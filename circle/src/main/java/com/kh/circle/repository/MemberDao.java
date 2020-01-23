@@ -1,0 +1,11 @@
+package com.kh.circle.repository;
+
+import com.kh.circle.entity.MemberDto;
+import com.kh.circle.entity.MemberProfileDto;
+
+public interface MemberDao {
+	void signup(MemberDto memberDto,MemberProfileDto memberProfileDto);
+	int getSequence();
+	MemberDto signin(MemberDto memberDto);
+	String checkGrade(MemberDto memberDto);
+}

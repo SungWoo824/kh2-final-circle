@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 
+	namespace : 영역을 부르는 별칭
+	parameterType : 이 명령을 실행하기 위해 필요한 데이터의 형태
+	resultType : 기대되는 결과물의 형태(목록이든 아니든 dto 형태로 표기)
+
+ -->
+
+<mapper namespace="member">
+	<insert id="signup" parameterType="memberDto">
+		insert into member values(#{member_no},#{member_email},#{member_pw},#{member_name},null)
+	</insert>
+	
+	<select id="signin" parameterType="map" resultType="memberDto">
+		select * from member where member_email=#{member_email}
+	</select>
+	<select id="checkgrade" parameterType="memberDto" resultType="java.lang.String">
+		select member_grade from member where member_email=#{member_email}
+	</select>
+	<select id="getseq" resultType="java.lang.Integer">
+		select member_no_seq.nextval from dual
+	</select>
+	<update id="changepw" parameterType="map">
+		update member set member_pw = #{member_pw} where member_email = #{member_email} 
+	</update>
+</mapper>
+
+
+
+
+
