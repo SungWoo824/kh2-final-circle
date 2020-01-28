@@ -9,14 +9,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.repository.MemberDao;
+import com.kh.circle.service.EmailService;
+import com.kh.circle.service.RandomService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/member")
+@Slf4j
 public class MemberController {
 	
 	@Autowired
@@ -64,5 +70,58 @@ public class MemberController {
 		session.removeAttribute("member_grade");
 		
 		return "redirect:../";
+	}
+	
+	@GetMapping("/findpw")
+	public String findpw() {
+		
+		return "member/findpw";
+	}
+	
+	@Autowired
+	private RandomService random;
+
+	@Autowired
+	private EmailService emailService;
+	
+	@GetMapping("send")
+	@ResponseBody
+	public String send(@RequestParam String email,
+				HttpSession session) {
+		String cert = random.generateCertificationNumber(6);
+		log.info(cert);
+		session.setAttribute("cert", cert);
+		session.setAttribute("email", email);
+		
+		return emailService.sendCertMessage(email, cert);
+	}
+	
+	@GetMapping("validate")
+	@ResponseBody
+	public String validate(@RequestParam String cert,
+						HttpSession session) {
+		String origin = (String) session.getAttribute("cert");
+		if(origin.equals(cert)) {
+			session.removeAttribute("cert");
+			return "success";
+		} else {
+			return "fail";
+		}
+	}
+	
+	@GetMapping("changepw")
+	public String changepw() {
+		
+		return "member/changepw";
+	}
+	
+	@PostMapping("changepw")
+	public String changepw(HttpSession session,
+						@RequestParam String change_pw) {
+		MemberDto memberDto = MemberDto.builder().member_email((String)session.getAttribute("email")).member_pw(change_pw).build();
+		
+		memberDao.changepw(memberDto);
+		
+		return "redirect:./signin";
 	}
 }

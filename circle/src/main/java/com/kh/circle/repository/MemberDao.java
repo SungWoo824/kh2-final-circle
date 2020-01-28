@@ -8,4 +8,5 @@ public interface MemberDao {
 	int getSequence();
 	MemberDto signin(MemberDto memberDto);
 	String checkGrade(MemberDto memberDto);
+	void changepw(MemberDto memberDto);
 }
