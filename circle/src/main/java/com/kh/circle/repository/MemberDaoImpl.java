@@ -39,5 +39,11 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("member.checkgrade",memberDto);
 	}
 
+	@Override
+	public void changepw(MemberDto memberDto) {
+		sqlSession.update("member.changepw", memberDto);
+		
+	}
+
 
 }

@@ -71,7 +71,7 @@
 	</form>
 
 <hr>
-	<form class="validate-form" action="validate" method="post">
+	<form class="validate-form" action="validate" method="get">
 		<input type="text" name="cert" placeholder="인증번호 입력">
 		<input type="submit" value="인증하기">
 	</form>
