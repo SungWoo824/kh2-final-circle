@@ -29,6 +29,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="changepw" parameterType="memberDto">
 		update member set member_pw = #{member_pw} where member_email = #{member_email} 
 	</update>
+	
+	<select id="memberList" resultType="memberDto">
+		select * from member
+	</select>
 </mapper>
 
 
