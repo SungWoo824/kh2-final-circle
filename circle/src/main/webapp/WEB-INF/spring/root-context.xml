@@ -47,6 +47,8 @@
 		<property name="dataSource" ref="dbcpSource"></property>
 	</bean>
 	
+	<context:property-placeholder location="classpath:/properties/*.properties"/>
+	
 	<!-- 
 		myBatis 도구들을 등록
 		- sqlSession(org.mybatis.spring.SqlSessionFactoryBean)
