@@ -4,10 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자 페이지 메인화면</title>
 </head>
 <body>
-	<h3>회원 가입 성공 페이지</h3>
-	<a href="./signin">로그인 페이지로 이동</a>
+
 </body>
 </html>

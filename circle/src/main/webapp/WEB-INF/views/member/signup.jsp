@@ -5,6 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<script src="${pageContext.request.contextPath}/resources/js/crypto/crypto-js.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/crypto/hmac-sha256.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>
 </head>
 <body>
 	<form action="signup" method="post" enctype="Multipart/form-data">
