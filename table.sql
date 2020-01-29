@@ -24,7 +24,7 @@ team_payment date
 create table team_member(
 member_no number,
 team_no number,
-member_position varchar2(15) not null,
+member_position varchar2(15),
 member_grade varchar2(24) not null,
 constraint fk_team_member_no foreign key(member_no) references member(member_no) on delete cascade,
 constraint fk_team_team_no foreign key(team_no) references team(team_no) on delete cascade
