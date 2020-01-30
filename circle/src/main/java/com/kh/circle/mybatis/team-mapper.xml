@@ -4,26 +4,37 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 
-	namespace : 영역을 부르는 별칭
-	parameterType : 이 명령을 실행하기 위해 필요한 데이터의 형태
-	resultType : 기대되는 결과물의 형태(목록이든 아니든 dto 형태로 표기)
-
- -->
+<!-- namespace : 영역을 부르는 별칭 parameterType : 이 명령을 실행하기 위해 필요한 데이터의 형태 resultType 
+	: 기대되는 결과물의 형태(목록이든 아니든 dto 형태로 표기) -->
 
 <mapper namespace="team">
 
-	<!-- 팀 생성 DB등록  -->
+	<!-- 팀 생성 DB등록 -->
 	<insert id="teamCreate" parameterType="teamDto">
-		insert into team values(#{team_no_seq.nextval},#{team_name},#{team_domain},#{team_payment})
+		insert into team
+		values(#{team_no},#{team_name},#{team_domain},sysdate)
+
 	</insert>
-	
+
 	<!-- 팀 생성에 필요한 팀 넘버 생성 -->
-	<select id="getSequence" resultType="teamDto">
-		select team_no_seq.nextval from dual
+	<select id="getSequence" resultType="int">
+		select team_no_seq.nextval
+		from dual
 	</select>
-	
-	
+
+	<!-- 팀생성 팀 이름 중복검사 -->
+
+	<select id="check" parameterType="String" resultType="int">
+		select
+		count(*) from team where team_name=#{team_name}
+	</select>
+
+	<select id="check2" parameterType="String" resultType="int">
+		select
+		count(*) from team where team_domain=#{team_domain}
+	</select>
+
+
 </mapper>
 
 

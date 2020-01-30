@@ -12,19 +12,19 @@ public class TeamDaoImpl implements TeamDao {
 	
 	@Autowired SqlSession sqlSession;
 	
+	@Override
+	public int getSequence() {
+		return sqlSession.selectOne("team.getSequence");
+		
+	}
 
 
 	@Override
 	public void teamCreate(TeamDto teamDto) {
-		sqlSession.insert("teamCreate",teamDto);
+		sqlSession.insert("team.teamCreate",teamDto);
 		
 	}
 
-	@Override
-	public int getSequence(TeamDto teamDto) {
-		return sqlSession.selectOne("getSequence",teamDto);
-		
-	}
 
 
 

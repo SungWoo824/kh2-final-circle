@@ -4,7 +4,7 @@ import com.kh.circle.entity.TeamDto;
 
 public interface TeamDao {
 	
-	int getSequence(TeamDto teamDto);
+	int getSequence();
 	void teamCreate(TeamDto teamDto);
 
 }
