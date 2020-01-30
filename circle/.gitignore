@@ -29,12 +29,12 @@ hs_err_pid*
 
 ### Java-Web ###
 ## ignoring target file
-target/
+/target/
 
 # End of https://www.gitignore.io/api/java,java-web
 
 # github repository name folder
-/KH/
+/spring/
 
 /.settings/
 
