@@ -24,7 +24,7 @@ team_payment date
 create table team_member(
 member_no number,
 team_no number,
-member_position varchar2(15) not null,
+member_position varchar2(15),
 member_grade varchar2(24) not null,
 constraint fk_team_member_no foreign key(member_no) references member(member_no) on delete cascade,
 constraint fk_team_team_no foreign key(team_no) references team(team_no) on delete cascade
@@ -72,12 +72,6 @@ constraint fk_todo_member_no foreign key(member_no) references member(member_no)
 constraint fk_todo_team_no foreign key(team_no) references team(team_no) on delete cascade
 );
 
-create table topic_chat_list(
-topic_chat_no number primary key,
-topic_chat_content varchar2(4000) not null,
-topic_chat_time date default sysdate
-);
-
 create table chat_list(
 chat_no number primary key,
 topic_no number,
@@ -98,7 +92,7 @@ member_no number,
 team_no number,
 Chat_file_uploadname varchar2(50) not null,
 chat_file_size number not null,
-chat_file_time date not null,
+chat_file_time date not null default sysdate,
 Constraint fk_chat_file_chat_no foreign key(chat_no) references chat_list(chat_no) on delete cascade,
 Constraint fk_chat_file_topic_no foreign key(topic_no) references topic(topic_no) on delete cascade,
 Constraint fk_chat_file_member_no foreign key(member_no) references member(member_no) on delete cascade,
