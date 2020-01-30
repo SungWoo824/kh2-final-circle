@@ -30,8 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set member_pw = #{member_pw} where member_email = #{member_email} 
 	</update>
 	
-	<select id="memberList" resultType="memberDto">
+	<select id="memberList" resultType="memberDto" parameterType="Map">
 		select * from member
+		<if test="type != null and value != null">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by member_no desc
 	</select>
 </mapper>
 

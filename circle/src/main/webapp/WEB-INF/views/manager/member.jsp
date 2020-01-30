@@ -9,6 +9,8 @@
 </head>
 <body>
 	<h2>회원목록</h2>
-	
+	<c:forEach items="${memberList}" var="memberDto">
+	${memberDto.member_no}
+	</c:forEach>
 </body>
 </html>
