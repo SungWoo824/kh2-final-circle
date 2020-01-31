@@ -87,6 +87,8 @@
 		</property>
 		
 	 </bean>
+	 
+	 <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
 	
 	 <!-- 
 	 	컴포넌트 스캔
