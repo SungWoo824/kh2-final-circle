@@ -32,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="memberList" resultType="memberDto" parameterType="Map">
 		select * from member
-		<if test="type != null and value != null">
+		<if test="!type.equals('')">
 			 where ${type} like '%'||#{value}||'%' 
 		</if>
 		order by member_no desc

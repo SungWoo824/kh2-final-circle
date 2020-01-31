@@ -12,7 +12,7 @@
 </head>
 <body>
 	<form action="signup" method="post" enctype="Multipart/form-data">
-		<label>이메일</label><input type="text" name ="member_email"><br><br>
+		<label>이메일</label><input type="email" name ="member_email"><br><br>
 		<label>비밀번호</label><input type="password" name="member_pw"><br><br>
 		<label>이름</label><input type="text" name="member_name"><br><br>
 		<input type="file" name="file" accept="image/*"><br><br>

@@ -22,8 +22,9 @@ public class ManagerDaoImpl implements ManagerDao{
 	@Override
 	public List<MemberDto> memberList(String type,String value) {
 		Map<String,String> param = new HashMap<>();
-		param.put("type", type);
-		param.put("value", value);
+			param.put("type", type);
+			param.put("value", value);
+		
 		
 		return sqlSession.selectList("member.memberList", param);
 	}

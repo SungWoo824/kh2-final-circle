@@ -9,8 +9,23 @@
 </head>
 <body>
 	<h2>회원목록</h2>
-	<c:forEach items="${memberList}" var="memberDto">
-	${memberDto.member_no}
-	</c:forEach>
+	<table>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>이메일</th>
+				<th>이름</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach items="${memberList}" var="memberDto">
+				<tr>
+					<td>${memberDto.member_no}</td>
+					<td>${memberDto.member_email}</td>
+					<td>${memberDto.member_name}</td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
 </body>
 </html>
