@@ -6,7 +6,7 @@ import com.kh.circle.entity.MemberProfileDto;
 public interface MemberDao {
 	void signup(MemberDto memberDto,MemberProfileDto memberProfileDto);
 	int getSequence();
-	MemberDto signin(MemberDto memberDto);
+	MemberDto signin(String email,String pw);
 	String checkGrade(MemberDto memberDto);
 	void changepw(MemberDto memberDto);
 }
