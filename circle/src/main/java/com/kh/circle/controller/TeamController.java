@@ -33,16 +33,18 @@ public class TeamController {
 		return "team/create";
 	}
 	
+	//팀 생성 등록이 완료되면 팀메인 페이지로 가는 컨트롤러
 	@PostMapping("/create")
 	public String create(@ModelAttribute TeamDto teamDto) {
 		int team_no =teamDao.getSequence();
 		teamDto.setTeam_no(team_no);
 		teamDao.teamCreate(teamDto);
 		
-
-		return "home";
+		return "redirect:main";
+//		return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
 	}
 	
+	//팀생성 이름 중복검사 rest컨트롤러
 	@GetMapping("/check")
 	@ResponseBody
 	public String check(@RequestParam String team_name, String team_domain) {
@@ -52,7 +54,7 @@ public class TeamController {
 		if(count>0) return "Y"; //있으면
 		else return "N";
 	}
-	
+	//팀생성-도메인 이름 중복검사 rest컨트롤러
 	@GetMapping("/check2")
 	@ResponseBody
 	public String check2(@RequestParam String team_domain) {
@@ -63,6 +65,12 @@ public class TeamController {
 		else return "N";
 	}
 	
+	//팀 메인 컨트롤러
+	@GetMapping("/main")
+	public String main() {
+		
+		return "team/main";
+	}
 	
 
 
