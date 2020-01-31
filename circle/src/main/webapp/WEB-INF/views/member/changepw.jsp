@@ -47,7 +47,6 @@ $(function(){
 		<div id="alert-success">비밀번호가 일치합니다.</div>
 		<div id="alert-danger">비밀번호가 일치하지 않습니다.</div>
 
-
 		<input type="submit" id="submit">
 	</form>
 </body>
