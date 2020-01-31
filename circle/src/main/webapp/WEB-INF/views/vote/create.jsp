@@ -5,10 +5,10 @@
 <h3>투표 제목			<input type="text" name="vote_create_title" placeholder="제목을 입력하세요" required></h3><br><br>
 <h3>투표 설명(옵션)			<input type="text" name="vote_create_detail" placeholder="설명을 입력하세요"></h3><br><br>
 <h3>보기 목록</h3><br>
-<input type="text" name="vote_category_content" placeholder="보기를 입력하세요" required><br><br>
-<input type="text" name="vote_category_content" placeholder="보기를 입력하세요" required><br><br>
+<input type="text" name="vote_create_option1" placeholder="보기를 입력하세요" required><br><br>
+<input type="text" name="vote_create_option2" placeholder="보기를 입력하세요" required><br><br>
 <button>+보기 추가</button><br><br>
-<h3>투표 옵션			<button>익명투표</button>	<button>복수선택</button></h3><br><br>
+<h3>투표 옵션			<button name="vote_create_anonymous" >익명투표</button>	<button name="vote_create_plural" >복수선택</button></h3><br><br>
 <h3>마감 시각			<input type="date" name="vote_create_date"></h3>
 <span>
 공유 대화방			
