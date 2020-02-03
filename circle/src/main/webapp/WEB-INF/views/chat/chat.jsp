@@ -59,7 +59,6 @@
 			};
 		}
 		
-		
 // 		메시지 전송 함수
 		function sendMessage(status, chat_content){
 			var topic_no = ${param.topic_no};
