@@ -45,6 +45,12 @@ public class MemberController {
 		return "redirect:./signup_success";
 	}
 	
+	@GetMapping("/signup_success")
+	public String signupSuccess() {
+		
+		return "member/signup_success";
+	}
+	
 	@GetMapping("/signin")
 	public String signin() {
 		
@@ -52,12 +58,13 @@ public class MemberController {
 	}
 	
 	@PostMapping("/signin")
-	public String signin(@ModelAttribute MemberDto memberDto, HttpSession session) {
-		
-		if(memberDao.signin(memberDto)!=null) {
-			String member_grade = memberDao.checkGrade(memberDto);
+	public String signin(@RequestParam String member_email,
+						@RequestParam String member_pw,
+						HttpSession session) {
+		MemberDto memberDto = memberDao.signin(member_email,member_pw);
+		if(memberDto!=null) {
 			session.setAttribute("member_email", memberDto.getMember_email());
-			session.setAttribute("member_grade", member_grade);
+			session.setAttribute("member_grade", memberDto.getMember_grade());
 			return "redirect:../";
 		}else {
 			return "redirect:./signin?error";
