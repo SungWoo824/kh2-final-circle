@@ -10,6 +10,8 @@ public class TopicDaoIml implements TopicDao{
 	@Autowired
 	private SqlSession sqlSession;
 	
+	
+	
 	@Override
 	public void TopicNew(TopicDto topicDto) {
 		sqlSession.insert("topic.newTopic",topicDto);

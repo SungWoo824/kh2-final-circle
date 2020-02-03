@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <mapper namespace="topic">
+
 	<insert id="topicNew" parameterType="topicDto">
 		insert into topic 
 		values(
@@ -13,9 +14,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{topic_name},
 			#{topic_confidential},
 			#{topic_explain},
+			"null",
 			null,
-			null,
-			#{topic_istopic}
+			null
 			)
 	</insert>
 	
