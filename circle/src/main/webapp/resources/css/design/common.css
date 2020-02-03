@@ -186,7 +186,21 @@ a{
     line-height: 36px;
 }
 
+.signin .signin-text{
+	width: 20rem;
+    height: 3rem;
+    margin: 0.5rem;
+}
 
+.signin-submit{
+	width: 20%;
+	height: 2.5rem;
+	margin:1rem
+}
+.signin-form-group{
+	width: 20%;
+	margin: auto;
+}
 
 
 

@@ -9,4 +9,5 @@ public interface MemberDao {
 	MemberDto signin(String email,String pw);
 	String checkGrade(MemberDto memberDto);
 	void changepw(MemberDto memberDto);
+	
 }

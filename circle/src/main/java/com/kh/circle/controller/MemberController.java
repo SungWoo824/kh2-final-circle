@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
@@ -65,7 +66,7 @@ public class MemberController {
 		if(memberDto!=null) {
 			session.setAttribute("member_email", memberDto.getMember_email());
 			session.setAttribute("member_grade", memberDto.getMember_grade());
-			return "redirect:../";
+			return "redirect:./mypage";
 		}else {
 			return "redirect:./signin?error";
 		}
@@ -130,5 +131,13 @@ public class MemberController {
 		memberDao.changepw(memberDto);
 		
 		return "redirect:./signin";
+	}
+	
+	@GetMapping("mypage")
+	public ModelAndView mypage(ModelAndView mav,
+							HttpSession session) {
+		
+		
+		return mav;
 	}
 }
