@@ -106,4 +106,5 @@ $(function(){
 <input type="submit" value="팀 생성하기" class="submitC" id="submitC">
 <br>
 <br>
+
  </form>

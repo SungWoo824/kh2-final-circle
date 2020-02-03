@@ -72,6 +72,21 @@ public class TeamController {
 		return "team/main";
 	}
 	
+	
+	//invite1 가기
+	@GetMapping("/invite1")
+	public String invite1() {
+		
+		return "team/invite1";
+	}
+	
+	//invite2 가기
+	@GetMapping("/invite2")
+	public String invite2() {
+		
+		return "team/invite2";
+	}
+	
 
 
 }
