@@ -1,63 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Star Admin Premium Bootstrap Admin Dashboard Template</title>
-    <!-- plugins:css -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/start/css/materialdesignicons.min.css">
-    <link rel="stylesheet" href="/css/start/css/ionicons.css">
-    <link rel="stylesheet" href="/css/start/css/typicons.css">
-    <link rel="stylesheet" href="/css/start/css/flag-icon.min.css">
-    <link rel="stylesheet" href="/css/start/css/vendor.bundle.base.css">
-    <link rel="stylesheet" href="/css/start/css/vendor.bundle.addons.css">
-    <!-- endinject -->
-    <!-- plugin css for this page -->
-    <!-- End plugin css for this page -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="/css/start/css/style.css">
-    <!-- endinject -->
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="/css/start/css/layoutstyle.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.addons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
+     <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-  </head>
-  <body>
-    <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
-    </div> 
-    <div class="menu-wrap">
+	
+<script>
+	var enter = 0, exit = 1, message = 2;
+	
+	$(function(){
+		
+// 		페이지가 로딩되면 웹소켓 서버에 접속
+		connect();
+
+		//페이지를 나가기 전에 웹소켓 서버 접속을 종료
+		$(window).on("beforeunload", function(){
+			sendMessage(exit);
+			window.socket.close();//종료코드
+		});
+		
+		//전송버튼 처리
+		$(".send-btn").click(function(){
+			var chat_content = $(".user-input").val();//입력값을 불러오고
+			if(!chat_content) return;//미입력시 중단
+			sendMessage(message, chat_content);
+			$(".user-input").val("");//입력창 초기화
+		});
+		
+		//p태그 생성해서 본문에 추가
+		function appendMessage(message){
+			$("<p>").text(message).appendTo("#chat-content");
+		}
+		
+// 		웹소켓 연결 함수
+		function connect(){
+			var host = location.host;
+			var context = "${pageContext.request.contextPath}";
+			var uri = "ws://"+host+context+"/topic";
+			console.log(uri);
+
+			window.socket = new WebSocket(uri);
+			
+// 			연결 시 예약 작업을 설정
+			window.socket.onopen = function(){
+
+				sendMessage(enter);
+			};
+			window.socket.onclose = function(){
+				appendMessage("서버와 연결이 종료되었습니다");
+			};
+			window.socket.onmessage = function(e){
+				appendMessage(e.data);
+			};
+			window.socket.onerror = function(){
+				appendMessage("연결 오류가 발생했습니다");
+			};
+		}
+		
+// 		메시지 전송 함수
+		function sendMessage(status, chat_content){
+			var topic_no = ${param.topic_no};
+			var message = {
+				topic_no:topic_no,
+				status:status,
+				chat_content:chat_content
+			};
+			var value = JSON.stringify(message);
+			window.socket.send(value);
+		}
+	});	
+</script>  
+
+<!-- 오른쪽 메뉴 토글 -->
+<script>
+
+            function view(){
+                $("#toggle1").click(function () {
+                           $(".menu1-slide").show();
+                       });
+            }
+
+            function hide(){
+                $("#toggle1").click(function () {
+                           $(".menu1-slide").hide();
+                       });
+            }
+
+            var change = false;
+            function toggle(){
+                if(!change){
+                    view();
+                }
+                else{
+                    hide();
+                }
+                change=!change;
+            }
+               
+</script>
+
+</head>
+<!-- <div class="container-scroller"> -->
+<!--     </div>  -->
+<div class="menu-wrap">
 <div class="menu-con bg-base">
     <div class="menu-top">
         <ul class="menu-bar">
-            <li>
-                <div class="gnb-btn">
+            <li class="gnb-btn">
                     <i class="fa fa-bars"></i>
-                </div>
             </li>
         </ul>
     </div>
     <div class="menu-bottom">
         <ul class="menu-bar">
-            <li>
-                <a class="gnb-btn fa fa-search"></a>
+             <li id="toggle1" class="gnb-btn menu1" onclick="toggle();">
+                <a class="fa fa-search"></a>
             </li>
-            <li>
-                <a class="gnb-btn fa fa-file"></a>
+            <li class="gnb-btn">
+                <a class="fa fa-file"></a>
             </li>
-            <li>
-                <a class="gnb-btn fa fa-list-ul"></a>
+            <li class="gnb-btn">
+                <a class="fa fa-list-ul"></a>
             </li>
-            <li>
-                <a class="gnb-btn fa fa-check-square"></a>
+            <li class="gnb-btn">
+                <a class="fa fa-check-square"></a>
             </li>
-            <li>
-                <a class="gnb-btn fa fa-plug"></a>
+            <li class="gnb-btn">
+                <a class="fa fa-plug"></a>
             </li>
-            <li>
-                <a class="gnb-btn fa fa-hdd"></a>
+            <li class="gnb-btn">
+                <a class="fa fa-hdd"></a>
             </li>
         </ul>
     </div>
@@ -73,7 +154,7 @@
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
                         <div class="brand-topic-list" href="index.html">
                             <div class="navbar-brand">
-                                <img src="/image/logo.png" alt="logo" />
+                                <img src="${pageContext.request.contextPath}/resources/image/logo.png" alt="logo" />
                             </div>
                             <span class="brand-topic-name">test</span>
                             <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -185,33 +266,24 @@
                     </div>
                     <article class="message-wrap">
                         <div class="message">
-
-                        </div>
-                    </article>
+							<h1>웹소켓 클라이언트(with 로그인, ${param.topic_no} 번 방)</h1>
+									<input type="text" class="user-input">
+									<button class="send-btn">보내기</button>
+									<div id="chat-content"></div>
+						</div>
+					</article>
             </div>
-   
             <!-- Page Title Header Ends-->
            
-        
-          <!-- partial -->
         </div> 
+        <div id="gnb-detail-slide">
+            <div class ="menu1-slide">d</div>
+        </div>
         <!-- main-panel ends -->
-      </div>
       <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="/css/start/js/vendor.bundle.base.js"></script>
-    <script src="/css/start/js/vendor.bundle.addons.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page-->
-    <!-- End plugin js for this page-->
-    <!-- inject:js -->
-    <script src="/css/start/js/off-canvas.js"></script>
-    <script src="/css/start/js/misc.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page-->
-    <script src="/css/start/js/dashboard.js"></script>
-    <!-- End custom js for this page-->
-  </body>
-</html>
+    <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.addons.js"></script>
+    
+ </html>
+    
+

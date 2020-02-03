@@ -6,9 +6,9 @@
 <meta charset="UTF-8">
 <title>메인 페이지</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
- <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/fullpage.css" />
- <script type="text/javascript" src=" ${pageContext.request.contextPath}/resources/css/fullpage.js"></script>
- <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/common.css" />
+ <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/fullpage.css" />
+ <script type="text/javascript" src=" ${pageContext.request.contextPath}/resources/js/design/fullpage.js"></script>
+ <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
     
 </head>
 <body>
@@ -19,7 +19,7 @@
                 <div class="header-wrap">
                     <div class="header-logo">
                         <div class="mainlogo">
-                            <img src="/image/logol.png">
+                            <img src=" ${pageContext.request.contextPath}/resources/image/logol.png">
                         </div>
                     </div>
                     <div class="header-gnb">
@@ -29,6 +29,7 @@
                         </ul>
                         <ul class="gnb-menu">
                             <li class="login-btn"><a href="member/signin">로그인</a></li>
+<!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
                         </ul>
                     </div>
                 </div>        
@@ -47,9 +48,9 @@
                                     </div>
                                     <div class="main-btn">
                                         <div class="main-btn-bg">
-                                            <a href="member/signup">무료 체험 시작</a>
-												<h3>member_email = ${member_email }</h3>
-												<h3>member_grade = ${member_grade }</h3>
+                                            <a href="member/signup">무료 체험 시작</a><br><br>
+												<h5>member_email = ${member_email }</h5>
+												<h5>member_grade = ${member_grade }</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +66,7 @@
                 </div>
         </div>
 		
-
+<!-- 메인 패럴렉스 -->
 <script>
         new fullpage('#fullpage', {
 			sectionsColor: ['#f9f9f9', '#2684fe','#f9f9f9'],
