@@ -1,6 +1,6 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,18 +9,30 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
-  
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
+
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   
     <script>
 
 
 $(function(){
+    // $(".load-btn").click(function(){
             $(".container").click(function(){
-            	
-        $('#Parse_Area').load('invite1.html');
+            $.ajax({
+            type : "GET", //전송방식을 지정한다 (POST,GET)
+            url : "${pageContext.request.contextPath}/team/invite1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
+            dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
+            error : function(){
+                alert("통신실패!!!!");
+            },
+            success : function(data){
+                $("#Parse_Area").html(data); //div에 받아온 값을 넣는다.
+ 
+            }
+
+        });
+        // $('#Parse_Area').load('invite.html');
     });
 });
 
@@ -38,6 +50,6 @@ $(function(){
     <button type="button" class="btn btn-info btn-lg" >팀 멤버 초대하기</button>
     </div>
 
-<div id="Parse_Area"> </div>
+<div id="Parse_Area"gt;lt;></div>
 </body>
 </html>

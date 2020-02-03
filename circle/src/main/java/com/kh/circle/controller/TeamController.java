@@ -67,6 +67,7 @@ public class TeamController {
 	
 	//팀 메인 컨트롤러
 	@GetMapping("/main")
+
 	public String main() {
 		
 		return "team/main";
@@ -75,6 +76,7 @@ public class TeamController {
 	
 	//invite1 가기
 	@GetMapping("/invite1")
+
 	public String invite1() {
 		
 		return "team/invite1";
@@ -82,6 +84,7 @@ public class TeamController {
 	
 	//invite2 가기
 	@GetMapping("/invite2")
+
 	public String invite2() {
 		
 		return "team/invite2";
