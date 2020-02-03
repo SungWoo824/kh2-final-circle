@@ -9,9 +9,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/chat")
 public class ChatController {
 
+	
 	@GetMapping("/chat")
 	public String chat(@RequestParam int topic_no) {
 		
 		return "chat/chat";
 	}
+	
+	@GetMapping("/topic_main")
+	public String topic_main(@RequestParam int topic_no) {
+		return "chat/topic_main";
+	}
+	
+	
 }
