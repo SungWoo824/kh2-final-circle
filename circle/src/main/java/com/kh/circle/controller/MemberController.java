@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.repository.MemberDao;
+import com.kh.circle.repository.TeamDao;
 import com.kh.circle.service.EmailService;
 import com.kh.circle.service.RandomService;
 
@@ -28,6 +29,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private TeamDao teamDao;
 	
 	@GetMapping("/signup")
 	public String signup() {
@@ -136,7 +139,9 @@ public class MemberController {
 	@GetMapping("mypage")
 	public ModelAndView mypage(ModelAndView mav,
 							HttpSession session) {
-		
+		mav.addObject("memberDto", memberDao.info((String)session.getAttribute("member_email")));
+		mav.addObject("teamDto", teamDao.teamList((String)session.getAttribute("member_email")));
+		mav.setViewName("member/mypage");
 		
 		return mav;
 	}
