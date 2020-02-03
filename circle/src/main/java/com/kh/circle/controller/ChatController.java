@@ -21,5 +21,15 @@ public class ChatController {
 		return "chat/topic_main";
 	}
 	
+	@GetMapping("/topic_new")
+	public String topic_new() {
+		return "chat/topic_new";
+	}
+	
+//	@PostMapping("/topic_new")
+//	public String topic_new(@RequestParam) {
+//		return "redirect:chat/topic_main";
+//	}
+	
 	
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="topic">
+	<insert id="topicNew" parameterType="topicDto">
+		insert into topic 
+		values(
+			topic_no_seq.nextval,
+			#{topic_name},
+			#{topic_confidential},
+			#{topic_explain},
+			null,
+			null,
+			#{topic_istopic}
+			)
+	</insert>
+	
+</mapper>
