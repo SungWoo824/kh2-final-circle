@@ -3,7 +3,6 @@
     
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
@@ -78,12 +77,15 @@
 			window.socket.send(value);
 		}
 	});	
-</script>  
-
-<!-- 오른쪽 메뉴 토글 -->
-<script>
-
-	$(function(){
+    <!--토픽생성-->
+    $(function(){
+        $('#topic-create').click(function(){
+        	
+  $('#topic-modal').show();
+});
+});
+    
+    $(function(){
 		$("#toggle1").click(function(){
 			$(".menu1-slide").toggle();
 		});
@@ -94,9 +96,36 @@
                
 </script>
 
+<style>
+	#topic-create > a{
+	cursor:pointer;
+	}
+	
+	#topic-modal{
+		display:none;
+	}
+</style>
+
 </head>
 <!-- <div class="container-scroller"> -->
 <!--     </div>  -->
+<div id="topic-modal">
+
+	<div class="topic-modal-view">
+		<h1>토픽 생성하기</h1>
+		<form action="topic_create" method="post">
+			이름 :<input type="text" name="topic_name"><br><br>
+			공개여부 :<input type="radio" name="topic_confidential" value="1" checked="checked">비공개
+							<input type="radio" name="topic_confidential" value="0" >공개<br><br>
+			토픽 설명 :<textarea name="topic_explain" rows="" cols=""></textarea><br><br>
+			<input type="submit" value="생성하기">
+			<input type="button" value="닫기"> 
+		</form>
+	
+	</div>
+
+</div>
+
 <div class="menu-wrap">
 <div class="menu-con bg-base">
     <div class="menu-top">
@@ -166,11 +195,15 @@
                 <span class="menu-title">메인으로</span>
             </a>
             </li>
+            <li class="nav-item" id="topic-create">
+            	<a>
+	                <i class="fa fa-plus"></i>
+            	</a>
+            </li>
             <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="menu-icon typcn typcn-coffee"></i>
                 <span class="menu-title">토픽</span>
-                <i class="menu-arrow fa fa-caret-down" aria-hidden="true"></i>
+                <i class="menu-arrow fa fa-caret-down" aria-hidden="false"></i>
                 <!-- <i class="menu-arrow fa fa-caret-down"></i> -->
             </a>
             <div class="collapse" id="ui-basic">
@@ -276,5 +309,8 @@
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.addons.js"></script>
     
+
+</div>
+
  </html>
 

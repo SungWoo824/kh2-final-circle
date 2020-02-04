@@ -70,6 +70,7 @@ color:#222;
   position: relative;
 }
 
+.menu2-slide,
 .menu1-slide{
   width: 380px;
  
@@ -692,11 +693,21 @@ color:#222;
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
-      padding: 15px 30px 0 55px;
+      padding: 15px 16px 0 55px;
       white-space: nowrap;
       color: #333; }
+      
+      .sidebar > .nav .nav-item i.fa-plus{
+
+      	text-align: center;
+      	display:block;
+      	line-height:30px;
+      	color: #2196f3;
+      	padding-left:110px;
+      }
+      
       .sidebar > .nav .nav-item .nav-link i.menu-arrow {
-        margin-left: auto;
+        margin-left: 20px;
         margin-right: 0;
         -webkit-transition-duration: 0.2s;
         transition-duration: 0.2s;
@@ -713,8 +724,8 @@ color:#222;
           vertical-align: middle;
           color: #bfccda; }
       .sidebar > .nav .nav-item .nav-link[aria-expanded="true"] i.menu-arrow {
-        -webkit-transform: rotate(90deg);
-        transform: rotate(90deg); }
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg); }
       .sidebar > .nav .nav-item .nav-link .menu-icon {
         display: none;
         margin-right: 1.25rem;
