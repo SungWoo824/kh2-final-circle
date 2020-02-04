@@ -68,6 +68,7 @@ public class MemberController {
 		MemberDto memberDto = memberDao.signin(member_email,member_pw);
 		if(memberDto!=null) {
 			session.setAttribute("member_email", memberDto.getMember_email());
+			session.setAttribute("member_no", memberDto.getMember_no());
 			session.setAttribute("member_grade", memberDto.getMember_grade());
 			return "redirect:./mypage";
 		}else {
@@ -79,6 +80,7 @@ public class MemberController {
 	public String signout(HttpSession session) {
 		session.removeAttribute("member_email");
 		session.removeAttribute("member_grade");
+		session.removeAttribute("member_no");
 		
 		return "redirect:../";
 	}
@@ -140,7 +142,7 @@ public class MemberController {
 	public ModelAndView mypage(ModelAndView mav,
 							HttpSession session) {
 		mav.addObject("memberDto", memberDao.info((String)session.getAttribute("member_email")));
-		mav.addObject("teamDto", teamDao.teamList((String)session.getAttribute("member_email")));
+		mav.addObject("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
 		mav.setViewName("member/mypage");
 		
 		return mav;

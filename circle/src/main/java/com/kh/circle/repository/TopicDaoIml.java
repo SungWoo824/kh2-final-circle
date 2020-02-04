@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kh.circle.entity.TopicDto;
+import com.kh.circle.entity.TopicMemberDto;
 
 public class TopicDaoIml implements TopicDao{
 
@@ -20,5 +21,12 @@ public class TopicDaoIml implements TopicDao{
 	public int getSequence() {
 		return sqlSession.selectOne("topic.getSeq");
 	}
+
+	@Override
+	public void topicMemberInsert(TopicMemberDto topicMemberDto) {
+		sqlSession.insert("topic.topicMemberInsert", topicMemberDto);
+	}
+	
+	
 
 }
