@@ -17,21 +17,67 @@
 
         //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
         $(".modal-footer").click(function(){
-             $('#myModal').hide();
+             $('.modal-fade').hide();
         });
         //팝업 Close 기능(X 버튼 누르면 닫아짐)
         $(".modal-header").click(function(){
-             $('#myModal').hide();
+             $('.modal-fade').hide();
         });
+        //팝업 뒤로가기 (invite1 ajax)
+        $(".modal-back").click(function(){
+        	 $.ajax({
+                 type : "GET", //전송방식을 지정한다 (POST,GET)
+                 url : "${pageContext.request.contextPath}/team/invite1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
+                 dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
+                 error : function(){
+                     alert("통신실패!!!!");
+                 },
+                 success : function(data){
+                     $("#Parse_Area").html(data); //div에 받아온 값을 넣는다.
+      
+                 }
+           		 });
+                 $('.modal-fade').hide();
+            });
+        
+        //이메일 보내기 버튼을 누르면 send주소로 비동기 신호를 전송 
+        $('.email-form').submit(function(e){
+        	e.preventDefault();
+        	
+        	$(this).find("input[type=submit]").prop("disabled", true);
+			$(this).find("input[type=submit]").val("인증번호 발송중...");
+       
+			var url = $(this).attr("action"); 
+			var method = $(this).attr("method");
+			var data = $(this).serialize();
+			
+			$.ajax({
+                type : "GET", //전송방식을 지정한다 (POST,GET)
+                url : url,
+                data : data,
+                error : function(){
+                    alert("통신실패!!!!");
+                },
+                success : function(resp){
+                    //console.log(resp);
+        
+                    	$("input[type=submit]").next("span").text("전송완료되었습니다");
+                    
+                }
+     
+            });
+//                 $('.modal-fade').hide();
+            });
+
 
     });
     
     </script>
 
     <style>
-    .container{
-        display: block;
-    }
+/*     .container{
+        display: none;
+    } */
     </style>
 
 </head>
@@ -68,15 +114,25 @@
                 <p id="content"></p>
                 <p>모든 토픽에 멤버를 초대하실 수 있습니다</p>
                 <p>초대 메일 보내기</p>
-                <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" type="email" placeholder="Enter email">
-                <button type="button" class="btn btn-alltopic" data-dismiss="modal">이메일 전송</button>
-              </div>
-      
+            </div>
+                
+              
+    		  <!-- 이메일 전송 폼 -->	
+              <form class="email-form" action="send" method="post">
+              	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" type="email" placeholder="Enter email">
+                <input type="submit" value="이메일전송" class="btn btn-primary" data-dismiss="modal">
+                <span></span>
+              </form>
+
+      		  <!-- CLOSE버튼 -->
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">뒤로가기</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      
               </div>
+              
+              <!-- 뒤로가기 버튼 -->
+      		  <div class="modal-back">
+                <button type="button" class="btn btn-default" data-dismiss="modal">뒤로가기</button>
+      		  </div>	
       
             </div>
       
@@ -87,7 +143,7 @@
         </div>  
       
       </div>
-
+	<div id="Parse_Area"gt;lt;></div>
     
 </body>
 </html>

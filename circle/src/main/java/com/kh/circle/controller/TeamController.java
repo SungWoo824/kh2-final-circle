@@ -1,6 +1,8 @@
 package com.kh.circle.controller;
 
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.repository.TeamDao;
+import com.kh.circle.service.EmailService;
+import com.kh.circle.service.RandomService;
+//import com.kh.circle.service.TeamEmailService;
 
 @Controller
 @RequestMapping("/team")
 public class TeamController { 
+	
+
+	@Autowired
+	private EmailService emailService;
+	
+	@Autowired
+	private RandomService randomService;
 	
 
 	@Autowired
@@ -67,28 +79,37 @@ public class TeamController {
 	
 	//팀 메인 컨트롤러
 	@GetMapping("/main")
-
 	public String main() {
-		
 		return "team/main";
 	}
-	
+
+		
 	
 	//invite1 가기
 	@GetMapping("/invite1")
-
 	public String invite1() {
-		
 		return "team/invite1";
 	}
 	
-	//invite2 가기
-	@GetMapping("/invite2")
-
-	public String invite2() {
 		
+	//invite2 가기
+	@GetMapping("/invite2") 
+	public String invite2() {
 		return "team/invite2";
 	}
+	
+	@GetMapping("/send")
+	@ResponseBody
+	public String send(@RequestParam String email, HttpSession session) {
+//		인증번호를 세션이든 DB든 어디에 저장
+//		String cert = "123456";
+		String cert = randomService.generateCertificationNumber(6);
+		session.setAttribute("cert", cert);
+		return emailService.sendCertMessage(email, cert); 	
+	}
+	
+	
+
 	
 
 
