@@ -4,5 +4,5 @@ import com.kh.circle.entity.TopicDto;
 
 public interface TopicService {
 
-	void topicNew(TopicDto topicDto);
+	void topicCreate(TopicDto topicDto);
 }

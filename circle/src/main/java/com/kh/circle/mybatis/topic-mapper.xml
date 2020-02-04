@@ -7,17 +7,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="topic">
 
-	<insert id="topicNew" parameterType="topicDto">
+	<insert id="topicCreate" parameterType="topicDto">
 		insert into topic 
 		values(
-			topic_no_seq.nextval,
+			#{topic_no},
 			#{topic_name},
 			#{topic_confidential},
 			#{topic_explain},
-			"null",
+			'null',
 			null,
 			null
 			)
 	</insert>
+	
+	<select id="getSeq" resultType="int">
+		select topic_no_seq.nextval from dual
+	</select>
+	
+	<select id="nameCheck" parameterType="String" resultType="int">
+		select count(topic_name) from topic where topic_name = #{topic_name} 
+	</select>
 	
 </mapper>

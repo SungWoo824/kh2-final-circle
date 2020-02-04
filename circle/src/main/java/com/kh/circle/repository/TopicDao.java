@@ -4,5 +4,7 @@ import com.kh.circle.entity.TopicDto;
 
 public interface TopicDao {
 
-	void TopicNew(TopicDto topicDto);
+	int getSequence();
+	
+	void topicCreate(TopicDto topicDto);
 }

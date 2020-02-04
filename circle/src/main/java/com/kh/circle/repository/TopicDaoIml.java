@@ -11,10 +11,14 @@ public class TopicDaoIml implements TopicDao{
 	private SqlSession sqlSession;
 	
 	
-	
 	@Override
-	public void TopicNew(TopicDto topicDto) {
-		sqlSession.insert("topic.newTopic",topicDto);
+	public void topicCreate(TopicDto topicDto) {
+		sqlSession.insert("topic.topicCreate",topicDto);
+	}
+
+	@Override
+	public int getSequence() {
+		return sqlSession.selectOne("topic.getSeq");
 	}
 
 }
