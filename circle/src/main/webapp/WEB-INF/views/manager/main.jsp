@@ -7,7 +7,7 @@
 <title>관리자 페이지 메인화면</title>
 </head>
 <body>
-	<a href="#">회원 관리</a>
+	<a href="./member?type=&value=">회원 관리</a>
 	<a href="#">팀 관리</a>
 	<a href="#">결제 내역 관리</a>
 </body>

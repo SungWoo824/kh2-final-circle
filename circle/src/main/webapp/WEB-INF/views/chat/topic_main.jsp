@@ -84,22 +84,27 @@
   $('#topic-modal').show();
 });
 });
-</script>  
+    
+    $(function(){
+		$("#toggle1").click(function(){
+			$(".menu1-slide").toggle();
+		});
+		$("#toggle4").click(function(){
+			$(".menu4-slide").toggle();
+		});
+	});
+               
+</script>
 
 <style>
-
-#topic-create > a{
-cursor:pointer;
-}
-
-#topic-modal{
-	display:none;
-}
-
-
+	#topic-create > a{
+	cursor:pointer;
+	}
+	
+	#topic-modal{
+		display:none;
+	}
 </style>
-
-
 
 </head>
 <!-- <div class="container-scroller"> -->
@@ -132,7 +137,7 @@ cursor:pointer;
     </div>
     <div class="menu-bottom">
         <ul class="menu-bar">
-             <li id="toggle1" class="gnb-btn menu1" onclick="toggle();">
+             <li id="toggle1" class="gnb-btn menu1">
                 <a class="fa fa-search"></a>
             </li>
             <li class="gnb-btn">
@@ -141,7 +146,7 @@ cursor:pointer;
             <li class="gnb-btn">
                 <a class="fa fa-list-ul"></a>
             </li>
-            <li class="gnb-btn">
+            <li id="toggle4" class="gnb-btn menu4">
                 <a class="fa fa-check-square"></a>
             </li>
             <li class="gnb-btn">
@@ -185,7 +190,7 @@ cursor:pointer;
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="${pageContext.request.contextPath}/member/mypage">
                 <i class="menu-icon typcn typcn-document-text"></i>
                 <span class="menu-title">메인으로</span>
             </a>
@@ -253,6 +258,7 @@ cursor:pointer;
     
   
             <div class="chat-wrap">
+            	<div class="chat-aside">
                     <div class="chat-menu-bar">
                         <div class="chat-img">
                             <div class="chat-img-bg">
@@ -279,20 +285,25 @@ cursor:pointer;
                         </div>
                     </div>
                     <article class="message-wrap">
-                        <div class="message">
+                        <div class="message" style="text-align: right">
 							<h1>웹소켓 클라이언트(with 로그인, ${param.topic_no} 번 방)</h1>
 									<input type="text" class="user-input">
 									<button class="send-btn">보내기</button>
 									<div id="chat-content"></div>
 						</div>
 					</article>
+				</div>
+				
+					<div id="gnb-detail-slide">
+			            <div class ="menu1-slide">d</div>
+			            <div class="menu4-slide"><a href="create">+투표 만들기</a></div>
+			        </div>
+			        
             </div>
             <!-- Page Title Header Ends-->
            
         </div> 
-        <div id="gnb-detail-slide">
-            <div class ="menu1-slide">d</div>
-        </div>
+        
         <!-- main-panel ends -->
       <!-- page-body-wrapper ends -->
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>
@@ -302,5 +313,4 @@ cursor:pointer;
 </div>
 
  </html>
-    
 
