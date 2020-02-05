@@ -107,6 +107,9 @@ public class TeamController {
 		return "team/invite2";
 	}
 	
-
-
+	@GetMapping("/connect")
+	public String connect(@RequestParam int team_no) {
+		
+		return "redirect:../chat/topic_main?team_no="+team_no;
+	}
 }

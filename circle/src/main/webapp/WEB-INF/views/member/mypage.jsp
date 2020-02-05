@@ -51,7 +51,10 @@
 		                                    	<div>
                                     				<div>
 														<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
-														<a href="${pageContext.request.contextPath}/chat/topic_main?topic_no=">이동</a>
+														<form action="${pageContext.request.contextPath}/team/connect">
+															<input type="hidden" name="team_no" value="${teamDto.team_no}">
+															<button type="submit">이동하기</button>
+														</form>
 														<br><br>
 													</div>
                                     			</div>

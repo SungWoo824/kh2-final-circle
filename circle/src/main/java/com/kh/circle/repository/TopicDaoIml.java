@@ -26,6 +26,11 @@ public class TopicDaoIml implements TopicDao{
 	public void topicMemberInsert(TopicMemberDto topicMemberDto) {
 		sqlSession.insert("topic.topicMemberInsert", topicMemberDto);
 	}
+
+	@Override
+	public int teamTopicFirst(int team_no) {
+		return sqlSession.selectOne("topic.teamTopicFirst", team_no);
+	}
 	
 	
 

@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into topic_member values(#{topic_no},#{member_no},#{team_no})
 	</insert>
 	
-	<select id="teamTopicFirst" parameterType="int">
-		select topic_no from topic_member where team_no = #{team_no} order by asc
+	<select id="teamTopicFirst" parameterType="int" resultType="int">
+		select topic_no from topic_member where team_no = #{team_no} order by topic_no asc
 	</select>
 	
 </mapper>
