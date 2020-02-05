@@ -1,5 +1,7 @@
 package com.kh.circle.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,18 +16,18 @@ public class TeamDaoImpl implements TeamDao {
 	
 	@Override
 	public int getSequence() {
-		return sqlSession.selectOne("team.getSequence");
-		
+		return sqlSession.selectOne("team.getSequence");	
 	}
-
 
 	@Override
 	public void teamCreate(TeamDto teamDto) {
-		sqlSession.insert("team.teamCreate",teamDto);
-		
+		sqlSession.insert("team.teamCreate",teamDto);		
 	}
 
-
+	@Override
+	public List<TeamDto> teamList(String member_email) {	
+		return sqlSession.selectList("team.teamlist",member_email);
+	}
 
 
 }
