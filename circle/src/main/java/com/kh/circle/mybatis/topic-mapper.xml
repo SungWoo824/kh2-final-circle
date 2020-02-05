@@ -36,4 +36,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select topic_no from topic_member where team_no = #{team_no} order by topic_no asc
 	</select>
 	
+	<select id="teamTopicList" parameterType="int" resultType="topicDto">
+		select topic.* from (select topic_no from topic_member where team_no = #{team_no}) tm inner join topic on topic.topic_no=tm.topic_no order by topic.topic_no
+	</select>
+	
 </mapper>
