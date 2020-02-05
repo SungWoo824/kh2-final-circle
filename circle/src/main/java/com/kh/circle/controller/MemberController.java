@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.repository.MemberDao;
+import com.kh.circle.repository.TeamDao;
 import com.kh.circle.service.EmailService;
 import com.kh.circle.service.RandomService;
 
@@ -27,6 +29,8 @@ public class MemberController {
 	
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private TeamDao teamDao;
 	
 	@GetMapping("/signup")
 	public String signup() {
@@ -65,7 +69,7 @@ public class MemberController {
 		if(memberDto!=null) {
 			session.setAttribute("member_email", memberDto.getMember_email());
 			session.setAttribute("member_grade", memberDto.getMember_grade());
-			return "redirect:../";
+			return "redirect:./mypage";
 		}else {
 			return "redirect:./signin?error";
 		}
@@ -130,5 +134,15 @@ public class MemberController {
 		memberDao.changepw(memberDto);
 		
 		return "redirect:./signin";
+	}
+	
+	@GetMapping("mypage")
+	public ModelAndView mypage(ModelAndView mav,
+							HttpSession session) {
+		mav.addObject("memberDto", memberDao.info((String)session.getAttribute("member_email")));
+		mav.addObject("teamDto", teamDao.teamList((String)session.getAttribute("member_email")));
+		mav.setViewName("member/mypage");
+		
+		return mav;
 	}
 }
