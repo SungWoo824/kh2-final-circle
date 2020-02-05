@@ -1,6 +1,8 @@
 package com.kh.circle.controller;
 
 
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,15 +17,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.entity.TeamDto;
+import com.kh.circle.repository.TeamCertDao;
 import com.kh.circle.repository.TeamDao;
 import com.kh.circle.service.EmailService;
 import com.kh.circle.service.RandomService;
 //import com.kh.circle.service.TeamEmailService;
+import com.kh.circle.service.TeamEmailService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/team")
+
 public class TeamController { 
 	
+	@Autowired
+	private TeamCertDao teamCertDao;
+	
+	@Autowired
+	private TeamEmailService teamEmailService;
 
 	@Autowired
 	private EmailService emailService;
@@ -107,6 +119,49 @@ public class TeamController {
 		session.setAttribute("cert", cert);
 		return emailService.sendCertMessage(email, cert); 	
 	}
+	
+	@GetMapping("/confirm1")
+	public String confirm1() {
+		return "team/confirm1";
+	}
+	
+	@PostMapping("/invite2")
+	public String invite2(@RequestParam String member_email) throws MessagingException
+	{ 	teamEmailService.sendConfirmMessage(member_email);
+	return "redirect:main";
+		
+	}
+	
+	@GetMapping("/confirm2")
+	public String confirm2(@RequestParam String cert_no,
+							@RequestParam String member_email,
+							HttpServletResponse response
+							) {
+		//필요한 작업 
+		// - 사용자가 이메일에서 링크를 누르면 이곳으로 들어온다 
+		// - 들어오면서 정상적인 링크라면 cert_no라는 파라미터와 member_email이라는 파라미터를 가지고 온다 
+		// - 위의 두 파라미터를 받아서 DB에 검증을 실시 
+		// - 위의 인증결과와 무관하게 해당 이메일의 인증정보를 모두 삭제 
+		
+		boolean enter = teamCertDao.check3(member_email,cert_no);
+//		teamCertDao.delete(member_email);
+		if(!enter) {
+			//team_cert에 데이터가 확인되지 않을 경우 에러 코드 송출
+			//다시 같은 페이지 재접속 방지를 위해서
+			response.setStatus(403);
+			return "team/invite3";	
+		}
+		else {
+
+			//team_cert에 데이터가 확인되면 team_cert에서 바로 데이터 삭제
+			teamCertDao.delete(member_email);
+						
+			return "team/confirm2";
+			
+		}
+	}
+	
+	
 	
 	
 

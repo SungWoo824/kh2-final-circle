@@ -52,7 +52,7 @@
 			var data = $(this).serialize();
 			
 			$.ajax({
-                type : "GET", //전송방식을 지정한다 (POST,GET)
+                type : "POST", //전송방식을 지정한다 (POST,GET)
                 url : url,
                 data : data,
                 error : function(){
@@ -62,7 +62,7 @@
                     //console.log(resp);
         
                     	$("input[type=submit]").next("span").text("전송완료되었습니다");
-                    
+                    	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
                 }
      
             });
@@ -118,8 +118,8 @@
                 
               
     		  <!-- 이메일 전송 폼 -->	
-              <form class="email-form" action="send" method="post">
-              	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" type="email" placeholder="Enter email">
+              <form class="email-form" action="invite2" method="post">
+              	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="member_email" type="email" placeholder="Enter email">
                 <input type="submit" value="이메일전송" class="btn btn-primary" data-dismiss="modal">
                 <span></span>
               </form>
