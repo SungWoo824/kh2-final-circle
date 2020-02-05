@@ -8,5 +8,6 @@ public interface TeamDao {
 	
 	int getSequence();
 	void teamCreate(TeamDto teamDto);
-	List<TeamDto> teamList(String member_email);
+	List<TeamDto> teamList(int member_no);
+	void teamMemberCreate(int member_no,int team_no);
 }

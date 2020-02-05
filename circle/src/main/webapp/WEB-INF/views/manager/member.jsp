@@ -25,6 +25,7 @@
 					<td>${memberDto.member_name}</td>
 				</tr>
 			</c:forEach>
+			
 		</tbody>
 	</table>
 </body>

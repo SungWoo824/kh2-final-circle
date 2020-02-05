@@ -47,16 +47,23 @@
                                         
                                     </div>
                                    
-		                                    <c:forEach items="${teamList}" var="teamDto">
-		                                    	<div class="main-btn">
-                                    				<div class="main-btn-bg">
-														<h3>${teamDto.team_name}</h3>
-														<h3>${teamDto.team_domain}</h3>
-														<a href="${pageContext.request.contextPath}/chat/topic_main?topic_no=1">무료 체험 시작</a><br><br>
+		                                    <c:forEach items="${teamlist}" var="teamDto">
+		                                    	<div>
+                                    				<div>
+														<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
+														<form action="${pageContext.request.contextPath}/team/connect">
+															<input type="hidden" name="team_no" value="${teamDto.team_no}">
+															<button type="submit">이동하기</button>
+														</form>
 														<br><br>
 													</div>
                                     			</div>
 											</c:forEach>
+											<div>
+											<form action="${pageContext.request.contextPath}/team/create">
+												<button type="submit">팀생성</button>
+											</form>
+											</div>
                                 </div>
                             </div>
                             <div class="section">
