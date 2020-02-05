@@ -49,6 +49,6 @@ public class ManagerController {
 	@GetMapping("/team")
 	public String team() {
 		
-		return "manager";
+		return "manager/team";
 	}
 }
