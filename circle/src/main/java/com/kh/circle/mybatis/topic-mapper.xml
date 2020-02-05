@@ -25,7 +25,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="nameCheck" parameterType="String" resultType="int">
-		select count(topic_name) from topic where topic_name = #{topic_name} 
+		SELECT  count(topic_name)
+		FROM  topic T
+			INNER JOIN(
+				select 
+			    topic_no, team_no, 
+			    count(*) as countof 
+			    from topic_member
+			    group by topic_no, team_no 
+			    having count(*)>1
+		    )TM 
+		    	ON T.topic_no = TM.topic_no where T.topic_name=#{topic_name}
 	</select>
+
 	
 </mapper>

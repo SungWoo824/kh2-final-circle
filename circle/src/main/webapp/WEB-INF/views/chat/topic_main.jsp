@@ -96,35 +96,11 @@
                
 </script>
 
-<style>
-	#topic-create > a{
-	cursor:pointer;
-	}
-	
-	#topic-modal{
-		display:none;
-	}
-</style>
 
 </head>
 <!-- <div class="container-scroller"> -->
 <!--     </div>  -->
-<div id="topic-modal">
 
-	<div class="topic-modal-view">
-		<h1>토픽 생성하기</h1>
-		<form action="topic_create" method="post">
-			이름 :<input type="text" name="topic_name"><br><br>
-			공개여부 :<input type="radio" name="topic_confidential" value="1" checked="checked">비공개
-							<input type="radio" name="topic_confidential" value="0" >공개<br><br>
-			토픽 설명 :<textarea name="topic_explain" rows="" cols=""></textarea><br><br>
-			<input type="submit" value="생성하기">
-			<input type="button" value="닫기"> 
-		</form>
-	
-	</div>
-
-</div>
 
 <div class="menu-wrap">
 <div class="menu-con bg-base">
