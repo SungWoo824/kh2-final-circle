@@ -47,5 +47,15 @@ public class ChatController {
 		return "redirect:topic_main?topic_no="+topicCreate_no;
 	}
 	
+	//중복검사
+	@GetMapping("/check")
+	public String topic_name_check(@RequestParam String topic_name) {
+		
+		int count = sqlSession.selectOne("topic.nameCheck",topic_name);
+		if(count>0) return "Y";
+		else return "N";
+		
+	}
+	
 	
 }
