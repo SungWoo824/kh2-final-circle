@@ -24,10 +24,10 @@ public class TeamCertDaoImpl implements TeamCertDao {
 	}
 
 	@Override
-	public boolean check3(String member_email, String cert_no) {
+	public boolean check3(String cert_email, String cert_no) {
 		//select * from team_cert where member_email=? and cert_no=?
 		Map<String, Object> param = new HashMap<>();
-		param.put("member_email", member_email);
+		param.put("cert_email", cert_email);
 		param.put("cert_no", cert_no);
 		TeamCertDto teamCertDto = sqlSession.selectOne("team.check3",param);
 		
@@ -35,16 +35,15 @@ public class TeamCertDaoImpl implements TeamCertDao {
 	}
 
 	@Override
-	public void delete(String member_email) {
-		sqlSession.delete("team.delete",member_email);
+	public void delete(String cert_email) {
+		sqlSession.delete("team.delete",cert_email);
 		
 	}
 
 	@Override
-	public boolean check4(String member_email,String cert_no) {
+	public boolean check4(String cert_email) {
 		Map<String, Object> param = new HashMap<>();
-		param.put("member_email", member_email);
-		param.put("cert_no", cert_no);
+		param.put("cert_email", cert_email);
 		TeamCertDto teamCertDto = sqlSession.selectOne("team.check4",param);
 		return memberDto != null;
 	}

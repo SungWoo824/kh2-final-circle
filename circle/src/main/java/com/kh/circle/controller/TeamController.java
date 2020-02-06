@@ -126,15 +126,15 @@ public class TeamController {
 	}
 	
 	@PostMapping("/invite2")
-	public String invite2(@RequestParam String member_email) throws MessagingException
-	{ 	teamEmailService.sendConfirmMessage(member_email);
+	public String invite2(@RequestParam String cert_email) throws MessagingException
+	{ 	teamEmailService.sendConfirmMessage(cert_email);
 	return "redirect:main";
 		
 	}
 	
 	@GetMapping("/confirm2")
-	public String confirm2(@RequestParam String cert_no,
-							@RequestParam String member_email,
+	public String confirm2(@RequestParam String cert_email,
+							@RequestParam String cert_no,
 							HttpServletResponse response
 							) {
 		//필요한 작업 
@@ -143,20 +143,18 @@ public class TeamController {
 		// - 위의 두 파라미터를 받아서 DB에 검증을 실시 
 		// - 위의 인증결과와 무관하게 해당 이메일의 인증정보를 모두 삭제 
 		
-		boolean enter = teamCertDao.check3(member_email,cert_no);
+		boolean enter = teamCertDao.check3(cert_email,cert_no);
 //		teamCertDao.delete(member_email);
 		if(!enter) {
 			//team_cert에 데이터가 확인되지 않을 경우 에러 코드 송출
 			//다시 같은 페이지 재접속 방지를 위해서
 			response.setStatus(403);
 			return "team/invite3";	
-		}
-		else {
-
-			//team_cert에 데이터가 확인되면 team_cert에서 바로 데이터 삭제
-			teamCertDao.delete(member_email);
-						
-			return "team/confirm2";
+			}	
+		else {	//도메인 주소는 맞다면 
+				teamCertDao.delete(cert_email);	
+				return "team/confirm2";
+			}
 			
 		}
 	}
@@ -168,4 +166,3 @@ public class TeamController {
 	
 
 
-}

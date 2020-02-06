@@ -9,7 +9,7 @@ import lombok.Data;
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class TeamCertDto {
 	
-	private String cert_no,when,member_email;
+	private String cert_email,cert_no,when;
 
 
 }

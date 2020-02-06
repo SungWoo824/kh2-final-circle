@@ -28,10 +28,10 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 	private RandomService randomService;
 
 	@Override
-	public String sendInviteMessage(String member_email, String cert_no) {
+	public String sendInviteMessage(String cert_email,String cert_no) {
 		try {
 			SimpleMailMessage message = new SimpleMailMessage();
-			String[] to = {member_email};
+			String[] to = {cert_email};
 			message.setTo(to);
 			message.setSubject("[Circle] 인증을 위한 이메일입니다.");
 			message.setText("멤버로 초대합니다");
@@ -46,30 +46,30 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 
 	@Transactional
 	@Override
-	public void sendConfirmMessage(String member_email) throws MessagingException {
+	public void sendConfirmMessage(String cert_email) throws MessagingException {
 		//랜덤 번호를 3자리 생성
 		String cert_no = randomService.generateCertificationNumber(3);
 		
 		//DB에 랜덤번호 / 이메일 / 시간을 저장
 		teamCertDao.regist(TeamCertDto.builder()
-										.cert_no(cert_no)
-									  .member_email(member_email)
+									    .cert_email(cert_email)
+									    .cert_no(cert_no)
 									  	.build());
 		//이메일 전송 
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 		
-		helper.setTo(member_email);
+		helper.setTo(cert_email);
 		helper.setSubject("[Cilcle]팀 멤버에 초대합니다");
 		
 		//주소 생성
-//		String url = "http://localhost:8080/sts21/pw/change?cert_no="+cert_no+"&member_email="+member_email;
+//		String url = "http://localhost:8080/circle/team/main?cert_email="+cert_email&cert_no="+cert_no+";
 		String url = ServletUriComponentsBuilder
 						.fromCurrentContextPath()
 						.port(8080)
 						.path("/team/confirm2")
+						.queryParam("cert_email", cert_email)
 						.queryParam("cert_no",cert_no)
-						.queryParam("member_email", member_email)
 						.toUriString();
 		
 		StringBuffer buffer = new StringBuffer();
