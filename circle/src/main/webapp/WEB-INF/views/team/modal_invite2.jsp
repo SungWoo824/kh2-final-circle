@@ -27,7 +27,7 @@
         $(".modal-back").click(function(){
         	 $.ajax({
                  type : "GET", //전송방식을 지정한다 (POST,GET)
-                 url : "${pageContext.request.contextPath}/team/invite1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
+                 url : "${pageContext.request.contextPath}/team/modal_invite1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
                  dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
                  error : function(){
                      alert("통신실패!!!!");
@@ -118,8 +118,9 @@
                 
               
     		  <!-- 이메일 전송 폼 -->	
-              <form class="email-form" action="invite2" method="post">
+              <form class="email-form" action="modal_invite2" method="post">
               	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
+              	<input type="hidden" value="${team_no}" name="team_no">
                 <input type="submit" value="이메일전송" class="btn btn-primary" data-dismiss="modal">
                 <span></span>
               </form>

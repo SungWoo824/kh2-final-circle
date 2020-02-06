@@ -29,7 +29,7 @@ $(function(){
         $(".modal-body").click(function(){
             $.ajax({
             type : "GET", //전송방식을 지정한다 (POST,GET)
-            url : "${pageContext.request.contextPath}/team/invite2",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
+            url : "${pageContext.request.contextPath}/team/modal_invite2",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
             dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
             error : function(){
                 alert("통신실패!!!!");
@@ -82,12 +82,14 @@ $(function(){
       
               </div>
       
+      		  <form class="invite-form" action="modal_invite1" method="post">
               <div class="modal-body">
       
                 <p id="content"></p>
                 <button type="button" class="btn btn-alltopic" data-dismiss="modal">전체 토픽에 초대하기</button>
+                <input type="hidden" value="${team_no}" name="team_no">
               </div>
-      
+      	      </form>
               <div class="modal-footer">
       
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -105,6 +107,6 @@ $(function(){
       </div>
 
       <div id="Parse_Area2"gt;lt;></div>
-  
+  <h5>team_no = ${team_no}</h5>
 </body>
 </html>

@@ -8,8 +8,10 @@
 <h2> 로그인 후 팀의 멤버가 되어보세요</h2>
 
 <!-- 파라미터값의 cert_email과 db member테이블에 있는 memebr_email이 맞다면 회원이므로  --> 
+<form action="invite_success">
 <a href="${context}/circle/member/signin">로그인</a>
-
+<input type="hidden" value="${team_no}" name="team_no">
+</form>
 
 
 

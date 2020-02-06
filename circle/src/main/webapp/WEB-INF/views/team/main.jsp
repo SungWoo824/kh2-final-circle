@@ -26,7 +26,7 @@ $(function(){
             $(".container").click(function(){
             $.ajax({
             type : "GET", //전송방식을 지정한다 (POST,GET)
-            url : "${pageContext.request.contextPath}/team/invite1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
+            url : "${pageContext.request.contextPath}/team/modal_invite1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
             dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
             error : function(){
                 alert("통신실패!!!!");
@@ -46,17 +46,23 @@ $(function(){
 <body>
 <!-- <button class="load-btn">팀 멤버 초대하기</button> -->
 
-<div class="container">
 
+<form class="invite-form" action="main" method="post">
+<div class="container">
     <h2>Modal Example</h2>
   
+
    <!--  버튼이 클릭되면 show 메소드가 호출된다.   show메서드를 호출할때 원하는 값을 넣어 보낸다.  show메서드의 인자로 넘어가는 aaa 는 동적으로 바뀌어야 함.  -->
-    
     <button type="button" class="btn btn-primary btn-lg" >팀 멤버 초대하기</button>
-    
+    <input type="hidden" value="${teamteam_no}" name="team_no">
     </div>
+    
 
 <div id="Parse_Area"gt;lt;></div>
+</form>
+
+<h5>team_no = ${team_no}</h5>
+
 </body>
 
         <!-- main-panel ends -->

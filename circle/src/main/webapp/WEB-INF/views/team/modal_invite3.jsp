@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>초대하기 이메일 전송 누르면 전송이 완료되었다는 모달창 뜨게하는 페이지</title>
 </head>
 <body>
 

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.kh.circle.entity.TeamCertDto;
 import com.kh.circle.repository.TeamCertDao;
+import com.kh.circle.repository.TeamDao;
 
 
 
@@ -23,6 +24,9 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 	
 	@Autowired
 	private TeamCertDao teamCertDao;
+	
+	@Autowired
+	private TeamDao teamDao;
 	
 	@Autowired
 	private RandomService randomService;
@@ -46,7 +50,7 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 
 	@Transactional
 	@Override
-	public void sendConfirmMessage(String cert_email) throws MessagingException {
+	public void sendConfirmMessage(String cert_email, int team_no) throws MessagingException {
 		//랜덤 번호를 3자리 생성
 		String cert_no = randomService.generateCertificationNumber(3);
 		
@@ -55,6 +59,7 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 									    .cert_email(cert_email)
 									    .cert_no(cert_no)
 									  	.build());
+		
 		//이메일 전송 
 		MimeMessage message = sender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
@@ -63,13 +68,14 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 		helper.setSubject("[Cilcle]팀 멤버에 초대합니다");
 		
 		//주소 생성
-//		String url = "http://localhost:8080/circle/team/main?cert_email="+cert_email&cert_no="+cert_no+";
+//		String url = "http://localhost:8080/circle/team/invite_success?cert_email="+cert_email&cert_no="+cert_no+";
 		String url = ServletUriComponentsBuilder
 						.fromCurrentContextPath()
 						.port(8080)
-						.path("/team/confirm2")
+						.path("/team/invite_success")
 						.queryParam("cert_email", cert_email)
 						.queryParam("cert_no",cert_no)
+						.queryParam("team_no",team_no)
 						.toUriString();
 		
 		StringBuffer buffer = new StringBuffer();
