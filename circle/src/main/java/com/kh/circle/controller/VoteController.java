@@ -33,6 +33,8 @@ public class VoteController {
 	
 	@GetMapping("/create")
 	public String create() {
+		System.out.println(voteCreateDao.getTopicList());
+		voteCreateDao.getTopicList();
 		return "vote/create";
 	}
 	
@@ -47,12 +49,13 @@ public class VoteController {
 				.vote_create_plural(vote.getVote_create_plural())
 				.vote_create_status(vote.getVote_create_status())
 				.vote_create_date(vote.getVote_create_date())
+				.vote_create_time(vote.getVote_create_time())
 				.build();	
 		voteCreateDao.create(vdto, seq);
 		for(VoteCategoryDto vcdto : dto) {
 			voteCreateDao.createCategory(vcdto, seq);
 		}
+
 		return "redirect:./list";
 	}
-	
 }

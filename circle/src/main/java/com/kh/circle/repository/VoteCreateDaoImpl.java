@@ -34,5 +34,10 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 		vote.setVote_create_no(seq);
 		sqlSession.insert("vote.createCategory", vote);
 	}
+	@Override
+	public List<String> getTopicList() {
+		
+		return sqlSession.selectList("vote.getTopic");
+	}
 
 }

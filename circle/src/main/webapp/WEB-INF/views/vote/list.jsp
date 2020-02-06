@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
@@ -78,15 +77,19 @@
 			window.socket.send(value);
 		}
 	});	
-</script>  
-
-<!-- 오른쪽 메뉴 토글 -->
-<script>
-
-	$(function(){
+    <!--토픽생성-->
+    $(function(){
+        $('#topic-create').click(function(){
+        	
+  $('#topic-modal').show();
+});
+});
+    
+    $(function(){
 		$("#toggle1").click(function(){
 			$(".menu1-slide").toggle();
 		});
+		
 		$("#toggle4").click(function(){
 			$(".menu4-slide").toggle();
 		});
@@ -94,9 +97,36 @@
                
 </script>
 
+<style>
+	#topic-create > a{
+	cursor:pointer;
+	}
+	
+	#topic-modal{
+		display:none;
+	}
+</style>
+
 </head>
 <!-- <div class="container-scroller"> -->
 <!--     </div>  -->
+<div id="topic-modal">
+
+	<div class="topic-modal-view">
+		<h1>토픽 생성하기</h1>
+		<form action="topic_create" method="post">
+			이름 :<input type="text" name="topic_name"><br><br>
+			공개여부 :<input type="radio" name="topic_confidential" value="1" checked="checked">비공개
+							<input type="radio" name="topic_confidential" value="0" >공개<br><br>
+			토픽 설명 :<textarea name="topic_explain" rows="" cols=""></textarea><br><br>
+			<input type="submit" value="생성하기">
+			<input type="button" value="닫기"> 
+		</form>
+	
+	</div>
+
+</div>
+
 <div class="menu-wrap">
 <div class="menu-con bg-base">
     <div class="menu-top">
@@ -161,34 +191,33 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item">
-            <a class="nav-link" href="index.html">
+            <a class="nav-link" href="${pageContext.request.contextPath}/member/mypage">
                 <i class="menu-icon typcn typcn-document-text"></i>
                 <span class="menu-title">메인으로</span>
             </a>
             </li>
+            <li class="nav-item" id="topic-create">
+            	<a>
+	                <i class="fa fa-plus"></i>
+            	</a>
+            </li>
             <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                <i class="menu-icon typcn typcn-coffee"></i>
                 <span class="menu-title">토픽</span>
-                <i class="menu-arrow fa fa-caret-down" aria-hidden="true"></i>
+                <i class="menu-arrow fa fa-caret-down" aria-hidden="false"></i>
                 <!-- <i class="menu-arrow fa fa-caret-down"></i> -->
             </a>
+            
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/buttons.html">공지사항</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/dropdowns.html">기능회의</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">업무 자료</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">일정 공유</a>
-                </li>
+                	<c:forEach items="${topicList}" var="topicDto">
+                		<li class="nav-item">
+		                    <a class="nav-link" href="pages/ui-features/buttons.html">topic_name = ${topicDto.topic_name}</a>
+		                </li>
+                	</c:forEach>
                 </ul>
             </div>
+            
             </li>
             <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
@@ -225,6 +254,7 @@
     
   
             <div class="chat-wrap">
+            	<div class="chat-aside">
                     <div class="chat-menu-bar">
                         <div class="chat-img">
                             <div class="chat-img-bg">
@@ -251,27 +281,35 @@
                         </div>
                     </div>
                     <article class="message-wrap">
-                        <div class="message">
+                        <div class="message" style="text-align: right">
 							<h1>웹소켓 클라이언트(with 로그인, ${param.topic_no} 번 방)</h1>
+							
 									<input type="text" class="user-input">
-									<button class="send-btn">보내기</button>
+									<button class="send-btn" type="submit">보내기</button>
+							
 									<div id="chat-content"></div>
 						</div>
 					</article>
+				</div>
+				
+					<div id="gnb-detail-slide">
+			            <div class ="menu1-slide">d</div>
+			            <!-- 주소 변경했음 -->
+			            <div class="menu4-slide"><a href="create">+투표 만들기</a></div>
+			        </div>
+			        
             </div>
             <!-- Page Title Header Ends-->
            
         </div> 
-        <div id="gnb-detail-slide">
-            <div class ="menu1-slide">d</div>
-        </div>
-        <div id="gnb-detail-slide">
-        	<div class="menu4-slide"><a href="create">+투표 만들기</a></div>
-        </div>
+        
         <!-- main-panel ends -->
       <!-- page-body-wrapper ends -->
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.addons.js"></script>
     
+
+
+
  </html>
-    
+

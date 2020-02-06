@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+
 <html>
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -66,16 +68,41 @@
 </label>
 <br><br>
 
-<h3>마감 시각			<input type="date" name="vote_create_date"></h3>
+<h3>마감 시각			<input type="date" name="vote_create_date">	<select name="vote_create_time">
+<option value="00:00">12:00 AM</option>
+<option value="01:00">01:00 AM</option>
+<option value="02:00">02:00 AM</option>
+<option value="03:00">03:00 AM</option>
+<option value="04:00">04:00 AM</option>
+<option value="05:00">05:00 AM</option>
+<option value="06:00">06:00 AM</option>
+<option value="07:00">07:00 AM</option>
+<option value="08:00">08:00 AM</option>
+<option value="09:00">09:00 AM</option>
+<option value="10:00">10:00 AM</option>
+<option value="11:00">11:00 AM</option>
+<option value="12:00">12:00 PM</option>
+<option value="13:00">01:00 PM</option>
+<option value="14:00">02:00 PM</option>
+<option value="15:00">03:00 PM</option>
+<option value="16:00">04:00 PM</option>
+<option value="17:00">05:00 PM</option>
+<option value="18:00">06:00 PM</option>
+<option value="19:00">07:00 PM</option>
+<option value="20:00">08:00 PM</option>
+<option value="21:00">09:00 PM</option>
+<option value="22:00">10:00 PM</option>
+<option value="23:00">11:00 PM</option>
+</select> </h3>
 <span>
 공유 대화방			
-<c:if test="${empty typeList}" >
+
    <select name="selectBox">
-      <c:forEach var="typeList" items="${typeList}" varStatus="i">
-         <option value="${typeList.type}">${typeList.type}</option>
+      <c:forEach var="topicList" items="${voteCreateDao.getTopicList()}" >
+         <option value="${topicList}">${topicList}</option>
       </c:forEach>
    </select>
-</c:if>
+
 </span>
 <br><br>
 <button>취소</button>		<input type="submit" value="만들기">
