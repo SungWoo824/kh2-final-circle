@@ -61,7 +61,7 @@ public class ChatController {
 				.team_no(team_no).build();
 		topicDao.topicMemberInsert(topicMemberDto);
 		
-		return "redirect:../chat/topic_main?topic_no="+topicCreate_no;
+		return "redirect:../chat/topic_main?team_no="+team_no+"&topic_no="+topicCreate_no;
 		
 	}
 	
