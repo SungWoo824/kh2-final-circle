@@ -1,11 +1,14 @@
 package com.kh.circle.controller;
 
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +21,13 @@ import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.TeamDao;
 import com.kh.circle.repository.TopicDao;
+import com.kh.circle.service.TeamService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/team")
+@Slf4j
 public class TeamController { 
 	
 
@@ -60,7 +67,7 @@ public class TeamController {
 		
 		topicDao.topicMemberInsert(topicMemberDto);
 		
-		return "redirect:../chat/topic_main?topic_no="+topic_no;
+		return "redirect:../chat/topic_main?team_no="+team_no+"&topic_no="+topic_no;
 //		return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
 	}
 	
@@ -107,9 +114,18 @@ public class TeamController {
 		return "team/invite2";
 	}
 	
+	@Autowired
+	private TeamService teamService;
+	
 	@GetMapping("/connect")
-	public String connect(@RequestParam int team_no) {
+	public String connect(@RequestParam int team_no,
+							Model model) {
+		int topic_no =topicDao.teamTopicFirst(team_no);
+		List<TopicDto> topicList = teamService.teamTopicList(team_no);
 		
-		return "redirect:../chat/topic_main?team_no="+team_no;
+		model.addAttribute("team_no", team_no);
+		model.addAttribute("topic_no", topic_no);
+		model.addAttribute("topicList", topicList);
+		return "redirect:../chat/topic_main";
 	}
 }

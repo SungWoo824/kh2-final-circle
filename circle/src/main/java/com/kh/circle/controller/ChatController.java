@@ -37,7 +37,8 @@ public class ChatController {
 	}
 	
 	@GetMapping("/topic_main")
-	public String topic_main() {
+	public String topic_main(@RequestParam int team_no,
+							@RequestParam int topic_no) {
 		return "chat/topic_main";
 	}
 	
