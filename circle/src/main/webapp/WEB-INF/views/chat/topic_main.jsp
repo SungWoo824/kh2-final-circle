@@ -77,25 +77,16 @@
 			window.socket.send(value);
 		}
 	});	
-    <!--토픽생성-->
-    $(function(){
-        $('#topic-create').click(function(){
-        	
-  $('#topic-modal').show();
-});
-});
-    
-    $(function(){
-		$("#toggle1").click(function(){
-			$(".menu1-slide").toggle();
-		});
-		$("#toggle4").click(function(){
-			$(".menu4-slide").toggle();
-		});
-	});
-               
+
 </script>
 
+<style>
+
+#topic-create{
+ cursor: pointer;
+}
+
+</style>
 
 </head>
 <!-- <div class="container-scroller"> -->
@@ -172,7 +163,7 @@
             </a>
             </li>
             <li class="nav-item" id="topic-create">
-            	<a>
+            	<a href="${pageContext.request.contextPath}/chat/topic_create?team_no=${param.team_no}">
 	                <i class="fa fa-plus"></i>
             	</a>
             </li>

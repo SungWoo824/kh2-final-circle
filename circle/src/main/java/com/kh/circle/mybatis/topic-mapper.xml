@@ -24,20 +24,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select topic_no_seq.nextval from dual
 	</select>
 	
-	<select id="nameCheck" parameterType="String" resultType="int">
-		SELECT  count(topic_name)
-		FROM  topic T
-			INNER JOIN(
-				select 
-			    topic_no, team_no, 
-			    count(*) as countof 
-			    from topic_member
-			    group by topic_no, team_no 
-			    having count(*)>1
-		    )TM 
-		    	ON T.topic_no = TM.topic_no where T.topic_name=#{topic_name}
+	<select id="nameCheck" parameterType="topicRestVo" resultType="int">
+		select count(topic_name) 
+		from topic inner join
+			(
+				select topic_no 
+				from 
+				topic_member 
+				where 
+				team_no= #{team_no}
+			)T 
+		on topic.topic_no = T.topic_no 
+		where topic.topic_name = #{topic_name}
 	</select>
-
 	
 	<insert id="topicMemberInsert" parameterType="topicMemberDto">
 		insert into topic_member values(#{topic_no},#{member_no},#{team_no})
