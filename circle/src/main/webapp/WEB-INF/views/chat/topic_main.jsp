@@ -3,14 +3,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.addons.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
      <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 	
 <script>
@@ -77,54 +79,74 @@
 			window.socket.send(value);
 		}
 	});	
-    <!--토픽생성-->
-    $(function(){
-        $('#topic-create').click(function(){
-        	
-  $('#topic-modal').show();
-});
-});
-    
-    $(function(){
-		$("#toggle1").click(function(){
-			$(".menu1-slide").toggle();
-		});
-		$("#toggle4").click(function(){
-			$(".menu4-slide").toggle();
-		});
+
+</script>
+
+<script>
+
+
+$(function(){
+	
+	//입력을 마치면(blur) 비동기통신으로 아이디 유무를 검사
+	$("#check-btn").attr("disabled",true);
+	
+	$("input[name=topic_name]").blur(function(){
+		
+		
+		var topic_name = $(this).val();
+		var team_no = $("input[name=team_no]").val();
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/chat/topic_namecheck",
+			type:"get",
+			data:{
+				topic_name :topic_name,
+				team_no: team_no
+			},
+			dataType:"text",
+			success: function(resp){
+				if(resp === "Y"){
+					$("input[name=topic_name]").next("span").text("동일한 이름이 있습니다.");
+					$("#check-btn").prop("disabled",true); 
+				}
+				else if(resp === "N"){
+					$("input[name=topic_name]").next("span").text("토픽생성가능");
+					$("#check-btn").prop("disabled",false); 
+				}
+			}
+		});			
 	});
-               
+});
+
+
+
 </script>
 
 <style>
-	#topic-create > a{
-	cursor:pointer;
-	}
-	
-	#topic-modal{
-		display:none;
-	}
+
+#topic-create{
+ cursor: pointer;
+border-top:1px solid #eee;
+border-bottom: 1px solid #eee;
+background-color:#f8f8f8;
+ height:40px;
+}
+
+#topic-create a{
+		position:absolute;
+      	display:inline-block;
+      	line-height:40px;
+      	left:55px;
+      	
+}
+
+
 </style>
 
 </head>
 <!-- <div class="container-scroller"> -->
 <!--     </div>  -->
-<div id="topic-modal">
 
-	<div class="topic-modal-view">
-		<h1>토픽 생성하기</h1>
-		<form action="topic_create" method="post">
-			이름 :<input type="text" name="topic_name"><br><br>
-			공개여부 :<input type="radio" name="topic_confidential" value="1" checked="checked">비공개
-							<input type="radio" name="topic_confidential" value="0" >공개<br><br>
-			토픽 설명 :<textarea name="topic_explain" rows="" cols=""></textarea><br><br>
-			<input type="submit" value="생성하기">
-			<input type="button" value="닫기"> 
-		</form>
-	
-	</div>
-
-</div>
 
 <div class="menu-wrap">
 <div class="menu-con bg-base">
@@ -196,10 +218,11 @@
             </a>
             </li>
             <li class="nav-item" id="topic-create">
-            	<a>
-	                <i class="fa fa-plus"></i>
-            	</a>
+            	<a data-toggle="modal" data-target="#exampleModalCenter">
+					새 토픽 생성
+            	</a>	<i class="fa fa-plus"></i>
             </li>
+            
             <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">토픽</span>
@@ -209,11 +232,13 @@
             
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
+
                 	<c:forEach items="${topicList}" var="topicDto">
                 		<li class="nav-item">
 		                    <a class="nav-link" href="pages/ui-features/buttons.html">topic_name = ${topicDto.topic_name}</a>
 		                </li>
                 	</c:forEach>
+
                 </ul>
             </div>
             
@@ -301,13 +326,43 @@
            
         </div> 
         
+                   	
+<!-- 토픽생성 모달 -->
+       <form action="topic_create" method="post">
+		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalCenterTitle">새 토픽 생성</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      		<input type="hidden" name="team_no"  value="${param.team_no}">
+					이름 :<input type="text" name="topic_name"><span></span><br><br>
+					
+					공개여부 :<input type="radio" name="topic_confidential" value="1" checked="checked">비공개
+									<input type="radio" name="topic_confidential" value="0" >공개<br><br>
+					토픽 설명 :<textarea name="topic_explain" rows="" cols=""></textarea><br><br>
+		
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+		        <button type="submit" id="check-btn" class="btn btn-primary" >생성하기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+</form>
+        
         <!-- main-panel ends -->
       <!-- page-body-wrapper ends -->
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.addons.js"></script>
     
 
-</div>
+
 
  </html>
 
