@@ -20,7 +20,6 @@ $(function(){
 		var topic_name = $(this).val();
 		var team_no = $("input[name=team_no]").val();
 		
-		topic_name=false;
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/chat/topic_namecheck",
@@ -35,7 +34,7 @@ $(function(){
 					$("input[name=topic_name]").next("span").text("동일한 이름이 있습니다.");
 					$("#check-btn").prop("disabled",true); 
 				}
-				else if(resp === "N"){
+				else(resp === "N"){
 					$("input[name=topic_name]").next("span").text("토픽생성가능");
 					$("#check-btn").prop("disabled",false); 
 				}

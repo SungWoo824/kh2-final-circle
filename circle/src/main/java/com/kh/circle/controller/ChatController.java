@@ -18,6 +18,7 @@ import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.TopicDao;
 import com.kh.circle.vo.TopicRestVO;
 
+import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
@@ -72,10 +73,11 @@ public class ChatController {
 //		System.out.println(topicRestVo.getTeam_no());
 //		int count = 1;
 		int count = sqlSession.selectOne("topic.nameCheck",topicRestVo);
+		System.out.println(count);
+		System.out.println(topicRestVo);
 		if(count>0) return "Y";
 		else return "N";
 		
-
 	}
 	
 	
