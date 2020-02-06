@@ -35,11 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 
-	<!-- -->
-	<select id="teamlist" resultType="teamDto" parameterType="java.lang.String">
+
+	<select id="teamlist" resultType="teamDto" parameterType="int">
 			select team.* from
-    (select * from team_member  where member_no = (select member_no from member where member_email=#{member_email})
-    ) tm inner join team on tm.team_no=team.team_no order by team.team_no
+    (select team_no from team_member  where member_no = #{member_no} ) tm
+     inner join team on tm.team_no=team.team_no order by team.team_no
 	</select>
 	
 	<!-- 이메일 전송 하면 team_cert DB에 등록 기능 -->
@@ -81,6 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 
+	<insert id="teamMemberCreate" parameterType="map">
+		insert into team_member values(#{member_no},#{team_no},'소유자','')
+	</insert>
 
 </mapper>
 

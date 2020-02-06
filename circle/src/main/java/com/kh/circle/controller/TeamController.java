@@ -1,6 +1,8 @@
 package com.kh.circle.controller;
 
 
+import java.util.List;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -8,44 +10,49 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.circle.entity.TeamDto;
+import com.kh.circle.entity.TopicDto;
+import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.TeamCertDao;
+//github.com/SungWoo824/kh2-final-circle
 import com.kh.circle.repository.TeamDao;
+import com.kh.circle.repository.TopicDao;
 import com.kh.circle.service.EmailService;
 import com.kh.circle.service.RandomService;
 //import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.service.TeamEmailService;
+import com.kh.circle.service.TeamService;
+
+//github.com/SungWoo824/kh2-final-circle
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/team")
+@Slf4j
 
 public class TeamController { 
 	
 	@Autowired
-	private TeamCertDao teamCertDao;
-	
+	private TeamCertDao teamCertDao;	
 	@Autowired
 	private TeamEmailService teamEmailService;
-
 	@Autowired
-	private EmailService emailService;
-	
+	private EmailService emailService;	
 	@Autowired
-	private RandomService randomService;
-	
-
+	private RandomService randomService;	
 	@Autowired
-	private TeamDao teamDao;
+	private TeamDao teamDao;	
+	@Autowired
+	private TopicDao topicDao;
 	
 	@Autowired
 	private SqlSession sqlSession;
@@ -59,12 +66,25 @@ public class TeamController {
 	
 	//팀 생성 등록이 완료되면 팀메인 페이지로 가는 컨트롤러
 	@PostMapping("/create")
-	public String create(@ModelAttribute TeamDto teamDto) {
+	public String create(@ModelAttribute TeamDto teamDto,
+						HttpSession session) {
 		int team_no =teamDao.getSequence();
+		int topic_no = topicDao.getSequence();
 		teamDto.setTeam_no(team_no);
 		teamDao.teamCreate(teamDto);
+		teamDao.teamMemberCreate((int)session.getAttribute("member_no"), team_no);
+		TopicDto topicDto = TopicDto.builder()
+				.topic_no(topic_no).topic_name("공지사항")
+				.topic_confidential("0")
+				.topic_explain("이 토픽은 모든 정회원이 자동으로 참여되며 나갈 수 없는 기본 토픽입니다. 정회원 모두에게 전달해야하는 내용을 전송할 수 있으며 준회원은 기본 토픽에 참여할 수 없습니다.")
+				.build();
 		
-		return "redirect:main";
+		topicDao.topicCreate(topicDto);
+		TopicMemberDto topicMemberDto = TopicMemberDto.builder().member_no((int) session.getAttribute("member_no")).team_no(team_no).topic_no(topic_no).build();
+		
+		topicDao.topicMemberInsert(topicMemberDto);
+		
+		return "redirect:../chat/topic_main?team_no="+team_no+"&topic_no="+topic_no;
 //		return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
 	}
 	
@@ -109,7 +129,7 @@ public class TeamController {
 	public String invite2() {
 		return "team/invite2";
 	}
-	
+
 	@GetMapping("/send")
 	@ResponseBody
 	public String send(@RequestParam String email, HttpSession session) {
@@ -157,12 +177,20 @@ public class TeamController {
 			}
 			
 		}
+
+	@Autowired
+	private TeamService teamService;
+	
+	@GetMapping("/connect")
+	public String connect(@RequestParam int team_no,
+							Model model) {
+		int topic_no =topicDao.teamTopicFirst(team_no);
+		List<TopicDto> topicList = teamService.teamTopicList(team_no);
+		
+		model.addAttribute("team_no", team_no);
+		model.addAttribute("topic_no", topic_no);
+		model.addAttribute("topicList", topicList);
+		return "redirect:../chat/topic_main";
 	}
-	
-	
-	
-	
-
-	
-
+}
 

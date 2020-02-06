@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <html>
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -206,22 +206,17 @@
                 <i class="menu-arrow fa fa-caret-down" aria-hidden="false"></i>
                 <!-- <i class="menu-arrow fa fa-caret-down"></i> -->
             </a>
+            
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/buttons.html">공지사항</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/dropdowns.html">기능회의</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">업무 자료</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">일정 공유</a>
-                </li>
+                	<c:forEach items="${topicList}" var="topicDto">
+                		<li class="nav-item">
+		                    <a class="nav-link" href="pages/ui-features/buttons.html">topic_name = ${topicDto.topic_name}</a>
+		                </li>
+                	</c:forEach>
                 </ul>
             </div>
+            
             </li>
             <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
@@ -287,8 +282,10 @@
                     <article class="message-wrap">
                         <div class="message" style="text-align: right">
 							<h1>웹소켓 클라이언트(with 로그인, ${param.topic_no} 번 방)</h1>
+							
 									<input type="text" class="user-input">
-									<button class="send-btn">보내기</button>
+									<button class="send-btn" type="submit">보내기</button>
+							
 									<div id="chat-content"></div>
 						</div>
 					</article>
