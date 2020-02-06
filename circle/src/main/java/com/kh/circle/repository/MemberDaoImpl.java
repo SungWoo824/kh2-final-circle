@@ -56,5 +56,15 @@ public class MemberDaoImpl implements MemberDao{
 		
 	}
 
+	
+
+	@Override
+	public MemberDto info(String member_email) {
+		
+		return sqlSession.selectOne("member.memberinfo", member_email);
+	}
+	
+	
+
 
 }
