@@ -68,7 +68,7 @@ public class ChatController {
 	@GetMapping("/topic_namecheck")
 	@ResponseBody
 	public String topic_name_check(@ModelAttribute TopicRestVO topicRestVo) {
-		System.out.println(topicRestVo.getTeam_no());
+//		System.out.println(topicRestVo.getTeam_no());
 //		int count = 1;
 		int count = sqlSession.selectOne("topic.nameCheck",topicRestVo);
 		if(count>0) return "Y";

@@ -11,11 +11,14 @@ $(function(){
 	//입력을 마치면(blur) 비동기통신으로 아이디 유무를 검사
 	$("input[name=topic_name]").blur(function(){
 		var topic_name = $(this).val();
-		var team_no = $(this).val();
+		var team_no = $("input[name=team_no]").val();
 		$.ajax({
 			url : "${pageContext.request.contextPath}/chat/topic_namecheck",
 			type:"get",
-			data:{topic_name :topic_name,team_no: team_no},
+			data:{
+				topic_name :topic_name,
+				team_no: team_no
+			},
 			dataType:"text",
 			success: function(resp){
 				if(resp === "Y"){
@@ -70,7 +73,7 @@ $(function(){
 		
 		<h1>토픽 생성하기</h1>
 		<form action="topic_create" method="post">
-		<input type="hidden" name="team_no"  value="${param.team_no}">
+			<input type="hidden" name="team_no"  value="${param.team_no}">
 			이름 :<input type="text" name="topic_name"><span></span><br><br>
 			
 			공개여부 :<input type="radio" name="topic_confidential" value="1" checked="checked">비공개

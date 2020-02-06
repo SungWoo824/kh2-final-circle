@@ -176,16 +176,16 @@
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
                 <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/buttons.html">공지사항</a>
+                    <a class="nav-link" >공지사항</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/dropdowns.html">기능회의</a>
+                    <a class="nav-link" >기능회의</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">업무 자료</a>
+                    <a class="nav-link" >업무 자료</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="pages/ui-features/typography.html">일정 공유</a>
+                    <a class="nav-link" >일정 공유</a>
                 </li>
                 </ul>
             </div>
