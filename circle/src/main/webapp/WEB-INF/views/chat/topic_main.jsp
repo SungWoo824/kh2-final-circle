@@ -3,12 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <html>
 <head>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+ 
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.addons.css">
-    
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
@@ -116,18 +117,48 @@ $(function(){
 			}
 		});			
 	});
-});
+// });
+
+// $(function(){
+	
+
+      //이메일 보내기 버튼을 누르면 send주소로 비동기 신호를 전송 
+      $('.email-form').submit(function(e){
+      	e.preventDefault();
+      	
+      	$(this).find("input[type=submit]").prop("disabled", true);
+			$(this).find("input[type=submit]").val("인증번호 발송중...");
+     
+			var url = $(this).attr("action"); 
+			var method = $(this).attr("method");
+			var data = $(this).serialize();
+			
+			$.ajax({
+              type : "POST", //전송방식을 지정한다 (POST,GET)
+              url : url,
+              data : data,
+              error : function(){
+            	  alert("통신실패!!!!");
+              },
+              success : function(resp){
+                  //console.log(resp);
+      
+                  	("input[type=submit]").next("span").text("전송완료되었습니다");
+                  	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
+              }
+   
+          });
+
+          });
 
 
+  });
 
 
 
 </script>
 
-
-
 <style>
-
 #invite-create,
 #topic-create{
  cursor: pointer;
@@ -136,7 +167,6 @@ border-bottom: 1px solid #eee;
 background-color:#f8f8f8;
  height:40px;
 }
-
 #invite-create a,
 #topic-create a{
 		position:absolute;
@@ -148,7 +178,9 @@ background-color:#f8f8f8;
 
 
 
-</style>
+    </style> 
+
+
 
 </head>
 <!-- <div class="container-scroller"> -->
@@ -230,11 +262,10 @@ background-color:#f8f8f8;
             	</a>	<i class="fa fa-plus"></i>
             </li>
             <li class="nav-item" id="invite-create">
-            	<a data-toggle="myModal" data-target="#exampleModalCenter2">
-					이메일 초대
+            	<a data-toggle="modal" data-target="#exampleModalCenter2">
+					멤버초대하기
             	</a>	<i class="fa fa-plus"></i>
             </li>
-            
             <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">토픽</span>
@@ -307,6 +338,9 @@ background-color:#f8f8f8;
                                 <span>이 토픽은 모든 정회원이 자동으로 참여되며 나갈 수 없는 기본 토픽입니다. 정회원 모두에게 전달해야하는 내용을 전송할 수 있으며 준회원은 기본 토픽에 참여할 수 없습니다.</span>
                             </div>
                         </div>  
+                        <!--멤버 초대하기 버튼-->
+						 <button type="submit" data-toggle="modal" data-target="#exampleModalCenter2">
+							멤버초대하기</button>
                         <div class="chat-menu-right">
                             <ul>
                                 <li></li>
@@ -368,9 +402,42 @@ background-color:#f8f8f8;
 		  </div>
 		</div>
 </form>
-        
-<!-- 이메일초대 모달 -->
 
+
+<!-- 이메일 전송 폼 -->
+<div class="container">
+<!-- Modal -->
+		<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		  <div class="modal-dialog modal-dialog-centered" role="document">
+			<!--  모달 보기 창 -->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalCenterTitle">이메일로 초대하기</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+
+		      <div class="modal-body">
+		       <!-- 이메일 전송 폼 -->	
+				<form class="email-form" action="topic_main" method="post">
+              <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
+<%--               	<input type="hidden" value="${team_no}" name="team_no"> --%>
+                <input type="submit" value="이메일전송" id="invite-send" class="invite-send" data-dismiss="modal">
+         			 <button type="submit" id="invite-send" class="invite-send" data-dismiss="modal">
+							이메일전송 </button>
+                <span></span>
+				</form>
+		      </div>
+
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+		        <button type="submit" id="check-btn" class="btn btn-primary" >생성하기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+</div>
         <!-- main-panel ends -->
       <!-- page-body-wrapper ends -->
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>

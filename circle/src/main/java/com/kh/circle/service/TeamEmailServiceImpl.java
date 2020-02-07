@@ -50,7 +50,7 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 
 	@Transactional
 	@Override
-	public void sendConfirmMessage(String cert_email, int team_no) throws MessagingException {
+	public void sendConfirmMessage(String cert_email, int team_no, int topic_no) throws MessagingException {
 		//랜덤 번호를 3자리 생성
 		String cert_no = randomService.generateCertificationNumber(3);
 		
@@ -76,6 +76,7 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 						.queryParam("cert_email", cert_email)
 						.queryParam("cert_no",cert_no)
 						.queryParam("team_no",team_no)
+						.queryParam("topic_no", topic_no)
 						.toUriString();
 		
 		StringBuffer buffer = new StringBuffer();

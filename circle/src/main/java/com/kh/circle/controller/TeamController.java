@@ -180,11 +180,12 @@ public class TeamController {
 	//멤버 초대 이메일 전송하는 컨트롤러 
 	@PostMapping("/modal_invite2")
 	public String modal_invite2(@RequestParam String cert_email,
-								@RequestParam int team_no
+								@RequestParam int team_no,
+								@RequestParam int topic_no
 								) throws MessagingException
 	{ 	
 
-		teamEmailService.sendConfirmMessage(cert_email,team_no);
+		teamEmailService.sendConfirmMessage(cert_email,team_no,topic_no);
 	return "redirect:result";
 		
 	}
