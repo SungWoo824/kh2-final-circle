@@ -3,12 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <html>
 <head>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.addons.css">
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
@@ -80,23 +80,6 @@
 		}
 	});	
 
-    <!--토픽생성-->
-    $(function(){
-        $('#topic-create').click(function(){
-        	
-  $('#topic-').show();
-});
-});
-    
-    $(function(){
-		$("#toggle1").click(function(){
-			$(".menu1-slide").toggle();
-		});
-		$("#toggle4").click(function(){
-			$(".menu4-slide").toggle();
-		});
-
-
 </script>
 
 <script>
@@ -132,29 +115,20 @@ $(function(){
 				}
 			}
 		});			
-
 	});
-
-
-               
-
 });
+
 
 
 
 
 </script>
 
+
+
 <style>
 
-	#topic-create > a{
-	cursor:pointer;
-	}
-	
-	#topic-{
-		display:none;
-	}
-
+#invite-create,
 #topic-create{
  cursor: pointer;
 border-top:1px solid #eee;
@@ -163,6 +137,7 @@ background-color:#f8f8f8;
  height:40px;
 }
 
+#invite-create a,
 #topic-create a{
 		position:absolute;
       	display:inline-block;
@@ -178,27 +153,6 @@ background-color:#f8f8f8;
 </head>
 <!-- <div class="container-scroller"> -->
 <!--     </div>  -->
-
-<div id="topic-">
-
-
-
-
-	<div class="topic--view">
-		<h1>토픽 생성하기</h1>
-		<form action="topic_create" method="post">
-			이름 :<input type="text" name="topic_name"><br><br>
-			공개여부 :<input type="radio" name="topic_confidential" value="1" checked="checked">비공개
-							<input type="radio" name="topic_confidential" value="0" >공개<br><br>
-			토픽 설명 :<textarea name="topic_explain" rows="" cols=""></textarea><br><br>
-			<input type="submit" value="생성하기">
-			<input type="button" value="닫기"> 
-		</form>
-	
-	</div>
-
-</div>
-
 
 
 <div class="menu-wrap">
@@ -273,6 +227,11 @@ background-color:#f8f8f8;
             <li class="nav-item" id="topic-create">
             	<a data-toggle="modal" data-target="#exampleModalCenter">
 					새 토픽 생성
+            	</a>	<i class="fa fa-plus"></i>
+            </li>
+            <li class="nav-item" id="invite-create">
+            	<a data-toggle="myModal" data-target="#exampleModalCenter2">
+					이메일 초대
             	</a>	<i class="fa fa-plus"></i>
             </li>
             
@@ -359,19 +318,6 @@ background-color:#f8f8f8;
                     </div>
                     <article class="message-wrap">
                         <div class="message" style="text-align: right">
-				
-				<!-- 팀 멤버 초대하기 버튼 자리  -->	
-				<form class="invite-form" action="main" method="post">
-					<div class="container">
-	  				<!--  버튼이 클릭되면 show 메소드가 호출된다.   show메서드를 호출할때 원하는 값을 넣어 보낸다.  show메서드의 인자로 넘어가는 aaa 는 동적으로 바뀌어야 함.  -->
-				  	  <a href="${pageContext.request.contextPath}/team/main?team_no=${param.team_no}" type="button" class="btn btn-primary btn-lg" >팀 멤버 초대하기</button>
-				  	  <input type="hidden" value="${team_no}" name="team_no">
-				    </div>
-					<div id="Parse_Area"gt;lt;></div>
-				</form>
-								    
-					
-						
 							<h1>웹소켓 클라이언트(with 로그인, ${param.topic_no} 번 방)</h1>
 							
 									<input type="text" class="user-input">
@@ -423,6 +369,8 @@ background-color:#f8f8f8;
 		</div>
 </form>
         
+<!-- 이메일초대 모달 -->
+
         <!-- main-panel ends -->
       <!-- page-body-wrapper ends -->
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>
@@ -432,4 +380,3 @@ background-color:#f8f8f8;
 
 
  </html>
-

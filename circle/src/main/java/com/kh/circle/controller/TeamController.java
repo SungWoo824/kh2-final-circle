@@ -109,6 +109,18 @@ public class TeamController {
 		else return "N";
 	}
 	
+	//invite_create 초대하기 버튼 
+
+	@GetMapping("/invite_create") 
+	public String invite_create(@RequestParam int team_no,
+								Model model) {
+		model.addAttribute("team_no", team_no);
+		return "team/invite_create";
+	}
+	
+	
+	
+	
 	//토픽 메인 화면에서 보이는 '팀초대하기' 버튼과 연결된 jsp
 	@GetMapping("/main")
 	public String main(@RequestParam int team_no,
@@ -177,35 +189,7 @@ public class TeamController {
 		
 	}
 	
-	//
-	@GetMapping("/invite_success")
-	public String invite_success(@RequestParam String cert_email,
-								 @RequestParam String cert_no,
-								 @RequestParam int team_no,
-								 HttpServletResponse response,
-								 HttpSession session) {
-		//필요한 작업 
-		// - 사용자가 이메일에서 링크를 누르면 이곳으로 들어온다 
-		// - 들어오면서 정상적인 링크라면 cert_no라는 파라미터와 member_email이라는 파라미터를 가지고 온다 
-		// - 위의 두 파라미터를 받아서 DB에 검증을 실시 
-		// - 위의 인증결과와 무관하게 해당 이메일의 인증정보를 모두 삭제 
-		
-		boolean enter = teamCertDao.check3(cert_email,cert_no);
-//		teamCertDao.delete(member_email);
-		if(!enter) {
-			//team_cert에 데이터가 확인되지 않을 경우 에러 코드 송출
-			//다시 같은 페이지 재접속 방지를 위해서
-			response.setStatus(403);
-			return "team/invite_expired";	
-			}	
-		else {	//정확한 주소로 잘 들어왔다면 DB team_cert에 데이터 삭제후 중복접속 방지 / 그리고 성공 페이지로(confirm2)페이지로 이동
-				session.setAttribute("cert_email", cert_email);
-				session.setAttribute("team_no", team_no);
-				teamCertDao.delete(cert_email);	
-				return "redirect:team/invite_success";
-			}
-			
-		}
+
 
 	@Autowired
 	private TeamService teamService;

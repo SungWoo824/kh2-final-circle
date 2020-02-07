@@ -120,7 +120,7 @@
     		  <!-- 이메일 전송 폼 -->	
               <form class="email-form" action="modal_invite2" method="post">
               	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
-              	<input type="hidden" value="${parma.team_no}" name="team_no">
+              	<input type="hidden" value="${team_no}" name="team_no">
                 <input type="submit" value="이메일전송" class="btn btn-primary" data-dismiss="modal">
                 <span></span>
               </form>
