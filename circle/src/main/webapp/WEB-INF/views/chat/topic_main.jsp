@@ -318,7 +318,8 @@ background-color:#f8f8f8;
 				
 					<div id="gnb-detail-slide">
 			            <div class ="menu1-slide">d</div>
-			            <div class="menu4-slide"><a href="create">+투표 만들기</a></div>
+			            <!-- 주소 변경했음 -->
+			            <div class="menu4-slide"><a href="../vote/create">+투표 만들기</a></div>
 			        </div>
 			        
             </div>

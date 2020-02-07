@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<!-- 
+		Appender : 로그를 출력하는 도구(위치 결정 도구)
+		- ...Appender라는 이름을 가짐
+		- ConsoleAppender : 출력을 콘솔창에 수행
+		- FileAppender : 출력을 파일에 수행
+		- DailyRollingFileAppender : 출력을 일정 기간 단위의 파일에 수행
+		- JdbcAppender : 출력을 DB에 수행
+		- SMTPAppender :  출력을 이메일에 수행
+		- NTEventAppender : 출력을 윈도우 시스템 로그에 수행
+		
+		Layout : 출력 형식
+		- %p : priority, 메시지 수준(Level)
+		- %m : message, 출력하고자 하는 메시지
+		- %n : newline, 개행(엔터)
+		- %c : category, 카테고리 출력, 뒤에 {n}를 붙이면 패키지 깊이(depth)를 설정할 수 있음
+		- %d : date, 시간 설정(자바 시간양식과 동일. SimpleDateFormat 참조)
+				- y(연), M(월), d(일), E(요일), a(오전/오후) 
+				- H(24시), h(12시), m(분), s(초), S(밀리초)
+	-->
+	<appender name="console" class="org.apache.log4j.ConsoleAppender">
+		<param name="Target" value="System.out" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] %c - %m%n" />
+		</layout>
+	</appender>
+	
+	<appender name="xml" class="org.apache.log4j.FileAppender">
+<!-- 		<param name="file" value="log.xml"></param> -->
+		<param name="file" value="D:/log.xml"></param>
+		<param name="Append" value="true"></param>
+		<layout class="org.apache.log4j.xml.XMLLayout"></layout>
+	</appender>
+	
+	<appender name="daily" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="D:/log/daily"></param>
+		<param name="Append" value="true"></param>
+		<!-- 파일의 날짜 패턴 -->
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'"></param>
+<!-- 		롤링(Rolling) 조건 : 1MB가 되면 신규 파일 생성(RollingFileAppender 옵션) -->
+<!-- 		<param name="MaxFileSize" value="1MB"></param> -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5p] %c - %m%n" />
+		</layout>
+	</appender>
+	
+	<!-- Root Logger -->
+	<root>
+		<priority value="info" />
+		<appender-ref ref="console" />
+	</root>
+	
+</log4j:configuration>
