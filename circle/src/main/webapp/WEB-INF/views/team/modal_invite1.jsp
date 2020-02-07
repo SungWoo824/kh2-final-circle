@@ -14,7 +14,7 @@
     <script type="text/javascript">
 
 $(function(){
-
+	var data = $("form[name=invite-form]").serialize();
       //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
 
         //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
@@ -31,6 +31,7 @@ $(function(){
             type : "GET", //전송방식을 지정한다 (POST,GET)
             url : "${pageContext.request.contextPath}/team/modal_invite2",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
             dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
+            data : data
             error : function(){
                 alert("통신실패!!!!");
             },
@@ -82,15 +83,17 @@ $(function(){
       
               </div>
       
-      		  <form class="invite-form" action="modal_invite1" method="post">
               <div class="modal-body">
+      		  <form class="invite-form" action="modal_invite2" method="post">
       
                 <p id="content"></p>
-                <button type="button" class="btn btn-alltopic" data-dismiss="modal">전체 토픽에 초대하기</button>
-                <input type="hidden" value="${team_no}" name="team_no">
-              </div>
-      	      </form>
+                <input type="hidden" value="${param.team_no}" name="team_no">
+                 <a href="${pageContext.request.contextPath}/team/modal_invite2?team_no=${param.team_no}" type="button" class="btn btn-primary btn-lg" >
+                 	전체 토픽 초대하기</a>
+<!--                 <button type="button" class="btn btn-alltopic" data-dismiss="modal">전체 토픽에 초대하기</button> -->
               <div class="modal-footer">
+      	      </form>
+              </div>
       
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       

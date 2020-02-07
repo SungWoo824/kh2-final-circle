@@ -81,7 +81,7 @@
     $(function(){
         $('#topic-create').click(function(){
         	
-  $('#topic-modal').show();
+  $('#topic-').show();
 });
 });
     
@@ -102,7 +102,7 @@
 	cursor:pointer;
 	}
 	
-	#topic-modal{
+	#topic-{
 		display:none;
 	}
 </style>
@@ -110,9 +110,9 @@
 </head>
 <!-- <div class="container-scroller"> -->
 <!--     </div>  -->
-<div id="topic-modal">
+<div id="topic-">
 
-	<div class="topic-modal-view">
+	<div class="topic--view">
 		<h1>토픽 생성하기</h1>
 		<form action="topic_create" method="post">
 			이름 :<input type="text" name="topic_name"><br><br>
@@ -288,7 +288,7 @@
 					<div class="container">
 	  				<!--  버튼이 클릭되면 show 메소드가 호출된다.   show메서드를 호출할때 원하는 값을 넣어 보낸다.  show메서드의 인자로 넘어가는 aaa 는 동적으로 바뀌어야 함.  -->
 				  	  <a href="${pageContext.request.contextPath}/team/main?team_no=${param.team_no}" type="button" class="btn btn-primary btn-lg" >팀 멤버 초대하기</button>
-				  	  <input type="hidden" value="${teamteam_no}" name="team_no">
+				  	  <input type="hidden" value="${team_no}" name="team_no">
 				    </div>
 					<div id="Parse_Area"gt;lt;></div>
 				</form>

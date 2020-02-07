@@ -109,27 +109,27 @@ public class TeamController {
 		else return "N";
 	}
 	
-	//팀에서 초대하기 버튼 있는 페이지 -> 추후에 /chat_topic에 버튼만 옮겨서 삭제할 예정
+	//토픽 메인 화면에서 보이는 '팀초대하기' 버튼과 연결된 jsp
 	@GetMapping("/main")
 	public String main(@RequestParam int team_no,
-					   Model model) {
-		model.addAttribute("team_no", team_no); //team_no로 team_no를 넘기겠디
+					   Model model) {	
+		model.addAttribute("team_no", team_no); //team_no이름으로 team_no를 파라미터값으로 넘기겠다
 		return "team/main";
 	}
 	
+	//modal_invite1 초대하기 모달 화면 1과 연결된 jsp 
+	@GetMapping("/modal_invite1")
+	public String modal_invite1(@RequestParam(value="team_no") int team_no,
+			Model model) {
+	
+		model.addAttribute("team_no", team_no);
+		return "team/modal_invite1";
+	}
 	
 	
 
 		
 	
-	//modal_invite1 초대하기 모달 화면 1
-	@GetMapping("/modal_invite1")
-	public String modal_invite1(@RequestParam int team_no,
-								Model model) {
-
-		model.addAttribute("team_no", team_no);
-		return "team/modal_invite1";
-	}
 	
 
 		
@@ -168,13 +168,12 @@ public class TeamController {
 	//멤버 초대 이메일 전송하는 컨트롤러 
 	@PostMapping("/modal_invite2")
 	public String modal_invite2(@RequestParam String cert_email,
-								@RequestParam int team_no,
-								HttpSession session) throws MessagingException
+								@RequestParam int team_no
+								) throws MessagingException
 	{ 	
-		session.setAttribute("cert_email", cert_email);
-		session.setAttribute("team_no", team_no);
+
 		teamEmailService.sendConfirmMessage(cert_email,team_no);
-	return "redirect:main";
+	return "redirect:result";
 		
 	}
 	
