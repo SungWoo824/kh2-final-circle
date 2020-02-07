@@ -70,16 +70,15 @@ color:#222;
   position: relative;
 }
 
+
 .menu2-slide,
 .menu1-slide{
   width: 380px;
- 
   display: none;
 }
 
 .menu4-slide{
   width: 380px;
- 
   display: none;
 }
 
@@ -699,11 +698,11 @@ color:#222;
       
       .sidebar > .nav .nav-item i.fa-plus{
 
-      	text-align: center;
-      	display:block;
-      	line-height:30px;
+      	position:absolute;
+      	display:inline-block;
+      	line-height:40px;
       	color: #2196f3;
-      	padding-left:110px;
+      	left:30px;
       }
       
       .sidebar > .nav .nav-item .nav-link i.menu-arrow {
