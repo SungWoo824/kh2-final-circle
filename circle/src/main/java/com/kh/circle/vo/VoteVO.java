@@ -20,6 +20,8 @@ public class VoteVO {
 	private String vote_create_status;
 	private String vote_create_date;
 	private String vote_create_time;
+	private String vote_create_topic;
+	private int vote_create_userno;
 	private int vote_create_no;
 	private List<VoteCategoryDto> category;
 	private VoteCategoryDto voteCategoryDto;

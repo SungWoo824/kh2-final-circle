@@ -13,8 +13,7 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 
 	@Autowired
 	private SqlSession sqlSession;
-	@Autowired 
-	private SeqService seqService;
+
 	
 	
 	@Override
@@ -36,8 +35,11 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 	}
 	@Override
 	public List<String> getTopicList() {
-		
 		return sqlSession.selectList("vote.getTopic");
 	}
-
+	
+	@Override
+	public List<VoteDto> getVoteList() {
+		return sqlSession.selectList("vote.getVoteList");
+	}
 }

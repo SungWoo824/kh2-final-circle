@@ -121,7 +121,17 @@ $(function(){
 
 
 </script>
-
+<script>
+$(function(){
+	$("#toggle1").click(function(){
+		$(".menu1-slide").toggle();
+	});
+	
+	$("#toggle4").click(function(){
+		$(".menu4-slide").toggle();
+	});
+});
+</script>
 <style>
 
 #topic-create{
