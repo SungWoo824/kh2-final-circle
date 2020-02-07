@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,13 +21,14 @@
                 <div class="header-wrap">
                     <div class="header-logo">
                         <div class="mainlogo">
-                            <img src=" ${pageContext.request.contextPath}/resources/image/logol.png">
+                            <a href="${pageContext.request.contextPath}"><img src=" ${pageContext.request.contextPath}/resources/image/logol.png"></a>
                         </div>
                     </div>
                     <div class="header-gnb">
                         <ul class="gnb-menu">
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
+                            
                         </ul>
                         <ul class="gnb-menu">
                             <li class="login-btn"><a href=" ${pageContext.request.contextPath}/member/signin">로그인</a></li>

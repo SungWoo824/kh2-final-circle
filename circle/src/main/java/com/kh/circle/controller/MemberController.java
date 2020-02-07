@@ -1,5 +1,7 @@
 package com.kh.circle.controller;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,10 +42,10 @@ public class MemberController {
 	
 	@PostMapping("/signup")
 	public String signup(@ModelAttribute MemberDto memberDto,
-						 @RequestParam MultipartFile file) {
+						 @RequestParam MultipartFile file) throws IllegalStateException, IOException {
 		
 		MemberProfileDto memberProfileDto = MemberProfileDto.builder().member_profile_uploadname(file.getOriginalFilename()).member_profile_filesize(file.getSize()).build();
-		memberDao.signup(memberDto, memberProfileDto);
+		memberDao.signup(memberDto, memberProfileDto, file);
 		
 		
 		return "redirect:./signup_success";

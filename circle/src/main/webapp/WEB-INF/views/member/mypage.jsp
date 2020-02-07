@@ -10,7 +10,33 @@
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/fullpage.css" />
  <script type="text/javascript" src=" ${pageContext.request.contextPath}/resources/js/design/fullpage.js"></script>
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
-    
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
+<script>
+$(function(){
+	$(".param_submit").submit(function(e){
+		e.preventDefault();
+		
+		var team_no = $(".team_no_value").attr("value")
+		var url = "${pageContext.request.contextPath}/team/connect"; 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
+		
+		$.ajax({
+			url:url,
+			type:"get",
+			data:data,
+			success:function(resp){
+				$(".topic_no_value").attr("value",resp);
+			},
+			error:function(resp){
+				console.log("error")
+			}
+		})
+		
+		this.submit();
+	})
+})
+</script> 
 </head>
 <body>
 
@@ -20,13 +46,18 @@
                 <div class="header-wrap">
                     <div class="header-logo">
                         <div class="mainlogo">
-                            <img src=" ${pageContext.request.contextPath}/resources/image/logol.png">
+                            <a href="${pageContext.request.contextPath}"><img src=" ${pageContext.request.contextPath}/resources/image/logol.png"></a>
                         </div>
                     </div>
                     <div class="header-gnb">
                         <ul class="gnb-menu">
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
+                            <c:choose>
+		                        <c:when test="${not empty member_email}">
+							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
+							    </c:when>
+						    </c:choose>
                         </ul>
                         <ul class="gnb-menu">
                             <li class="login-btn"><a href="member/signin">로그인</a></li>
@@ -51,8 +82,9 @@
 		                                    	<div>
                                     				<div>
 														<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
-														<form action="${pageContext.request.contextPath}/team/connect">
-															<input type="hidden" name="team_no" value="${teamDto.team_no}">
+														<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic_main">
+															<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+															<input type="hidden" name="topic_no" class="topic_no_value" value="">
 															<button type="submit">이동하기</button>
 														</form>
 														<br><br>
