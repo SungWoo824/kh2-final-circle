@@ -2,10 +2,12 @@ package com.kh.circle.repository;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 
+@Repository
 public class TopicDaoIml implements TopicDao{
 
 	@Autowired

@@ -30,9 +30,8 @@ public class ChatController {
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,
-							@ModelAttribute List<TopicDto> topicList,
 							Model model) {
-		topicList = teamService.teamTopicList(team_no);
+		List<TopicDto> topicList = teamService.teamTopicList(team_no);
 		topic_no =topicDao.teamTopicFirst(team_no);
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
@@ -59,11 +58,12 @@ public class ChatController {
 	public String topic(@RequestParam int topic_no,
 						@RequestParam int team_no,
 						Model model) {
-		List<TopicDto> topicList = teamService.teamTopicList(team_no);
+		
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
+		model.addAttribute("team_no", team_no);
 		model.addAttribute("topic_no", topic_no);
-		model.addAttribute("topicList", topicList);
-		return "chat/topic_main";
+		
+		return "redirect:./topic_main";
 	}
 	
 	

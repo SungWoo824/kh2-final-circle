@@ -117,8 +117,8 @@ public class TeamController {
 	
 	@GetMapping("/connect")
 	@ResponseBody
-	public int connect(@RequestParam int team_no) {
+	public String connect(@RequestParam int team_no) {
 		int topic_no =topicDao.teamTopicFirst(team_no);
-		return topic_no;
+		return String.valueOf(topic_no);
 	}
 }
