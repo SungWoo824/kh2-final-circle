@@ -2,6 +2,8 @@ package com.kh.circle.repository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,12 +42,16 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public MemberDto signin(String member_email,String pw) {
 		MemberDto memberDto = sqlSession.selectOne("member.signin", member_email);
-		
-		if(encoder.matches(pw, memberDto.getMember_pw())) {
-			return memberDto;
+		if(memberDto !=null) {
+			if(encoder.matches(pw, memberDto.getMember_pw())) {
+				return memberDto;
+			}else {
+				return null;
+			}
 		}else {
 			return null;
 		}
+		
 	}
 
 	@Override
@@ -66,7 +72,7 @@ public class MemberDaoImpl implements MemberDao{
 
 	@Override
 	public void changepw(MemberDto memberDto) {
-		
+		memberDto.setMember_pw(encoder.encode(memberDto.getMember_pw()));
 		sqlSession.update("member.changepw", memberDto);
 		
 	}
@@ -77,9 +83,31 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("member.memberinfo", member_email);
 	}
 
-	
-	
-	
+	@Override
+	public void memberChangeName(String email, String name) {
+		Map<String,String> param = new HashMap<>();
+		
+		param.put("member_email", email);
+		param.put("member_name", name);
+		
+		sqlSession.update("member.changename", param);
+	}
 
+	@Override
+	public void memberDelete(String member_email) {
+		sqlSession.delete("member.delete", member_email);
+	}
 
+	@Override
+	public int memberProfileNo(int member_no) {
+		return sqlSession.selectOne("member.memberprofileno", member_no);
+	}
+
+	@Override
+	public MemberProfileDto getMemberProfile(int member_no) {
+	
+		return sqlSession.selectOne("member_profile.getmemberprofile", member_no);
+	}
+
+	
 }

@@ -231,9 +231,27 @@ a{
 	width:70%;
 	box-sizing:border-box;
 	margin: 0px;
+	text-align:center;
+	padding:2rem;
 }
 .modify-item-content-button{
 	width:100%;
 	height:100%;
 	border:none;
+	display:block;
+}
+
+.modify-alert{
+	background-color:pink;
+	margin:0.5rem;
+}
+
+.signup-article{
+	margin-top: 10%;
+}
+
+#member-profile-img{
+	width: 70px;
+    height: 70px;
+    border-radius: 50px;
 }

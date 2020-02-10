@@ -14,6 +14,9 @@ public interface MemberDao {
 	MemberDto signin(String email,String pw);
 	String checkGrade(MemberDto memberDto);
 	void changepw(MemberDto memberDto);
-	
+	void memberChangeName(String email,String name);
 	MemberDto info(String member_email);
+	void memberDelete(String member_email);
+	int memberProfileNo(int member_no);
+	MemberProfileDto getMemberProfile(int member_no);
 }

@@ -1,9 +1,13 @@
 package com.kh.circle.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -155,9 +159,64 @@ public class MemberController {
 	public String modify(HttpSession session,
 						Model model){
 		model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));
-		
+		int profile_no=memberDao.memberProfileNo((int)session.getAttribute("member_no"));
+		model.addAttribute("profile_no", profile_no);
 		return "member/modify";
 	}
 	
+	@PostMapping("mypagechangepw")
+	public String myPageChangepw(HttpSession session,
+						@RequestParam String change_pw) {
+		MemberDto memberDto = MemberDto.builder().member_email((String)session.getAttribute("member_email"))
+				.member_pw(change_pw).build();
+		
+		memberDao.changepw(memberDto);
+		
+		return "redirect:./modify";
+	}
 	
+	@GetMapping("checkpw")
+	@ResponseBody
+	public String myPageCheckpw(@RequestParam String member_pw,
+								HttpSession session) {
+		MemberDto memberDto = memberDao.signin((String)session.getAttribute("member_email"), member_pw);
+		
+		if(memberDto!=null) {	
+			return "success";
+		}else {
+			return "fail";
+		}
+		
+	}
+	@PostMapping("mypagechangename")
+	public String myPageChangeName(@RequestParam String member_name,
+									HttpSession session) {
+		memberDao.memberChangeName((String)session.getAttribute("member_email"), member_name);
+		
+		return "redirect:./modify";
+	}
+	
+	@PostMapping("mypagedeletemember")
+	public String myPageDeleteMember(HttpSession session) {
+		int profile_no = memberDao.memberProfileNo((int)session.getAttribute("member_no"));
+		memberDao.memberDelete((String)session.getAttribute("member_email"));
+		File target = new File("D:/upload/kh2e/memberProfile/"+profile_no);
+		target.delete();
+		return "redirect:./signout";
+	}
+	
+	@GetMapping("/download")
+	   public void download(@RequestParam int member_no,
+	         HttpServletResponse resp) throws IOException {
+	      MemberProfileDto memberProfileDto = memberDao.getMemberProfile(member_no);
+	      
+	      File target = new File("D:/upload/kh2e/memberProfile",String.valueOf(memberProfileDto.getMember_no()));
+	      byte[] data = FileUtils.readFileToByteArray(target);
+	      
+	      resp.setHeader("Content-Type", "application/octet=stream; charset=UTF-8");
+	      resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(memberProfileDto.getMember_profile_uploadname(), "UTF-8")+"\"");
+	      resp.setHeader("Content-Length", String.valueOf(memberProfileDto.getMember_profile_filesize()));
+
+	      resp.getOutputStream().write(data);
+	   }
 }
