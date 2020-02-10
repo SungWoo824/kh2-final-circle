@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TopicDto;
 
+@Service
 public class TeamServiceImpl implements TeamService {
 
 	@Autowired
