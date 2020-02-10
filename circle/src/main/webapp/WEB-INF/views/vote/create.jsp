@@ -107,7 +107,9 @@
 
 </span>
 <br><br>
-<button>취소</button>		<input type="submit" value="만들기">
+		
+		<input type="hidden" name="vote_create_status" id="create" value="y">
+		<input type="submit" value="만들기">
 </form>
-
+<a href="list"><button>취소</button></a>
 </html>

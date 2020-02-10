@@ -99,17 +99,14 @@
 	});
 
  
-    	function MovePage(name){
+    	function MovePage(no){
     		var  ajaxOption = {
-    				url : "detail?vote_create_no="+name,
+    				url : "./detail?vote_create_no="+no,
     				type : "GET",
     				dataType : "html",
     				cache : false
     		};
     		$.ajax(ajaxOption).done(function(data){
-//     			Contents 영역 삭제
-//     			$('#bodyContents').empty();
-//     			Contents 영역 교체(덮어쓰기)
     			$('#bodyContents').html(data);
     		});
     	}
@@ -315,6 +312,8 @@
 			            <div class ="menu1-slide">d</div>
 			            <!-- 주소 변경했음 -->
         			<div id="bodyContents" class="menu4-slide">   
+        				<!-- 목록으로 버튼 if처리해야함 -->
+			       		<button id="movelist">목록으로..</button>
 			            <a href="create">+투표 만들기</a><br><br>
 			            <h3>진행중인 투표 목록</h3>
 
@@ -323,14 +322,15 @@
 			            	<c:forEach var="voteList" items="${voteList }" >
 			            		<li>
 			            		<c:out value="${voteList.vote_create_no }"></c:out>번 투표
-			            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="javascript:MovePage(${voteList.vote_create_no })">			            		
-<%-- 			            		<a href="#" >투표제목:<c:out value="${voteList.vote_create_title}"/></a> --%>
+			            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
 			            		</li>
 			            		<br>
 			            	</c:forEach>   	
 			            		</ul>
 			            </div>
 			        </div>
+			        
+			        
 			        
             </div>
             <!-- Page Title Header Ends-->

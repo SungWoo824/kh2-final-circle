@@ -11,4 +11,9 @@ public interface VoteCreateDao {
 	void createCategory(VoteCategoryDto vcdto, int seq);
 	List<String> getTopicList();
 	List<VoteDto> getVoteList();
+	List<VoteDto> getVoteDetail(int vote_create_no);
+	List<VoteCategoryDto> getVoteCategoryDetail(int vote_create_no);
+	String getMemberName(int member_no);
+	void selection(int member_no, int vote_create_no, String content, String selection, String name);
+	Object compare(int member_no); 
 }

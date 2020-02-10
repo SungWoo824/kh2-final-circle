@@ -24,4 +24,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getVoteList" resultType="voteDto">
 		select*from vote_create
 	</select>
+	
+	<select id="getVoteDetail" resultType="voteDto" parameterType="java.lang.Integer">
+		select*from vote_create where vote_create_no=#{vote_create_no}
+	</select>
+	
+	<select id="getVoteCategoryDetail" resultType="voteCategoryDto" parameterType="java.lang.Integer">
+		select*from vote_category where vote_create_no=#{vote_create_no}
+	</select>
+	
+	<select id="getMemberName" resultType="String" parameterType="java.lang.Integer">
+		select member_name from member where member_no=#{member_no}
+	</select>
+	
+	<insert id="selection" parameterType="voteSelectionDto">
+		insert into vote_select values(#{member_no}, #{vote_create_no}, #{vote_category_content}, #{vote_select_true}, #{member_name})
+	</insert>
+	
+	<select id="compare" parameterType="java.lang.Integer" resultType="Object">
+		select vote_create_userno from vote_create where vote_create_userno=#{member_no}
+	</select>
 </mapper>

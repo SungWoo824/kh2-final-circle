@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.VoteCategoryDto;
 import com.kh.circle.entity.VoteDto;
@@ -27,21 +26,24 @@ public class VoteController {
 	
 	@Autowired
 	private VoteCreateDao voteCreateDao;
-	
 	@Autowired
 	private SeqService seqService;
 	
 	@GetMapping("/detail")
-	@ResponseBody
-	public String detail(@RequestParam("vote_create_no") String vote_create_no) {
-		return "vote/detail?vote_create_no="+vote_create_no;
+	public String detail(@RequestParam("vote_create_no") int vote_create_no, Model model, HttpSession session) {
+		model.addAttribute("no", vote_create_no);
+		model.addAttribute("voteDetail", voteCreateDao.getVoteDetail(vote_create_no));
+		model.addAttribute("voteCategoryDetail", voteCreateDao.getVoteCategoryDetail(vote_create_no));
+		session.setAttribute("member_no", 21);
+		model.addAttribute("memberNo", session.getAttribute("member_no") );
+		model.addAttribute("memberName", voteCreateDao.getMemberName((int) session.getAttribute("member_no")));
+		model.addAttribute("compare", voteCreateDao.compare((int) session.getAttribute("member_no")));
+		return "vote/detail";
 	}
 	
 	@GetMapping("/list")
 	public String list(Model model) {
-//		List<voteDto>voteList = voteCreateDao.getVoteList();
-		model.addAttribute("voteList", voteCreateDao.getVoteList());
-		System.out.println(voteCreateDao.getVoteList());
+		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		return "vote/list";
 	}
 	
@@ -53,7 +55,7 @@ public class VoteController {
 	
 	@PostMapping("/create")
 	public String create(@ModelAttribute VoteVO vote, HttpSession session) {
-		session.setAttribute("member_no", 1);
+		session.setAttribute("member_no", 21);
 		int seq = seqService.getSequence();
 		List<VoteCategoryDto> dto = vote.getCategory();
 		VoteDto vdto = VoteDto.builder()
@@ -71,7 +73,21 @@ public class VoteController {
 		for(VoteCategoryDto vcdto : dto) {
 			voteCreateDao.createCategory(vcdto, seq);
 		}
-
 		return "redirect:./list";
+	}
+	
+	@GetMapping("/voteselect")
+	public String selection(@RequestParam("member_no") int member_no, @RequestParam("vote_create_no") int vote_create_no, @RequestParam("vote_category_content") String content, @RequestParam("vote_select_true") String selection, @RequestParam("member_name") String name) {
+		voteCreateDao.selection(member_no, vote_create_no, content, selection, name);
+//		return "redirect:./detail?vote_create_no="+vote_create_no;
+		return "redirect:./result?member_no="+member_no;	
+	}
+	
+	@GetMapping("/result")
+	public String result(Model model) {
+//		voteCreateDao.compare(member_no);
+//		model.addAttribute("compare", voteCreateDao.compare(member_no));
+//		System.out.println(voteCreateDao.compare(member_no));
+		return "vote/result";
 	}
 }
