@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!--     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> 
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<!--     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> -->
     <script>
         $(function(){
       //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
@@ -111,9 +111,8 @@
               
     		  <!-- 이메일 전송 폼 -->	
               <form class="email-form" action="modal_invite2" method="post">
-              	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
-              	<input type="hidden" value="${param.team_no}" name="team_no">
-              	<input type="hidden" value="${param.topic_no}" name="team_no">
+              	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="email" type="email" placeholder="Enter email">
+              	<input type="hidden" value="${team_no}" name="team_no">
                 <input type="submit" value="이메일전송" class="btn btn-primary" data-dismiss="modal">
                 <span></span>
               </form>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.entity.TeamDto;
+import com.kh.circle.entity.TeamMemberDto;
 
 @Repository
 public class TeamDaoImpl implements TeamDao {
@@ -37,6 +38,16 @@ public class TeamDaoImpl implements TeamDao {
 		param.put("team_no", team_no);
 		
 		sqlSession.insert("team.teamMemberCreate", param);
+	}
+
+	@Override
+	public void teamMemberCreate2(int member_no, int team_no) {
+		TeamMemberDto teamMemberDto = TeamMemberDto.builder()
+						.member_no(member_no)
+						.team_no(team_no)
+						.build();
+		sqlSession.insert("team.teamMemberCreate2",teamMemberDto);
+		
 	}
 
 

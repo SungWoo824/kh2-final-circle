@@ -45,7 +45,7 @@
     		  <!-- 이메일 전송 폼 -->	
               <form class="email-form" action="modal_invite2" method="post">
               	<input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
-              	<input type="hidden" value="${parma.team_no}" name="team_no">
+              	<input type="hidden" value="${param.team_no}" name="team_no">
                 <input type="submit" value="이메일전송" class="btn btn-primary" data-dismiss="modal">
                 <span></span>
               </form>
@@ -61,6 +61,12 @@
       		  </div>	
       
             </div>
+            
+                        <li class="nav-item" id="invite-create">
+            	<a data-toggle="modal" data-target="#exampleModalCenter2">
+					멤버초대하기
+            	</a>	<i class="fa fa-plus"></i>
+            </li>
       
             
       

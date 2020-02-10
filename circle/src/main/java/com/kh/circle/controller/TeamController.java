@@ -64,6 +64,12 @@ public class TeamController {
 		return "team/create";
 	}
 	
+	@GetMapping("/oldmain")
+	public String oldmain() {
+		return "team/oldmain";
+				
+	}
+	
 	//팀 생성을 하는 컨트롤러 / 생성 후 topic창으로 연결 
 	@PostMapping("/create")
 	public String create(@ModelAttribute TeamDto teamDto,

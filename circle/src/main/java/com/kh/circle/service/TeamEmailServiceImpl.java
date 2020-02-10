@@ -68,11 +68,11 @@ public class TeamEmailServiceImpl implements TeamEmailService {
 		helper.setSubject("[Cilcle]팀 멤버에 초대합니다");
 		
 		//주소 생성
-//		String url = "http://localhost:8080/circle/team/invite_success?cert_email="+cert_email&cert_no="+cert_no+";
+//		String url = "http://localhost:8080/circle/chat/invite_success?cert_email="+cert_email&cert_no="+cert_no+";
 		String url = ServletUriComponentsBuilder
 						.fromCurrentContextPath()
 						.port(8080)
-						.path("/team/invite_success")
+						.path("/chat/invite_success")
 						.queryParam("cert_email", cert_email)
 						.queryParam("cert_no",cert_no)
 						.queryParam("team_no",team_no)

@@ -117,11 +117,37 @@ $(function(){
 			}
 		});			
 	});
-// });
+});
 
-// $(function(){
+//팀 멤버 초대하기 모달 생성
+$(function(){
+//		var data = $("form[name=invite-form]").serialize();
+
+        $(".invite-form").click(function(){
+        $.ajax({
+        type : "GET", //전송방식을 지정한다 (POST,GET)
+        url : "${pageContext.request.contextPath}/chat/invite_modal1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
+//         data : data
+        dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
+        error : function(){
+            alert("통신실패!!!!");
+        },
+        success : function(data){
+            $("#Parse_Area").html(data); //div에 받아온 값을 넣는다.
+
+        }
+
+    });
+});
+});
+</script>
+
+<script>	
+
 	
 
+
+$(function(){
       //이메일 보내기 버튼을 누르면 send주소로 비동기 신호를 전송 
       $('.email-form').submit(function(e){
       	e.preventDefault();
@@ -139,10 +165,12 @@ $(function(){
               data : data,
               error : function(){
             	  alert("통신실패!!!!");
+            	  $('#modal').hide();
               },
               success : function(resp){
                   //console.log(resp);
-      
+      				alert("발송완료되었습니다");
+      				$('#modal').hide();
                   	("input[type=submit]").next("span").text("전송완료되었습니다");
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
@@ -151,8 +179,19 @@ $(function(){
 
           });
 
-
   });
+	$(function(){
+	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
+
+	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
+	      $('#close_btn').click(function(){
+	           $('#modal').hide();
+	      });
+	      $('#invite_btn').click(function(){
+	              $('#modal').show();
+	      		});
+
+	});
 
 
 
@@ -176,6 +215,32 @@ background-color:#f8f8f8;
       	
 }
 
+
+    .modal{
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background-color:rgba(139, 133, 133, 0.5);
+            
+            display: none;
+        }
+        
+        .modal > .modal-view{
+            position: fixed;
+            width:300px;
+            height:400px;
+            background-color: white;
+            border:1px solid; padding:10px;
+            /* 가운데 배치 */
+            top:50%;
+            left:50%;
+            margin-left: -150px;
+            margin-top: -200px;
+            
+            
+        }
 
 
     </style> 
@@ -338,9 +403,37 @@ background-color:#f8f8f8;
                                 <span>이 토픽은 모든 정회원이 자동으로 참여되며 나갈 수 없는 기본 토픽입니다. 정회원 모두에게 전달해야하는 내용을 전송할 수 있으며 준회원은 기본 토픽에 참여할 수 없습니다.</span>
                             </div>
                         </div>  
-                        <!--멤버 초대하기 버튼-->
-						 <button type="submit" data-toggle="modal" data-target="#exampleModalCenter2">
-							멤버초대하기</button>
+                        <!-- 멤버 초대하기 버튼 -->
+                        <button type="button" id="invite_btn">팀 멤버 초대하기</button>
+<!-- 						<div class="container"> -->
+						<div id="modal" class="modal">
+						
+						<!--모달창 디자인-->
+				        <div class="modal-view"></div> 
+				        <div style="position: absolute; top: 50%; left: 50%; width: 300px; height: 400px; margin-left: -150px; margin-top: -200px;">
+				        <div style="height: 30px;"></div>
+				        
+				         <!-- 이메일 전송 폼 -->	
+				<form class="email-form" action="topic_main" method="post">
+                <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
+<%--                 <input type="hidden" value="${param.cert_email}" name="cert_email">	 --%>
+              	<input type="hidden" value="${param.team_no}" name="team_no">
+             	<input type="hidden" value="${param.topic_no}" name="topic_no">
+                <input type="submit" value="이메일전송" id="invite-send" class="invite-send" data-dismiss="modal">
+                <span></span>
+				</form>
+ 			 
+						
+<!-- 						<form class="invite-form" action="topic_main" method="post" name="invite-form"> -->
+						   <!--  버튼이 클릭되면 show 메소드가 호출된다.   show메서드를 호출할때 원하는 값을 넣어 보낸다.-->
+<%-- 						    <input type="hidden" value="${param.team_no}" name="team_no" id="team_no" class="team_no"> --%>
+<%-- 						     <input type="hidden" value="${param.topic_no}" name="topic_no" id="team_no" class="topic_no"> --%>
+<%-- 						     <a href="${pageContext.request.contextPath}/chat/invite_modal1" type="button" class="btn btn-primary btn-lg" >팀 멤버 초대하기</a> --%>
+						<!--     <button type="button" class="btn btn-primary btn-lg" name="invite">팀 멤버 초대하기</button> -->
+						<!-- modal_invite1 화면이 나타날 자리 -->
+<!-- 						<div id="Parse_Area"gt;lt;></div> -->
+<!-- 						</form> -->
+						</div>
                         <div class="chat-menu-right">
                             <ul>
                                 <li></li>
@@ -418,17 +511,18 @@ background-color:#f8f8f8;
 		        </button>
 		      </div>
 
-		      <div class="modal-body">
-		       <!-- 이메일 전송 폼 -->	
 				<form class="email-form" action="topic_main" method="post">
-              <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
-<%--               	<input type="hidden" value="${team_no}" name="team_no"> --%>
+<!-- 		      <div class="modal-body"> -->
+		       <!-- 이메일 전송 폼 -->	
+                <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
+                <input type="hidden" value="${param.cert_email}" name="cert_email">
+              	<input type="hidden" value="${param.team_no}" name="team_no">
+                <input type="hidden" value="${param.topic_no}" name="topic_no">
                 <input type="submit" value="이메일전송" id="invite-send" class="invite-send" data-dismiss="modal">
-         			 <button type="submit" id="invite-send" class="invite-send" data-dismiss="modal">
-							이메일전송 </button>
+<!--          	
                 <span></span>
+<!-- 		      </div> -->
 				</form>
-		      </div>
 
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
