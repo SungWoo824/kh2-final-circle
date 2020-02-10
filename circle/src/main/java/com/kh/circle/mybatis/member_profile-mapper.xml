@@ -6,8 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <mapper namespace="member_profile">
-	<insert id="member_profile.insert" parameterType="memberProfileDto">
-		insert into member_profile values(member_profile_no_seq.nextval,#{member_no},#{member_profile_uploadname},#{member_profile_filesize})
+	<select id="profileSequence" resultType="int">
+		select member_profile_no_seq.nextval from dual
+	</select>
+	<insert id="insert" parameterType="memberProfileDto">
+		insert into member_profile values(#{member_profile_no},#{member_no},#{member_profile_uploadname},#{member_profile_filesize})
 	</insert>
 	
 </mapper>

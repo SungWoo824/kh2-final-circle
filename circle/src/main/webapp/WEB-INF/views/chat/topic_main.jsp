@@ -340,10 +340,14 @@ background-color:#f8f8f8;
             
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
+<<<<<<< HEAD
 
                 	<c:forEach items="${topicList}" var="topicDto">
+=======
+                	<c:forEach items="${topicList}" var="topicListDto">  
+>>>>>>> branch 'master' of https://github.com/SungWoo824/kh2-final-circle
                 		<li class="nav-item">
-		                    <a class="nav-link" href="pages/ui-features/buttons.html">topic_name = ${topicDto.topic_name}</a>
+		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic?team_no=${param.team_no }&topic_no=${topicListDto.topic_no}">${topicListDto.topic_name}</a>
 		                </li>
                 	</c:forEach>
 
@@ -396,11 +400,11 @@ background-color:#f8f8f8;
                         </div>
                         <div class="chat-menu-center">
                             <div class="chat-menu-title">
-                                <span>공지사항</span>
+                                <span>${topicDto.topic_name}</span>
                             </div>
                             <div class="chat-menu-sub">
                                 <span class="label">기본토픽</span>
-                                <span>이 토픽은 모든 정회원이 자동으로 참여되며 나갈 수 없는 기본 토픽입니다. 정회원 모두에게 전달해야하는 내용을 전송할 수 있으며 준회원은 기본 토픽에 참여할 수 없습니다.</span>
+                                <span>${topicDto.topic_explain}</span>
                             </div>
                         </div>  
                         <!-- 멤버 초대하기 버튼 -->
@@ -445,8 +449,7 @@ background-color:#f8f8f8;
                     </div>
                     <article class="message-wrap">
                         <div class="message" style="text-align: right">
-							<h1>웹소켓 클라이언트(with 로그인, ${param.topic_no} 번 방)</h1>
-							
+							<h1>웹소켓 클라이언트(with 로그인, ${topicDto.topic_name})</h1>
 									<input type="text" class="user-input">
 									<button class="send-btn" type="submit">보내기</button>
 							

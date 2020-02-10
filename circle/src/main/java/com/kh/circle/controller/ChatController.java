@@ -1,10 +1,16 @@
 package com.kh.circle.controller;
 
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +37,17 @@ import com.kh.circle.repository.TeamCertDao;
 import com.kh.circle.repository.TeamDao;
 
 import com.kh.circle.repository.TopicDao;
+
 import com.kh.circle.service.EmailService;
 import com.kh.circle.service.RandomService;
 import com.kh.circle.service.TeamEmailService;
+
+
+import com.kh.circle.service.TeamService;
+
+
 import com.kh.circle.vo.TopicRestVO;
+
 
 import lombok.extern.slf4j.Slf4j;
 @Controller
@@ -55,16 +68,25 @@ public class ChatController {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	
+
+	@Autowired
+	private MemberDao memberDao;
+
 	@GetMapping("/chat")
 	public String chat(@RequestParam int topic_no) {
 		
 		return "chat/chat";
 	}
+
 	
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
-							@RequestParam int topic_no) {
+							@RequestParam int topic_no,
+							Model model) {
+		List<TopicDto> topicList = teamService.teamTopicList(team_no);
+		topic_no =topicDao.teamTopicFirst(team_no);
+		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
+		model.addAttribute("topicList", topicList);
 		return "chat/topic_main";
 	}
 	
@@ -91,6 +113,22 @@ public class ChatController {
 		
 	}
 	
+
+	@Autowired
+	private TeamService teamService;
+	
+	@GetMapping("/topic")
+	public String topic(@RequestParam int topic_no,
+						@RequestParam int team_no,
+						Model model) {
+		
+		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
+		model.addAttribute("team_no", team_no);
+		model.addAttribute("topic_no", topic_no);
+
+		return "redirect:./topic_main";
+	}
+
 	//중복검사
 	@GetMapping("/topic_namecheck")
 	@ResponseBody
@@ -104,6 +142,7 @@ public class ChatController {
 		else return "N";
 		
 	}
+
 		
 
 	//소희 : 멤버 초대 이메일 전송하는 컨트롤러 
@@ -154,7 +193,7 @@ public class ChatController {
 		}
 		
 	//이메일 초대로유저 로그인창
-		@Autowired private MemberDao memberDao;
+
 		@GetMapping("/invite_signin")
 		public String invite_signin(@RequestParam String cert_email,
 								   @RequestParam String team_no,
@@ -205,17 +244,7 @@ public class ChatController {
 			return "chat/invite_signup";
 		}
 		
-		@PostMapping("/invite_signup")
-		public String signup(@ModelAttribute MemberDto memberDto,
-							 @RequestParam MultipartFile file) {
-			
-			MemberProfileDto memberProfileDto = MemberProfileDto.builder().member_profile_uploadname(file.getOriginalFilename()).member_profile_filesize(file.getSize()).build();
-			memberDao.signup(memberDto, memberProfileDto);
-			
-			
-			return "redirect:./invite_signin";
-		}
-		
+
 		
 		//팀 멤버로 등록하는 페이지 접속
 		
@@ -252,6 +281,6 @@ public class ChatController {
 		}
 	
 	
-	
+
 	
 }
