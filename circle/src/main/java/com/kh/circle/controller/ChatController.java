@@ -88,6 +88,7 @@ public class ChatController {
 						Model model) {
 		
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
+		model.addAttribute("team_no", team_no);
 		model.addAttribute("topic_no", topic_no);
 
 		return "redirect:./topic_main";

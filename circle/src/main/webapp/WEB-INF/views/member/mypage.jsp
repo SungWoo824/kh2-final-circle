@@ -13,7 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
 <script>
 $(function(){
-	$(".param_submit").submit(function(e){
+	$(".param_submit").click(function(e){
 		e.preventDefault();
 		
 		var team_no = $(".team_no_value").attr("value")
@@ -27,13 +27,12 @@ $(function(){
 			data:data,
 			success:function(resp){
 				$(".topic_no_value").attr("value",resp);
-			},
-			error:function(resp){
-				console.log("error")
+				$(".param_submit").submit();
+				
 			}
-		})
+		});
 		
-		this.submit();
+		
 	})
 })
 </script> 
@@ -60,8 +59,16 @@ $(function(){
 						    </c:choose>
                         </ul>
                         <ul class="gnb-menu">
-                            <li class="login-btn"><a href="member/signin">로그인</a></li>
-<!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
+                           <c:choose>
+	                        <c:when test="${not empty member_email}">
+						        <li class="logout-btn"><a href="${pageContext.request.contextPath}/member/signout">로그아웃</a></li>
+						    </c:when>
+							<c:otherwise>
+								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
+							</c:otherwise>
+                       
+                        
+                        </c:choose>
                         </ul>
                     </div>
                 </div>        
@@ -73,8 +80,13 @@ $(function(){
                             <div class="section">
                                 <div class="main-title">
                                     <div>
+                                    	<div>
                                         <span>${memberDto.member_name}</span>
                                         <p>${memberDto.member_email}
+                                        </div>
+                                        <div>
+                                        	<a href="${pageContext.request.contextPath}/member/modify">프로필 설정</a>
+                                        </div>
                                         
                                     </div>
                                    
@@ -82,7 +94,7 @@ $(function(){
 		                                    	<div>
                                     				<div>
 														<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
-														<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic_main">
+														<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 															<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 															<input type="hidden" name="topic_no" class="topic_no_value" value="">
 															<button type="submit">이동하기</button>
