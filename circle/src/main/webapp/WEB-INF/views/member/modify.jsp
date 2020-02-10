@@ -133,7 +133,7 @@
 				</div>
 				<div class="modify-item-content">
 						
-							<img id="member-profile-img" src='download?member_no=${member_no}'>
+							<button class="member-profile-button"><img id="member-profile-img" src='download?member_no=${member_no}'></button>
 						
 				</div>
 			</div>

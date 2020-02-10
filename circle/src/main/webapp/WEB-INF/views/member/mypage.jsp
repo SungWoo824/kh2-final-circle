@@ -78,13 +78,13 @@ $(function(){
                     
                         <div id="fullpage">
                             <div class="section">
-                                <div class="main-title">
-                                    <div>
-                                    	<div>
-                                        <span>${memberDto.member_name}</span>
-                                        <p>${memberDto.member_email}
+                                <div class="main-title mypage-main-content">
+                                    <div class="mypage-div">
+                                    	<div class="mypage-name-div">
+	                                        <span>${memberDto.member_name}</span>
+	                                        <p>${memberDto.member_email}
                                         </div>
-                                        <div>
+                                        <div class="mypage-profile-div">
                                         	<a href="${pageContext.request.contextPath}/member/modify">프로필 설정</a>
                                         </div>
                                         
@@ -92,14 +92,18 @@ $(function(){
                                    
 		                                    <c:forEach items="${teamlist}" var="teamDto">
 		                                    	<div>
-                                    				<div>
-														<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
+                                    				<div class="mypage-div">
+                                    					<div class="mypage-name-div">
+															<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
+														</div>
 														<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 															<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 															<input type="hidden" name="topic_no" class="topic_no_value" value="">
-															<button type="submit">이동하기</button>
+															<div class="mypage-team-div">
+																<button type="submit">이동하기</button>
+															</div>
 														</form>
-														<br><br>
+														
 													</div>
                                     			</div>
 											</c:forEach>
