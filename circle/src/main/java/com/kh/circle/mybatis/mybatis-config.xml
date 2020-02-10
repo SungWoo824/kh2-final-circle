@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE configuration
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -18,16 +18,13 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.circle.entity.MemberProfileDto" alias="memberProfileDto"/>
 		<typeAlias type="com.kh.circle.entity.TopicDto" alias="topicDto"/>
 		<typeAlias type="com.kh.circle.entity.TopicMemberDto" alias="topicMemberDto"/>
+		<typeAlias type="com.kh.circle.vo.TopicRestVO" alias="topicRestVo"/>
 		<typeAlias type="com.kh.circle.entity.TeamDto" alias="TeamDto"/>
 		<typeAlias type="com.kh.circle.entity.TeamMemberDto" alias="TeamMemberDto"/>
-
+		<typeAlias type="com.kh.circle.entity.VoteDto" alias="voteDto"/>
+		<typeAlias type="com.kh.circle.entity.VoteCategoryDto" alias="voteCategoryDto"/>
 	</typeAliases>
 	
 	
 
 </configuration>
-
-
-
-
-
