@@ -43,7 +43,7 @@
 </script>   
 </head>
 
-<form action="create" method="post">
+<form action="vote_create" method="post">
 <!-- 세션 찍어주는 표현식 -->
 <h3>${member_no}</h3>
 <h3>투표 제목			<input type="text" name="vote_create_title" placeholder="제목을 입력하세요" required></h3><br><br>

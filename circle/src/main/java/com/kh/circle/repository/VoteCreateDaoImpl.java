@@ -62,7 +62,7 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 
 	@Override
 	public Object compare(int member_no) {
-		if(sqlSession.selectOne("vote.compare", member_no) != null) {
+		if(sqlSession.selectList("vote.compare", member_no) != null) {
 			return "y";
 		}else {
 			return "f";

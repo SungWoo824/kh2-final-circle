@@ -21,7 +21,7 @@ import com.kh.circle.vo.VoteVO;
 
 
 @Controller
-@RequestMapping("/vote")
+@RequestMapping("/chat")
 public class VoteController {
 	
 	@Autowired
@@ -29,33 +29,35 @@ public class VoteController {
 	@Autowired
 	private SeqService seqService;
 	
-	@GetMapping("/detail")
+	@GetMapping("/vote_detail")
 	public String detail(@RequestParam("vote_create_no") int vote_create_no, Model model, HttpSession session) {
 		model.addAttribute("no", vote_create_no);
 		model.addAttribute("voteDetail", voteCreateDao.getVoteDetail(vote_create_no));
 		model.addAttribute("voteCategoryDetail", voteCreateDao.getVoteCategoryDetail(vote_create_no));
-		session.setAttribute("member_no", 21);
-		model.addAttribute("memberNo", session.getAttribute("member_no") );
+//		session.setAttribute("member_no", 21);
+		model.addAttribute("member_no", session.getAttribute("member_no") );
 		model.addAttribute("memberName", voteCreateDao.getMemberName((int) session.getAttribute("member_no")));
 		model.addAttribute("compare", voteCreateDao.compare((int) session.getAttribute("member_no")));
-		return "vote/detail";
+		return "chat/vote_detail";
 	}
 	
-	@GetMapping("/list")
-	public String list(Model model) {
-		model.addAttribute("voteList", voteCreateDao.getVoteList());	
-		return "vote/list";
-	}
+//	@GetMapping("/vote_list")
+//	public String list(Model model, HttpSession session) {
+//		model.addAttribute("voteList", voteCreateDao.getVoteList());	
+//		model.addAttribute("member_no", session.getAttribute("member_no"));
+//		return "chat/topic_main";
+//	}
 	
-	@GetMapping("/create")
-	public String create(Model model) {
+	@GetMapping("/vote_create")
+	public String create(Model model, HttpSession session) {
 		model.addAttribute("topicList", voteCreateDao.getTopicList());
-		return "vote/create";
+		model.addAttribute("member_no", session.getAttribute("member_no"));
+		return "chat/vote_create";
 	}
 	
-	@PostMapping("/create")
+	@PostMapping("/vote_create")
 	public String create(@ModelAttribute VoteVO vote, HttpSession session) {
-		session.setAttribute("member_no", 21);
+//		session.setAttribute("member_no", 21);
 		int seq = seqService.getSequence();
 		List<VoteCategoryDto> dto = vote.getCategory();
 		VoteDto vdto = VoteDto.builder()
@@ -73,21 +75,21 @@ public class VoteController {
 		for(VoteCategoryDto vcdto : dto) {
 			voteCreateDao.createCategory(vcdto, seq);
 		}
-		return "redirect:./list";
+		return "redirect:./vote_list";
 	}
 	
 	@GetMapping("/voteselect")
 	public String selection(@RequestParam("member_no") int member_no, @RequestParam("vote_create_no") int vote_create_no, @RequestParam("vote_category_content") String content, @RequestParam("vote_select_true") String selection, @RequestParam("member_name") String name) {
 		voteCreateDao.selection(member_no, vote_create_no, content, selection, name);
 //		return "redirect:./detail?vote_create_no="+vote_create_no;
-		return "redirect:./result?member_no="+member_no;	
+		return "redirect:./vote_result?member_no="+member_no;	
 	}
 	
-	@GetMapping("/result")
+	@GetMapping("/vote_result")
 	public String result(Model model) {
 //		voteCreateDao.compare(member_no);
 //		model.addAttribute("compare", voteCreateDao.compare(member_no));
 //		System.out.println(voteCreateDao.compare(member_no));
-		return "vote/result";
+		return "chat/vote_result";
 	}
 }

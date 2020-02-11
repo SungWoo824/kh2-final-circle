@@ -23,7 +23,7 @@ function MovePage(no){
 			dataType : "html",
 			cache : false,
 			data : {
-					  member_no:${memberNo},
+					  member_no:${member_no},
 					  vote_category_content:str,
 					  vote_select_true:selection,
 					  member_name:"${memberName}",
@@ -44,9 +44,9 @@ function MovePage(no){
 <div id="bodyContents">
 <h3>투표상세페이지</h3>
 <c:if test="${compare=='y'}">
-<a href="./result"><button>투표 종료</button></a>
+<a href="./vote_result"><button>투표 종료</button></a>
 </c:if>
-<c:out value="${no }" />
+<c:out value="${member_no }" />
 
 <ul>
 	<li>

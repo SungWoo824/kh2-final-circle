@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.TopicDao;
-
+import com.kh.circle.repository.VoteCreateDao;
 import com.kh.circle.service.TeamService;
 
 import com.kh.circle.vo.TopicRestVO;
@@ -35,6 +35,8 @@ public class ChatController {
 	private TopicDao topicDao;
 	
 	@Autowired
+	private VoteCreateDao voteCreateDao;
+	@Autowired
 	private SqlSession sqlSession;
 
 	@GetMapping("/chat")
@@ -47,11 +49,14 @@ public class ChatController {
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,
-							Model model) {
+							Model model, HttpSession session) {
 		List<TopicDto> topicList = teamService.teamTopicList(team_no);
 		topic_no =topicDao.teamTopicFirst(team_no);
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
+		//투표기능관련 코드
+		model.addAttribute("voteList", voteCreateDao.getVoteList());	
+		model.addAttribute("member_no", session.getAttribute("member_no"));
 		return "chat/topic_main";
 	}
 	

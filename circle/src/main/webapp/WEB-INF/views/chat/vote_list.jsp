@@ -101,7 +101,7 @@
  
     	function MovePage(no){
     		var  ajaxOption = {
-    				url : "./detail?vote_create_no="+no,
+    				url : "./vote_detail?vote_create_no="+no,
     				type : "GET",
     				dataType : "html",
     				cache : false
@@ -314,7 +314,7 @@
         			<div id="bodyContents" class="menu4-slide">   
         				<!-- 목록으로 버튼 if처리해야함 -->
 			       		<button id="movelist">목록으로..</button>
-			            <a href="create">+투표 만들기</a><br><br>
+			            <a href="vote_create">+투표 만들기</a><br><br>
 			            <h3>진행중인 투표 목록</h3>
 
         <!-- 화면 동적 전환(투표 상세 페이지) -->
