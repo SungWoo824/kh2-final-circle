@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.circle.entity.TeamCertDto" alias="TeamCertDto"/>
 		<typeAlias type="com.kh.circle.entity.VoteDto" alias="voteDto"/>
 		<typeAlias type="com.kh.circle.entity.VoteCategoryDto" alias="voteCategoryDto"/>
+		<typeAlias type="com.kh.circle.entity.VoteSelectionDto" alias="voteSelectionDto"/>
 	</typeAliases>
 	
 	

@@ -23,13 +23,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
+
 
 import com.kh.circle.entity.MemberDto;
-import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.entity.TeamDto;
-import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.MemberDao;
@@ -38,10 +35,10 @@ import com.kh.circle.repository.TeamDao;
 
 import com.kh.circle.repository.TopicDao;
 
-import com.kh.circle.service.EmailService;
-import com.kh.circle.service.RandomService;
 import com.kh.circle.service.TeamEmailService;
 
+
+import com.kh.circle.repository.VoteCreateDao;
 
 import com.kh.circle.service.TeamService;
 
@@ -67,6 +64,8 @@ public class ChatController {
 	private TopicDao topicDao;
 	
 	@Autowired
+	private VoteCreateDao voteCreateDao;
+	@Autowired
 	private SqlSession sqlSession;
 
 	@Autowired
@@ -82,11 +81,14 @@ public class ChatController {
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,
-							Model model) {
+							Model model, HttpSession session) {
 		List<TopicDto> topicList = teamService.teamTopicList(team_no);
 		topic_no =topicDao.teamTopicFirst(team_no);
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
+		//투표기능관련 코드
+		model.addAttribute("voteList", voteCreateDao.getVoteList());	
+		model.addAttribute("member_no", session.getAttribute("member_no"));
 		return "chat/topic_main";
 	}
 	
