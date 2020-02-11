@@ -3,17 +3,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <html>
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.addons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
-     <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
+    <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
+    
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-
-	
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script>
+
 	var enter = 0, exit = 1, message = 2;
 	
 	$(function(){
@@ -67,7 +69,8 @@
 		
 // 		메시지 전송 함수
 		function sendMessage(status, chat_content){
-			var topic_no = ${param.topic_no};
+			var topic_no = "${param.topic_no}";
+// 			var topic_no = ${param.topic_no} || 0;
 			var message = {
 				topic_no:topic_no,
 				status:status,
@@ -94,8 +97,22 @@
 			$(".menu4-slide").toggle();
 		});
 	});
-               
+
+ 
+    	function MovePage(no){
+    		var  ajaxOption = {
+    				url : "./vote_detail?vote_create_no="+no,
+    				type : "GET",
+    				dataType : "html",
+    				cache : false
+    		};
+    		$.ajax(ajaxOption).done(function(data){
+    			$('#bodyContents').html(data);
+    		});
+    	}
+
 </script>
+
 
 <style>
 	#topic-create > a{
@@ -108,8 +125,7 @@
 </style>
 
 </head>
-<!-- <div class="container-scroller"> -->
-<!--     </div>  -->
+
 <div id="topic-modal">
 
 	<div class="topic-modal-view">
@@ -295,15 +311,33 @@
 					<div id="gnb-detail-slide">
 			            <div class ="menu1-slide">d</div>
 			            <!-- 주소 변경했음 -->
-			            <div class="menu4-slide"><a href="create">+투표 만들기</a></div>
+        			<div id="bodyContents" class="menu4-slide">   
+        				<!-- 목록으로 버튼 if처리해야함 -->
+			       		<button id="movelist">목록으로..</button>
+			            <a href="vote_create">+투표 만들기</a><br><br>
+			            <h3>진행중인 투표 목록</h3>
+
+        <!-- 화면 동적 전환(투표 상세 페이지) -->
+			            		<ul>
+			            	<c:forEach var="voteList" items="${voteList }" >
+			            		<li>
+			            		<c:out value="${voteList.vote_create_no }"></c:out>번 투표
+			            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
+			            		</li>
+			            		<br>
+			            	</c:forEach>   	
+			            		</ul>
+			            </div>
 			        </div>
+			        
+			        
 			        
             </div>
             <!-- Page Title Header Ends-->
            
         </div> 
-        
         <!-- main-panel ends -->
+        
       <!-- page-body-wrapper ends -->
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.base.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/design/vendor.bundle.addons.js"></script>

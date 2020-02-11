@@ -43,7 +43,9 @@
 </script>   
 </head>
 
-<form action="create" method="post">
+<form action="vote_create" method="post">
+<!-- 세션 찍어주는 표현식 -->
+<h3>${member_no}</h3>
 <h3>투표 제목			<input type="text" name="vote_create_title" placeholder="제목을 입력하세요" required></h3><br><br>
 <h3>투표 설명(옵션)			<input type="text" name="vote_create_detail" placeholder="설명을 입력하세요"></h3><br><br>
 <h3>보기 목록</h3><br>
@@ -97,15 +99,17 @@
 <span>
 공유 대화방			
 
-   <select name="selectBox">
-      <c:forEach var="topicList" items="${voteCreateDao.getTopicList()}" >
-         <option value="${topicList}">${topicList}</option>
+   <select name="vote_create_topic" >
+      <c:forEach var="topicList" items="${topicList}">
+         <option value="<c:out value='${topicList }'/>"><c:out value="${topicList}"/></option>
       </c:forEach>
    </select>
 
 </span>
 <br><br>
-<button>취소</button>		<input type="submit" value="만들기">
+		
+		<input type="hidden" name="vote_create_status" id="create" value="y">
+		<input type="submit" value="만들기">
 </form>
-
+<a href="list"><button>취소</button></a>
 </html>
