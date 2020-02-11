@@ -10,7 +10,32 @@
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/fullpage.css" />
  <script type="text/javascript" src=" ${pageContext.request.contextPath}/resources/js/design/fullpage.js"></script>
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
-    
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
+<script>
+$(function(){
+	$(".param_submit").click(function(e){
+		e.preventDefault();
+		
+		var team_no = $(".team_no_value").attr("value")
+		var url = "${pageContext.request.contextPath}/team/connect"; 
+		var method = $(this).attr("method");
+		var data = $(this).serialize();
+		
+		$.ajax({
+			url:url,
+			type:"get",
+			data:data,
+			success:function(resp){
+				$(".topic_no_value").attr("value",resp);
+				$(".param_submit").submit();
+				
+			}
+		});
+		
+		
+	})
+})
+</script> 
 </head>
 <body>
 
@@ -20,17 +45,30 @@
                 <div class="header-wrap">
                     <div class="header-logo">
                         <div class="mainlogo">
-                            <img src=" ${pageContext.request.contextPath}/resources/image/logol.png">
+                            <a href="${pageContext.request.contextPath}"><img src=" ${pageContext.request.contextPath}/resources/image/logol.png"></a>
                         </div>
                     </div>
                     <div class="header-gnb">
                         <ul class="gnb-menu">
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
+                            <c:choose>
+		                        <c:when test="${not empty member_email}">
+							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
+							    </c:when>
+						    </c:choose>
                         </ul>
                         <ul class="gnb-menu">
-                            <li class="login-btn"><a href="member/signin">로그인</a></li>
-<!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
+                           <c:choose>
+	                        <c:when test="${not empty member_email}">
+						        <li class="logout-btn"><a href="${pageContext.request.contextPath}/member/signout">로그아웃</a></li>
+						    </c:when>
+							<c:otherwise>
+								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
+							</c:otherwise>
+                       
+                        
+                        </c:choose>
                         </ul>
                     </div>
                 </div>        
@@ -42,8 +80,13 @@
                             <div class="section">
                                 <div class="main-title">
                                     <div>
+                                    	<div>
                                         <span>${memberDto.member_name}</span>
                                         <p>${memberDto.member_email}
+                                        </div>
+                                        <div>
+                                        	<a href="${pageContext.request.contextPath}/member/modify">프로필 설정</a>
+                                        </div>
                                         
                                     </div>
                                    
@@ -51,8 +94,9 @@
 		                                    	<div>
                                     				<div>
 														<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
-														<form action="${pageContext.request.contextPath}/team/connect">
-															<input type="hidden" name="team_no" value="${teamDto.team_no}">
+														<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
+															<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+															<input type="hidden" name="topic_no" class="topic_no_value" value="">
 															<button type="submit">이동하기</button>
 														</form>
 														<br><br>

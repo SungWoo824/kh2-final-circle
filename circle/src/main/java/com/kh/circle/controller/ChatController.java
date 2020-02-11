@@ -1,6 +1,9 @@
 package com.kh.circle.controller;
 
+
+import java.util.List;
 import javax.servlet.http.HttpSession;
+
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.TopicDao;
+
+import com.kh.circle.service.TeamService;
+
 import com.kh.circle.vo.TopicRestVO;
+
 
 import lombok.extern.slf4j.Slf4j;
 @Controller
@@ -30,16 +37,21 @@ public class ChatController {
 	@Autowired
 	private SqlSession sqlSession;
 
-	
 	@GetMapping("/chat")
 	public String chat(@RequestParam int topic_no) {
 		
 		return "chat/chat";
 	}
+
 	
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
-							@RequestParam int topic_no) {
+							@RequestParam int topic_no,
+							Model model) {
+		List<TopicDto> topicList = teamService.teamTopicList(team_no);
+		topic_no =topicDao.teamTopicFirst(team_no);
+		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
+		model.addAttribute("topicList", topicList);
 		return "chat/topic_main";
 	}
 	
@@ -66,6 +78,22 @@ public class ChatController {
 		
 	}
 	
+
+	@Autowired
+	private TeamService teamService;
+	
+	@GetMapping("/topic")
+	public String topic(@RequestParam int topic_no,
+						@RequestParam int team_no,
+						Model model) {
+		
+		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
+		model.addAttribute("team_no", team_no);
+		model.addAttribute("topic_no", topic_no);
+
+		return "redirect:./topic_main";
+	}
+
 	//중복검사
 	@GetMapping("/topic_namecheck")
 	@ResponseBody
@@ -79,14 +107,7 @@ public class ChatController {
 		else return "N";
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 }
