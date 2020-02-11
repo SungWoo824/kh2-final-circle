@@ -306,10 +306,16 @@ background-color:#f8f8f8;
                     <article class="message-wrap">
                         <div class="message" style="text-align: right">
 							<h1>웹소켓 클라이언트(with 로그인, ${topicDto.topic_name})</h1>
+							<div id="chat-content" style="overflow:scroll; width:100%; height:42rem; text-align:left;"></div>
+							<div class="chat-send-content">
+								<div class="chat-send-text">
 									<input type="text" class="user-input">
+								</div>
+								<div class="chat-send-button">
 									<button class="send-btn" type="submit">보내기</button>
-							
-									<div id="chat-content"></div>
+								</div>
+							</div>
+									
 						</div>
 					</article>
 				</div>

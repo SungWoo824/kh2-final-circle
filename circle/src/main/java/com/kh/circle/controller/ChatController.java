@@ -49,7 +49,6 @@ public class ChatController {
 							@RequestParam int topic_no,
 							Model model) {
 		List<TopicDto> topicList = teamService.teamTopicList(team_no);
-		topic_no =topicDao.teamTopicFirst(team_no);
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
 		return "chat/topic_main";

@@ -112,6 +112,7 @@ color:#222;
 
 .chat-aside{
      flex-grow: 1;
+     width: 100%;
 }
 
 .chat-menu-bar{
