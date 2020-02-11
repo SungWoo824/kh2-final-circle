@@ -50,7 +50,8 @@
                     </div>
                 </div>        
         </div>
-	<h3>회원 가입 성공 페이지</h3>
-	<a href="./signin">로그인 페이지로 이동</a>
+        <div class="signup-article">
+			<a href="./signin">로그인 페이지로 이동</a>
+		</div>
 </body>
 </html>
