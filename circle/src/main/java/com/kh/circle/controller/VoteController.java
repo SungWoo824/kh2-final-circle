@@ -1,5 +1,7 @@
 package com.kh.circle.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -31,13 +33,16 @@ public class VoteController {
 	
 	@GetMapping("/vote_detail")
 	public String detail(@RequestParam("vote_create_no") int vote_create_no, Model model, HttpSession session) {
+//		, @RequestParam("team_no") int team_no, @RequestParam("topic_no") int topic_no
 		model.addAttribute("no", vote_create_no);
 		model.addAttribute("voteDetail", voteCreateDao.getVoteDetail(vote_create_no));
 		model.addAttribute("voteCategoryDetail", voteCreateDao.getVoteCategoryDetail(vote_create_no));
-//		session.setAttribute("member_no", 21);
 		model.addAttribute("member_no", session.getAttribute("member_no") );
 		model.addAttribute("memberName", voteCreateDao.getMemberName((int) session.getAttribute("member_no")));
-		model.addAttribute("compare", voteCreateDao.compare((int) session.getAttribute("member_no")));
+		model.addAttribute("compare", voteCreateDao.compare(vote_create_no,(int) session.getAttribute("member_no")));
+		model.addAttribute("complete", voteCreateDao.complete(vote_create_no, (int) session.getAttribute("member_no")));
+		model.addAttribute("status", voteCreateDao.status(vote_create_no));
+		model.addAttribute("maxcount", voteCreateDao.maxcount(vote_create_no));
 		return "chat/vote_detail";
 	}
 	
@@ -56,7 +61,7 @@ public class VoteController {
 	}
 	
 	@PostMapping("/vote_create")
-	public String create(@ModelAttribute VoteVO vote, HttpSession session) {
+	public String create(@ModelAttribute VoteVO vote, HttpSession session, @RequestParam("team_no") int team_no, @RequestParam("topic_no") int topic_no) {
 //		session.setAttribute("member_no", 21);
 		int seq = seqService.getSequence();
 		List<VoteCategoryDto> dto = vote.getCategory();
@@ -75,21 +80,33 @@ public class VoteController {
 		for(VoteCategoryDto vcdto : dto) {
 			voteCreateDao.createCategory(vcdto, seq);
 		}
-		return "redirect:./vote_list";
+		return "redirect:./topic_main?team_no="+team_no+"&topic_no="+topic_no;
 	}
 	
 	@GetMapping("/voteselect")
-	public String selection(@RequestParam("member_no") int member_no, @RequestParam("vote_create_no") int vote_create_no, @RequestParam("vote_category_content") String content, @RequestParam("vote_select_true") String selection, @RequestParam("member_name") String name) {
+	public String selection(@RequestParam("member_no") int member_no, @RequestParam("vote_create_no") int vote_create_no, @RequestParam("vote_category_content") String content, @RequestParam("vote_select_true") String selection, @RequestParam("member_name") String name, @RequestParam("team_no") int team_no, @RequestParam("topic_no") int topic_no) {
+		
 		voteCreateDao.selection(member_no, vote_create_no, content, selection, name);
+		
 //		return "redirect:./detail?vote_create_no="+vote_create_no;
-		return "redirect:./vote_result?member_no="+member_no;	
+		return "redirect:./vote_result?member_no="+member_no+"&team_no="+team_no+"&topic_no="+topic_no+"&vote_create_no="+vote_create_no;	
 	}
 	
 	@GetMapping("/vote_result")
-	public String result(Model model) {
+	public String result(@RequestParam("vote_create_no") int vote_create_no, HttpSession session, Model model, @RequestParam("member_no") int member_no, @RequestParam("team_no") int team_no, @RequestParam("topic_no") int topic_no) {
 //		voteCreateDao.compare(member_no);
 //		model.addAttribute("compare", voteCreateDao.compare(member_no));
 //		System.out.println(voteCreateDao.compare(member_no));
+		model.addAttribute("no", vote_create_no);
+		model.addAttribute("voteDetail", voteCreateDao.getVoteDetail(vote_create_no));
+		model.addAttribute("voteCategoryDetail", voteCreateDao.getVoteCategoryDetail(vote_create_no));
+		model.addAttribute("member_no", session.getAttribute("member_no") );
+		model.addAttribute("memberName", voteCreateDao.getMemberName((int) session.getAttribute("member_no")));
+		model.addAttribute("compare", voteCreateDao.compare(vote_create_no,(int) session.getAttribute("member_no")));
+		model.addAttribute("complete", voteCreateDao.complete(vote_create_no, (int) session.getAttribute("member_no")));
+		model.addAttribute("status", voteCreateDao.status(vote_create_no));
+		model.addAttribute("maxcount", voteCreateDao.maxcount(vote_create_no));
+		voteCreateDao.close(vote_create_no);
 		return "chat/vote_result";
 	}
 }

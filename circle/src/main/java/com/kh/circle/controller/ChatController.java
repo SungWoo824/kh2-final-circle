@@ -45,7 +45,6 @@ public class ChatController {
 		return "chat/chat";
 	}
 
-	
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,

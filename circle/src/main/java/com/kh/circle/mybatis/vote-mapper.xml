@@ -41,7 +41,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into vote_select values(#{member_no}, #{vote_create_no}, #{vote_category_content}, #{vote_select_true}, #{member_name})
 	</insert>
 	
-	<select id="compare" parameterType="java.lang.Integer" resultType="Object">
-		select vote_create_userno from vote_create where vote_create_userno=#{member_no}
+	<select id="compare" parameterType="voteCompareDto" resultType="Object">
+		select vote_create_userno from vote_create where vote_create_no=#{vote_create_no} and vote_create_userno=#{member_no}
 	</select>
+	
+	<select id="complete" parameterType="voteCompareDto" resultType="String">
+		select vote_category_content from vote_select where vote_create_no=#{vote_create_no} and member_no=#{member_no}
+	</select>
+	
+	<update id="close" parameterType="Integer" >
+		update vote_create set vote_create_status = 'n' where vote_create_no = #{vote_create_no}
+	</update>
+	
+	<select id="status" parameterType="Integer" resultType="String">
+		select vote_create_status from vote_create where vote_create_no=#{vote_create_no}
+	</select>
+	
+	<select id="maxcount" parameterType="Integer" resultType="Integer">
+		select vote_category_content from(select vote_category_content, count(*) as max_vote_count from vote_select group by vote_category_content, vote_create_no having vote_create_no=#{vote_create_no} order by max_vote_count desc) where rownum=1
+	</select> 
 </mapper>

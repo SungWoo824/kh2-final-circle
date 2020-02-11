@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kh.circle.entity.VoteCategoryDto;
+import com.kh.circle.entity.VoteCompareDto;
 import com.kh.circle.entity.VoteDto;
 import com.kh.circle.entity.VoteSelectionDto;
 
@@ -61,12 +62,45 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 	}
 
 	@Override
-	public Object compare(int member_no) {
-		if(sqlSession.selectList("vote.compare", member_no) != null) {
+	public Object compare(int vote_create_no, int member_no) {
+		VoteCompareDto voteCompareDto = VoteCompareDto.builder()
+																	.vote_create_no(vote_create_no)
+																	.member_no(member_no)
+																	.build();
+//		System.out.println(sqlSession.selectList("vote.compare", voteCompareDto).size());
+		if(sqlSession.selectList("vote.compare", voteCompareDto).size() != 0) {
 			return "y";
 		}else {
 			return "f";
 		}
+	}
+	
+	public String complete(int vote_create_no, int member_no) {
+		VoteCompareDto voteCompareDto = VoteCompareDto.builder()
+				.vote_create_no(vote_create_no)
+				.member_no(member_no)
+				.build();
+		if(sqlSession.selectList("vote.complete", voteCompareDto).size() != 0) {
+			return "y";
+		}else {
+			return "f";
+		}
+	}
+	
+	public void close(int vote_create_no) {
+		sqlSession.update("vote.close", vote_create_no);
+	}
+
+	@Override
+	public String status(int vote_create_no) {
+		
+		return sqlSession.selectOne("vote.status", vote_create_no);
+	}
+
+	@Override
+	public int maxcount(int vote_create_no) {
+		
+		return sqlSession.selectOne("vote.maxcount", vote_create_no);
 	}
 	
 }
