@@ -22,12 +22,23 @@
 		
 		$(".modify-origin-div").click(function() {
 
-            $(this).parent().children(".modify-fix-div").show('3000'); //천천히 보이기
+            $(this).parent().children(".modify-fix-div").show('3000');
 
-            $(this).hide('fast');//more버튼 숨기기
+            $(this).hide('fast');
 
         });
+		
+		$(".modify-cancel").click(function(){
+			$(this).parent().parent().children(".modify-origin-div").show('3000');
 
+            $(this).parent().parent().children(".modify-fix-div").hide('fast');
+		})
+		
+		$(".modify-cancel-img").click(function(){
+			$(this).parent().parent().parent().children(".modify-origin-div").show('3000');
+
+            $(this).parent().parent().parent().children(".modify-fix-div").hide('fast');
+		})
 		
 	});
 	
@@ -85,9 +96,29 @@
 				}
 			});
 		})
+		
+		$(".modify-img-submit").click(function(){
+			$(".change-profle-form").submit();
+		})
 	});
 	
+	function previewImage(target){
+	    
+	    if(target.files && target.files[0]){
+	        
+	        var reader = new FileReader();
 
+	        reader.onload = function(data){
+
+	            var img = document.querySelector("#preview");
+	            img.src = data.target.result;
+	            
+	        }
+	        reader.readAsDataURL(target.files[0]);
+	    }
+	}
+    
+	
 </script>
 </head>
 <body>
@@ -132,9 +163,25 @@
 					프로필사진
 				</div>
 				<div class="modify-item-content">
-						
-							<button class="member-profile-button"><img id="member-profile-img" src='download?member_no=${member_no}'></button>
-						
+					<div class="modify-origin-div">
+						<img id="member-profile-img" src='download?member_no=${member_no}'>
+					</div>
+					<div class="modify-fix-div">
+						<div class="mypage-div">
+							<div class="mypage-profile-img-div">
+								<img id="preview" class="preview-img">
+							</div>
+							<div class="mypage-profile-img-div">
+								<form action="mypagechangeprofile" method="post" class="change-profle-form" enctype="Multipart/form-data">
+									<input type='file' id='modify-upload' name='member_profile' onchange="previewImage(this);">
+								</form>
+							</div>
+						</div>
+						<div class="mypage-profile-img-button">
+							<button class="modify-img-submit">확인</button>
+							<button class="modify-cancel-img">취소</button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="modify-items">
@@ -149,8 +196,10 @@
 					<div class="modify-fix-div">
 							<form action="mypagechangename" method="post">
 								<input type="text" name="member_name" value="${memberDto.member_name }">
-								<button>취소</button><button>확인</button>
+								<button>확인</button>
 							</form>
+							
+							<button class="modify-cancel">취소</button>
 					</div>
 				</div>
 			</div>
@@ -166,8 +215,9 @@
 					<div class="modify-fix-div">
 						<form action="#">
 							<input type="text" name="member_email" value="${memberDto.member_email }">
-							<button>취소</button><button>확인</button>
+							<button>확인</button>
 						</form>
+						<button class="modify-cancel">취소</button>
 					</div>
 				</div>
 			</div>
@@ -187,7 +237,8 @@
 							<h5>새 비밀번호</h5>
 							<input type="password" name="change_pw"><br><br>
 						</form>
-						<button>취소</button><button id="modify-change-pw-submit">확인</button>
+						<button id="modify-change-pw-submit">확인</button>
+						<button class="modify-cancel">취소</button>
 					</div>
 				</div>
 			</div>
@@ -209,7 +260,7 @@
 							</div>
 						</form>
 						<button id="modify-delete-submit">잔디 계정 삭제</button>
-						<button>취소</button>
+						<button class="modify-cancel">취소</button>
 					</div>
 				</div>
 			</div>

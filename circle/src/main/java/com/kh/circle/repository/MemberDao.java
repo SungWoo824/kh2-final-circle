@@ -19,4 +19,5 @@ public interface MemberDao {
 	void memberDelete(String member_email);
 	int memberProfileNo(int member_no);
 	MemberProfileDto getMemberProfile(int member_no);
+	void changeProfile(MultipartFile multipartFile,MemberProfileDto memberProfileDto,int member_no) throws IllegalStateException, IOException;
 }

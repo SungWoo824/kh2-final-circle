@@ -109,5 +109,21 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("member_profile.getmemberprofile", member_no);
 	}
 
+	@Override
+	public void changeProfile(MultipartFile multipartFile,
+					MemberProfileDto memberProfileDto, int member_no) throws IllegalStateException, IOException {
+		int profile_no = sqlSession.selectOne("member_profile.getprofileno", member_no);
+		File dir = new File("D:/upload/kh2e/memberProfile");
+	    dir.mkdirs();
+	    File origin = new File("D:/upload/kh2e/memberProfile/"+profile_no);
+	    origin.delete();
+	    File target = new File(dir, String.valueOf(profile_no));
+	    multipartFile.transferTo(target);
+		
+		memberProfileDto.setMember_profile_no(profile_no);
+		sqlSession.update("member_profile.memberprofilechange",memberProfileDto);
+		
+	}
+
 	
 }

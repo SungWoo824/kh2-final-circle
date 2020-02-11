@@ -219,4 +219,15 @@ public class MemberController {
 
 	      resp.getOutputStream().write(data);
 	   }
+	@PostMapping("mypagechangeprofile")
+	public String myPageChangeProfile(@RequestParam MultipartFile member_profile,
+									HttpSession session) throws IllegalStateException, IOException {
+		MemberProfileDto memberProfileDto = MemberProfileDto.builder()
+				.member_profile_uploadname(member_profile.getOriginalFilename())
+				.member_profile_filesize(member_profile.getSize()).build();
+		
+		memberDao.changeProfile(member_profile, memberProfileDto,(int)session.getAttribute("member_no"));
+		
+		return "redirect:./modify";
+	}
 }
