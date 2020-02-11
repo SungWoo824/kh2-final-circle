@@ -75,17 +75,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-		<!-- 해당 이메일의 인증정보를 삭제하는 구문 team_cert db에서 삭제 하므로 중복으로 들어가는 것을 방지 -->
+	<!-- 해당 이메일의 인증정보를 삭제하는 구문 team_cert db에서 삭제 하므로 중복으로 들어가는 것을 방지 -->
 	<delete id="delete" parameterType="String">
 		delete team_cert where cert_email=#{cert_email}
 	</delete>
 	
-
+	<!-- 본인이 팀 생성시 자동으로 팀멤버와 토픽멤버로 등록 -->
 	<insert id="teamMemberCreate" parameterType="map">
 		insert into team_member values(#{member_no},#{team_no},'소유자','')
 	</insert>
 	
-	<!-- 초대로 들어온 경우 팀 멤버로 등록 -->
+	<!-- 초대로 들어온 경우 팀 멤버,토픽멤버로 등록 -->
 	<insert id="teamMemberCreate2" parameterType="teamMemberDto">
 		insert into team_member values(#{member_no},#{team_no},'소유자','')
 	</insert>

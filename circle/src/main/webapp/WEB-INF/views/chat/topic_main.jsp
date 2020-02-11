@@ -340,12 +340,9 @@ background-color:#f8f8f8;
             
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
-<<<<<<< HEAD
 
-                	<c:forEach items="${topicList}" var="topicDto">
-=======
                 	<c:forEach items="${topicList}" var="topicListDto">  
->>>>>>> branch 'master' of https://github.com/SungWoo824/kh2-final-circle
+
                 		<li class="nav-item">
 		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic?team_no=${param.team_no }&topic_no=${topicListDto.topic_no}">${topicListDto.topic_name}</a>
 		                </li>

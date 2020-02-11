@@ -48,7 +48,7 @@ import com.kh.circle.service.TeamService;
 
 import com.kh.circle.vo.TopicRestVO;
 
-
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/chat")
@@ -242,6 +242,12 @@ public class ChatController {
 			
 			
 			return "chat/invite_signup";
+		}
+		
+		//링크 회원가입 버튼 누르기 진행중
+		@PostMapping("/invite_signup")
+		public String invite_signup(@ModelAttribute MemberDto memberDto) {
+			return "redirect:./invite_signin";
 		}
 		
 
