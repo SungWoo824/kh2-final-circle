@@ -126,13 +126,11 @@ $(function(){
 
 //팀 멤버 초대하기 모달 생성
 $(function(){
-//		var data = $("form[name=invite-form]").serialize();
 
         $(".invite-form").click(function(){
         $.ajax({
         type : "GET", //전송방식을 지정한다 (POST,GET)
         url : "${pageContext.request.contextPath}/chat/invite_modal1",//호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다.
-//         data : data
         dataType : "html",//호출한 페이지의 형식이다. xml,json,html,text등의 여러 방식을 사용할 수 있다.
         error : function(){
             alert("통신실패!!!!");
@@ -148,10 +146,7 @@ $(function(){
 </script>
 
 <script>	
-
-	
-
-
+//소희 : 멤버초대 이메일 보내기 
 $(function(){
       //이메일 보내기 버튼을 누르면 send주소로 비동기 신호를 전송 
       $('.email-form').submit(function(e){
@@ -183,22 +178,37 @@ $(function(){
           });
 
           });
+ });
+ 
 
-  });
+  	//멤버 초대 모달 화면
 	$(function(){
 	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
 
 	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
-	      $('#close_btn').click(function(){
+	      $('#invite_close').click(function(){
 	           $('#modal').hide();
 	      });
 	      $('#invite_btn').click(function(){
 	              $('#modal').show();
 	      		});
+	});
+  	
+  	
+  	
+	//멤버 리스트 모달 화면
+	$(function(){
+	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
+
+	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
+	      $('#memberlist_close').click(function(){
+	           $('#modal2').hide();
+	      });
+	      $('#memberlist_btn').click(function(){
+	              $('#modal2').show();
+	      });
 
 	});
-
-
 
 </script>
 <script>
@@ -241,10 +251,9 @@ background-color:#f8f8f8;
       	left:55px;
       	
 }
-<<<<<<< HEAD
 
-
-    .modal{
+	/* 소희 : 멤버초대 모달 화면 디자인 */
+   .modal{
             position: fixed;
             top:0;
             left:0;
@@ -266,17 +275,36 @@ background-color:#f8f8f8;
             left:50%;
             margin-left: -150px;
             margin-top: -200px;
+                       
+        }
+        
+        /* 소희 : 멤버초대 모달 화면 디자인 */
+       .modal2{
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background-color:rgba(139, 133, 133, 0.5);
             
-            
+            display: none;
+        }
+        
+         .modal2 > .modal-view2{
+            position: fixed;
+            width:300px;
+            height:400px;
+            background-color: white;
+            border:1px solid; padding:10px;
+            /* 가운데 배치 */
+            top:50%;
+            left:50%;
+            margin-left: -150px;
+            margin-top: -200px;
+                       
         }
 
-
     </style> 
-
-
-=======
-</style>
->>>>>>> branch 'master' of https://github.com/SungWoo824/kh2-final-circle
 
 </head>
 
@@ -432,9 +460,12 @@ background-color:#f8f8f8;
                                 <span>${topicDto.topic_explain}</span>
                             </div>
                         </div>  
+                       
+						
                         <!-- 멤버 초대하기 버튼 -->
+                        <div>
                         <button type="button" id="invite_btn">팀 멤버 초대하기</button>
-<!-- 						<div class="container"> -->
+<!-- 					<div class="container"> -->
 						<div id="modal" class="modal">
 						
 						<!--모달창 디자인-->
@@ -443,14 +474,15 @@ background-color:#f8f8f8;
 				        <div style="height: 30px;"></div>
 				        
 				         <!-- 이메일 전송 폼 -->	
-				<form class="email-form" action="topic_main" method="post">
-                <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
-<%--                 <input type="hidden" value="${param.cert_email}" name="cert_email">	 --%>
-              	<input type="hidden" value="${param.team_no}" name="team_no">
-             	<input type="hidden" value="${param.topic_no}" name="topic_no">
-                <input type="submit" value="이메일전송" id="invite-send" class="invite-send" data-dismiss="modal">
-                <span></span>
-				</form>		<!-- 혹시 몰라서 아직 남겨두는 코드 -->
+						<form class="email-form" action="topic_main" method="post">
+		                <input class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="cert_email" type="email" placeholder="Enter email">
+		<%--                 <input type="hidden" value="${param.cert_email}" name="cert_email">	 --%>
+		              	<input type="hidden" value="${param.team_no}" name="team_no">
+		             	<input type="hidden" value="${param.topic_no}" name="topic_no">
+		                <input type="submit" value="이메일전송" id="invite-send" class="invite-send" data-dismiss="modal">
+		                <span></span>
+		                <button type="button" id="invite_close">닫기</button>
+						</form>		<!-- 혹시 몰라서 아직 남겨두는 코드 -->
 <!-- 						<form class="invite-form" action="topic_main" method="post" name="invite-form"> -->
 						   <!--  버튼이 클릭되면 show 메소드가 호출된다.   show메서드를 호출할때 원하는 값을 넣어 보낸다.-->
 <%-- 						    <input type="hidden" value="${param.team_no}" name="team_no" id="team_no" class="team_no"> --%>
@@ -460,9 +492,34 @@ background-color:#f8f8f8;
 						<!-- modal_invite1 화면이 나타날 자리 -->
 <!-- 						<div id="Parse_Area"gt;lt;></div> -->
 <!-- 						</form> -->
- 			 
-						
+                        </div>
 						</div>
+ 			 			
+                        <!-- 멤버 목록보기 버튼 -->
+ 			 		
+						<form action="${pageContext.request.contextPath}/chat/topic" method="post">
+                        <button type="submit" id="memberlist_btn" name="">참여중인멤버</button>	
+                        
+                        <div id="modal2" class="modal2">
+						<!--모달창 디자인-->
+						<div class="modal-view2"></div> 
+						<div style="position: absolute; top: 50%; left: 50%; width: 300px; height: 400px; margin-left: -150px; margin-top: -200px;">
+						<div style="height: 30px;"></div>
+						<h4>멤버 목록 보기</h4>
+						<c:forEach items="${memberList}" var="memberListVO">	
+							<div>
+<%-- 								<input type="hidden" value="${param.member_position}" name="member_position"> --%>
+<%-- 								<input type="hidden" value="${memberListVO.member_name}" name="member_name"> --%>
+<%-- 								<h4> member_name = ${memberListVO.member_name} member_position=${memberListVO.member_position} </h4> --%>
+							</div>
+						</c:forEach>
+						
+						
+						<button type="button" id="memberlist_close" class="memberlist_close">닫기</button>	
+						</form>
+						                       
+                        
+						
                         <div class="chat-menu-right">
                             <ul>
                                 <li></li>

@@ -8,8 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
+import com.kh.circle.vo.MemberListVO;
 
 @Repository
 public class TeamDaoImpl implements TeamDao {
@@ -31,6 +33,8 @@ public class TeamDaoImpl implements TeamDao {
 		return sqlSession.selectList("team.teamlist",member_no);
 	}
 
+
+
 	@Override
 	public void teamMemberCreate(int member_no, int team_no) {
 		Map<String,Integer> param = new HashMap<>();
@@ -47,8 +51,21 @@ public class TeamDaoImpl implements TeamDao {
 						.team_no(team_no)
 						.build();
 		sqlSession.insert("team.teamMemberCreate2",teamMemberDto);
-		
 	}
+
+	@Override
+	public List<MemberListVO> memberList(String member_name, String member_position) {
+		MemberListVO memberListVO = MemberListVO.builder()
+				.member_name(member_name)
+				.member_position(member_position)
+				.build();
+		return sqlSession.selectList("team.memberList",memberListVO);
+	}
+
+	
+	
+	
+	
 
 
 }

@@ -41,8 +41,7 @@ import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.repository.VoteCreateDao;
 
 import com.kh.circle.service.TeamService;
-
-
+import com.kh.circle.vo.MemberListVO;
 import com.kh.circle.vo.TopicRestVO;
 
 import lombok.Builder;
@@ -89,6 +88,9 @@ public class ChatController {
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));
+
+
+		
 		return "chat/topic_main";
 	}
 	
@@ -216,6 +218,7 @@ public class ChatController {
 				   					@RequestParam String topic_no,
 				   					HttpSession session, Model model) {
 			
+			
 			MemberDto memberDto = memberDao.signin(member_email,member_pw);
 			if(memberDto != null) {
 				session.setAttribute("member_email", memberDto.getMember_email());
@@ -226,8 +229,8 @@ public class ChatController {
 				return "redirect:./team_member_regist";
 			}
 			
-		else {
-			return "redirect:./invite_expired";
+		else {	//
+			return "redirect:./invite_signup";
 		}
 }
 
@@ -246,9 +249,14 @@ public class ChatController {
 			return "chat/invite_signup";
 		}
 		
-		//링크 회원가입 버튼 누르기 진행중
+		//링크 회원가입 버튼 누르기 미완료 기능 -> 
 		@PostMapping("/invite_signup")
 		public String invite_signup(@ModelAttribute MemberDto memberDto) {
+			//추후 이 자리에 회원가입 기능 등록 해야 함
+			
+			//계획 : 회원가입이 완료되면 member DB에 저장이됨 -> 그리고 로그인 페이지로 리다이렉트 ->
+			//파라미터와 세션들을 계속 가지고 로그인까지 완료되면 team_member_regist로 이동 ->
+			//가입 하기 버튼 누르면 자동으로 DB 저장 // 현재 초대 로그인하면 db로 저장되는것 구현 완료
 			return "redirect:./invite_signin";
 		}
 		
@@ -288,7 +296,19 @@ public class ChatController {
 //			return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
 		}
 	
-	
+		//참여중인 멤버 리스트 	보기(임시 jsp)
+		@GetMapping("/team_member_list")
+		public String team_member_list() {
+			return "chat/team_member_list";
+		}
+		
+		//할일 리스트 (임시 jsp)
+		@GetMapping("/todo")
+		public String todo() {
+			return "chat/todo";
+		}
+		
+
 
 	
 }
