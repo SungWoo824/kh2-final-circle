@@ -31,20 +31,39 @@
                         <ul class="gnb-menu">
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
+                            <c:choose>
+		                        <c:when test="${not empty member_email}">
+							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
+							    </c:when>
+                        	</c:choose>
                         </ul>
                         <ul class="gnb-menu">
-                            <li class="login-btn"><a href="member/signin">로그인</a></li>
-<!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
+                        
+                        <c:choose>
+	                        <c:when test="${not empty member_email}">
+						        <li class="logout-btn"><a href="${pageContext.request.contextPath}/member/signout">로그아웃</a></li>
+						    </c:when>
+							<c:otherwise>
+								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
+							</c:otherwise>    
+                        </c:choose>
+                            
+                        
+              
                         </ul>
                     </div>
                 </div>        
         </div>
-	<form action="signup" method="post" enctype="Multipart/form-data">
-		<label>이메일</label><input type="email" name ="member_email"><br><br>
-		<label>비밀번호</label><input type="password" name="member_pw"><br><br>
-		<label>이름</label><input type="text" name="member_name"><br><br>
-		<input type="file" name="file" accept="image/*"><br><br>
-		<input type="submit">
-	</form>
+	<article class="signup-article">
+		<div>
+			<form action="signup" method="post" enctype="Multipart/form-data">
+				<label>이메일</label><input type="email" name ="member_email"><br><br>
+				<label>비밀번호</label><input type="password" name="member_pw"><br><br>
+				<label>이름</label><input type="text" name="member_name"><br><br>
+				<input type="file" name="file" accept="image/*"><br><br>
+				<input type="submit">
+			</form>
+		</div>
+	</article>
 </body>
 </html>
