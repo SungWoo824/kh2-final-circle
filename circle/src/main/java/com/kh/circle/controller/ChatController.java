@@ -83,7 +83,7 @@ public class ChatController {
 							@RequestParam int topic_no,
 							Model model, HttpSession session) {
 		List<TopicDto> topicList = teamService.teamTopicList(team_no);
-		topic_no =topicDao.teamTopicFirst(team_no);
+
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
 		//투표기능관련 코드
@@ -175,6 +175,8 @@ public class ChatController {
 								 @RequestParam String cert_no,
 								 @RequestParam int team_no,
 								 @RequestParam int topic_no,
+								 @ModelAttribute TeamDto teamDto,
+								 Model model,
 								 HttpServletResponse response
 							) {
 		//필요한 작업 
@@ -182,6 +184,10 @@ public class ChatController {
 		// - 들어오면서 정상적인 링크라면 cert_no라는 파라미터와 member_email이라는 파라미터를 가지고 온다 
 		// - 위의 두 파라미터를 받아서 DB에 검증을 실시 
 		// - 위의 인증결과와 무관하게 해당 이메일의 인증정보를 모두 삭제 
+//		model.addAttribute("teamDto",teamDto.getTeam_name());
+//		teamDto.getTeam_name();
+
+		model.addAttribute("teamDto", teamDao.teamName(team_no));
 		
 		boolean enter = teamCertDao.check3(cert_email,cert_no);
 //		teamCertDao.delete(member_email);
@@ -201,11 +207,11 @@ public class ChatController {
 	//이메일 초대로유저 로그인창
 
 		@GetMapping("/invite_signin")
-		public String invite_signin(@RequestParam String member_email,
+		public String invite_signin(
 								   @RequestParam String team_no,
 								   @RequestParam String topic_no,
 								   Model model) {
-			model.addAttribute("member_email",member_email);
+
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("topic_no",topic_no);
 			return "chat/invite_signin";
@@ -253,10 +259,14 @@ public class ChatController {
 		
 		//링크 회원가입 버튼 누르기 미완료 기능 -> 
 		@PostMapping("/invite_signup")
-		public String invite_signup(
+		public String invite_signup(@RequestParam String team_no,
+									@RequestParam String topic_no,
+									Model model,
 									@ModelAttribute MemberDto memberDto,
 									@RequestParam MultipartFile file) throws IllegalStateException, IOException {
 			
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no", topic_no);
 			MemberProfileDto memberProfileDto = MemberProfileDto.builder().member_profile_uploadname(file.getOriginalFilename()).member_profile_filesize(file.getSize()).build();
 			memberDao.signup(memberDto, memberProfileDto, file);
 			
@@ -289,16 +299,22 @@ public class ChatController {
 			model.addAttribute("team_no", team_no);
 			model.addAttribute("topic_no", topic_no);
 			int member_no = (int) session.getAttribute("member_no");
+	
 			
 			//팀멤버로 추가
 			teamDao.teamMemberCreate2(member_no, team_no);
 			//토픽 멤버추가 
-			TopicMemberDto topicMemberDto = TopicMemberDto.builder().member_no((int) session.getAttribute("member_no")).team_no(team_no).topic_no(topic_no).build();
+			TopicMemberDto topicMemberDto = TopicMemberDto.builder()
+											.member_no((int) session.getAttribute("member_no"))
+											.team_no(team_no)
+											.topic_no(topic_no)
+											.build();
 			topicDao.topicMemberInsert(topicMemberDto);
 			return "redirect:../chat/topic_main";
 //			return "redirect:../
 //			return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
-		}
+			}
+		
 	
 
 	

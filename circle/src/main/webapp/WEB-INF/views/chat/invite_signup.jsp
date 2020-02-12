@@ -62,6 +62,8 @@
                                 <div class="main-title">
                                 <form action="invite_signup" method="post" enctype="Multipart/form-data">
                                     <div>
+                                    <input type="hidden" value="${param.team_no}" name="team_no">
+									<input type="hidden" value="${param.topic_no}" name="topic_no">
                                         <span>회원가입</span>
                                         
                                         <div class="form-group signin-form-group">

@@ -62,6 +62,18 @@ public class TeamDaoImpl implements TeamDao {
 		return sqlSession.selectList("team.memberList",team_no);
 	}
 
+	@Override
+	public String teamName(int team_no) {
+		
+		return sqlSession.selectOne("team.teamName", team_no);
+	}
+
+	@Override
+	public void teamDelete(int team_no) {
+		sqlSession.delete("team.teamDelete", team_no);
+		
+	}
+
 	
 	
 	
