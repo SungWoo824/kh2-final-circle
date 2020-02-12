@@ -28,11 +28,10 @@
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
                             <c:choose>
-	                        <c:when test="${not empty member_email}">
-						        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
-						    </c:when>
-                        
-                        </c:choose>
+		                        <c:when test="${not empty member_email}">
+							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
+							    </c:when>
+                        	</c:choose>
                         </ul>
                         <ul class="gnb-menu">
                         
@@ -42,9 +41,7 @@
 						    </c:when>
 							<c:otherwise>
 								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
-							</c:otherwise>
-                       
-                        
+							</c:otherwise>    
                         </c:choose>
                             
                         

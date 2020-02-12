@@ -27,18 +27,31 @@
                         <ul class="gnb-menu">
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
-                            <c:when test="${not empty member_email}">
-						        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
-						    </c:when>
+                            <c:choose>
+		                        <c:when test="${not empty member_email}">
+							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
+							    </c:when>
+                        	</c:choose>
                         </ul>
                         <ul class="gnb-menu">
-                            <li class="login-btn"><a href="member/signin">로그인</a></li>
-<!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
+                        
+                        <c:choose>
+	                        <c:when test="${not empty member_email}">
+						        <li class="logout-btn"><a href="${pageContext.request.contextPath}/member/signout">로그아웃</a></li>
+						    </c:when>
+							<c:otherwise>
+								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
+							</c:otherwise>    
+                        </c:choose>
+                            
+                        
+              
                         </ul>
                     </div>
                 </div>        
         </div>
-	<h3>회원 가입 성공 페이지</h3>
-	<a href="./signin">로그인 페이지로 이동</a>
+        <div class="signup-article">
+			<a href="./signin">로그인 페이지로 이동</a>
+		</div>
 </body>
 </html>
