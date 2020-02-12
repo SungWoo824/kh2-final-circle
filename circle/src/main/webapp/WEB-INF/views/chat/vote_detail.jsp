@@ -18,21 +18,31 @@
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 </head>
 <script>
+$(function(){
+	var plural = $('.pluralstatus').val();
+	if(plural=="y"){
+		$('.voteSelect').attr("type", "checkbox");
+	}else{
+		$('.voteSelect').attr("type", "radio");
+	}
+});
 function MovePage(no){
-	var str = "";
+	var str = new Array();
 	$('.voteSelect:checked').each(function(){
-		str +=$(this).val();
+		str +=$(this).val()+",";
+// 		str.push($(this).val());
+// 		console.log(str);
 	});
 	var selection = 0;
 	if($(".voteSelect").is(":checked") == true) {
 		  var selection=selection+1; 
 		}
 	var  ajaxOption = {
-			url : "./voteselect?vote_create_no="+no,
-			type : "GET",
-			dataType : "html",
-			cache : false,
-			data : {
+			url:"./voteselect?vote_create_no="+no,
+			type:"GET",
+			dataType:"html",
+			cache:false,
+			data:{
 					  member_no:${member_no},
 					  vote_category_content:str,
 					  vote_select_true:selection,
@@ -41,6 +51,24 @@ function MovePage(no){
 					  topic_no:${param.topic_no}
 					}
 			};
+	$.ajax(ajaxOption).done(function(data){
+		$('#bodyContents').html(data);
+	});
+}
+</script>
+<script>
+function closevote(no){
+	var  ajaxOption = {
+			url : "./closevote?vote_create_no="+no,
+			type : "GET",
+			dataType : "html",
+			cache : false,
+			data : {
+					member_no:${member_no},
+					team_no:${param.team_no}, 
+					topic_no:${param.topic_no}
+					}
+	};
 	$.ajax(ajaxOption).done(function(data){
 		$('#bodyContents').html(data);
 	});
@@ -74,36 +102,31 @@ function MovePage(no){
 				<c:out value="${fn:substring(voteDetail.vote_create_date,0,11) }"/>
 				<c:out value="${voteDetail.vote_create_time}"/>
 			</li>
-<!-- 			<li> -->
-<%-- 				<c:if test="${!empty voteDetail.vote_create_anonymous }"> --%>
-<!-- 					익명투표			 -->
-<%-- 				</c:if> --%>
-<!-- 			</li> -->
 			<li>
+				<input type="hidden" class="pluralstatus" value="${voteDetail.vote_create_plural }">
 				<c:if test="${!empty voteDetail.vote_create_plural }">
 					복수투표가능			
 				</c:if>
 			</li>
 		</c:forEach>
 </ul>
-		<c:choose>
-			<c:when test="${compare=='y'}">
-				<input type="button" value="투표완료" disabled="disabled">
-			</c:when>
-			<c:otherwise>
-				<input type="button" value="투표하기" onclick="MovePage(${no})">
-			</c:otherwise>
-		</c:choose>	
+
+
 <c:choose>
-	<c:when test="${compare=='y' && status=='n' }">
-		<input type="button" value="투표종료" onclick="MovePage(${no})">
+	<c:when test="${complete=='n' }">
+		<input type="button" value="투표하기" onclick="MovePage(${no})">
 	</c:when>
 	<c:otherwise>
-		<h4>투표 마감</h4>
-		<h4>최다 득표 항목: <c:out value="${count}">${count}</c:out> </h4> 
-		
+		투표완료	
 	</c:otherwise>
 </c:choose>
+	<c:if test="${compare=='y' and status=='y' }">
+		<input type="button" value="투표종료" onclick="closevote(${no})">
+	</c:if>
+	<c:if test="${status=='n' }">
+		<h4>투표 마감</h4>
+		<h4>최다 득표 항목: <c:out value="${maxcount}">${maxcount}</c:out> </h4> 
+	</c:if>
 
 </div>
 

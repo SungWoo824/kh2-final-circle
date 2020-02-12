@@ -19,5 +19,6 @@ public interface VoteCreateDao {
 	String complete(int vote_create_no, int member_no);
 	void close(int vote_create_no);
 	String status(int vote_create_no);
-	int maxcount(int vote_create_no);
+	Object maxcount(int vote_create_no);
+	List<VoteDto> selectNullCheck(int vote_create_no);
 }

@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
     <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/toggle.css">
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -53,18 +54,18 @@
 <div class="ins"></div>
 <input type="button" value="+보기 추가" class="option"><br>
 <br><br>
-<h3>
-익명투표</h3>
-<label class="switch">
-<input type="checkbox"  class="switcha" name="vote_create_anonymous" value="y">
-<span class="slider round"></span>
-</label>			
 <!-- <h3> -->
-<!-- 복수선택</h3>	 -->
+<!-- 익명투표</h3> -->
 <!-- <label class="switch"> -->
-<!-- <input type="checkbox"  class="switchp" name="vote_create_plural" value="y"> -->
+<!-- <input type="checkbox"  class="switcha" name="vote_create_anonymous" value="y"> -->
 <!-- <span class="slider round"></span> -->
-<!-- </label> -->
+<!-- </label>			 -->
+<h3>
+복수선택</h3>	
+<label class="switch">
+<input type="checkbox"  class="switchp" name="vote_create_plural" value="y">
+<span class="slider round"></span>
+</label>
 <br><br>
 
 <h3>마감 시각			<input type="date" name="vote_create_date">	<select name="vote_create_time">

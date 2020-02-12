@@ -1,6 +1,9 @@
 package com.kh.circle.repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,14 +54,22 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 
 	@Override
 	public void selection(int member_no, int vote_create_no, String content, String selection, String name) {
-		VoteSelectionDto voteSelectionDto = VoteSelectionDto.builder()
-																.member_no(member_no)
-																.vote_create_no(vote_create_no)
-																.vote_category_content(content)
-																.vote_select_true(selection)
-																.member_name(name)
-																.build();
-		sqlSession.insert("vote.selection", voteSelectionDto);
+		String[] contentArr = content.split(",");
+		
+		for (String string : contentArr) {
+			VoteSelectionDto voteSelectionDto = VoteSelectionDto.builder()
+					.member_no(member_no)
+					.vote_create_no(vote_create_no)
+					.vote_category_content(string)
+					.vote_select_true(selection)
+					.member_name(name)
+					.build();
+			sqlSession.insert("vote.selection", voteSelectionDto);
+		}		
+//		List<Object> select = new ArrayList<Object>();
+	
+
+//		sqlSession.insert("vote.selection", select);
 	}
 
 	@Override
@@ -81,9 +92,11 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 				.member_no(member_no)
 				.build();
 		if(sqlSession.selectList("vote.complete", voteCompareDto).size() != 0) {
+			
 			return "y";
 		}else {
-			return "f";
+			
+			return "n";
 		}
 	}
 	
@@ -98,9 +111,15 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 	}
 
 	@Override
-	public int maxcount(int vote_create_no) {
+	public Object maxcount(int vote_create_no) {
 		
 		return sqlSession.selectOne("vote.maxcount", vote_create_no);
+	}
+
+	@Override
+	public List<VoteDto> selectNullCheck(int vote_create_no) {
+		
+		return sqlSession.selectList("vote.nullcheck", vote_create_no);
 	}
 	
 }

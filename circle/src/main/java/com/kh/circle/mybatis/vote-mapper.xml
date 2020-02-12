@@ -41,6 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into vote_select values(#{member_no}, #{vote_create_no}, #{vote_category_content}, #{vote_select_true}, #{member_name})
 	</insert>
 	
+<!-- 	<insert id="selection" parameterType="map"> -->
+<!--         <foreach collection="list" item="item" open="INSERT ALL " close="SELECT * FROM DUAL" >  -->
+<!--          into vote_select values(#{item.member_no}, #{item.vote_create_no},  -->
+<!--          #{item.vote_category_content}, #{item.vote_select_true}, #{item.member_name}) -->
+<!--         </foreach> -->
+<!--     </insert> -->
+	
 	<select id="compare" parameterType="voteCompareDto" resultType="Object">
 		select vote_create_userno from vote_create where vote_create_no=#{vote_create_no} and vote_create_userno=#{member_no}
 	</select>
@@ -57,7 +64,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select vote_create_status from vote_create where vote_create_no=#{vote_create_no}
 	</select>
 	
-	<select id="maxcount" parameterType="Integer" resultType="Integer">
+	<select id="maxcount" parameterType="Integer" resultType="Object">
 		select vote_category_content from(select vote_category_content, count(*) as max_vote_count from vote_select group by vote_category_content, vote_create_no having vote_create_no=#{vote_create_no} order by max_vote_count desc) where rownum=1
 	</select> 
+	
+	<select id="nullcheck" parameterType="Integer" resultType="voteDto">
+		select vote_create_no from vote_select where vote_create_no=#{vote_create_no}
+	</select>
 </mapper>

@@ -42,7 +42,9 @@ public class VoteController {
 		model.addAttribute("compare", voteCreateDao.compare(vote_create_no,(int) session.getAttribute("member_no")));
 		model.addAttribute("complete", voteCreateDao.complete(vote_create_no, (int) session.getAttribute("member_no")));
 		model.addAttribute("status", voteCreateDao.status(vote_create_no));
-		model.addAttribute("maxcount", voteCreateDao.maxcount(vote_create_no));
+		if(voteCreateDao.selectNullCheck(vote_create_no).size() != 0) {
+			model.addAttribute("maxcount", voteCreateDao.maxcount(vote_create_no));			
+		}
 		return "chat/vote_detail";
 	}
 	
@@ -103,10 +105,16 @@ public class VoteController {
 		model.addAttribute("member_no", session.getAttribute("member_no") );
 		model.addAttribute("memberName", voteCreateDao.getMemberName((int) session.getAttribute("member_no")));
 		model.addAttribute("compare", voteCreateDao.compare(vote_create_no,(int) session.getAttribute("member_no")));
-		model.addAttribute("complete", voteCreateDao.complete(vote_create_no, (int) session.getAttribute("member_no")));
 		model.addAttribute("status", voteCreateDao.status(vote_create_no));
-		model.addAttribute("maxcount", voteCreateDao.maxcount(vote_create_no));
-		voteCreateDao.close(vote_create_no);
+		if(voteCreateDao.selectNullCheck(vote_create_no).size() != 0) {
+			model.addAttribute("maxcount", voteCreateDao.maxcount(vote_create_no));			
+		}	
 		return "chat/vote_result";
+	}
+	
+	@GetMapping("/closevote")
+	public String close(@RequestParam("vote_create_no") int a, @RequestParam("member_no") int b, @RequestParam("team_no") int c, @RequestParam("topic_no") int d) {
+		voteCreateDao.close(a);
+		return "redirect:./vote_result?vote_create_no="+a+"&member_no="+b+"&team_no="+c+"&topic_no="+d;
 	}
 }
