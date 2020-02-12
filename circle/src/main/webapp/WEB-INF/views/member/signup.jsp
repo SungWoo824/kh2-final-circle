@@ -31,20 +31,76 @@
                         <ul class="gnb-menu">
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
+                            <c:choose>
+		                        <c:when test="${not empty member_email}">
+							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
+							    </c:when>
+                        	</c:choose>
                         </ul>
                         <ul class="gnb-menu">
-                            <li class="login-btn"><a href="member/signin">로그인</a></li>
-<!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
+                        
+                        <c:choose>
+	                        <c:when test="${not empty member_email}">
+						        <li class="logout-btn"><a href="${pageContext.request.contextPath}/member/signout">로그아웃</a></li>
+						    </c:when>
+							<c:otherwise>
+								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
+							</c:otherwise>    
+                        </c:choose>
+                            
+                        
+              
                         </ul>
                     </div>
                 </div>        
         </div>
-	<form action="signup" method="post" enctype="Multipart/form-data">
-		<label>이메일</label><input type="email" name ="member_email"><br><br>
-		<label>비밀번호</label><input type="password" name="member_pw"><br><br>
-		<label>이름</label><input type="text" name="member_name"><br><br>
-		<input type="file" name="file" accept="image/*"><br><br>
-		<input type="submit">
-	</form>
+        <div class="signup-article">
+                <div class="main-bg">
+                    
+                        <div id="fullpage">
+                            <div class="section">
+                                <div class="main-title">
+                                <form action="signup" method="post" enctype="Multipart/form-data">
+                                    <div>
+                                        <span>회원가입</span>
+                                        
+                                        <div class="form-group signin-form-group">
+									      <label for="exampleInputEmail1"></label>
+									      <input type="email" class="form-control" id="exampleInputEmail1" name="member_email" aria-describedby="emailHelp" placeholder="Enter email">
+									    </div>
+									    <div class="form-group signin-form-group">
+									      <label for="exampleInputPassword1"></label>
+									      <input type="password" class="form-control" id="exampleInputPassword1" name="member_pw" placeholder="Password">
+									    </div>
+                                        <div class="form-group signin-form-group">
+									      <label for="exampleInputEmail1"></label>
+									      <input type="text" class="form-control" id="exampleInputEmail1" name="member_name" aria-describedby="emailHelp" placeholder="Enter name">
+									    </div>
+									    <div class="form-group signin-form-group">
+									      <label for="exampleInputEmail1"></label>
+									      <input type="file" class="form-control" id="exampleInputEmail1" name="file" accept="image/*">
+									    </div>
+                                    </div>
+                                    <div>
+                                        <div>
+                   
+											<button type="submit" class="btn btn-primary signin-submit">회원가입</button>
+										
+                                           
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="section">
+                               
+                            </div>
+                            <div class="section">
+                                
+                            </div>
+                        </div>
+                  
+                </div>
+        </div>
 </body>
 </html>

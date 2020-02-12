@@ -92,19 +92,21 @@
                     </div>
                 </div>        
         </div>
-	<h3>비밀번호 찾기</h3>
-	<form class="email-form" action="send" method="get">
-		<input type="email" class="email-form-email" name="email" placeholder="이메일 입력">
-		<input type="submit" value="인증번호 보내기">
-	</form>
-
-<hr>
-	<form class="validate-form" action="validate" method="get">
-		<input type="text" name="cert" placeholder="인증번호 입력">
-		<input type="submit" value="인증하기">
-	</form>
-	<form class="success-form" action="changepw" method="get">
-		<input type="submit" value="변경 페이지로 이동">
-	</form>
+        <div class="signup-article">
+			<h3>비밀번호 찾기</h3>
+			<form class="email-form" action="send" method="get">
+				<input type="email" class="email-form-email" name="email" placeholder="이메일 입력">
+				<input type="submit" value="인증번호 보내기">
+			</form>
+		
+			<hr>
+			<form class="validate-form" action="validate" method="get">
+				<input type="text" name="cert" placeholder="인증번호 입력">
+				<input type="submit" value="인증하기">
+			</form>
+			<form class="success-form" action="changepw" method="get">
+				<input type="submit" value="변경 페이지로 이동">
+			</form>
+		</div>
 </body>
 </html>

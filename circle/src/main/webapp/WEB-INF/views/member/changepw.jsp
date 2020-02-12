@@ -71,14 +71,16 @@ $(function(){
                     </div>
                 </div>        
         </div>
-	<form action="changepw" class="pw-form" method="post">
-		<input type="password" class="change_pw" name="change_pw"><br><br>
-		<input type="password" class="change_pw_check" name="change_pw_check"><br><br>
+        <div class="signup-article">
+			<form action="changepw" class="pw-form" method="post">
+				<input type="password" class="change_pw" name="change_pw"><br><br>
+				<input type="password" class="change_pw_check" name="change_pw_check"><br><br>
+				
+				<div id="alert-success">비밀번호가 일치합니다.</div>
+				<div id="alert-danger">비밀번호가 일치하지 않습니다.</div>
 		
-		<div id="alert-success">비밀번호가 일치합니다.</div>
-		<div id="alert-danger">비밀번호가 일치하지 않습니다.</div>
-
-		<input type="submit" id="submit">
-	</form>
+				<input type="submit" id="submit">
+			</form>
+		</div>
 </body>
 </html>
