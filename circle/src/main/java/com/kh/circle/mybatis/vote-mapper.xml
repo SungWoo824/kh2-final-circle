@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="vote">
 	<insert id="create" parameterType="voteDto">
-		insert into vote_create values(#{vote_create_no}, #{vote_create_title}, #{vote_create_detail}, #{vote_create_anonymous, jdbcType=VARCHAR}, #{vote_create_plural, jdbcType=VARCHAR}, #{vote_create_date}, #{vote_create_status, jdbcType=VARCHAR}, #{vote_create_time})
+		insert into vote_create values(#{vote_create_no}, #{vote_create_title}, #{vote_create_detail}, #{vote_create_anonymous, jdbcType=VARCHAR}, #{vote_create_plural, jdbcType=VARCHAR}, #{vote_create_date}, #{vote_create_status, jdbcType=VARCHAR}, #{vote_create_time}, #{vote_create_topic}, #{vote_create_userno})
 	</insert>
 	
 	<insert id="createCategory" parameterType="voteCategoryDto">
@@ -19,5 +19,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getTopic" resultType="java.lang.String">
 		select topic_name from topic
+	</select>
+	
+	<select id="getVoteList" resultType="voteDto">
+		select*from vote_create
+	</select>
+	
+	<select id="getVoteDetail" resultType="voteDto" parameterType="java.lang.Integer">
+		select*from vote_create where vote_create_no=#{vote_create_no}
+	</select>
+	
+	<select id="getVoteCategoryDetail" resultType="voteCategoryDto" parameterType="java.lang.Integer">
+		select*from vote_category where vote_create_no=#{vote_create_no}
+	</select>
+	
+	<select id="getMemberName" resultType="String" parameterType="java.lang.Integer">
+		select member_name from member where member_no=#{member_no}
+	</select>
+	
+	<insert id="selection" parameterType="voteSelectionDto">
+		insert into vote_select values(#{member_no}, #{vote_create_no}, #{vote_category_content}, #{vote_select_true}, #{member_name})
+	</insert>
+	
+	<select id="compare" parameterType="java.lang.Integer" resultType="Object">
+		select vote_create_userno from vote_create where vote_create_userno=#{member_no}
 	</select>
 </mapper>
