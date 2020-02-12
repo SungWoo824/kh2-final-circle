@@ -54,10 +54,11 @@
 			
 // 			연결 시 예약 작업을 설정
 			window.socket.onopen = function(){
-
+				//db에 대화내용들 저장
 				sendMessage(enter);
 			};
 			window.socket.onclose = function(){
+				//db에 대화 내용들 저장
 				appendMessage("서버와 연결이 종료되었습니다");
 			};
 			window.socket.onmessage = function(e){
@@ -70,8 +71,10 @@
 		
 // 		메시지 전송 함수
 		function sendMessage(status, chat_content){
+			var team_no = ${param.team_no};
 			var topic_no = ${param.topic_no};
 			var message = {
+				team_no:team_no,
 				topic_no:topic_no,
 				status:status,
 				chat_content:chat_content
