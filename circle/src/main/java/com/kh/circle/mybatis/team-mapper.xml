@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 멤버 리스트 보기 -->
 	<select id="memberList" resultType="memberListVO" parameterType="int">
 	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm 
-	inner join member on member.member_no = tm.member_no;
+	inner join member on member.member_no = tm.member_no
 	</select>
 	
 	<!-- 이메일 전송 하면 team_cert DB에 등록 기능 -->
@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 초대로 들어온 경우 팀 멤버,토픽멤버로 등록 -->
 	<insert id="teamMemberCreate2" parameterType="teamMemberDto">
-		insert into team_member values(#{member_no},#{team_no},'소유자','')
+		insert into team_member values(#{member_no},#{team_no},'정회원','')
 	</insert>
 
 </mapper>

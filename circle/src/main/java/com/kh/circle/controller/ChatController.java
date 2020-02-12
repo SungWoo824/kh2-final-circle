@@ -23,9 +23,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.entity.MemberDto;
+import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
@@ -89,7 +90,8 @@ public class ChatController {
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));
 
-
+		//멤버 리스트 
+		model.addAttribute("memberList",teamDao.memberList(team_no));
 		
 		return "chat/topic_main";
 	}
@@ -199,11 +201,11 @@ public class ChatController {
 	//이메일 초대로유저 로그인창
 
 		@GetMapping("/invite_signin")
-		public String invite_signin(@RequestParam String cert_email,
+		public String invite_signin(@RequestParam String member_email,
 								   @RequestParam String team_no,
 								   @RequestParam String topic_no,
 								   Model model) {
-			model.addAttribute("cert_email",cert_email);
+			model.addAttribute("member_email",member_email);
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("topic_no",topic_no);
 			return "chat/invite_signin";
@@ -251,12 +253,14 @@ public class ChatController {
 		
 		//링크 회원가입 버튼 누르기 미완료 기능 -> 
 		@PostMapping("/invite_signup")
-		public String invite_signup(@ModelAttribute MemberDto memberDto) {
-			//추후 이 자리에 회원가입 기능 등록 해야 함
+		public String invite_signup(
+									@ModelAttribute MemberDto memberDto,
+									@RequestParam MultipartFile file) throws IllegalStateException, IOException {
 			
-			//계획 : 회원가입이 완료되면 member DB에 저장이됨 -> 그리고 로그인 페이지로 리다이렉트 ->
-			//파라미터와 세션들을 계속 가지고 로그인까지 완료되면 team_member_regist로 이동 ->
-			//가입 하기 버튼 누르면 자동으로 DB 저장 // 현재 초대 로그인하면 db로 저장되는것 구현 완료
+			MemberProfileDto memberProfileDto = MemberProfileDto.builder().member_profile_uploadname(file.getOriginalFilename()).member_profile_filesize(file.getSize()).build();
+			memberDao.signup(memberDto, memberProfileDto, file);
+			
+			
 			return "redirect:./invite_signin";
 		}
 		
@@ -291,24 +295,11 @@ public class ChatController {
 			//토픽 멤버추가 
 			TopicMemberDto topicMemberDto = TopicMemberDto.builder().member_no((int) session.getAttribute("member_no")).team_no(team_no).topic_no(topic_no).build();
 			topicDao.topicMemberInsert(topicMemberDto);
-			return "redirect:../chat/topic_main?team_no="+team_no+"&topic_no="+topic_no;
+			return "redirect:../chat/topic_main";
 //			return "redirect:../
 //			return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
 		}
 	
-		//참여중인 멤버 리스트 	보기(임시 jsp)
-		@GetMapping("/team_member_list")
-		public String team_member_list() {
-			return "chat/team_member_list";
-		}
-		
-		//할일 리스트 (임시 jsp)
-		@GetMapping("/todo")
-		public String todo() {
-			return "chat/todo";
-		}
-		
-
 
 	
 }

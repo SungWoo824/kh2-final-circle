@@ -497,7 +497,7 @@ background-color:#f8f8f8;
  			 			
                         <!-- 멤버 목록보기 버튼 -->
  			 		
-						<form action="${pageContext.request.contextPath}/chat/topic" method="post">
+
                         <button type="submit" id="memberlist_btn" name="">참여중인멤버</button>	
                         
                         <div id="modal2" class="modal2">
@@ -507,16 +507,12 @@ background-color:#f8f8f8;
 						<div style="height: 30px;"></div>
 						<h4>멤버 목록 보기</h4>
 						<c:forEach items="${memberList}" var="memberListVO">	
-							<div>
-<%-- 								<input type="hidden" value="${param.member_position}" name="member_position"> --%>
-<%-- 								<input type="hidden" value="${memberListVO.member_name}" name="member_name"> --%>
-<%-- 								<h4> member_name = ${memberListVO.member_name} member_position=${memberListVO.member_position} </h4> --%>
-							</div>
+							<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+							<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
 						</c:forEach>
-						
-						
+						<br><br>
 						<button type="button" id="memberlist_close" class="memberlist_close">닫기</button>	
-						</form>
+
 						                       
                         
 						

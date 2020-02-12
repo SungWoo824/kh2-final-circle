@@ -54,12 +54,12 @@ public class TeamDaoImpl implements TeamDao {
 	}
 
 	@Override
-	public List<MemberListVO> memberList(String member_name, String member_position) {
-		MemberListVO memberListVO = MemberListVO.builder()
-				.member_name(member_name)
-				.member_position(member_position)
-				.build();
-		return sqlSession.selectList("team.memberList",memberListVO);
+	public List<MemberListVO> memberList(int team_no) {
+//		MemberListVO memberListVO = MemberListVO.builder()
+//				.member_name(member_name)
+//				.member_position(member_position)
+//				.build();
+		return sqlSession.selectList("team.memberList",team_no);
 	}
 
 	
