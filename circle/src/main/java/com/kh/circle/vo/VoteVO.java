@@ -23,6 +23,7 @@ public class VoteVO {
 	private String vote_create_topic;
 	private int vote_create_userno;
 	private int vote_create_no;
+	private int vote_create_team_no;
 	private List<VoteCategoryDto> category;
 	private VoteCategoryDto voteCategoryDto;
 }

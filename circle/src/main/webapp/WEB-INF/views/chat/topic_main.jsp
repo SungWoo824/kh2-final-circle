@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -360,19 +361,20 @@ background-color:#f8f8f8;
         <!-- 화면 동적 전환(투표 상세 페이지) -->
 			            		<ul>
 			            	<c:forEach var="voteList" items="${voteList }" >
+			            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
 			            		<li>
-			            		<c:out value="${voteList.vote_create_no }"></c:out>번 투표
+        					<c:if test="${param.team_no eq no}">
+			            		<c:out value="${voteList.vote_create_no}"/>번 투표
 			            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
+			            	</c:if>
 			            		</li>
 			            		<br>
 			            	</c:forEach>   	
 			            		</ul>
 			            </div>
 			        </div>
-			        
             </div>
-            <!-- Page Title Header Ends-->
-           
+            <!-- Page Title Header Ends-->      
         </div> 
         
                    	

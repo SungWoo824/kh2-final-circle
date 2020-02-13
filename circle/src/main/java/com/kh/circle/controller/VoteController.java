@@ -56,7 +56,7 @@ public class VoteController {
 //	}
 	
 	@GetMapping("/vote_create")
-	public String create(Model model, HttpSession session) {
+	public String create(Model model, HttpSession session, @RequestParam("team_no") int team_no) {
 		model.addAttribute("topicList", voteCreateDao.getTopicList());
 		model.addAttribute("member_no", session.getAttribute("member_no"));
 		return "chat/vote_create";
@@ -77,6 +77,7 @@ public class VoteController {
 				.vote_create_time(vote.getVote_create_time())
 				.vote_create_topic(vote.getVote_create_topic())
 				.vote_create_userno((int) session.getAttribute("member_no"))
+				.vote_create_team_no(team_no)
 				.build();	
 		voteCreateDao.create(vdto, seq);
 		for(VoteCategoryDto vcdto : dto) {
