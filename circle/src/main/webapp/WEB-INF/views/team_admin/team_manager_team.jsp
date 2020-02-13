@@ -16,23 +16,84 @@
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
 <script>
-	$(function(){
-		 //수정하기 기능
+$(function(){
+	
+	//등록버튼 비활성화를 위한 준비 
+	$('#submitC').attr('disabled',true);//첫 페이지부터 등록버튼 비활성화
+	var team_name_check = false;	//일단 네임 체크 변수 만들기
+	var team_domain_check = false;	//일단 도메인 체크 변수 만들기
+	
+	//입력을 마치면(blur) 비동기통신으로 아이디 유무를 검사 
+	$("input[name=team_name]").blur(function(){
+		var team_name = $(this).val();
+		
+		if(team_name == ""){   //빈칸이 공란일 때 = 비동기통신이 작동하지 않아서 팀이름 입력
+			$("input[name=team_name]").next("span").text("팀이름 입력해주세요");
+			team_name_check=false;	
+		}
+		
+		else{	//빈칸이 공란이아닐때 = 비동기통신이 작동하여 팀이름 사용유무 확인가능
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/team_admin/check",
+				type:"get",
+				data:{team_name : team_name},
+				dataType:"text",
+				success:function(resp){
+	// 				console.log(resp);
+					if(resp === "Y"){ //사용중
+						$("input[name=team_name]").next("span").text("사용중인 팀이름");
+						team_name_check=false;	
+					} else if(resp === "N"){ //사용가능
+						team_name_check=true;
+						if(team_name_check && team_domain_check){
+							$('#submitC').attr('disabled',false);
+						}
+						$("input[name=team_name]").next("span").text("사용가능합니다");
+						
+					} 
+				}
+			});
+		}
+		
+	});
 
-            var input = $("<input>");
-            $(".edit-name").click(function(){  //수정 버튼을 누르면 
-            	
-            //result-form에 입력창과 수정하기버튼을 생성
-            	var input = $("<input/>").attr("placeholder","변경할 이름을 입력해주세요").prop("required",true).appendTo(".result-form");
-                var button = $("<button/>").text("수정하기").appendTo(".result-form");
-            });
-           
-//             수정하기 버튼을 누르면 
-           $(".edit-name").click(function(){
-                $(this).remove();
-           });
+	//팀 도메인 이름 중복 확인
+	$("input[name=team_domain]").blur(function(){
+		var team_domain = $(this).val();
+		if(team_domain == ""){ //빈칸이 공란일 때 = 비동기통신이 작동하지 않아서 팀이름 입력
+			$("input[name=team_domain]").next("span").text("팀이름 입력해주세요");
+			team_domain_check=false;
+		}
+		else{	//빈칸이 공란이 아닐때= 비동기통신이 작동해서 도메인 이름 중복유무 확인가능
+			
+			$.ajax({
+				url:"${pageContext.request.contextPath}/team_admin/check2",
+				type:"get",
+				data:{team_domain : team_domain},
+				dataType:"text",
+				success:function(resp){
+	// 				console.log(resp);
+				if(resp === "Y"){ //사용중
+					$("input[name=team_domain]").next("span").text("사용중인 도메인");
+					team_domain_check=false;
+					} else if(resp === "N"){ //사용가능
+						$("input[name=team_domain]").next("span").text("사용가능합니다");
+						team_domain_check=true;
+						
+						if(team_name_check && team_domain_check){
+							$('#submitC').attr('disabled',false);
+						}
+					} 
+				}
+			});
+		}
+		
+	});
+	
+});
 
-        });
+		
 </script>
 
 <body>
@@ -87,34 +148,43 @@
         									<div class="mypage-profile-div">
 	                                        </div>
 	                                        
-			                                 
+			                                 <!-- 팀 이름 변경하기 -->
 			                                 <div class="mypage-name-div">
-			                                 <c:forEach var="teamDto" items="${getDetail}">
-	                                    	 <h3>팀 이름= ${teamDto.team_name}</h3>
-	                                    	
-                                                     <button class="edit-name">이름 변경하기</button>
-                                                     
-                                                     <form class="result-form" action="team_manager_team" method="get"> 
-                                                     
+			                                
+	                                    	 <h3>팀 이름= ${param.team_name}</h3>
+                                                     <form  action="edit_team_name" method="post"> 
+                                                     <input type="hidden" name="team_no" value="${param.team_no}">
+                                                     <input type="hidden" name="team_domain" value="${param.team_domain}">
+                                                     <input type="text" name="team_name" value="${teamDto.team_name}">
+                                                     <span name="team_nameN" id="team_nameS" class="team_nameS"></span>
+                                                     <button type="submit" class="edit-name">수정하기</button>
                                                      </form>
-	                                    	 </c:forEach>
+	                                    	</div>
+	                                    	 
 	                                    			
-	                                    	</div>
 	                                    	
+                                                    
+                                                     
+	                                    	<!-- 팀 도메인 변경하기 -->
 	                                    	 <div class="mypage-name-div">
-	                                    	<h3>팀 도메인</h3>
-	                                    			<span>
-													<button type="submit">도메인 변경하기</button>
-	                                    			</span>
-	                                    	</div>
+	                                    	 
+	                                    	<h3>팀 도메인 = ${param.team_domain}</h3>
+	                                    			<form  action="edit_team_domain" method="post"> 
+                                                     <input type="hidden" name="team_no" value="${param.team_no}">
+                                                     <input type="hidden" name="team_name" value="${param.team_name}">
+                                                     <input type="text" name="team_domain" value="${teamDto.team_domain}">
+                                                     <span name="team_domainN" id="team_domainS" class="team_domainS"></span>
+                                                     <button type="submit" class="edit-domain">수정하기</button>
+                                                     </form>
 	                                    	
+	                                    	</div>
 	                                    	
 												
 		                                       	
 	                                    	<div class="mypage-name-div">
 	                                    	<span>팀삭제</span>
-		                                       	<form class="delete_submit" action="team_manager_team" method="post">
-
+		                                       	<form class="delete_submit" action="${pageContext.request.contextPath}/team_admin/edit_team_delete" method="post">
+													<input type="hidden" name="team_no" value="${param.team_no}">
 													<button type="submit">팀삭제</button>
 												</form>
 			                                 </div>

@@ -88,12 +88,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 본인이 팀 생성시 자동으로 팀멤버와 토픽멤버(소유자)로 등록 -->
 	<insert id="teamMemberCreate" parameterType="map">
-		insert into team_member values(#{member_no},#{team_no},'소유자','')
+		insert into team_member values(#{member_no},#{team_no},'소유자','','준회원')
 	</insert>
 	
 	<!-- 초대로 들어온 경우 팀 멤버,토픽멤버(준회원)로 등록 -->
 	<insert id="teamMemberCreate2" parameterType="teamMemberDto">
-		insert into team_member values(#{member_no},#{team_no},'준회원','')
+		insert into team_member values(#{member_no},#{team_no},'준회원','','준회원')
 	</insert>
 	
 	<!-- 팀  전체 정보 출력 -->
@@ -112,10 +112,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where member_email=#{member_email}
 	</select>
 	
+	<!-- 팀 이름 변경하기 -->
 	<update id="editTeamName" parameterType="teamDto">
 	update team 
-	set team_name = ${team_name}
-	where team_no = ${team_no}
+	set team_name = #{team_name}
+	where team_no = #{team_no}
+	</update>
+	
+	<update id="editTeamDomain" parameterType="teamDto">
+	update team 
+	set team_domain = #{team_domain}
+	where team_no = #{team_no}
 	</update>
 	
 	

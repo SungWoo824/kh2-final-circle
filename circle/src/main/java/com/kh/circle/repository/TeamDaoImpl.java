@@ -74,6 +74,7 @@ public class TeamDaoImpl implements TeamDao {
 		
 	}
 
+	//팀관리자:팀 이름 변경하기
 	@Override
 	public void editTeamName(String team_name, int team_no) {
 		TeamDto teamDto = TeamDto.builder()
@@ -83,6 +84,16 @@ public class TeamDaoImpl implements TeamDao {
 		
 		sqlSession.update("team.editTeamName", teamDto);
 		
+	}
+	
+	//팀관리자:팀 도메인 변경하기
+	@Override
+	public void editTeamDomain(String team_domain, int team_no) {
+		TeamDto teamDto = TeamDto.builder()
+				.team_name(team_domain)
+				.team_no(team_no)
+				.build();
+		sqlSession.update("team.editTeamDomain",teamDto);
 	}
 
 	
