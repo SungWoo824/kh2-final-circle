@@ -99,6 +99,7 @@ $(function(){
 															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/team_manager_team" method="get">
 																
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}">
 <!-- 																<input type="hidden" name="topic_no" class="topic_no_value" value=""> -->
 																<div class="mypage-team-div">
 																	<button type="submit">팀관리</button>

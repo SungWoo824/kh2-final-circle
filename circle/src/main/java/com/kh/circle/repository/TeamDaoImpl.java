@@ -75,7 +75,12 @@ public class TeamDaoImpl implements TeamDao {
 	}
 
 	@Override
-	public void editTeamName(TeamDto teamDto) {
+	public void editTeamName(String team_name, int team_no) {
+		TeamDto teamDto = TeamDto.builder()
+				.team_name(team_name)
+				.team_no(team_no)
+				.build();
+		
 		sqlSession.update("team.editTeamName", teamDto);
 		
 	}

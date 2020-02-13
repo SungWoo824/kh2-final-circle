@@ -16,5 +16,5 @@ public interface TeamDao {
 	void teamMemberCreate2(int member_no, int team_no);
 	List<Object> teamDetail(int team_no);
 	void teamDelete(int team_no);
-	void editTeamName(TeamDto teamDto);
+	void editTeamName(String team_name, int team_no);
 }
