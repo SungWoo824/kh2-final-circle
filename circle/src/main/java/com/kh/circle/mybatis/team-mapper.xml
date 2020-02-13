@@ -33,16 +33,93 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select
 		count(*) from team where team_domain=#{team_domain}
 	</select>
+	
 
+	<!-- 팀 목록보기 -->
 	<select id="teamlist" resultType="teamDto" parameterType="int">
 			select team.* from
     (select team_no from team_member  where member_no = #{member_no} ) tm
      inner join team on tm.team_no=team.team_no order by team.team_no
 	</select>
 	
+	<!-- 어떤 팀에 참여중인 멤버 리스트 보기 -->
+	<select id="memberList" resultType="memberListVO" parameterType="int">
+	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm 
+	inner join member on member.member_no = tm.member_no
+	</select>
+	
+	<!-- 이메일 전송 하면 team_cert DB에 등록 기능 -->
+	<insert id="regist" parameterType="com.kh.circle.entity.TeamCertDto">
+		merge into team_cert using dual on(cert_email = #{cert_email})
+		when matched then
+			update set 
+				cert_no=#{cert_no}, when=sysdate 
+			where 
+				cert_email=#{cert_email}
+		when not matched then
+			insert values(#{cert_email},#{cert_no},sysdate)
+	</insert>
+	
+	<!-- DB team_cert테이블에 cert_no와 cert_email이 추가되었는지 확인하는 구문  -->
+	<select id="check3" resultType="com.kh.circle.entity.TeamCertDto" parameterType="map">
+		select 
+		  * 
+		from 
+		  team_cert
+		where 
+		  cert_email=#{cert_email} and 
+		  cert_no=#{cert_no}
+	<!-- 인증 시간이 필요한 경우   -->
+ 		  and when between sysdate-1/24/60 and sysdate   	 
+ 	</select>
+	
+	
+
+	<!-- 기존 회원인지 확인하기  -->
+	<select id="check4" resultType="com.kh.circle.entity.MemberDto" parameterType="map">
+		select count(*) from member where member_email = #{member_email}
+	</select>
+	
+	
+	<!-- 해당 이메일의 인증정보를 삭제하는 구문 team_cert db에서 삭제 하므로 중복으로 들어가는 것을 방지 -->
+	<delete id="delete" parameterType="String">
+		delete team_cert where cert_email=#{cert_email}
+	</delete>
+	
+	<!-- 본인이 팀 생성시 자동으로 팀멤버와 토픽멤버(소유자)로 등록 -->
 	<insert id="teamMemberCreate" parameterType="map">
 		insert into team_member values(#{member_no},#{team_no},'소유자','')
 	</insert>
+	
+	<!-- 초대로 들어온 경우 팀 멤버,토픽멤버(준회원)로 등록 -->
+	<insert id="teamMemberCreate2" parameterType="teamMemberDto">
+		insert into team_member values(#{member_no},#{team_no},'준회원','')
+	</insert>
+	
+	<!-- 팀  전체 정보 출력 -->
+	<select id="teamDetail" parameterType="int" resultType="teamDto">
+	 	select * from team where team_no=#{team_no}
+	</select>
+	
+	<!-- 팀 삭제 -->
+	<delete id="teamDelete" parameterType="int" >
+		delete team where team_no=#{team_no}
+	</delete>
+	
+	<select id="memberDetail" parameterType="String" resultType="com.kh.circle.entity.MemberDto">
+	select *
+	from member 
+	where member_email=#{member_email}
+	</select>
+	
+	<update id="editTeamName" parameterType="teamDto">
+	update team 
+	set team_name = ${team_name}
+	where team_no = ${team_no}
+	</update>
+	
+	
+
 </mapper>
 
 

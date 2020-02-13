@@ -19,12 +19,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.circle.entity.TopicDto" alias="topicDto"/>
 		<typeAlias type="com.kh.circle.entity.TopicMemberDto" alias="topicMemberDto"/>
 		<typeAlias type="com.kh.circle.vo.TopicRestVO" alias="topicRestVo"/>
-		<typeAlias type="com.kh.circle.entity.TeamDto" alias="TeamDto"/>
-		<typeAlias type="com.kh.circle.entity.TeamMemberDto" alias="TeamMemberDto"/>
+		<typeAlias type="com.kh.circle.entity.TeamDto" alias="teamDto"/>
+		<typeAlias type="com.kh.circle.entity.TeamMemberDto" alias="teamMemberDto"/>
+		<typeAlias type="com.kh.circle.entity.TeamCertDto" alias="TeamCertDto"/>
 		<typeAlias type="com.kh.circle.entity.VoteDto" alias="voteDto"/>
 		<typeAlias type="com.kh.circle.entity.VoteCategoryDto" alias="voteCategoryDto"/>
 		<typeAlias type="com.kh.circle.entity.VoteSelectionDto" alias="voteSelectionDto"/>
 		<typeAlias type="com.kh.circle.entity.VoteCompareDto" alias="voteCompareDto"/>
+		<typeAlias type="com.kh.circle.vo.MemberListVO" alias="memberListVO"/>
 	</typeAliases>
 	
 	
