@@ -42,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      inner join team on tm.team_no=team.team_no order by team.team_no
 	</select>
 	
-	<!-- 멤버 리스트 보기 -->
+	<!-- 어떤 팀에 참여중인 멤버 리스트 보기 -->
 	<select id="memberList" resultType="memberListVO" parameterType="int">
 	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm 
 	inner join member on member.member_no = tm.member_no
@@ -96,13 +96,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into team_member values(#{member_no},#{team_no},'준회원','')
 	</insert>
 	
-	<select id="teamName" parameterType="int" resultType="String">
-	 	select team_name from team where team_no=#{team_no}
+	<!-- 팀  전체 정보 출력 -->
+	<select id="teamDetail" parameterType="int" resultType="teamDto">
+	 	select * from team where team_no=#{team_no}
 	</select>
 	
-	<delete id="teamDelete" parameterType="int">
-		delete from team where team_no=#{team_no}
+	<!-- 팀 삭제 -->
+	<delete id="teamDelete" parameterType="int" >
+		delete team where team_no=#{team_no}
 	</delete>
+	
+	<select id="memberDetail" parameterType="String" resultType="com.kh.circle.entity.MemberDto">
+	select *
+	from member 
+	where member_email=#{member_email}
+	</select>
+	
+	<update id="editTeamName" parameterType="teamDto">
+	update team 
+	set team_name = ${team_name}
+	where team_no = ${team_no}
+	</update>
+	
+	
 
 </mapper>
 

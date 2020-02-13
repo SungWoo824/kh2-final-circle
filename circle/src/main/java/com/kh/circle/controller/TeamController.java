@@ -209,16 +209,6 @@ public class TeamController {
 		return String.valueOf(topic_no);
 	}
 	
-	//팀관리 페이지 메인 
-	@GetMapping("/team_manager_team")
-	public String team_manager_team(
-									@RequestParam int team_no,	
-									@ModelAttribute TeamDto teamDto,
-									Model model,
-									HttpServletResponse response) {
-		model.addAttribute("teamDto", teamDao.teamName(team_no));
-		
-		return "team/team_manager_team";
-	}
+
 }
 

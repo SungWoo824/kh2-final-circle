@@ -151,8 +151,12 @@ $(function(){
               success : function(resp){
                   //console.log(resp);
       				alert("발송완료되었습니다");
+      			//입력창 초기화
+                    $(".form-control").val("");
+                    
       				$('#modal').hide();
-                  	("input[type=submit]").next("span").text("전송완료되었습니다");
+                  	("input[type=submit]").prop("disabled",false)
+                    .val("이메일 전송");
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
    
@@ -379,6 +383,7 @@ background-color:#f8f8f8;
 					새 토픽 생성
             	</a>	<i class="fa fa-plus"></i>
             </li>
+            <!-- 등급이 소유자 또는 정회원만 초대 가능하게 if문 걸어야 한다 -->
             <li class="nav-item" id="invite-create">
             	<a id="invite_btn" data-toggle="modal"> 멤버 초대하기
 				</a>	<i class="fa fa-plus"></i>

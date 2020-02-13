@@ -186,8 +186,8 @@ public class ChatController {
 		// - 위의 인증결과와 무관하게 해당 이메일의 인증정보를 모두 삭제 
 //		model.addAttribute("teamDto",teamDto.getTeam_name());
 //		teamDto.getTeam_name();
-
-		model.addAttribute("teamDto", teamDao.teamName(team_no));
+		//뷰에 데이터 출력하기 
+		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 		
 		boolean enter = teamCertDao.check3(cert_email,cert_no);
 //		teamCertDao.delete(member_email);
@@ -198,7 +198,7 @@ public class ChatController {
 			return "chat/invite_expired";	
 			}	
 		else {	//정확한 주소로 잘 들어왔다면 DB team_cert에 데이터 삭제후 중복접속 방지 / 그리고 성공 페이지로(confirm2)페이지로 이동
-//				teamCertDao.delete(cert_email);	
+				teamCertDao.delete(cert_email);	
 				return "chat/invite_success";
 			}
 			
