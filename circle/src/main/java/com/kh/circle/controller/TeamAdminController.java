@@ -27,7 +27,7 @@ public class TeamAdminController {
 		model.addAttribute("team_name", team_name);
 		model.addAttribute("team_no", team_no);
 		model.addAttribute("getDetail", teamDao.teamDetail(team_no));
-		teamDao.editTeamName(team_name,team_no);
+		
 		
 		return "team_admin/team_manager_team";
 	}
