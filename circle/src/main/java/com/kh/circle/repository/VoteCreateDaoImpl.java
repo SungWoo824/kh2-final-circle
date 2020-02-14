@@ -1,11 +1,15 @@
 package com.kh.circle.repository;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.kh.circle.entity.VoteCategoryDto;
+import com.kh.circle.entity.VoteCompareDto;
 import com.kh.circle.entity.VoteDto;
 import com.kh.circle.entity.VoteSelectionDto;
 
@@ -50,23 +54,72 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 
 	@Override
 	public void selection(int member_no, int vote_create_no, String content, String selection, String name) {
-		VoteSelectionDto voteSelectionDto = VoteSelectionDto.builder()
-																.member_no(member_no)
-																.vote_create_no(vote_create_no)
-																.vote_category_content(content)
-																.vote_select_true(selection)
-																.member_name(name)
-																.build();
-		sqlSession.insert("vote.selection", voteSelectionDto);
+		String[] contentArr = content.split(",");
+		
+		for (String string : contentArr) {
+			VoteSelectionDto voteSelectionDto = VoteSelectionDto.builder()
+					.member_no(member_no)
+					.vote_create_no(vote_create_no)
+					.vote_category_content(string)
+					.vote_select_true(selection)
+					.member_name(name)
+					.build();
+			sqlSession.insert("vote.selection", voteSelectionDto);
+		}		
+//		List<Object> select = new ArrayList<Object>();
+	
+
+//		sqlSession.insert("vote.selection", select);
 	}
 
 	@Override
-	public Object compare(int member_no) {
-		if(sqlSession.selectList("vote.compare", member_no) != null) {
+	public Object compare(int vote_create_no, int member_no) {
+		VoteCompareDto voteCompareDto = VoteCompareDto.builder()
+																	.vote_create_no(vote_create_no)
+																	.member_no(member_no)
+																	.build();
+//		System.out.println(sqlSession.selectList("vote.compare", voteCompareDto).size());
+		if(sqlSession.selectList("vote.compare", voteCompareDto).size() != 0) {
 			return "y";
 		}else {
 			return "f";
 		}
+	}
+	
+	public String complete(int vote_create_no, int member_no) {
+		VoteCompareDto voteCompareDto = VoteCompareDto.builder()
+				.vote_create_no(vote_create_no)
+				.member_no(member_no)
+				.build();
+		if(sqlSession.selectList("vote.complete", voteCompareDto).size() != 0) {
+			
+			return "y";
+		}else {
+			
+			return "n";
+		}
+	}
+	
+	public void close(int vote_create_no) {
+		sqlSession.update("vote.close", vote_create_no);
+	}
+
+	@Override
+	public String status(int vote_create_no) {
+		
+		return sqlSession.selectOne("vote.status", vote_create_no);
+	}
+
+	@Override
+	public Object maxcount(int vote_create_no) {
+		
+		return sqlSession.selectOne("vote.maxcount", vote_create_no);
+	}
+
+	@Override
+	public List<VoteDto> selectNullCheck(int vote_create_no) {
+		
+		return sqlSession.selectList("vote.nullcheck", vote_create_no);
 	}
 	
 }

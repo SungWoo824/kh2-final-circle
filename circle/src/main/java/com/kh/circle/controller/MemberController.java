@@ -53,7 +53,7 @@ public class MemberController {
 		memberDao.signup(memberDto, memberProfileDto, file);
 		
 		
-		return "redirect:./signup_success";
+			return "redirect:./signup_success";
 	}
 	
 	@GetMapping("/signup_success")
