@@ -574,14 +574,11 @@ background-color:#f8f8f8;
 			            </div>
 			        </div>
             </div>
-<<<<<<< HEAD
             <!-- Page Title Header Ends-->      
         </div> 
         
-=======
             <!-- Page Title Header Ends-->
 			
->>>>>>> refs/remotes/origin/teamCreate
                    	
 <!-- 토픽생성 모달 -->
        <form action="topic_create" method="post">
