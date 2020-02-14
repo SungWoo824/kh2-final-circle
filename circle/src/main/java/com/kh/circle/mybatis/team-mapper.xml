@@ -88,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 본인이 팀 생성시 자동으로 팀멤버와 토픽멤버(소유자)로 등록 -->
 	<insert id="teamMemberCreate" parameterType="map">
-		insert into team_member values(#{member_no},#{team_no},'소유자','')
+		insert into team_member values(#{member_no},#{team_no},'소유자','','준회원')
 	</insert>
 	
 	<!-- 초대로 들어온 경우 팀 멤버,토픽멤버(준회원)로 등록 -->
