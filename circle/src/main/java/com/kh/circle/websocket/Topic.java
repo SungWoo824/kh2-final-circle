@@ -7,10 +7,10 @@ import java.util.Set;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
-public class Room {
+public class Topic {
 	//방에 접속한 사용자 목록
 		private Set<WebSocketSession> userList = new HashSet<>();
-		
+	
 		//방에 신규인원을 추가하는 메소드
 		public void add(WebSocketSession session) throws IOException {
 			userList.add(session);
@@ -27,6 +27,7 @@ public class Room {
 		public void broadcast(WebSocketSession user, String text) throws IOException {
 			String id = (String) user.getAttributes().get("member_email");
 			TextMessage message = new TextMessage("["+id+"] "+text);
+			
 			for(WebSocketSession session : userList) {
 				session.sendMessage(message);
 			}

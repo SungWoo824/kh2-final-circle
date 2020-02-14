@@ -326,7 +326,7 @@ background-color:#f8f8f8;
                     </div>
                     <article class="message-wrap">
                         <div class="message" style="text-align: right">
-							<h1>웹소켓 클라이언트(with 로그인, ${topicDto.topic_name})</h1>
+							<h1>${topicDto.topic_name}</h1>
 							<div id="chat-content" style="overflow:scroll; width:100%; height:42rem; text-align:left;"></div>
 							<div class="chat-send-content">
 								<div class="chat-send-text">

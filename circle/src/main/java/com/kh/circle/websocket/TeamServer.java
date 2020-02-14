@@ -11,9 +11,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.circle.vo.ChatVo;
 
-public class TopicChatServer extends TextWebSocketHandler{
+public class TeamServer extends TextWebSocketHandler{
 	
-	private Map<Integer,Room> roomList = new HashMap<>();
+	private Map<Integer,Team> teamList = new HashMap<>();
 	
 	public static final int enter = 0;
 	public static final int exit = 1;
@@ -29,23 +29,23 @@ public class TopicChatServer extends TextWebSocketHandler{
 		int status = data.getStatus();
 		
 		if(status==enter) {
-			int topic_no = data.getTopic_no();
-			boolean exist = roomList.containsKey(topic_no);
+			int team_no = data.getTeam_no();
+			boolean exist = teamList.containsKey(team_no);
 			if(!exist) {
-				Room room = new Room();
-				roomList.put(topic_no, room);
+				Team room = new Team();
+				teamList.put(team_no, room);
 			}
-			
-			roomList.get(topic_no).add(session);
+			Team team = new Team();
+			teamList.get(team_no).add(session);
 		} else if (status == exit) {
-			int topic_no = data.getTopic_no();
-			roomList.get(topic_no).remove(session);
-			if(roomList.get(topic_no).isEmpty()) {
-				roomList.remove(topic_no);
+			int team_no = data.getTeam_no();
+			teamList.get(team_no).remove(session);
+			if(teamList.get(team_no).isEmpty()) {
+				teamList.remove(team_no);
 			}
 		} else if(status == mess) {
-			int topic_no = data.getTopic_no();
-			roomList.get(topic_no).broadcast(session, data.getChat_content());
+			int team_no = data.getTeam_no();
+			teamList.get(team_no).broadcast(session, data);
 		}
 	}
 	
