@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">   
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.base.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/vendor.bundle.addons.css">
@@ -13,10 +13,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
     <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/toggle.css">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script>
 	$(function(){
-		var seq=0;
+		var seq=2;
         $(".option").click(function(e){
             console.log("click");
             var text = "<input type='text' name='category["+seq+"].vote_category_content' placeholder='보기를 입력하세요' required><br><br>";
@@ -26,11 +29,6 @@
 	});
 	
 	$(function(){
-        // var check = $("input[type=checkbox]");
-        // check.click(function(){
-        //     var status = $(this).is(":checked");
-        //     console.log(status);
-        // });
         $(".switcha").change(function(){
             console.log($(this).prop("checked"));
         });    
@@ -51,17 +49,17 @@
 <h3>보기 목록</h3><br>
 <!-- <input type="text" name="vote_create_option1" placeholder="보기를 입력하세요" required><br><br> -->
 <!-- <input type="text" name="vote_create_option2" placeholder="보기를 입력하세요" required><br><br> -->
+<input type='text' name='category[0].vote_category_content' placeholder='보기를 입력하세요' required><br><br>
+<input type='text' name='category[1].vote_category_content' placeholder='보기를 입력하세요' required><br><br>
 <div class="ins"></div>
 <input type="button" value="+보기 추가" class="option"><br>
-<h3>투표 옵션
-
 <br><br>
-
-익명투표</h3>
-<label class="switch">
-<input type="checkbox"  class="switcha" name="vote_create_anonymous" value="y">
-<span class="slider round"></span>
-</label>			
+<!-- <h3> -->
+<!-- 익명투표</h3> -->
+<!-- <label class="switch"> -->
+<!-- <input type="checkbox"  class="switcha" name="vote_create_anonymous" value="y"> -->
+<!-- <span class="slider round"></span> -->
+<!-- </label>			 -->
 <h3>
 복수선택</h3>	
 <label class="switch">
@@ -109,7 +107,10 @@
 <br><br>
 		
 		<input type="hidden" name="vote_create_status" id="create" value="y">
+		<input type="hidden" name="team_no" value="${param.team_no }">
+		<input type="hidden" name="topic_no" value="${param.topic_no }">
+		
 		<input type="submit" value="만들기">
 </form>
-<a href="list"><button>취소</button></a>
+<a href="topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button>취소</button></a>
 </html>

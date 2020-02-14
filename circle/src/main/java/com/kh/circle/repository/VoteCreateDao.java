@@ -15,5 +15,10 @@ public interface VoteCreateDao {
 	List<VoteCategoryDto> getVoteCategoryDetail(int vote_create_no);
 	String getMemberName(int member_no);
 	void selection(int member_no, int vote_create_no, String content, String selection, String name);
-	Object compare(int member_no); 
+	Object compare(int vote_create_no, int member_no); 
+	String complete(int vote_create_no, int member_no);
+	void close(int vote_create_no);
+	String status(int vote_create_no);
+	Object maxcount(int vote_create_no);
+	List<VoteDto> selectNullCheck(int vote_create_no);
 }

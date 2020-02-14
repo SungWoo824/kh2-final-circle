@@ -1,6 +1,11 @@
 package com.kh.circle.controller;
 
 
+import java.util.List;
+
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -17,35 +22,56 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
+import com.kh.circle.repository.TeamCertDao;
+//github.com/SungWoo824/kh2-final-circle
 import com.kh.circle.repository.TeamDao;
 import com.kh.circle.repository.TopicDao;
+import com.kh.circle.service.EmailService;
+import com.kh.circle.service.RandomService;
+//import com.kh.circle.service.TeamEmailService;
+import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.service.TeamService;
+
+//github.com/SungWoo824/kh2-final-circle
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/team")
 @Slf4j
+
 public class TeamController { 
 	
-
 	@Autowired
-	private TeamDao teamDao;
-	
+	private TeamCertDao teamCertDao;	
+	@Autowired
+	private TeamEmailService teamEmailService;
+	@Autowired
+	private EmailService emailService;	
+	@Autowired
+	private RandomService randomService;	
+	@Autowired
+	private TeamDao teamDao;	
 	@Autowired
 	private TopicDao topicDao;
 	
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//팀 생성하기 
+	//팀 생성하기 페이지 
 	@GetMapping("/create")
 	public String create() {
 		
 		return "team/create";
 	}
 	
-	//팀 생성 등록이 완료되면 팀메인 페이지로 가는 컨트롤러
+	@GetMapping("/oldmain")
+	public String oldmain() {
+		return "team/oldmain";
+				
+	}
+	
+	//팀 생성을 하는 컨트롤러 / 생성 후 topic창으로 연결 
 	@PostMapping("/create")
 	public String create(@ModelAttribute TeamDto teamDto,
 						HttpSession session) {
@@ -90,28 +116,89 @@ public class TeamController {
 		else return "N";
 	}
 	
-	//팀 메인 컨트롤러
+	//invite_create 초대하기 버튼 
+
+	@GetMapping("/invite_create") 
+	public String invite_create(@RequestParam int team_no,
+								Model model) {
+		model.addAttribute("team_no", team_no);
+		return "team/invite_create";
+	}
+	
+	
+	
+	
+	//토픽 메인 화면에서 보이는 '팀초대하기' 버튼과 연결된 jsp
 	@GetMapping("/main")
-	public String main() {
-		
+	public String main(@RequestParam int team_no,
+					   Model model) {	
+		model.addAttribute("team_no", team_no); //team_no이름으로 team_no를 파라미터값으로 넘기겠다
 		return "team/main";
 	}
 	
+	//modal_invite1 초대하기 모달 화면 1과 연결된 jsp 
+	@GetMapping("/modal_invite1")
+	public String modal_invite1(@RequestParam(value="team_no") int team_no,
+			Model model) {
 	
-	//invite1 가기
-	@GetMapping("/invite1")
-	public String invite1() {
-		
-		return "team/invite1";
+		model.addAttribute("team_no", team_no);
+		return "team/modal_invite1";
 	}
 	
-	//invite2 가기
-	@GetMapping("/invite2")
-	public String invite2() {
+	
+
 		
-		return "team/invite2";
+	
+	
+
+		
+	//modal_invite2 가기 초대하기 모달 화면 2
+	@GetMapping("/modal_invite2") 
+	public String modal_invite2(@RequestParam int team_no,
+								Model model) {
+		model.addAttribute("team_no", team_no);
+		return "team/modal_invite2";
+	}
+
+	
+	
+	
+	
+	
+	//modal_invite3 가기 초대하기 모달 화면 3
+	@GetMapping("/modal_invite3") 
+	public String modal_invite3() {
+		return "team/modal_invite3";
 	}
 	
+	
+	//인증 번호6자리를 보낼 수 있는 컨트롤러 / 현재 team에서 사용하지 않는 메소드 
+	@GetMapping("/send")
+	@ResponseBody
+	public String send(@RequestParam String email, HttpSession session) {
+//		인증번호를 세션이든 DB든 어디에 저장
+//		String cert = "123456";
+		String cert = randomService.generateCertificationNumber(6);
+		session.setAttribute("cert", cert);
+		return emailService.sendCertMessage(email, cert); 	
+	}
+	
+	
+	//멤버 초대 이메일 전송하는 컨트롤러 
+	@PostMapping("/modal_invite2")
+	public String modal_invite2(@RequestParam String cert_email,
+								@RequestParam int team_no,
+								@RequestParam int topic_no
+								) throws MessagingException
+	{ 	
+
+		teamEmailService.sendConfirmMessage(cert_email,team_no,topic_no);
+	return "redirect:result";
+		
+	}
+	
+
+
 	@Autowired
 	private TeamService teamService;
 	
@@ -122,4 +209,7 @@ public class TeamController {
 		
 		return topic_no;
 	}
+	
+
 }
+
