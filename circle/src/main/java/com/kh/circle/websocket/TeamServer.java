@@ -3,12 +3,14 @@ package com.kh.circle.websocket;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.circle.repository.ChatDao;
 import com.kh.circle.vo.ChatVo;
 
 public class TeamServer extends TextWebSocketHandler{
@@ -21,6 +23,8 @@ public class TeamServer extends TextWebSocketHandler{
 	
 	private ObjectMapper mapper = new ObjectMapper();
 
+	@Autowired
+	private ChatDao chatDao;
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
@@ -35,16 +39,17 @@ public class TeamServer extends TextWebSocketHandler{
 				Team room = new Team();
 				teamList.put(team_no, room);
 			}
-			Team team = new Team();
-			teamList.get(team_no).add(session);
+			teamList.get(team_no).add(session,data);
 		} else if (status == exit) {
 			int team_no = data.getTeam_no();
-			teamList.get(team_no).remove(session);
+			teamList.get(team_no).remove(session, data);
 			if(teamList.get(team_no).isEmpty()) {
 				teamList.remove(team_no);
 			}
 		} else if(status == mess) {
 			int team_no = data.getTeam_no();
+			data.setMember_no((int)session.getAttributes().get("member_no"));
+			chatDao.chatDataSave(data);
 			teamList.get(team_no).broadcast(session, data);
 		}
 	}

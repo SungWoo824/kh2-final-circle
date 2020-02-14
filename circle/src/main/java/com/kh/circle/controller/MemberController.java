@@ -77,6 +77,7 @@ public class MemberController {
 			session.setAttribute("member_email", memberDto.getMember_email());
 			session.setAttribute("member_no", memberDto.getMember_no());
 			session.setAttribute("member_grade", memberDto.getMember_grade());
+			session.setAttribute("member_name", memberDto.getMember_name());
 			return "redirect:./mypage";
 		}else {
 			return "redirect:./signin?error";
@@ -88,6 +89,7 @@ public class MemberController {
 		session.removeAttribute("member_email");
 		session.removeAttribute("member_grade");
 		session.removeAttribute("member_no");
+		session.removeAttribute("member_name");
 		
 		return "redirect:../";
 	}

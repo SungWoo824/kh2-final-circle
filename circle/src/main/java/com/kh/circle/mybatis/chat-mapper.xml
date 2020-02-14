@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="chat">
+	<insert id="insert" parameterType="chatVo">
+		insert into chat_list values(chat_no_seq.nextval,#{topic_no},#{member_no},#{team_no},#{chat_content},sysdate)
+	</insert>
+	<select id="topicChatList" parameterType="int" resultType="chatVo">
+		select cl.* , member.member_name from (select * from chat_list  where topic_no = #{topic_no})cl inner join member on member.member_no=cl.member_no order by cl.chat_no
+	</select>
+</mapper>

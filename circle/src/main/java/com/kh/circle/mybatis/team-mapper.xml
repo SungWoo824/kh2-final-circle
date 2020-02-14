@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="teamMemberCreate" parameterType="map">
-		insert into team_member values(#{member_no},#{team_no},'소유자','')
+		insert into team_member values(#{member_no},#{team_no},'소유자','','준회원')
 	</insert>
 </mapper>
 

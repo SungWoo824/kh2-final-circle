@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 public class ChatVo {
 	private int team_no;
 	private int topic_no;
+	private int member_no;
+	private String member_name;
 	private String chat_content;
 	private int status;//0(enter), 1(exit), 2(message)
 }

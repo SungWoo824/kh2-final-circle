@@ -2,8 +2,8 @@ package com.kh.circle.controller;
 
 
 import java.util.List;
-import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
+import com.kh.circle.repository.ChatDao;
 import com.kh.circle.repository.TopicDao;
 import com.kh.circle.repository.VoteCreateDao;
 import com.kh.circle.service.TeamService;
-
 import com.kh.circle.vo.TopicRestVO;
-
-
-import lombok.extern.slf4j.Slf4j;
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
@@ -33,6 +30,8 @@ public class ChatController {
 	
 	@Autowired
 	private TopicDao topicDao;
+	@Autowired
+	private ChatDao chatDao;
 	
 	@Autowired
 	private VoteCreateDao voteCreateDao;
@@ -53,6 +52,7 @@ public class ChatController {
 		List<TopicDto> topicList = teamService.teamTopicList(team_no);
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
+		model.addAttribute("topicChatList", chatDao.topicChatList(topic_no));
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));
@@ -87,14 +87,13 @@ public class ChatController {
 	private TeamService teamService;
 	
 	@GetMapping("/topic")
-	public String topic(@RequestParam int topic_no,
-						@RequestParam int team_no,
+	public String topic(@RequestParam int team_no,
 						Model model) {
-		
+		int topic_no = topicDao.teamTopicFirst(team_no);
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("team_no", team_no);
 		model.addAttribute("topic_no", topic_no);
-
+		
 		return "redirect:./topic_main";
 	}
 
