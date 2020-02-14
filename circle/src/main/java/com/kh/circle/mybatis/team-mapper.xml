@@ -93,7 +93,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 초대로 들어온 경우 팀 멤버,토픽멤버(준회원)로 등록 -->
 	<insert id="teamMemberCreate2" parameterType="teamMemberDto">
-		insert into team_member values(#{member_no},#{team_no},'준회원','','준회원')
+		insert into team_member values(#{member_no},#{team_no},'','','준회원')
 	</insert>
 	
 	<!-- 팀  전체 정보 출력 -->

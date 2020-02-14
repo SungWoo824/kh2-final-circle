@@ -90,7 +90,7 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public void editTeamDomain(String team_domain, int team_no) {
 		TeamDto teamDto = TeamDto.builder()
-				.team_name(team_domain)
+				.team_domain(team_domain)
 				.team_no(team_no)
 				.build();
 		sqlSession.update("team.editTeamDomain",teamDto);
