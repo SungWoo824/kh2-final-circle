@@ -14,22 +14,25 @@ public class Topic {
 		//방에 신규인원을 추가하는 메소드
 		public void add(WebSocketSession session) throws IOException {
 			userList.add(session);
-			broadcast(session,"접속");
+			
 		}
 		
 		//방에 있는 인원을 삭제하는 메소드
 		public void remove(WebSocketSession session) throws IOException {
 			userList.remove(session);
-			broadcast(session,"퇴장");
+			
 		}
 		
 		//방에 있는 인원에게 메시지를 전송하는 메소드
 		public void broadcast(WebSocketSession user, String text) throws IOException {
 			String id = (String) user.getAttributes().get("member_name");
 			TextMessage message = new TextMessage("["+id+"] "+text);
-			
+			int count = 1;
 			for(WebSocketSession session : userList) {
 				session.sendMessage(message);
+			}
+			for(WebSocketSession session : userList) {
+				
 			}
 		}
 

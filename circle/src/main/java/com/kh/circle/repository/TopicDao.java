@@ -1,5 +1,7 @@
 package com.kh.circle.repository;
 
+import java.util.List;
+
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 
@@ -10,7 +12,7 @@ public interface TopicDao {
 	void topicMemberInsert(TopicMemberDto topicMemberDto);
 	int teamTopicFirst(int team_no);
 	TopicDto topicChange(int topic_no);
-
+	List<TopicDto> teamTopicList(int team_no);
 	
 
 }

@@ -314,9 +314,8 @@ public class ChatController {
 											.build();
 			topicDao.topicMemberInsert(topicMemberDto);
 			return "redirect:../chat/topic_main";
-//			return "redirect:../
-//			return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
-			}
+
+		}
 		
 	
 

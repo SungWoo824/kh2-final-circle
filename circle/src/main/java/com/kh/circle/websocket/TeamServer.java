@@ -50,7 +50,9 @@ public class TeamServer extends TextWebSocketHandler{
 			int team_no = data.getTeam_no();
 			data.setMember_no((int)session.getAttributes().get("member_no"));
 			chatDao.chatDataSave(data);
+			
 			teamList.get(team_no).broadcast(session, data);
+			teamList.get(team_no).count(session, data);
 		}
 	}
 	
