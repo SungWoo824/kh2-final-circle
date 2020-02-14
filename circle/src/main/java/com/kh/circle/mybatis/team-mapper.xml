@@ -101,9 +101,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from team where team_no=#{team_no}
 	</select>
 	
-	<!-- 팀 삭제 -->
+	<!-- 팀 아예 삭제 ( 모든 멤버까지 다삭제) -->
 	<delete id="teamDelete" parameterType="int" >
 		delete team where team_no=#{team_no}
+	</delete>
+	
+	<!-- 팀 탈퇴(팀에서 자신만 탈퇴됨) -->
+	<delete id="teamExit" parameterType="int"> 
+	delete team_member where team_no=#{team_no}
+	</delete>
+	
+	<!-- 토픽 탈퇴 (팀탈퇴 시 같이 사용해야 할 메소드 -->
+	<delete id="topicExit" parameterType="int">
+	delete topic_member where team_no=#{team_no} and member_no=#{member_no};
 	</delete>
 	
 	<select id="memberDetail" parameterType="String" resultType="com.kh.circle.entity.MemberDto">
@@ -119,11 +129,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where team_no = #{team_no}
 	</update>
 	
+	<!-- 팀 도메인 변경하기 -->
 	<update id="editTeamDomain" parameterType="teamDto">
 	update team 
 	set team_domain = #{team_domain}
 	where team_no = #{team_no}
 	</update>
+	
+	
 	
 	
 

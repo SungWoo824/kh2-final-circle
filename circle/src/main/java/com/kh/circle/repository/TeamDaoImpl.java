@@ -8,9 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
+import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.MemberListVO;
 
 @Repository
@@ -63,11 +64,12 @@ public class TeamDaoImpl implements TeamDao {
 	}
 
 	@Override
-	public List<Object> teamDetail(int team_no) {
+	public TeamDto teamDetail(int team_no) {
 		
-		return sqlSession.selectList("team.teamDetail", team_no);
+		return sqlSession.selectOne("team.teamDetail", team_no);
 	}
-
+	
+	//팀 삭제 (팀멤버와 아예 모든 정보 다 삭제)
 	@Override
 	public void teamDelete(int team_no) {
 		sqlSession.delete("team.teamDelete", team_no);
@@ -94,6 +96,25 @@ public class TeamDaoImpl implements TeamDao {
 				.team_no(team_no)
 				.build();
 		sqlSession.update("team.editTeamDomain",teamDto);
+	}
+
+	//팀멤버 탈퇴 (팀삭제가 아니고 자신만 탈퇴)
+	@Override
+	public void teamExit(int team_no) {
+		sqlSession.delete("team.teamExit", team_no);
+		
+	}
+	
+	//팀 탈퇴시 토픽멤버에서도 탈퇴됨
+	@Override
+	public void topicExit(int team_no, int member_no) {
+		TopicMemberDto topicMemberDto = TopicMemberDto.builder()
+				.team_no(team_no)
+				.member_no(member_no)
+				.build();
+		
+		sqlSession.delete("team.topicExit", topicMemberDto);
+		
 	}
 
 	

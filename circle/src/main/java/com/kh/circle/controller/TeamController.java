@@ -115,63 +115,8 @@ public class TeamController {
 		if(count>0) return "Y"; //있으면
 		else return "N";
 	}
-	
-	//invite_create 초대하기 버튼 
 
-	@GetMapping("/invite_create") 
-	public String invite_create(@RequestParam int team_no,
-								Model model) {
-		model.addAttribute("team_no", team_no);
-		return "team/invite_create";
-	}
-	
-	
-	
-	
-	//토픽 메인 화면에서 보이는 '팀초대하기' 버튼과 연결된 jsp
-	@GetMapping("/main")
-	public String main(@RequestParam int team_no,
-					   Model model) {	
-		model.addAttribute("team_no", team_no); //team_no이름으로 team_no를 파라미터값으로 넘기겠다
-		return "team/main";
-	}
-	
-	//modal_invite1 초대하기 모달 화면 1과 연결된 jsp 
-	@GetMapping("/modal_invite1")
-	public String modal_invite1(@RequestParam(value="team_no") int team_no,
-			Model model) {
-	
-		model.addAttribute("team_no", team_no);
-		return "team/modal_invite1";
-	}
-	
-	
 
-		
-	
-	
-
-		
-	//modal_invite2 가기 초대하기 모달 화면 2
-	@GetMapping("/modal_invite2") 
-	public String modal_invite2(@RequestParam int team_no,
-								Model model) {
-		model.addAttribute("team_no", team_no);
-		return "team/modal_invite2";
-	}
-
-	
-	
-	
-	
-	
-	//modal_invite3 가기 초대하기 모달 화면 3
-	@GetMapping("/modal_invite3") 
-	public String modal_invite3() {
-		return "team/modal_invite3";
-	}
-	
-	
 	//인증 번호6자리를 보낼 수 있는 컨트롤러 / 현재 team에서 사용하지 않는 메소드 
 	@GetMapping("/send")
 	@ResponseBody

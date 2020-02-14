@@ -1,4 +1,6 @@
 package com.kh.circle.controller;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.TeamDto;
+import com.kh.circle.entity.TopicMemberDto;
+import com.kh.circle.repository.MemberDao;
 import com.kh.circle.repository.TeamDao;
 
 @Controller
@@ -19,20 +24,43 @@ public class TeamAdminController {
 	
 	@Autowired private TeamDao teamDao;
 	@Autowired private SqlSession sqlSession;
+	@Autowired private MemberDao memberDao;
 	
-	//팀관리 페이지 메인 
+	//논소유자: 팀관리 페이지 메인
+	@GetMapping("/member_manager_team")
+	public String team_member_team(@RequestParam String team_name,
+								   @RequestParam int team_no,
+								   @RequestParam String team_domain,
+								   @RequestParam int member_no,
+								   HttpSession session,
+							       Model model) {
+		//팀 테이블 정보 출력
+		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
+		
+		model.addAttribute("teamDto", teamDao.teamDetail((int)session.getAttribute("member_no")));
+		model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));
+
+		
+		return "team_admin/member_manager_team";
+	}
+	
+	//소유자 : 팀관리 페이지 메인 
 	@GetMapping("/team_manager_team")
 	public String team_manager_team(@RequestParam String team_name,
 									@RequestParam int team_no,
 									@RequestParam String team_domain,
-									@ModelAttribute TeamDto teamDto,
+									
+									HttpSession session,
 									Model model) {
 		
-		model.addAttribute("team_name", team_name);
-		model.addAttribute("team_no", team_no);
-		model.addAttribute("team_domain", team_domain);
-		model.addAttribute("getDetail", teamDao.teamDetail(team_no));
+//		model.addAttribute("team_name", team_name);
+//		model.addAttribute("team_no", team_no);
+//		model.addAttribute("team_domain", team_domain);
+		//팀 테이블 정보 리스트 출력
+		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 		
+		//비밀번호 확인 할때 이메일 세션 가져오기 
+		model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));
 		
 		return "team_admin/team_manager_team";
 	}
@@ -72,6 +100,40 @@ public class TeamAdminController {
 		
 		teamDao.teamDelete(team_no);
 		return "redirect:../member/mypage";
+	}
+	
+	//팀 탈퇴하기
+		@PostMapping("/edit_team_exit")
+		public String edit_team_exit(@RequestParam int team_no,
+				@RequestParam int member_no,
+									HttpSession session, 
+									Model model) {
+			
+			//탈퇴 할때 team_no와 member_no 필요 
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("member_no", member_no);
+//			int member_no = (int) session.getAttribute("member_no");
+			
+			//팀 멤버에서 탈퇴
+			teamDao.teamExit(team_no);
+			
+			
+			return "redirect:../member/mypage";
+		}
+	
+	//비밀번호 확인 
+	@GetMapping("checkpw")
+	@ResponseBody
+	public String checkpw(@RequestParam String member_pw,
+						 HttpSession session) {
+		MemberDto memberDto = memberDao.signin((String)session.getAttribute("member_email"), member_pw);
+		if(memberDto!=null) {	
+			return "success";
+		}else {
+			return "fail";
+		}
+		
+	
 	}
 	
 	//팀이름 변경 중복검사 rest컨트롤러

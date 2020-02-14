@@ -173,7 +173,6 @@ public class ChatController {
 								 @RequestParam String cert_no,
 								 @RequestParam int team_no,
 								 @RequestParam int topic_no,
-								 @ModelAttribute TeamDto teamDto,
 								 Model model,
 								 HttpServletResponse response
 							) {

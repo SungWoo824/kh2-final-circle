@@ -57,15 +57,14 @@
 			        	<div class="mypage-name-div">
 							<br><br>
 							
-								<form action="invite_success" method="post">
-							<c:forEach items="teamDetail"></c:forEach>
+					
+							
 							<h3>${teamDto.team_name} 팀에 초대를 받으셨습니다</h3>
+						
 							<h3> 로그인 후 팀의 멤버가 되어보세요</h3>
 							<br>
 								<!-- 파라미터값의 cert_email과 db member테이블에 있는 memebr_email이 맞다면 회원이므로  --> 
-								<input type="hidden" value="${param.cert_email}" name="cert_email">
-								<input type="hidden" value="${param.team_no}" name="team_no">
-								<input type="hidden" value="${param.topic_no}" name="topic_no">
+							
 								<a href="${pageContext.request.contextPath}/chat/invite_signin?cert_email=${param.cert_email}&team_no=${param.team_no}&topic_no=${param.topic_no}" class="btn btn-primary" role="button">로그인</a>
 								
 
@@ -73,12 +72,10 @@
 								<br><br>
 							<h2>써클 회원이 아니신가요?</h2>
 							<br>
-								<input type="hidden" value="${param.cert_email}" name="cert_email">
-								<input type="hidden" value="${param.team_no}" name="team_no">
-								<input type="hidden" value="${param.topic_no}" name="topic_no">
+							
 								<a href="${pageContext.request.contextPath}/chat/invite_signup?cert_email=${param.cert_email}&team_no=${param.team_no}&topic_no=${param.topic_no}" class="btn btn-primary" role="button">회원가입</a>
 
-							</form>
+					
 						</div>
 					</div>
                 </div>

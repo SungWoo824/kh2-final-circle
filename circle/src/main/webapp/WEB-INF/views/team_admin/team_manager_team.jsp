@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-    
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,8 +12,14 @@
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/fullpage.css" />
  <script type="text/javascript" src=" ${pageContext.request.contextPath}/resources/js/design/fullpage.js"></script>
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
+<script src="${pageContext.request.contextPath}/resources/js/crypto/crypto-js.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/crypto/hmac-sha256.js"></script>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
+<script src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>   
+
 <script>
+
+//팀 네임 변경 중복검사 
 $(function(){
 	
 	//등록버튼 비활성화를 위한 준비 
@@ -93,6 +97,61 @@ $(function(){
 	
 });
 
+// 클릭 하면 열고 닫기 
+$(function(){
+	$(".modify-fix-div").hide();
+	$(".modify-origin-div").show();
+	
+	$(".modify-origin-div").click(function() {
+
+        $(this).parent().children(".modify-fix-div").show('3000');
+
+        $(this).hide('fast');
+
+    });
+	
+	//취소 버튼
+	$(".modify-cancel").click(function(){
+		$(this).parent().parent().children(".modify-origin-div").show('3000');
+
+        $(this).parent().parent().children(".modify-fix-div").hide('fast');
+	})
+});
+
+$(function(){
+	$("#modify-delete-submit").click(function(e){
+		
+		var url = "${pageContext.request.contextPath}/member/checkpw"; 
+		var method = "get";
+		var text = $("#modify-delete-pw").val();
+
+		text = CryptoJS.HmacSHA256(text, "kh");
+		text = CryptoJS.enc.Base64.stringify(text);
+		var member_pw = text;
+		
+		$.ajax({
+			url: url,
+			type:method,
+			data:{member_pw:member_pw},//member_pw=aaa
+			success:function(resp){
+				if(resp == "fail"){
+					alert("비밀번호가 틀렸습니다");
+					
+				}else{
+					var con = confirm("삭제하시겠습니까?");
+					if(con){
+						$("#modify-delete-member").submit();
+					}
+				}
+			}
+		});
+	})
+	
+	$(".modify-img-submit").click(function(){
+		$(".change-profle-form").submit();
+	})
+});
+
 		
 </script>
 
@@ -130,21 +189,27 @@ $(function(){
                     </div>
                 </div>        
         </div>
-        		<!-- 팀 관리 부분 -->
-                <div class="mypage-main">
-                <div class="main-bg">
+        <!-- 팀 관리 부분 -->
+        <div class="mypage-main">
+             <div class="main-bg">
                     
-                        <div id="fullpage">
-                            <div class="section">
-                                	<div class="mypage-main-content">
+                 <div id="fullpage">
+                      <div class="section">
+                           <div class="mypage-main-content">
+                                		
+                                		<!-- 팀 정보 보기 -->
 	                                    <div class="mypage-div">
 	                                    		<h1>팀관리</h1>
-	                                    		<c:forEach var="teamDto" items="${getDetail}">
+<%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
 	                                    		<span> 팀 이름 = ${teamDto.team_name}</span>
-	                                    		</c:forEach>
-		                                        <span>${memberDto.member_name}</span>
-		                                        <p>${memberDto.member_email}</p>
+	                                    		
+		                                        
 	                                    </div>
+	                                    
+	                                    <!-- 변경하기 부분 -->
+	                                    <article class="modify-article">
+	                                    
+	                                        <!-- 프로필 사진 -->
         									<div class="mypage-profile-div">
 	                                        </div>
 	                                        
@@ -159,7 +224,7 @@ $(function(){
                                                      <span name="team_nameN" id="team_nameS" class="team_nameS"></span>
                                                      <button type="submit" class="edit-name">수정하기</button>
                                                      </form>
-	                                    	</div>
+	                                    	 </div>
 	                                    	 
 	                                    			
 	                                    	
@@ -176,26 +241,45 @@ $(function(){
                                                      <span name="team_domainN" id="team_domainS" class="team_domainS"></span>
                                                      <button type="submit" class="edit-domain">수정하기</button>
                                                      </form>
-	                                    	
 	                                    	</div>
 	                                    	
-												
-		                                       	
-	                                    	<div class="mypage-name-div">
-	                                    	<span>팀삭제</span>
-		                                       	<form class="delete_submit" action="${pageContext.request.contextPath}/team_admin/edit_team_delete" method="post">
-													<input type="hidden" name="team_no" value="${param.team_no}">
-													<button type="submit">팀삭제</button>
-												</form>
-			                                 </div>
-													
-													
-													
-			                                  </div>
-	                                        </div>
-	                                        </div>
-	                                        </div>
-	                                        </div>
+<%-- 	                                    	</c:forEach> --%>
+	                                    	<!-- 팀 영구 삭제하기 -->
+											<div class="modify-items">
+												<div class="modify-item-name">
+													 팀삭제
+												</div>
+													<div class="modify-item-content modify-item4">
+														
+														<!-- 팀 삭제하기 버튼을 누르면 -->
+														<div class="modify-origin-div">
+															팀 삭제하기
+														</div>	
+														
+															<div class="modify-fix-div">
+													<form action="${pageContext.request.contextPath}/team_admin/edit_team_delete" method="post" id="modify-delete-member">
+														<h5>비밀번호</h5>
+		                                       				
+		                                       				<input type="hidden" name="team_no" value="${param.team_no}">
+		                                       				<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
+																<div class="modify-alert">
+																	<h4>"${param.team_name}" 팀에서 소유자를 양도하셔야 합니다.<br>
+																	 계정 비밀번호를 입력후 양도할 소유자를 선택해 주세요</h4>
+															 </div>
+													</form>
+											
+					                                    	<button id="modify-delete-submit">팀 삭제하기</button>
+															<button class="modify-cancel">취소</button>
+															</div>
+													</div>
+											</div>
+									</article>			
+								
+							</div>
+					</div>
+			</div>
+		</div>
+</div>	                                  
 	                                     
 	                                        
 	                                        
