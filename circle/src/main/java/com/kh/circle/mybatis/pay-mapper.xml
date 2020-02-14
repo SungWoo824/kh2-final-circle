@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pay">
+	<insert id="ready" parameterType="payDto">
+		insert into pay values(
+			pay_seq.nextval,
+			#{tid},
+			#{cid},
+			to_date(#{approved_time},'YYYY-MM-DD"T"HH24:MI:SS'),
+			#{partner_order_id},
+			#{partner_user_id},
+			#{item_name},
+			#{quantity},
+			#{total_amount},
+			'준비',
+			#{aid},
+			#{term},
+			#{price}
+		)
+	</insert>
+	
+	<insert id="success" parameterType="payDto">
+		insert into pay values(
+			pay_seq.nextval,
+			#{tid},
+			#{cid},
+			to_date(#{approved_time},'YYYY-MM-DD"T"HH24:MI:SS'),
+			#{partner_order_id},
+			#{partner_user_id},
+			#{item_name},
+			#{quantity},
+			#{total_amount},
+			'준비',
+			#{aid},
+			#{term},
+			#{price}
+		)
+	</insert>
+	
+	<select id="list" resultType="payDto">
+		select*from pay order by no asc
+	</select>
+	
+	
+</mapper>

@@ -87,6 +87,9 @@
         									<div class="mypage-profile-div">
 	                                        </div>
 	                                        
+	                                        <div class="mypage-name-div">
+	                                        	<h3><a href="../pay/planoption">이용중인 플랜 보기</a></h3>
+	                                        </div>
 			                                 
 			                                 <div class="mypage-name-div">
 			                                 <c:forEach var="teamDto" items="${getDetail}">
