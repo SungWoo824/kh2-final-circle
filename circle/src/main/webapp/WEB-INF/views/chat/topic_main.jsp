@@ -414,14 +414,19 @@ background-color:#f8f8f8;
             	<a id="invite_btn" data-toggle="modal"> 멤버 초대하기
 				</a>	<i class="fa fa-plus"></i>
             </li>
+            <li class="nav-item">
+	            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+	                <span class="menu-title">토픽</span>
+	                <i class="menu-arrow fa fa-caret-down" aria-hidden="false"></i>
+	                <!-- <i class="menu-arrow fa fa-caret-down"></i> -->
+	            </a>
             
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
 
-                	<c:forEach items="${topicList}" var="topicListDto">  
-
+                	<c:forEach items="${topicList}" var="topicListDto">
                 		<li class="nav-item">
-		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic?team_no=${param.team_no }&topic_no=${topicListDto.topic_no}">${topicListDto.topic_name}</a>
+		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">${topicListDto.topic_name}</a>
 		                </li>
                 	</c:forEach>
 
