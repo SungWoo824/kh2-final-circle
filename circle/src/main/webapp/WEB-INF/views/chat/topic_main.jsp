@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -218,16 +219,31 @@ $(function(){
 });
 
 function MovePage(no){
+	var team_no = ${param.team_no};
+	var topic_no = ${param.topic_no};
 	var  ajaxOption = {
 			url : "./vote_detail?vote_create_no="+no,
 			type : "GET",
 			dataType : "html",
+			data : {team_no:team_no, topic_no:topic_no},
 			cache : false
 	};
 	$.ajax(ajaxOption).done(function(data){
 		$('#bodyContents').html(data);
 	});
 }
+
+// function MoveList(){
+// 	var ajaxOption = {
+// 			url: "./vote_golist",
+// 			type: "GET",
+// 			dataType: "html",
+// 			cache: false
+// 	};
+// 	$.ajax(ajaxOption).done(function(data){
+// 		$('#bodyContents').html(data);
+// 	});
+// }
 </script>
 <style>
 #invite-create,
@@ -536,27 +552,36 @@ background-color:#f8f8f8;
 			            <div class ="menu1-slide">d</div>
 			            <!-- 주소 변경했음 -->
         			<div id="bodyContents" class="menu4-slide">   
+<!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
+						<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
         				<!-- 목록으로 버튼 if처리해야함 -->
-			       		<button id="movelist">목록으로..</button>
-			            <a href="./vote_create">+투표 만들기</a><br><br>
+			            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
 			            <h3>진행중인 투표 목록</h3>
 
         <!-- 화면 동적 전환(투표 상세 페이지) -->
 			            		<ul>
 			            	<c:forEach var="voteList" items="${voteList }" >
+			            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
 			            		<li>
-			            		<c:out value="${voteList.vote_create_no }"></c:out>번 투표
+        					<c:if test="${param.team_no eq no}">
+			            		<c:out value="${voteList.vote_create_no}"/>번 투표
 			            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
+			            	</c:if>
 			            		</li>
 			            		<br>
 			            	</c:forEach>   	
 			            		</ul>
 			            </div>
 			        </div>
-			        
             </div>
+<<<<<<< HEAD
+            <!-- Page Title Header Ends-->      
+        </div> 
+        
+=======
             <!-- Page Title Header Ends-->
 			
+>>>>>>> refs/remotes/origin/teamCreate
                    	
 <!-- 토픽생성 모달 -->
        <form action="topic_create" method="post">

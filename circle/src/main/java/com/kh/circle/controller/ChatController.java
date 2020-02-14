@@ -77,13 +77,11 @@ public class ChatController {
 		return "chat/chat";
 	}
 
-	
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,
 							Model model, HttpSession session) {
 		List<TopicDto> topicList = teamService.teamTopicList(team_no);
-
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
 		//투표기능관련 코드
