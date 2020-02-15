@@ -100,20 +100,16 @@ public class TeamDaoImpl implements TeamDao {
 
 	//팀멤버 탈퇴 (팀삭제가 아니고 자신만 탈퇴)
 	@Override
-	public void teamExit(int team_no) {
-		sqlSession.delete("team.teamExit", team_no);
+	public void teamExit(TeamMemberDto teamMemberDto) {
+		
+		sqlSession.delete("team.teamExit", teamMemberDto);
 		
 	}
 	
 	//팀 탈퇴시 토픽멤버에서도 탈퇴됨
 	@Override
-	public void topicExit(int team_no, int member_no) {
-		TopicMemberDto topicMemberDto = TopicMemberDto.builder()
-				.team_no(team_no)
-				.member_no(member_no)
-				.build();
-		
-		sqlSession.delete("team.topicExit", topicMemberDto);
+	public void topicExit(TopicMemberDto topicMemberDto) {
+		sqlSession.delete("team.topicExit",topicMemberDto);
 		
 	}
 

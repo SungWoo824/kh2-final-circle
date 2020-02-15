@@ -19,7 +19,7 @@ public interface TeamDao {
 	void teamDelete(int team_no);
 	void editTeamName(String team_name, int team_no);
 	void editTeamDomain(String team_domain, int team_no);
-	void teamExit(int team_no);
-	void topicExit(int team_no, int member_no);
+	void teamExit(TeamMemberDto teamMemberDto);
+	void topicExit(TopicMemberDto topicMemberDto);
 
 }

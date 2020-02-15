@@ -107,13 +107,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<!-- 팀 탈퇴(팀에서 자신만 탈퇴됨) -->
-	<delete id="teamExit" parameterType="int"> 
-	delete team_member where team_no=#{team_no}
+	<delete id="teamExit" parameterType="teamMemberDto"> 
+	delete from team_member where team_no=#{team_no} and member_no=#{member_no}
 	</delete>
 	
 	<!-- 토픽 탈퇴 (팀탈퇴 시 같이 사용해야 할 메소드 -->
-	<delete id="topicExit" parameterType="int">
-	delete topic_member where team_no=#{team_no} and member_no=#{member_no};
+	<delete id="topicExit" parameterType="topicMemberDto">
+	delete from topic_member where team_no=#{team_no} and member_no=#{member_no}
 	</delete>
 	
 	<select id="memberDetail" parameterType="String" resultType="com.kh.circle.entity.MemberDto">

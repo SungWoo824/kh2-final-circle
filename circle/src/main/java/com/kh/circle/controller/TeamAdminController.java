@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.TeamDto;
+import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.MemberDao;
 import com.kh.circle.repository.TeamDao;
@@ -31,7 +32,7 @@ public class TeamAdminController {
 	public String team_member_team(@RequestParam String team_name,
 								   @RequestParam int team_no,
 								   @RequestParam String team_domain,
-								   @RequestParam int member_no,
+								  
 								   HttpSession session,
 							       Model model) {
 		//팀 테이블 정보 출력
@@ -102,21 +103,22 @@ public class TeamAdminController {
 		return "redirect:../member/mypage";
 	}
 	
-	//팀 탈퇴하기
+	//논소유 : 팀 탈퇴하기
 		@PostMapping("/edit_team_exit")
-		public String edit_team_exit(@RequestParam int team_no,
-				@RequestParam int member_no,
-									HttpSession session, 
-									Model model) {
+		public String edit_team_exit(@ModelAttribute TeamMemberDto teamMemberDto,
+									@ModelAttribute TopicMemberDto topicMemberDto
+									
+									) {
+			
 			
 			//탈퇴 할때 team_no와 member_no 필요 
-			model.addAttribute("team_no", team_no);
-			model.addAttribute("member_no", member_no);
-//			int member_no = (int) session.getAttribute("member_no");
+//			model.addAttribute("team_no", team_no);
+//			
+//			int member_no = (int)session.getAttribute("member_no");
 			
-			//팀 멤버에서 탈퇴
-			teamDao.teamExit(team_no);
-			
+			//팀 멤버와 토픽멤버에서 동시 탈퇴 / 팀은 유지됨 
+			teamDao.teamExit(teamMemberDto);
+			teamDao.topicExit(topicMemberDto);
 			
 			return "redirect:../member/mypage";
 		}

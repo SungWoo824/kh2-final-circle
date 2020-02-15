@@ -164,7 +164,7 @@ $(function(){
 							<div class="modify-fix-div">
 								<form action="${pageContext.request.contextPath}/team_admin/edit_team_exit" method="post" id="modify-delete-member">
 									<h5>비밀번호</h5>
-									<input type="hidden" name="member_no" value="${param.member_no}">	
+								    <input type="hidden" name="member_no" value="${memberDto.member_no}">
 									<input type="hidden" name="team_no" value="${param.team_no}">
 									<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
 										<div class="modify-alert">
