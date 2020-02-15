@@ -12,29 +12,8 @@
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
 <script>
-$(function(){
-	$(".param_submit").click(function(e){
-		e.preventDefault();
-		
-		var team_no = $(".team_no_value").attr("value")
-		var url = "${pageContext.request.contextPath}/team/connect"; 
-		var method = $(this).attr("method");
-		var data = $(this).serialize();
-		
-		$.ajax({
-			url:url,
-			type:"get",
-			data:data,
-			success:function(resp){
-				$(".topic_no_value").attr("value",resp);
-				$(".param_submit").submit();
-				
-			}
-		});
-		
-		
-	})
-})
+
+
 </script> 
 </head>
 <body>
@@ -121,7 +100,7 @@ $(function(){
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 																<input type="hidden" name="topic_no" class="topic_no_value" value="">
 																<div class="mypage-team-div">
-																	<button type="submit">이동하기</button>
+																	<button id="param_submit_btn" type="submit">이동하기</button>
 																</div>
 															</form>
 															
