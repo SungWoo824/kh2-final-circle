@@ -35,24 +35,32 @@ public class TeamServer extends TextWebSocketHandler{
 		if(status==enter) {
 			int team_no = data.getTeam_no();
 			boolean exist = teamList.containsKey(team_no);
+			data.setMember_no((int)session.getAttributes().get("member_no"));
+			data.setChat_content("");
+			chatDao.chatDataSave(data);
 			if(!exist) {
 				Team room = new Team();
 				teamList.put(team_no, room);
 			}
 			teamList.get(team_no).add(session,data);
+			
 		} else if (status == exit) {
 			int team_no = data.getTeam_no();
 			teamList.get(team_no).remove(session, data);
+			data.setMember_no((int)session.getAttributes().get("member_no"));
+			data.setChat_content("");
+			chatDao.chatDataSave(data);
 			if(teamList.get(team_no).isEmpty()) {
 				teamList.remove(team_no);
 			}
+			
 		} else if(status == mess) {
 			int team_no = data.getTeam_no();
 			data.setMember_no((int)session.getAttributes().get("member_no"));
 			chatDao.chatDataSave(data);
 			
 			teamList.get(team_no).broadcast(session, data);
-			teamList.get(team_no).count(session, data);
+			
 		}
 	}
 	

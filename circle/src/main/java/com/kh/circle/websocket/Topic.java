@@ -7,6 +7,8 @@ import java.util.Set;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
+import com.kh.circle.vo.ChatVo;
+
 public class Topic {
 	//방에 접속한 사용자 목록
 		private Set<WebSocketSession> userList = new HashSet<>();

@@ -389,8 +389,7 @@ background-color:#f8f8f8;
                             <a class="dropdown-item" href="#">test</a>
                             <a class="dropdown-item" href="#">test2</a>
                             <a class="dropdown-item" href="#">test3</a>
-                            <!-- <div class="dropdown-divider"></div> -->
-                            <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+                            
                         </div> 
                   </div>
                 </div>

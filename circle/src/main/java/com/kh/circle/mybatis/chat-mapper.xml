@@ -6,9 +6,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="chat">
 	<insert id="insert" parameterType="chatVo">
-		insert into chat_list values(chat_no_seq.nextval,#{topic_no},#{member_no},#{team_no},#{chat_content},sysdate)
+		insert into chat_list values(chat_no_seq.nextval,#{topic_no},#{member_no},#{team_no},#{chat_content},sysdate,#{status})
 	</insert>
 	<select id="topicChatList" parameterType="int" resultType="chatVo">
-		select cl.* , member.member_name from (select * from chat_list  where topic_no = #{topic_no})cl inner join member on member.member_no=cl.member_no order by cl.chat_no
+		select cl.* , member.member_name from (select * from chat_list  where topic_no = #{topic_no} and chat_status = 2)cl inner join member on member.member_no=cl.member_no order by cl.chat_no
+	</select>
+	<select id="memberContainTopic" parameterType="chatVo" resultType="int">
+		select topic_no from topic_member where team_no = #{team_no} and member_no=#{member_no}
 	</select>
 </mapper>
