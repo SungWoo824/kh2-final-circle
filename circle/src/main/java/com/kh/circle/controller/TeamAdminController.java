@@ -18,6 +18,8 @@ import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.MemberDao;
 import com.kh.circle.repository.TeamDao;
+import com.kh.circle.repository.TopicDao;
+import com.kh.circle.service.TeamService;
 
 @Controller
 @RequestMapping("/team_admin")
@@ -26,21 +28,25 @@ public class TeamAdminController {
 	@Autowired private TeamDao teamDao;
 	@Autowired private SqlSession sqlSession;
 	@Autowired private MemberDao memberDao;
+
 	
+	
+
 	//논소유자: 팀관리 페이지 메인
 	@GetMapping("/member_manager_team")
 	public String team_member_team(@RequestParam String team_name,
 								   @RequestParam int team_no,
 								   @RequestParam String team_domain,
-								  
+								   
 								   HttpSession session,
 							       Model model) {
 		//팀 테이블 정보 출력
 		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 		
-		model.addAttribute("teamDto", teamDao.teamDetail((int)session.getAttribute("member_no")));
+//		model.addAttribute("teamDto", teamDao.teamDetail((int)session.getAttribute("member_no")));
+//		model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));
 		model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));
-
+		model.addAttribute("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
 		
 		return "team_admin/member_manager_team";
 	}
@@ -59,6 +65,8 @@ public class TeamAdminController {
 //		model.addAttribute("team_domain", team_domain);
 		//팀 테이블 정보 리스트 출력
 		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
+		
+		model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
 		
 		//비밀번호 확인 할때 이메일 세션 가져오기 
 		model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));

@@ -101,6 +101,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from team where team_no=#{team_no}
 	</select>
 	
+	<!-- 팀 멤버 디티오 정 -->
+	<select id="teamMemberinfo" resultType="teamMemberDto" parameterType="int">
+		select * from team_member where member_no = #{member_no}
+	</select>
+	
 	<!-- 팀 아예 삭제 ( 모든 멤버까지 다삭제) -->
 	<delete id="teamDelete" parameterType="int" >
 		delete team where team_no=#{team_no}

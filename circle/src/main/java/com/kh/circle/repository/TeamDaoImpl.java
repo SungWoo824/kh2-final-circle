@@ -113,6 +113,12 @@ public class TeamDaoImpl implements TeamDao {
 		
 	}
 
+	@Override
+	public TeamMemberDto teamMemberinfo(int member_no) {
+		return sqlSession.selectOne("team.teamMemberinfo", member_no);
+		
+	}
+
 	
 	
 	

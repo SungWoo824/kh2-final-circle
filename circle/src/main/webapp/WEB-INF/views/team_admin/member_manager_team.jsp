@@ -126,7 +126,13 @@ $(function(){
 <%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
 	                            <span> 팀 이름 = ${teamDto.team_name}</span>
 	                                    		
-		                                        
+		                        <form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
+																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+																
+																<div class="mypage-team-div">
+																	<button id="param_submit_btn" type="submit">이동하기</button>
+																</div>
+															</form>                
 	                       </div>
 	                       
   						   <!-- 정보보기 시작 -->    

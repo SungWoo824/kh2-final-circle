@@ -82,6 +82,7 @@
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}">
 																<input type="hidden" name="team_domain" class="team_domain_value" value="${teamDto.team_domain}">
+																
 																<div class="mypage-team-div">
 																	<button type="submit">논소유자관리</button>
 																</div>

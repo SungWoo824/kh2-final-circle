@@ -198,98 +198,109 @@ $(function(){
 	                                    		<h1>팀관리</h1>
 <%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
 	                                    		<span> 팀 이름 = ${teamDto.team_name}</span>
+	                                    		<br>
+	                                    		<span> 내 등급 = ${teamMemberDto.member_position}</span>
+	                                    </div>
 	                                    		
 		                                        
-	                                    </div>
 	                                    
 	                                    <!-- 변경하기 부분 -->
 	                                    <article class="modify-article">
 	                               		     <div>
+	                               		     
+	                               		     <!-- 팀 정보보기  -->
+												<div class="modify-items">
+													<div class="modify-item-name">
+														팀 정보보기  
+													</div>
+	                                        			<div class="modify-item-content modify-item2">
+															<div class="modify-origin-div">
+																보기 
+																
+															</div>
+			                             					    <div class="modify-fix-div">
+                                                   				    팀 이름 = ${teamDto.team_name}
+                                                   				    내 등급 = ${teamMemberDto.member_position} , ${teamMemberDto.member_auth}
+                                                   				   
+                                                   				    이메일 = ${memberDto.member_email}
+                                                    					 <button class="modify-cancel">닫기 </button>
+	                                    						</div>
+	                                    				</div>
+	                                    	    </div>	
+	                                    	    
 			                               	    <!-- 팀 이름 변경하기 -->
 												<div class="modify-items">
 													<div class="modify-item-name">
 														팀 이름   
 													</div>
 	                                        			<div class="modify-item-content modify-item2">
-												<div class="modify-origin-div">
-													${param.team_name}
-												</div>
-												
-			                                 <div class="modify-fix-div">
-			                                
-	                                    	
-                                                     <form  action="edit_team_name" method="post"> 
-                                                     <input type="hidden" name="team_no" value="${param.team_no}">
-                                                     <input type="hidden" name="team_domain" value="${param.team_domain}">
-                                                     
-                                                     <input type="text" name="team_name" value="${teamDto.team_name}">
-                                                     
-                                                     <span name="team_nameN" id="team_nameS" class="team_nameS"></span>
-                                                     <button type="submit" name="submitC" class="submitC" id="submitC">수정하기</button>
-                                                     </form>
-                                                     <button class="modify-cancel">취소</button>
-	                                    	 </div>
-	                                    	 </div>
-	                                    	 </div>	
-	                                    	
-                                                    
-                                                     
-	                                    	<!-- 팀 도메인 변경하기 -->
-	                                    	 <div class="modify-items">
-	                                    	 <div class="modify-item-name">
-	                                    	     팀 도메인
-	                                    	</div>
-	                                    	
-	                                    	<div class="modify-item-content modify-item4">
-	                                    		<!--변경하기 버튼 부-->
-	                                    		<div class="modify-origin-div">
-																${param.team_domain}  
+															<div class="modify-origin-div">
+																${param.team_name}
 															</div>
-															<div class="modify-fix-div">
-	                                    			<form  action="edit_team_domain" method="post"> 
-                                                     <input type="hidden" name="team_no" value="${param.team_no}">
-                                                     <input type="hidden" name="team_name" value="${param.team_name}">
-                                                     <input type="text" name="team_domain" value="${teamDto.team_domain}">
-                                                     <span name="team_domainN" id="team_domainS" class="team_domainS"></span>
-                                                     <button type="submit" name="submitD" class="submitD" id="submitD">수정하기</button>
-                                                     </form>
-<!--                                                      					<button id="modify-edit-submit">변경하기</button> -->
-											<button class="modify-cancel">취소</button>
-	                                    	</div>
-	                                    	</div>
-	                                    	</div>
+			                             					    <div class="modify-fix-div">
+                                                   				    <form  action="edit_team_name" method="post"> 
+                                                					     <input type="hidden" name="team_no" value="${param.team_no}">
+                                                  						 <input type="hidden" name="team_domain" value="${param.team_domain}">
+                                                      					 <input type="text" name="team_name" value="${teamDto.team_name}">
+	                                                     				 <span name="team_nameN" id="team_nameS" class="team_nameS"></span>
+                                                     					 <button type="submit" name="submitC" class="submitC" id="submitC">수정하기</button>
+                                                    				 </form>
+                                                    					 <button class="modify-cancel">취소</button>
+	                                    						</div>
+	                                    				</div>
+	                                    	    </div>	
+                                                     
+	                                    		<!-- 팀 도메인 변경하기 -->
+	                                    		<div class="modify-items">
+	                                    			 <div class="modify-item-name">
+	                                    			     팀 도메인
+	                                    		    </div>
+	                                    			    	<div class="modify-item-content modify-item4">
+	                                    						<!--변경하기 버튼 부-->
+	                                    						<div class="modify-origin-div">
+																	${param.team_domain}  
+																</div>
+																      <div class="modify-fix-div">
+	                                    								   <form  action="edit_team_domain" method="post"> 
+							                                                     <input type="hidden" name="team_no" value="${param.team_no}">
+							                                                     <input type="hidden" name="team_name" value="${param.team_name}">
+							                                                     <input type="text" name="team_domain" value="${teamDto.team_domain}">
+							                                                     <span name="team_domainN" id="team_domainS" class="team_domainS"></span>
+							                                                     <button type="submit" name="submitD" class="submitD" id="submitD">수정하기</button>
+							                                                </form>
+																			 	 <button class="modify-cancel">취소</button>
+	                                    							 </div>
+	                                    				</div>
+	                                    		</div>
 	                                    	
 	                                    	
 <%-- 	                                    	</c:forEach> --%>
-	                                    	<!-- 팀 영구 삭제하기 -->
-											<div class="modify-items">
-												<div class="modify-item-name">
-													 팀삭제
-												</div>
-													<div class="modify-item-content modify-item4">
-														
-														<!-- 팀 삭제하기 버튼을 누르면 -->
-														<div class="modify-origin-div">
-															팀 삭제하기
-														</div>	
-														
-															<div class="modify-fix-div">
-													<form action="${pageContext.request.contextPath}/team_admin/edit_team_delete" method="post" id="modify-delete-member">
-														<h5>비밀번호</h5>
-		                                       				
-		                                       				<input type="hidden" name="team_no" value="${param.team_no}">
-		                                       				<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
-																<div class="modify-alert">
-																	<h4>"${param.team_name}" 팀에서 소유자를 양도하셔야 합니다.<br>
-																	 계정 비밀번호를 입력후 양도할 소유자를 선택해 주세요</h4>
-															 </div>
-													</form>
-											
-					                                    	<button id="modify-delete-submit">팀 삭제하기</button>
-															<button class="modify-cancel">취소</button>
-															</div>
+	                                    		<!-- 팀 영구 삭제하기 -->
+												<div class="modify-items">
+													<div class="modify-item-name">
+														 팀삭제
 													</div>
-											</div>
+														 <div class="modify-item-content modify-item4">
+															<!-- 팀 삭제하기 버튼을 누르면 -->
+															<div class="modify-origin-div">
+																팀 삭제하기
+															</div>	
+																 <div class="modify-fix-div">
+																	 <form action="${pageContext.request.contextPath}/team_admin/edit_team_delete" method="post" id="modify-delete-member">
+																		<h5>비밀번호</h5>
+																		<input type="hidden" name="team_no" value="${param.team_no}">
+		                                       							<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
+																			<div class="modify-alert">
+																				<h4>"${param.team_name}" 팀에서 소유자를 양도하셔야 합니다.<br>
+																	 				계정 비밀번호를 입력후 양도할 소유자를 선택해 주세요</h4>
+															 				</div>
+																	</form>
+											
+					                                    				<button id="modify-delete-submit">팀 삭제하기</button>
+																		<button class="modify-cancel">취소</button>
+																</div>
+														</div>
+												</div>
 									</article>			
 								
 							</div>

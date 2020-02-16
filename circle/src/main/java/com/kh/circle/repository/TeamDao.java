@@ -2,6 +2,7 @@ package com.kh.circle.repository;
 
 import java.util.List;
 
+import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicMemberDto;
@@ -21,5 +22,6 @@ public interface TeamDao {
 	void editTeamDomain(String team_domain, int team_no);
 	void teamExit(TeamMemberDto teamMemberDto);
 	void topicExit(TopicMemberDto topicMemberDto);
+	TeamMemberDto teamMemberinfo(int member_no);
 
 }
