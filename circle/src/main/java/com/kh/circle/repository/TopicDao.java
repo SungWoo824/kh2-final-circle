@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
+import com.kh.circle.vo.TopicRestVO;
 
 public interface TopicDao {
 
@@ -13,6 +14,7 @@ public interface TopicDao {
 	int teamTopicFirst(int team_no);
 	TopicDto topicChange(int topic_no);
 	List<TopicMemberDto> topicMemberList(int topic_no);
-	
+	void editTopic(TopicDto topicDto);
+	void outTopic(int topic_no);
 
 }

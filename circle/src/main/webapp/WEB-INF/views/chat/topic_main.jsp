@@ -395,7 +395,7 @@ background-color:#f8f8f8;
             </a>
             </li>
             <li class="nav-item" id="topic-create">
-            	<a data-toggle="modal" data-target="#exampleModalCenter">
+            	<a data-toggle="modal" data-target="#newTopicCreate">
 					새 토픽 생성
             	</a>	<i class="fa fa-plus"></i>
             </li>
@@ -582,7 +582,7 @@ background-color:#f8f8f8;
                    	
 <!-- 토픽생성 모달 -->
        <form action="topic_create" method="post">
-		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal fade" id="newTopicCreate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		  <div class="modal-dialog modal-dialog-centered" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
