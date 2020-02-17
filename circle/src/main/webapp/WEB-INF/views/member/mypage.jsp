@@ -88,7 +88,7 @@
 																</div>
 															</form>
 															<!-- 팀관리 : 소유자만 보이는 버튼 -->
-															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/team_manager_team" method="get">
+															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/owner_manager_team" method="get">
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}">
 																<input type="hidden" name="team_domain" class="team_domain_value" value="${teamDto.team_domain}">
