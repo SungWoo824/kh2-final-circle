@@ -212,9 +212,7 @@ $(function(){
 // 		$('.dropdown-toggle').on('shown.bs.dropdown');
 	});
 	
-// 	$('#myDropdown').on('show.bs.dropdown', function () {
-// 		  // do something...
-// 		});
+
 
 </script>
 <script>
@@ -472,6 +470,9 @@ background-color:#f8f8f8;
                     <div class="chat-menu-bar">
                     
                       <!-- 팀멤버 보기 드롭다운 시작-->
+
+           </div>           
+                      
                       <div class="btn-group" id="membertList">
  						 <button  type="button" id="myDropdown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     						팀멤버 보기 </button>

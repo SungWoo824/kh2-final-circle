@@ -53,7 +53,8 @@ public class TeamDaoImpl implements TeamDao {
 						.build();
 		sqlSession.insert("team.teamMemberCreate2",teamMemberDto);
 	}
-
+	
+	//특정 팀에 참여 중인 모든 멤버 리스트 출력
 	@Override
 	public List<MemberListVO> memberList(int team_no) {
 //		MemberListVO memberListVO = MemberListVO.builder()
@@ -62,10 +63,28 @@ public class TeamDaoImpl implements TeamDao {
 //				.build();
 		return sqlSession.selectList("team.memberList",team_no);
 	}
-
+	
+	//특정 팀에 참여중인 정회원 리스트 출력 
+	@Override
+	public List<MemberListVO> memberListRegular(int team_no) {
+		return sqlSession.selectList("team.memberListRegular", team_no);
+	}
+	
+	//특정 팀에 참여중인 준회원 리스트 출력
+	@Override
+	public List<MemberListVO> memberListAssociate(int team_no) {
+		return sqlSession.selectList("team.memberListAssociate", team_no);
+	}
+	
+	// 특정 팀에 참여중인 소유자 리스트 출력
+	@Override
+	public List<MemberListVO> memberListOwner(int team_no) {
+		return sqlSession.selectList("team.memberListOwner", team_no);
+	}
+	
+	//팀 테이블 리스트 셀렉원으로 출력 / 리스트 출력 아님
 	@Override
 	public TeamDto teamDetail(int team_no) {
-		
 		return sqlSession.selectOne("team.teamDetail", team_no);
 	}
 	
@@ -97,11 +116,21 @@ public class TeamDaoImpl implements TeamDao {
 				.build();
 		sqlSession.update("team.editTeamDomain",teamDto);
 	}
+	
+	//팀 관리자 : 멤버 등급 변경
+	@Override
+	public void grantPosition(int member_no, int team_no, String member_position) {
+		Map<String,Object> param = new HashMap<>();
+		param.put("member_no", member_no);
+		param.put("team_no", team_no);
+		param.put("member_position",member_position);
+		
+		sqlSession.update("team.grantPosition", param);
+	}
 
 	//팀멤버 탈퇴 (팀삭제가 아니고 자신만 탈퇴)
 	@Override
 	public void teamExit(TeamMemberDto teamMemberDto) {
-		
 		sqlSession.delete("team.teamExit", teamMemberDto);
 		
 	}
@@ -112,14 +141,13 @@ public class TeamDaoImpl implements TeamDao {
 		sqlSession.delete("team.topicExit",topicMemberDto);
 		
 	}
-
+	
+	//팀멤버 테이블 전체 목록 셀렉원으로 출력
 	@Override
 	public TeamMemberDto teamMemberinfo(int member_no) {
 		return sqlSession.selectOne("team.teamMemberinfo", member_no);
-		
 	}
 
-	
 	
 	
 	

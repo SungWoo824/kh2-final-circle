@@ -14,6 +14,9 @@ public interface TeamDao {
 	void teamCreate(TeamDto teamDto);
 	List<TeamDto> teamList(int member_no);
 	List<MemberListVO> memberList(int team_no);
+	List<MemberListVO> memberListRegular(int team_no);
+	List<MemberListVO> memberListAssociate(int team_no);
+	List<MemberListVO> memberListOwner(int team_no);
 	void teamMemberCreate(int member_no,int team_no);
 	void teamMemberCreate2(int member_no, int team_no);
 	TeamDto teamDetail(int team_no);
@@ -23,5 +26,6 @@ public interface TeamDao {
 	void teamExit(TeamMemberDto teamMemberDto);
 	void topicExit(TopicMemberDto topicMemberDto);
 	TeamMemberDto teamMemberinfo(int member_no);
+	void grantPosition(int member_no, int team_no, String member_position);
 
 }
