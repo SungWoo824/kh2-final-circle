@@ -19,6 +19,7 @@ import com.kh.circle.vo.CirclePayReadyReturnVO;
 import com.kh.circle.vo.CirclePaySuccessReadyVO;
 import com.kh.circle.vo.CirclePaySuccessReturnVO;
 import com.kh.circle.vo.PayReadyVO;
+import com.kh.circle.vo.PayRevokeReturnVO;
 
 @Controller
 @RequestMapping("/pay")
@@ -73,5 +74,13 @@ public class PayController {
 	public String list(Model model) {
 		model.addAttribute("list", payDao.getList());
 		return "pay/list";
+	}
+	
+	@GetMapping("/revoke")
+	public String revoke(@RequestParam int no) throws URISyntaxException {
+		
+		PayRevokeReturnVO vo = payService.revoke(no);
+		
+		return "redirect:list";
 	}
 }

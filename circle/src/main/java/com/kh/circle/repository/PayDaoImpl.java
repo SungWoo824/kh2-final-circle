@@ -2,6 +2,8 @@ package com.kh.circle.repository;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -26,7 +28,15 @@ public class PayDaoImpl implements PayDao{
 	public List<PayDto> getList() {
 		return sqlSession.selectList("pay.list");
 	}
-	
-	
-	
+
+	@Override
+	public PayDto get(int no) {
+		
+		return sqlSession.selectOne("pay.get", no);
+	}
+
+	@Override
+	public void insertRevoke(PayDto payDto) {
+		sqlSession.insert("pay.revoke", payDto);
+	}
 }

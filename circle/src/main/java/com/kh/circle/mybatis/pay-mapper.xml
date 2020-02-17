@@ -45,5 +45,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select*from pay order by no asc
 	</select>
 	
+	<select id="get" resultType="payDto" parameterType="Integer">
+		select*from pay where no=#{no}
+	</select>
 	
+	<insert id="revoke" parameterType="payDto">
+	 			insert into pay values(
+					pay_seq.nextval,
+					#{tid},
+					#{cid},
+					to_date(#{approved_time},'YYYY-MM-DD"T"HH24:MI:SS'),
+					#{partner_order_id},
+					#{partner_user_id},
+					#{item_name},
+					#{quantity},
+					#{total_amount},
+					'완료',
+					#{aid},
+					#{term},
+					#{price}
+		)
+	 </insert>
+<!-- 	<select id="getno" resultType="Integer" parameterType="String"> -->
+<!-- 		select no from pay where tid=#{tid} -->
+<!-- 	</select> -->
 </mapper>
