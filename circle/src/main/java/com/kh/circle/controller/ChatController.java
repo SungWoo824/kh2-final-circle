@@ -178,7 +178,6 @@ public class ChatController {
 								 @RequestParam String cert_no,
 								 @RequestParam int team_no,
 								 @RequestParam int topic_no,
-								 @ModelAttribute TeamDto teamDto,
 								 Model model,
 								 HttpServletResponse response
 							) {
@@ -260,7 +259,7 @@ public class ChatController {
 			return "chat/invite_signup";
 		}
 		
-		//링크 회원가입 버튼 누르기 미완료 기능 -> 
+		//링크 회원가입 버튼 누르기 
 		@PostMapping("/invite_signup")
 		public String invite_signup(@RequestParam String team_no,
 									@RequestParam String topic_no,

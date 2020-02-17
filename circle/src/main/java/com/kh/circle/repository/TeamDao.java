@@ -2,8 +2,10 @@ package com.kh.circle.repository;
 
 import java.util.List;
 
+import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
+import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.MemberListVO;
 
 public interface TeamDao {
@@ -14,7 +16,12 @@ public interface TeamDao {
 	List<MemberListVO> memberList(int team_no);
 	void teamMemberCreate(int member_no,int team_no);
 	void teamMemberCreate2(int member_no, int team_no);
-	List<Object> teamDetail(int team_no);
+	TeamDto teamDetail(int team_no);
 	void teamDelete(int team_no);
 	void editTeamName(String team_name, int team_no);
+	void editTeamDomain(String team_domain, int team_no);
+	void teamExit(TeamMemberDto teamMemberDto);
+	void topicExit(TopicMemberDto topicMemberDto);
+	TeamMemberDto teamMemberinfo(int member_no);
+
 }

@@ -42,33 +42,33 @@
                         <div id="fullpage">
                             <div class="section">
                                 <div class="main-title">
-                                <form action="invite_signin" method="post">
-                                <input type="hidden" value="${param.team_no}" name="team_no">
-								<input type="hidden" value="${param.topic_no}" name="topic_no">
-								
-                                    <div>
-                                        <span>로그인</span>
-                                        
-                                        <div class="form-group signin-form-group">
-									      <label for="exampleInputEmail1"></label>
-									      <input type="email" class="form-control" id="exampleInputEmail1" name="member_email" aria-describedby="emailHelp" placeholder="Enter email">
-									      
-									    </div>
-									    <div class="form-group signin-form-group">
-									      <label for="exampleInputPassword1"></label>
-									      <input type="password" class="form-control" id="exampleInputPassword1" name="member_pw" placeholder="Password">
-									    </div>
-                                       
-                                    </div>
-                                    <div>
-                                        <div>
-                   
-											<button type="submit" class="btn btn-primary signin-submit">로그인</button>
-										
-                                           
-                                        </div>
-                                    </div>
-                                    </form>
+	                                <form action="invite_signin" method="post">
+	                             	   <input type="hidden" value="${param.team_no}" name="team_no">
+										<input type="hidden" value="${param.topic_no}" name="topic_no">
+									
+	                                 	   <div>
+		                                        <span>로그인</span>
+		                                        
+		                                        <div class="form-group signin-form-group">
+											      <label for="exampleInputEmail1"></label>
+											      <input type="email" class="form-control" id="exampleInputEmail1" name="member_email" aria-describedby="emailHelp" placeholder="Enter email">
+											      
+											    </div>
+											    <div class="form-group signin-form-group">
+											      <label for="exampleInputPassword1"></label>
+											      <input type="password" class="form-control" id="exampleInputPassword1" name="member_pw" placeholder="Password">
+											    </div>
+	                                       
+	                                 	    </div>
+	                                	    <div>
+		                                        <div>
+		                   
+													<button type="submit" class="btn btn-primary signin-submit">로그인</button>
+												
+		                                           
+		                                        </div>
+	                                  	  </div>
+                                  </form>
                                 </div>
                             </div>
                             <div class="section">
