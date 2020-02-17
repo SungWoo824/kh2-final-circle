@@ -117,7 +117,7 @@ public class TeamController {
 	}
 
 
-	//인증 번호6자리를 보낼 수 있는 컨트롤러 / 현재 team에서 사용하지 않는 메소드 
+
 	@GetMapping("/send")
 	@ResponseBody
 	public String send(@RequestParam String email, HttpSession session) {
@@ -149,9 +149,10 @@ public class TeamController {
 	
 	@GetMapping("/connect")
 	@ResponseBody
-	public String connect(@RequestParam int team_no) {
+	public int connect(@RequestParam int team_no) {
 		int topic_no =topicDao.teamTopicFirst(team_no);
-		return String.valueOf(topic_no);
+		
+		return topic_no;
 	}
 	
 

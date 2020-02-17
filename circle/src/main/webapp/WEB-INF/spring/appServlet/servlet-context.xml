@@ -31,10 +31,10 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
 	</context:component-scan>
 	
-	<beans:bean id="topicChatServer" class="com.kh.circle.websocket.TopicChatServer"/>
+	<beans:bean id="teamServer" class="com.kh.circle.websocket.TeamServer"/>
 	<websocket:handlers>
 		<!-- 그룹채팅 서버 -->
-		<websocket:mapping handler="topicChatServer" path="/topic"/>
+		<websocket:mapping handler="teamServer" path="/topic"/>
 		<!-- 인터셉터 등록 : HttpSession의 정보를 가져오기 위한 도구 -->
 		<websocket:handshake-interceptors>
 			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></beans:bean>
