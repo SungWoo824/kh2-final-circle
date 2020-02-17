@@ -147,11 +147,19 @@ $(function(){
 		$(".change-profle-form").submit();
 	})
 });
+
+
+//클릭 하면 열고 닫기 
+$(function(){
+	$(".navbar").hide();
+	$(".navbar").show();
+
+});
 	
 </script>
 
 <body>
-	<!-- 상단 헤더 --> -->
+ 	 <!-- 상단 헤더 --> -->
 	 <div class="circle-header">
 
                 <div class="header-wrap">
@@ -185,42 +193,58 @@ $(function(){
                     </div>
                 </div>        
         </div>
-        <!-- 팀 관리 부분 -->
+        
+        
+       
+        <!-- 소유자 :팀 관리 설정-->
         <div class="mypage-main">
              <div class="main-bg">
                     
                  <div id="fullpage">
                       <div class="section">
                            <div class="mypage-main-content">
-                                		
+                          
+								<!-- 상단 네비바 -->
+								<nav class="navbar navbar-expand-lg navbar-light bg-light">
+								  <a class="navbar-brand" href="#">팀관리</a>
+								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+								    <span class="navbar-toggler-icon"></span>
+								  </button>
+								 <c:forEach items="${teamlist}" var="teamDto">
+								  <div class="collapse navbar-collapse" id="navbarNav">
+								    <ul class="navbar-nav">
+								      <li class="nav-item active">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
+								      </li>
+								      <li class="nav-item">
+								    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리</a>
+								     
+								      </li>
+								      <li class="nav-item">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
+								      </li>
+								<!--       <li class="nav-item"> -->
+								<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+								<!--       </li> -->
+								    </ul>
+								  </div>
+								  </c:forEach>
+								</nav>	 
+
                                 		<!-- 팀 정보 보기 -->
 	                                    <div class="mypage-div">
-	                                    		<h1>팀관리</h1>
 <%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
 	                                    		<span> 팀 이름 = ${teamDto.team_name}</span>
 	                                    		<br>
-	                                    		<span> 내 등급 = ${teamMemberDto.member_position}</span>
+	                                    		<span> 내 등급 = ${teamMemberDto.member_position},</span>
+	                                    		<span>${teamMemberDto.member_auth} </span>
 	                                    </div>
-
-        									<div class="mypage-profile-div">
-	                                        </div>
-	                                        
-	                                        <div class="mypage-name-div">
-	                                        	<h3><a href="../pay/planoption">이용중인 플랜 보기</a></h3>
-	                                        </div>
-			                                 
-			                                 <div class="mypage-name-div">
-			                                 <c:forEach var="teamDto" items="${getDetail}">
-	                                    	 <h3>팀 이름= ${teamDto.team_name}</h3>
-	                                    	</c:forEach>
-                                                     <button class="edit-name">이름 변경하기</button>
-
 	                                    		
-		                                        
+		                                  
 	                                    
 	                                    <!-- 변경하기 부분 -->
 	                                    <article class="modify-article">
-	                               		    
+	                               		     <div>
 	                               		     
 	                               		     <!-- 팀 정보보기  -->
 												<div class="modify-items">
@@ -263,7 +287,6 @@ $(function(){
 	                                    						</div>
 	                                    				</div>
 	                                    	    </div>	
-
                                                      
 	                                    		<!-- 팀 도메인 변경하기 -->
 	                                    		<div class="modify-items">
@@ -289,7 +312,7 @@ $(function(){
 	                                    		</div>
 	                                    	
 	                                    	
-	                                    	
+<%-- 	                                    	</c:forEach> --%>
 	                                    		<!-- 팀 영구 삭제하기 -->
 												<div class="modify-items">
 													<div class="modify-item-name">
@@ -316,8 +339,10 @@ $(function(){
 																</div>
 														</div>
 												</div>
-								
+												</div>
+											
 									</article>			
+								
 							</div>
 					</div>
 			</div>

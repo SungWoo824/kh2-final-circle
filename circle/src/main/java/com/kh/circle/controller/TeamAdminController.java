@@ -52,12 +52,13 @@ public class TeamAdminController {
 	}
 	
 	//소유자 : 팀관리 페이지 메인 
-	@GetMapping("/team_manager_team")
-	public String team_manager_team(@RequestParam String team_name,
+	@GetMapping("/owner_manager_team")
+	public String owner_manager_team(@RequestParam String team_name,
 									@RequestParam int team_no,
 									@RequestParam String team_domain,
 									HttpSession session,
 									Model model) {
+
 		
 
 		model.addAttribute("team_name", team_name);
@@ -66,16 +67,52 @@ public class TeamAdminController {
 //		model.addAttribute("team_name", team_name);
 //		model.addAttribute("team_no", team_no);
 //		model.addAttribute("team_domain", team_domain);
+
 		//팀 테이블 정보 리스트 출력
+		model.addAttribute("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
 		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
+
 		model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
-		
 		//비밀번호 확인 할때 이메일 세션 가져오기 
 		model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));
 
 		
-		return "team_admin/team_manager_team";
+		return "team_admin/owner_manager_team";
 	}
+	
+	@GetMapping("/owner_manager_member")
+	public String owner_manager_member(@RequestParam String team_name,
+								  	   @RequestParam int team_no,
+									   @RequestParam String team_domain,
+									   HttpSession session,
+									   Model model) {
+		
+		model.addAttribute("team_name", team_name);
+		//팀 테이블 정보 리스트 출력
+		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
+		//팀 멤버 정보 출력
+		model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
+		
+		
+		return "team_admin/owner_manager_member";
+	}
+	
+	@GetMapping("/owner_manager_per")
+	public String owner_manager_mper(@RequestParam String team_name,
+										@RequestParam int team_no,
+										@RequestParam String team_domain,
+										HttpSession session,
+										Model model) {
+		//팀 테이블 정보 리스트 출력
+		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
+		//팀 멤버 정보 출력
+		model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
+				
+		
+		return "team_admin/owner_manager_per";
+	}
+	
+	
 	
 	//팀 이름 변경하기 
 	@PostMapping("/edit_team_name")
@@ -89,7 +126,7 @@ public class TeamAdminController {
 		model.addAttribute("team_domain", team_domain);
 		
 		teamDao.editTeamName(team_name, team_no);
-		return "redirect:./team_manager_team";
+		return "redirect:./owner_manager_team";
 	}
 	
 	//팀 도메인 변경하기
@@ -102,7 +139,7 @@ public class TeamAdminController {
 		model.addAttribute("team_no", team_no);
 		model.addAttribute("team_name", team_name);
 		teamDao.editTeamDomain(team_domain, team_no);
-		return "redirect:./team_manager_team";
+		return "redirect:./owner_manager_team";
 		
 	}
 	
