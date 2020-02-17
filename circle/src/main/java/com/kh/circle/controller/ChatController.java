@@ -335,17 +335,17 @@ public class ChatController {
 		//토픽소유자 나가기(선택멤버 토픽소유자로 변경하고 나가기)
 		@PostMapping("/topic_masterchange")
 		public String topicMasterChange(@RequestParam int topic_no, @RequestParam int team_no, HttpSession session) {
-			topicDao.topicMasterChange(topic_no,(int)session.getAttribute("member_no"));
-			topicDao.outTopic(topic_no,(int)session.getAttribute("member_no"));
+			topicDao.topicMasterChange(topic_no,team_no);
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
 			return "redirect:/chat/topic_main?team_no="+team_no+"&topic_no="+topic_no;
 		}
 		
 		
 		//토픽멤버 나가기(토픽소유자 제외)
-		@GetMapping("/outtopic")
-		public String outTopic(@RequestParam int topic_no,HttpSession session) {
+		@PostMapping("/outtopic")
+		public String outTopic(@RequestParam int topic_no,@RequestParam int team_no,HttpSession session) {
 			topicDao.outTopic(topic_no,(int)session.getAttribute("member_no"));
-			return "redirect:/chat/topic_invite?topic_no="+topic_no;
+			return "redirect:/chat/topic_main?team_no="+team_no+"&topic_no="+topic_no;
 		}
 		
 		

@@ -511,12 +511,20 @@ function MovePage(no){
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 							role="button" aria-haspopup="true" aria-expanded="false">더 보기</a>
 							<div class="dropdown-menu" style="">
-								<a class="dropdown-item" data-toggle="modal" data-target="#inTopic">토픽 참여 목록보기</a> 
-									<a class="dropdown-item" data-toggle="modal" data-target="#inviteTopic">토픽 초대하기</a> 
-									<a class="dropdown-item" data-toggle="modal" data-target="#editTopic">토픽 정보변경</a>
-									<a class="dropdown-item" href="#">토픽 삭제하기</a> 
-									<a class="dropdown-item" data-toggle="modal" data-target="#outTopic">토픽 나가기</a>
-									<a class="dropdown-item" data-toggle="modal" data-target="#topicMasterChange">토픽 나가기</a>
+									<c:choose>
+										<c:when test="${topicMemberDto.topic_member_position == '토픽소유자'}">
+											<a class="dropdown-item" data-toggle="modal" data-target="#inTopic">토픽 참여 목록보기</a> 
+											<a class="dropdown-item" data-toggle="modal" data-target="#inviteTopic">토픽 초대하기</a> 
+											<a class="dropdown-item" data-toggle="modal" data-target="#editTopic">토픽 정보변경</a>
+											<a class="dropdown-item" href="#">토픽 삭제하기</a> 
+											<a class="dropdown-item" data-toggle="modal" data-target="#topicMasterChange">토픽 나가기</a>
+										</c:when>
+										<c:otherwise>
+											<a class="dropdown-item" data-toggle="modal" data-target="#inTopic">토픽 참여 목록보기</a> 
+											<a class="dropdown-item" data-toggle="modal" data-target="#inviteTopic">토픽 초대하기</a> 
+											<a class="dropdown-item" data-toggle="modal" data-target="#outTopic">토픽 나가기</a>
+										</c:otherwise>
+									</c:choose>
 							</div>
 						</li>
 					</ul>
@@ -760,16 +768,23 @@ function MovePage(no){
         </button>
       </div>
        <div class="modal-body">
-					<span>다음 토픽 관리자를 선택해주세요</span><br><hr>
-			    		<c:forEach var="tmList" items="${topicMemberList}">
-					        	<input type="checkbox" name="member_no" value="${tmList.member_no }">
+			<span>다음 토픽 관리자를 선택해주세요</span><br><hr>
+		    		<c:forEach var="tmList" items="${topicMemberList}">
+	    				<c:choose>
+		    				<c:when test="${tmList.member_no== param.member_no}">
+				        		<input type="checkbox" name="member_no" value="${tmList.member_no }" disabled>
+		    				</c:when>
+				        	<c:otherwise>
+					        	<input type="checkbox" name="member_no" value="${tmList.member_no }">	
+				        	</c:otherwise>
+			    		</c:choose>
 					        	<input type="hidden" name="topic_no" value="${tmList.topic_no }">
 					        	<input type="hidden" name="team_no" value="${tmList.team_no }">
-						        	<span>
-						        		${tmList.member_name}-${tmList.member_email}(${tmList.topic_member_position })
-						        	</span>
-				        	<br>
-				        </c:forEach>
+					        	<span>
+					        		${tmList.member_name}-${tmList.member_email}(${tmList.topic_member_position })
+					        	</span>
+			        			<br>
+			        </c:forEach>
 		 </div>
 		 <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
