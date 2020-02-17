@@ -8,5 +8,5 @@ import com.kh.circle.vo.ChatVo;
 public interface ChatDao {
 	void chatDataSave(ChatVo chatVo);
 	List<ChatVo> topicChatList(int topic_no);
-	List<Integer> memberContainTopic(ChatVo chatVo);
+	List<Integer> memberContainTopic(int member_no,int team_no);
 }

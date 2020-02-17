@@ -12,33 +12,35 @@ import com.kh.circle.repository.ChatDao;
 import com.kh.circle.repository.TopicDao;
 import com.kh.circle.vo.ChatVo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Team{
 	private Map<Integer,Topic> topicList = new HashMap<>();
 	
 	@Autowired
 	private TopicDao topicDao;
+	
 	@Autowired
 	private ChatDao chatDao;
 	//방에 신규인원을 추가하는 메소드
-	public void add(WebSocketSession session, ChatVo chatVo) throws IOException {
+	public void add(WebSocketSession session, ChatVo chatVo, List<Integer> containList) throws IOException {
 		
-		List<Integer> containList = chatDao.memberContainTopic(chatVo);
 		for(int topic_no : containList) {
 			boolean exist = topicList.containsKey(topic_no);
 			
 			if(!exist) {
 				Topic room = new Topic();
-				topicList.put(chatVo.getTopic_no(), room);
+				topicList.put(topic_no, room);
 			}
 			
-			topicList.get(chatVo.getTopic_no()).add(session);
+			topicList.get(topic_no).add(session);
 		}
 		
 	}
 	
 	//방에 있는 인원을 삭제하는 메소드
-	public void remove(WebSocketSession session, ChatVo chatVo) throws IOException {
-		List<Integer> containList = chatDao.memberContainTopic(chatVo);
+	public void remove(WebSocketSession session, ChatVo chatVo, List<Integer> containList) throws IOException {
 		for(int topic_no : containList) {
 			topicList.get(topic_no).remove(session);
 			
@@ -49,8 +51,11 @@ public class Team{
 	}
 	
 	//방에 있는 인원에게 메시지를 전송하는 메소드
-	public void broadcast(WebSocketSession user, ChatVo chatVo) throws IOException {
-		topicList.get(chatVo.getTopic_no()).broadcast(user, chatVo.getChat_content());
+	public void broadcast(WebSocketSession user, ChatVo chatVo, List<Integer> containList) throws IOException {
+		
+		for(int topic_no : containList) {
+			topicList.get(topic_no).broadcast(user, chatVo);
+		}
 		
 	}
 

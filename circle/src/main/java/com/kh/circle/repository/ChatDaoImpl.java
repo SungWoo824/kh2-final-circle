@@ -1,6 +1,8 @@
 package com.kh.circle.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +28,12 @@ public class ChatDaoImpl implements ChatDao{
 	}
 
 	@Override
-	public List<Integer> memberContainTopic(ChatVo chatVo) {
+	public List<Integer> memberContainTopic(int member_no, int team_no) {
+		Map<String,Integer> param = new HashMap<>();
+		param.put("member_no", member_no);
+		param.put("team_no", team_no);
 		
-		return sqlSession.selectList("chat.memberContainTopic", chatVo);
+		return sqlSession.selectList("chat.memberContainTopic", param);
 	}
 	
 }

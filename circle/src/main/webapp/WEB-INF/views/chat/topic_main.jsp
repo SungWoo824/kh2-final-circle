@@ -75,8 +75,11 @@
 				appendMessage("서버와 연결이 종료되었습니다");
 			};
 			window.socket.onmessage = function(e){
-				appendMessage(e.data);
+				var msg = JSON.parse(e.data);
+				console.log(msg);
+				appendMessage(msg.chat_content);
 			};
+			
 			window.socket.onerror = function(){
 				appendMessage("연결 오류가 발생했습니다");
 			};
@@ -89,6 +92,8 @@
 			var message = {
 				team_no:team_no,
 				topic_no:topic_no,
+				member_no:'',
+				member_name:'',
 				status:status,
 				chat_content:chat_content
 			};
