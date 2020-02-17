@@ -44,8 +44,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 어떤 팀에 참여중인 멤버 리스트 보기 -->
 	<select id="memberList" resultType="memberListVO" parameterType="int">
-	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm 
+<!-- 	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm  -->
+<!-- 	inner join member on member.member_no = tm.member_no -->
+select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no})tm 
 	inner join member on member.member_no = tm.member_no
+
 	</select>
 	
 	<!-- 이메일 전송 하면 team_cert DB에 등록 기능 -->

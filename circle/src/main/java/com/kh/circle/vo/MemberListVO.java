@@ -9,5 +9,8 @@ import lombok.NoArgsConstructor;
 public class MemberListVO {
 	private String member_name; 
 	private String member_position;
+	private String member_auth;
+	private String member_email;
+	private String member_grade;
 
 }

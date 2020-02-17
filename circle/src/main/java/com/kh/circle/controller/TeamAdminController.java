@@ -69,7 +69,7 @@ public class TeamAdminController {
 		
 		return "team_admin/owner_manager_team";
 	}
-	
+	//소유자 : 관리 / 멤버 관리 / 모든 참여 멤버 
 	@GetMapping("/owner_manager_member")
 	public String owner_manager_member(@RequestParam String team_name,
 								  	   @RequestParam int team_no,
@@ -83,10 +83,29 @@ public class TeamAdminController {
 		//팀 멤버 정보 출력
 		model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
 		
-		
+		//반복문 . 참여멤버리스트 출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
+		model.addAttribute("memberList",teamDao.memberList(team_no));
 		return "team_admin/owner_manager_member";
 	}
 	
+	//소유자 : 관리 / 멤버 설정 / 정회원 리스트 페이지
+	@GetMapping("/member_list_regular")
+	public String member_list_regular(@RequestParam String team_name,
+								  	   @RequestParam int team_no,
+									   @RequestParam String team_domain,
+									   HttpSession session,
+									   Model model) {
+		model.addAttribute("team_name", team_name);
+		//팀 테이블 정보 리스트 출력
+		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
+		//팀 멤버 정보 출력
+		model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
+		
+		
+		return "team_admin/member_list_regular";
+	}
+	
+	//소유자 : 관리 / 개인 설정
 	@GetMapping("/owner_manager_per")
 	public String owner_manager_mper(@RequestParam String team_name,
 										@RequestParam int team_no,

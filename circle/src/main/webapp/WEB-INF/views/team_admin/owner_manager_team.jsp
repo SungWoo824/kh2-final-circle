@@ -329,8 +329,8 @@ $(function(){
 																		<input type="hidden" name="team_no" value="${param.team_no}">
 		                                       							<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
 																			<div class="modify-alert">
-																				<h4>"${param.team_name}" 팀에서 소유자를 양도하셔야 합니다.<br>
-																	 				계정 비밀번호를 입력후 양도할 소유자를 선택해 주세요</h4>
+																				<h4>"${param.team_name}" 팀의 모든 멤버가 같이 삭제됩니다. 그래도 원하신다면<br>
+																	 				계정 비밀번호를 입력후 팀을 삭제해주세요</h4>
 															 				</div>
 																	</form>
 											
