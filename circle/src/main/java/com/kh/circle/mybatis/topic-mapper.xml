@@ -43,7 +43,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<select id="teamTopicFirst" parameterType="int" resultType="int">
-		select topic_no from topic_member where team_no = #{team_no} order by topic_no asc
+		select * from (select topic_no from topic_member where team_no = #{team_no} order by topic_no) where rownum &lt;=1
+   		 
+
 	</select>
 	
 	<select id="teamTopicList" parameterType="int" resultType="topicDto">
