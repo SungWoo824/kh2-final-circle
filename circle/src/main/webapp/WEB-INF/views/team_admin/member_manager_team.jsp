@@ -126,7 +126,13 @@ $(function(){
 <%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
 	                            <span> 팀 이름 = ${teamDto.team_name}</span>
 	                                    		
-		                                        
+		                        <form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
+																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+																
+																<div class="mypage-team-div">
+																	<button id="param_submit_btn" type="submit">이동하기</button>
+																</div>
+															</form>                
 	                       </div>
 	                       
   						   <!-- 정보보기 시작 -->    
@@ -164,7 +170,7 @@ $(function(){
 							<div class="modify-fix-div">
 								<form action="${pageContext.request.contextPath}/team_admin/edit_team_exit" method="post" id="modify-delete-member">
 									<h5>비밀번호</h5>
-									<input type="hidden" name="member_no" value="${param.member_no}">	
+								    <input type="hidden" name="member_no" value="${memberDto.member_no}">
 									<input type="hidden" name="team_no" value="${param.team_no}">
 									<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
 										<div class="modify-alert">

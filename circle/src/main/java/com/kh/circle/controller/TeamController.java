@@ -65,12 +65,6 @@ public class TeamController {
 		return "team/create";
 	}
 	
-	@GetMapping("/oldmain")
-	public String oldmain() {
-		return "team/oldmain";
-				
-	}
-	
 	//팀 생성을 하는 컨트롤러 / 생성 후 topic창으로 연결 
 	@PostMapping("/create")
 	public String create(@ModelAttribute TeamDto teamDto,
@@ -117,7 +111,6 @@ public class TeamController {
 	}
 
 
-
 	@GetMapping("/send")
 	@ResponseBody
 	public String send(@RequestParam String email, HttpSession session) {
@@ -128,21 +121,6 @@ public class TeamController {
 		return emailService.sendCertMessage(email, cert); 	
 	}
 	
-	
-	//멤버 초대 이메일 전송하는 컨트롤러 
-	@PostMapping("/modal_invite2")
-	public String modal_invite2(@RequestParam String cert_email,
-								@RequestParam int team_no,
-								@RequestParam int topic_no
-								) throws MessagingException
-	{ 	
-
-		teamEmailService.sendConfirmMessage(cert_email,team_no,topic_no);
-	return "redirect:result";
-		
-	}
-	
-
 
 	@Autowired
 	private TeamService teamService;
