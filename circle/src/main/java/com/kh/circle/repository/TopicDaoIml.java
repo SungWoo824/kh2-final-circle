@@ -58,7 +58,7 @@ public class TopicDaoIml implements TopicDao{
 		Map<String, Integer> param = new HashMap<>();
 		param.put("member_no", member_no);
 		param.put("topic_no",topic_no);
-		sqlSession.delete("topic.outTopic", param);
+		sqlSession.delete("team.topicExit", param);
 	}
 
 	@Override

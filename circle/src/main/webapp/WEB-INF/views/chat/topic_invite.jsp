@@ -32,7 +32,7 @@ $(function(){
 					$("#check-btn").prop("disabled",true); 
 				}
 				else if(resp === "N"){
-					$("input[name=topic_name]").next("span").text("토픽생성가능");
+					$("input[name=topic_name]").next("span").text(" ");
 					$("#check-btn").prop("disabled",false); 
 				}
 			}
@@ -44,9 +44,9 @@ $(function(){
 
 
 
-	<h3>팀 : ${param.team_no }</h3>
-    <h3>토픽 : ${param.topic_no}</h3>
-    <h3>토픽 명 : ${param.topic_name }</h3>
+<%-- 	<h3>팀 : ${param.team_no }</h3> --%>
+<%--     <h3>토픽 : ${param.topic_no}</h3> --%>
+<%--     <h3>토픽 명 : ${param.topic_name }</h3> --%>
     
     <!-- 참여멤버-->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#inTopic">
@@ -136,23 +136,11 @@ $(function(){
         </button>
       </div>
        <div class="modal-body">
-       		<c:if test="${memberDto.topic_member_position=='토픽소유자'}">
-		        <span>토픽을 인계할 사람을 선택해주세요</span><br><hr>
-	    		<c:forEach var="memberDto" items="${topicMemberList}">
-	<%-- 	        	<a href="topic_masterchange?member_no=${param.member_no}&topic_no=${param.topic_no}"> --%>
-				        	<input type="checkbox" name="">
-				        		<span>
-				        			${memberDto.member_name}-${memberDto.member_email}(${memberDto.topic_member_position })
-				        		</span>
-	<!-- 	        	</a> -->
-		        	<br>
-		        </c:forEach>
-       		</c:if>
        		<c:choose>
-				<c:when test="${memberDto.topic_member_position=='토픽소유자'}">
+				<c:when test="${param.topic_member_position=='토픽소유자'}">
 					<span>토픽을 인계할 사람을 선택해주세요</span><br><hr>
 			    		<c:forEach var="memberDto" items="${topicMemberList}">
-					        	<input type="checkbox" name="">
+					        	<input type="checkbox" name="member_no" value="${memberDto.member_no }">
 					        	<span>
 					        		${memberDto.member_name}-${memberDto.member_email}(${memberDto.topic_member_position })
 					        	</span>
@@ -160,7 +148,7 @@ $(function(){
 				        </c:forEach>
 				</c:when>
 				<c:otherwise>
-					<span>정말 나가시겠습니까?</span><br><hr>
+					<span>정말 나가시겠습니까?</span>
 				</c:otherwise>
 			</c:choose>
 
@@ -203,3 +191,7 @@ $(function(){
     </div>
   </div>
 </form>
+
+
+
+

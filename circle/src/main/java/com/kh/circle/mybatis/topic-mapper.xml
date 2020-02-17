@@ -82,19 +82,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	
-	<!-- 1.토픽소유자 인계후-->
-	<update id="topicMasterChange" parameterType="int">
+	<!-- 1.토픽소유자 인계-->
+	<update id="topicMasterChange" parameterType="map">
 		update topic_member 
 		set 
 			topic_member_position='토픽소유자'
 		where 
-			topic_no = #{topic_no}, member_no=#{member_no}
+			topic_no = #{topic_no} and member_no=#{member_no}
 	</update>
 
-	
 
 	<!-- 2. 토픽 나가기 -->
-	<delete id="outTopic" parameterType="int">
+	<delete id="outTopic" parameterType="map">
 		delete from topic_member where topic_no=#{topic_no} and member_no =#{member_no} 
 	</delete>
 	
