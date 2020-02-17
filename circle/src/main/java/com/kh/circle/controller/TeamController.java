@@ -204,9 +204,10 @@ public class TeamController {
 	
 	@GetMapping("/connect")
 	@ResponseBody
-	public String connect(@RequestParam int team_no) {
+	public int connect(@RequestParam int team_no) {
 		int topic_no =topicDao.teamTopicFirst(team_no);
-		return String.valueOf(topic_no);
+		
+		return topic_no;
 	}
 	
 

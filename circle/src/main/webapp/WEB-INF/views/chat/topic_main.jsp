@@ -24,9 +24,7 @@
 	
 <script>
 	var enter = 0, exit = 1, message = 2;
-	
 	$(function(){
-		
 // 		페이지가 로딩되면 웹소켓 서버에 접속
 		connect();
 
@@ -36,6 +34,15 @@
 			window.socket.close();//종료코드
 		});
 		
+		
+		$('.user-input').keydown(function(e) {
+		    if (e.keyCode == 13) {
+		    	var chat_content = $(".user-input").val();//입력값을 불러오고
+				if(!chat_content) return;//미입력시 중단
+				sendMessage(message, chat_content);
+				$(".user-input").val("");//입력창 초기화
+		    }
+		});
 		//전송버튼 처리
 		$(".send-btn").click(function(){
 			var chat_content = $(".user-input").val();//입력값을 불러오고
@@ -43,7 +50,7 @@
 			sendMessage(message, chat_content);
 			$(".user-input").val("");//입력창 초기화
 		});
-		
+
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
 			$("<p>").text(message).appendTo("#chat-content");
@@ -60,10 +67,11 @@
 			
 // 			연결 시 예약 작업을 설정
 			window.socket.onopen = function(){
-
+				//db에 대화내용들 저장
 				sendMessage(enter);
 			};
 			window.socket.onclose = function(){
+				//db에 대화 내용들 저장
 				appendMessage("서버와 연결이 종료되었습니다");
 			};
 			window.socket.onmessage = function(e){
@@ -72,12 +80,14 @@
 			window.socket.onerror = function(){
 				appendMessage("연결 오류가 발생했습니다");
 			};
-		}
+		};
 		
 // 		메시지 전송 함수
 		function sendMessage(status, chat_content){
+			var team_no = ${param.team_no};
 			var topic_no = ${param.topic_no};
 			var message = {
+				team_no:team_no,
 				topic_no:topic_no,
 				status:status,
 				chat_content:chat_content
@@ -510,12 +520,23 @@ background-color:#f8f8f8;
                     <article class="message-wrap">
                     
                         <div class="message" style="text-align: right">
-							<h1>웹소켓 클라이언트(with 로그인, ${topicDto.topic_name})</h1>
-						</div>
+
+							<h1>${topicDto.topic_name}</h1>
+							<div id="chat-content">
+								<c:forEach items="${topicChatList}" var="chatVo">
+									<p>[${chatVo.member_name}] ${chatVo.chat_content}
+								</c:forEach>
+							</div>
+							<div class="chat-send-content">
+								<div class="chat-send-text">
+
 									<input type="text" class="user-input">
+								</div>
+								<div class="chat-send-button">
 									<button class="send-btn" type="submit">보내기</button>
-							
-									<div id="chat-content"></div>
+								</div>
+							</div>
+									
 						</div>
 					</article>
 					
@@ -529,55 +550,53 @@ background-color:#f8f8f8;
          
 
 		<div>
-		<button type="sumbit" class="btn btn-secondary" id="memberlist_btn">팀멤버 보기 </button>
-<!-- 	        <button type="submit" id="memberlist_btn" name="">참여중인멤버</button> -->
-            <!-- 팀멤버 목록 모달 -->
-            <div id="modal2" class="modal2">
-				 <!--모달창 디자인-->
-				 <div class="modal-view2"></div> 
-					 <div style="position: absolute; top: 50%; left: 50%; width: 300px; height: 400px; margin-left: -150px; margin-top: -200px;">
-						 <div style="height: 30px;"></div>
-							<h4>멤버 목록 보기</h4>
-								<c:forEach items="${memberList}" var="memberListVO">	
-									<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-									<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-								</c:forEach>
-									<br><br>
-								<button type="button" id="memberlist_close" class="memberlist_close">닫기</button>	
-        				</div> 
-	    </div>
+			<button type="sumbit" class="btn btn-secondary" id="memberlist_btn">팀멤버 보기 </button>
+	<!-- 	        <button type="submit" id="memberlist_btn" name="">참여중인멤버</button> -->
+	            <!-- 팀멤버 목록 모달 -->
+	            <div id="modal2" class="modal2">
+					 <!--모달창 디자인-->
+					 <div class="modal-view2"></div> 
+						 <div style="position: absolute; top: 50%; left: 50%; width: 300px; height: 400px; margin-left: -150px; margin-top: -200px;">
+							 <div style="height: 30px;"></div>
+								<h4>멤버 목록 보기</h4>
+									<c:forEach items="${memberList}" var="memberListVO">	
+										<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+										<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
+									</c:forEach>
+										<br><br>
+									<button type="button" id="memberlist_close" class="memberlist_close">닫기</button>	
+	        			</div> 
+		    	</div>
         <!-- partical end : Team_Member_List -->
 
 					<div id="gnb-detail-slide">
 			            <div class ="menu1-slide">d</div>
 			            <!-- 주소 변경했음 -->
-        			<div id="bodyContents" class="menu4-slide">   
-<!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
-						<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
-        				<!-- 목록으로 버튼 if처리해야함 -->
-			            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
-			            <h3>진행중인 투표 목록</h3>
-
-        <!-- 화면 동적 전환(투표 상세 페이지) -->
-			            		<ul>
-			            	<c:forEach var="voteList" items="${voteList }" >
-			            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
-			            		<li>
-        					<c:if test="${param.team_no eq no}">
-			            		<c:out value="${voteList.vote_create_no}"/>번 투표
-			            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
-			            	</c:if>
-			            		</li>
-			            		<br>
-			            	</c:forEach>   	
-			            		</ul>
-			            </div>
+	        			<div id="bodyContents" class="menu4-slide">   
+	<!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
+							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
+	        				<!-- 목록으로 버튼 if처리해야함 -->
+				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
+				            <h3>진행중인 투표 목록</h3>
+	
+	        <!-- 화면 동적 전환(투표 상세 페이지) -->
+				            		<ul>
+				            	<c:forEach var="voteList" items="${voteList }" >
+				            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
+				            		<li>
+	        					<c:if test="${param.team_no eq no}">
+				            		<c:out value="${voteList.vote_create_no}"/>번 투표
+				            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
+				            	</c:if>
+				            		</li>
+				            		<br>
+				            	</c:forEach>   	
+				            		</ul>
+				            </div>
 			        </div>
             </div>
-
             <!-- Page Title Header Ends-->      
         </div> 
-                 	
 <!-- 토픽생성 모달 -->
        <form action="topic_create" method="post">
 		<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
