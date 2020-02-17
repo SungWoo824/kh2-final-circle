@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where topic.topic_name = #{topic_name}
 	</select>
 	
+	<!-- 토픽 소유자로 등록 -->
 	<insert id="topicMemberInsert" parameterType="topicMemberDto">
 		insert into topic_member values(#{topic_no},#{member_no},#{team_no},'토픽소유자')
 	</insert>
@@ -59,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 토픽 참여자 목록-->
 	<select id="topicMemberList" resultType="memberListVO" parameterType="int">
-		select distinct tv.member_name, t.topic_member_position
+		select distinct tv.member_email, tv.member_name,  t.topic_member_position
 		from (select * from teamview)tv
 		inner join
 		(
@@ -70,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		on tv.member_no = T.member_no
 	</select>
 	
-	<!-- 토픽 정보 수정 -->
+	<!-- 토픽 정보 수정-->
 	<update id="editTopic" parameterType="topicDto">
 		update topic 
 		set 
@@ -79,14 +80,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where 
 			topic_no = #{topic_no}
 	</update>
-	<!-- 토픽 삭제하기(소유자가 다른멤버에게 소유자를 인계 후 나가기 또는 혼자 남았을때는 토픽 삭제)-->
-	<!-- 토픽 초대하기(같은 팀 멤버를 같은 토픽번호로 추가) -->
-	<!-- 토픽 나가기 -->
+	
+	
+	<!-- 1.토픽소유자 인계후-->
+	<update id="topicMasterChange" parameterType="int">
+		update topic_member 
+		set 
+			topic_member_position='토픽소유자'
+		where 
+			topic_no = #{topic_no}, member_no=#{member_no}
+	</update>
+
+	
+
+	<!-- 2. 토픽 나가기 -->
 	<delete id="outTopic" parameterType="int">
 		delete from topic_member where topic_no=#{topic_no} and member_no =#{member_no} 
 	</delete>
 	
+	<!-- 토픽삭제 -->
+	<delete id="deleteTopic" parameterType="int">
+		delete from topic where topic_no=#{topic_no}
+	</delete>
 	
+	
+	
+	<!-- 토픽 초대하기(같은 팀 멤버를 같은 토픽번호로 추가) -->
+	<insert id="inviteTopic" parameterType="list">
+	    <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual">
+			insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
+		</foreach>
+	</insert>
+	
+
 	
 	
 </mapper>

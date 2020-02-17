@@ -1,6 +1,8 @@
 package com.kh.circle.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +54,27 @@ public class TopicDaoIml implements TopicDao{
 	}
 
 	@Override
-	public void outTopic(int topic_no) {
-		sqlSession.delete("topic.outTopic",topic_no);
+	public void outTopic(int topic_no, int member_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("member_no", member_no);
+		param.put("topic_no",topic_no);
+		sqlSession.delete("topic.outTopic", param);
 	}
+
+	@Override
+	public void inviteTopic(TopicMemberDto topicMemberDto) {
+		sqlSession.insert("topic.inviteTopic",topicMemberDto);
+	}
+
+	@Override
+	public void topicMasterChange(int topic_no, int member_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("member_no", member_no);
+		param.put("topic_no", topic_no);
+		sqlSession.update("topic.topicMasterChange",param);
+	}
+	
+	
 	
 	
 

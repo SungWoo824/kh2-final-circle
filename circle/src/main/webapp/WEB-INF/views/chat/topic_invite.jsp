@@ -65,7 +65,7 @@ $(function(){
       <div class="modal-body">
 	        <c:forEach var="memberDto" items="${topicMemberList}">
 <!-- 	        	<input type="checkbox"> -->
-	        	<a href="#">${memberDto.member_name}(${memberDto.topic_member_position })</a>
+	        	<a href="#">${memberDto.member_name}-${memberDto.member_email}(${memberDto.topic_member_position })</a>
 	        	<br>
 	        </c:forEach>
       </div>
@@ -84,6 +84,8 @@ $(function(){
  토픽 초대하기
 </button>
 
+<!-- <form action="invitetopic" method="post"> -->
+
 <div class="modal fade" id="topicInvite" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -94,27 +96,87 @@ $(function(){
         </button>
       </div>
       <div class="modal-body">
-	        <c:forEach var="memberDto" items="${topicMemberList}">
-<!-- 	        	<input type="checkbox"> -->
-	        	<a href="#">${memberDto.member_name}(${memberDto.member_position }) - 초대하기ㅇ</a>
+	        <c:forEach var="team" items="${memberList}">
+<%-- 	        	<input type="checkbox" name="member_no" value="${team.member_no }"> --%>
+<%-- 	        	<input type="hidden" name="team_no" value="${team.team_no }"> --%>
+<%-- 	        	<input type="hidden" name="topic_no" value="${team.topic_no }"> --%>
+ 	        		<span>${team}</span>
 	        	<br>
 	        </c:forEach>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="button" class="btn btn-primary">초대하기</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- </form> -->
+
 
 <!-- 토픽 나가기 -->
- <a href="outtopic?topic_no=${param.topic_no}"><button type="button" class="btn btn-primary">
-토픽 나가기
-</button></a>
+<%--  <a href="outtopic?topic_no=${param.topic_no}"><button type="button" class="btn btn-primary"> --%>
+<!-- 토픽 삭제 -->
+<!-- </button></a> -->
+
+<!-- 토픽 삭제하기 -->
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#outTopic">
+ 토픽 나가기
+</button>
+<form action="topic_masterchange" method="post">
+<div class="modal fade" id="outTopic" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle"> 토픽 관리자 변경</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       <div class="modal-body">
+       		<c:if test="${memberDto.topic_member_position=='토픽소유자'}">
+		        <span>토픽을 인계할 사람을 선택해주세요</span><br><hr>
+	    		<c:forEach var="memberDto" items="${topicMemberList}">
+	<%-- 	        	<a href="topic_masterchange?member_no=${param.member_no}&topic_no=${param.topic_no}"> --%>
+				        	<input type="checkbox" name="">
+				        		<span>
+				        			${memberDto.member_name}-${memberDto.member_email}(${memberDto.topic_member_position })
+				        		</span>
+	<!-- 	        	</a> -->
+		        	<br>
+		        </c:forEach>
+       		</c:if>
+       		<c:choose>
+				<c:when test="${memberDto.topic_member_position=='토픽소유자'}">
+					<span>토픽을 인계할 사람을 선택해주세요</span><br><hr>
+			    		<c:forEach var="memberDto" items="${topicMemberList}">
+					        	<input type="checkbox" name="">
+					        	<span>
+					        		${memberDto.member_name}-${memberDto.member_email}(${memberDto.topic_member_position })
+					        	</span>
+				        	<br>
+				        </c:forEach>
+				</c:when>
+				<c:otherwise>
+					<span>정말 나가시겠습니까?</span><br><hr>
+				</c:otherwise>
+			</c:choose>
+
+		 </div>
+		 <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+		        <button type="submit"  class="btn btn-primary" >토픽 나가기</button>
+		</div>
+      </div>
+    </div>
+  </div>
+</form>
 
 
+
+<!-- 토픽 정보변경 -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editTopic">
  토픽 정보변경
 </button>

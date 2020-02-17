@@ -375,7 +375,7 @@ background-color:#f8f8f8;
         <div class="text-center navbar-brand-wrapper d-flex align-items-top">
             <div class="brand-logo-wapper">
                 <div class="dropdown">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
+                    <button class="btn dropdown-toggle" type="button" id="topTeamList" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">  
                         <div class="brand-topic-list" href="index.html">
                             <div class="navbar-brand">
                                 <img src="${pageContext.request.contextPath}/resources/image/logo.png" alt="logo" />
@@ -384,7 +384,7 @@ background-color:#f8f8f8;
                             <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </div>
                         </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                        <div class="dropdown-menu" aria-labelledby="topTeamList">
                             <h6 class="dropdown-header">팀 리스트</h6>
                             <a class="dropdown-item" href="#">test</a>
                             <a class="dropdown-item" href="#">test2</a>
@@ -509,7 +509,56 @@ background-color:#f8f8f8;
                                 <span>${topicDto.topic_explain}</span>
                             </div>
                         </div> 
-                        
+                        <!-- 토픽 더보기 -->
+                        <div>
+	                        <ul class="nav nav-pills">
+							  <li class="nav-item dropdown">
+							    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">더 보기</a>
+							    <div class="dropdown-menu" style="">
+<%-- 							      <c:choose> --%>
+<%-- 							      	<c:when test="${param.topic_member_position=='토픽소유자' }"> --%>
+									      <a class="dropdown-item" href="#">토픽 참여 목록보기</a>
+									      			<!-- 토픽 참여자리스트 -->
+									      			<div class="modal fade" id="inTopic" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+													  <div class="modal-dialog modal-dialog-centered" role="document">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <h5 class="modal-title" id="exampleModalCenterTitle"> 토픽 참여 멤버 보기</h5>
+													        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+													          <span aria-hidden="true">&times;</span>
+													        </button>
+													      </div>
+													      <div class="modal-body">
+														        <c:forEach var="memberDto" items="${topicMemberList}">
+													<!-- 	        	<input type="checkbox"> -->
+														        	<a href="#">${memberDto.member_name}-${memberDto.member_email}(${memberDto.topic_member_position })</a>
+														        	<br>
+														        </c:forEach>
+													      </div>
+													      <div class="modal-footer">
+													        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+													        <button type="button" class="btn btn-primary">Save changes</button>
+													      </div>
+													    </div>
+													  </div>
+													</div>
+									      			<!-- 토픽참여자end -->
+									      <a class="dropdown-item" href="#">토픽 초대하기</a>
+									      <a class="dropdown-item" href="#">토픽 정보변경</a>
+									      <a class="dropdown-item" href="#">토픽 삭제하기</a>
+									      <a class="dropdown-item" href="#">토픽 나가기</a>
+<%-- 							      	</c:when> --%>
+<%-- 							      	<c:otherwise> --%>
+<!-- 								      		<a class="dropdown-item" href="#">토픽 참여 목록보기</a> -->
+<!-- 										     <a class="dropdown-item" href="#">토픽 초대하기</a> -->
+<!-- 								      		<a class="dropdown-item" href="#">토픽 나가기</a> -->
+<%-- 							      	</c:otherwise> --%>
+<%-- 							      </c:choose> --%>
+							    </div>
+							  </li>
+							</ul>
+                        </div>
+                        <!-- 토픽 더보기 end -->
                       </div>
             <!-- partial -->                 
 

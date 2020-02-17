@@ -16,6 +16,7 @@ public interface TopicDao {
 
 	List<TopicMemberDto> topicMemberList(int topic_no);
 	void editTopic(TopicDto topicDto);
-	void outTopic(int topic_no);
-
+	void outTopic(int topic_no,int member_no);
+	void inviteTopic(TopicMemberDto topicMemberDto);
+	void topicMasterChange(int topic_no, int member_no);
 }

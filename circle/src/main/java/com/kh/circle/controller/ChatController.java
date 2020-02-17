@@ -312,14 +312,13 @@ public class ChatController {
 											.team_no(team_no)
 											.topic_no(topic_no)
 											.build();
-			topicDao.topicMemberInsert(topicMemberDto);
+			topicDao.inviteTopic(topicMemberDto);
 			return "redirect:../chat/topic_main";
 //			return "redirect:../
 //			return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
 			}
 		
 	
-
 		//토픽 참여자 목록
 		@GetMapping("/topic_invite")
 		public String topicList(Model model,@RequestParam int topic_no) {
@@ -328,25 +327,36 @@ public class ChatController {
 			return "chat/topic_invite";
 		}
 		
-		//토픽 정보변경
+		//토픽 정보변경(토픽소유자만 보이기)
 		@PostMapping("/topic_invite")
 		public String editTopic(@ModelAttribute TopicDto topicDto) {
 			topicDao.editTopic(topicDto);
 			return "redirect:/chat/topic_invite?topic_no="+topicDto.getTopic_no();
 		}
 		
-		//토픽 나가기(소유자제외)
+		//토픽소유자 나가기(선택멤버 토픽소유자로 변경하고 나가기)
+		@PostMapping("/topic_masterchange")
+		public String topicMasterChange(@RequestParam int topic_no,HttpSession session) {
+			topicDao.topicMasterChange(topic_no,(int)session.getAttribute("member_no"));
+			topicDao.outTopic(topic_no,(int)session.getAttribute("member_no"));
+			return "redirect:/chat/topic_invite?team_no=";
+		}
+		
+		
+		//토픽멤버 나가기(토픽소유자 제외)
 		@GetMapping("/outtopic")
-		public String outTopic(@RequestParam int topic_no) {
-			topicDao.outTopic(topic_no);
+		public String outTopic(@RequestParam int topic_no,HttpSession session) {
+			topicDao.outTopic(topic_no,(int)session.getAttribute("member_no"));
 			return "redirect:/chat/topic_invite?topic_no="+topic_no;
 		}
 		
-		//토픽 초대(같은 팀 내 참여자리스트에서 추가하면 바로 토픽 참여)
-//		@GetMapping("/topic_invite")
-//		public String topicInvite(Model model,@RequestParam int topic_no) {
-//			return "chat/topic_invite";
-//		}
+		
+		//토픽 초대(같은 토픽에 참여하고있지 않은 팀 리스트)
+		@PostMapping("/invitetopic")
+		public String topicInvite(@ModelAttribute TopicMemberDto topicMemberDto) {
+			topicDao.inviteTopic(topicMemberDto);
+			return "redirect:/chat/topic_invite";
+		}
 		
 		
 		
