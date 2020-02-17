@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MemberListVO {
 	private String member_name; 
-	private String member_position;
+	private String member_position, topic_member_position;
+	
 
 }

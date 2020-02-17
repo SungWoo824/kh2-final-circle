@@ -315,5 +315,36 @@ public class ChatController {
 		
 	
 
-	
+		//토픽 참여자 목록
+		@GetMapping("/topic_invite")
+		public String topicList(Model model,@RequestParam int topic_no) {
+			List<TopicMemberDto> topicMemberList = topicDao.topicMemberList(topic_no);
+			model.addAttribute("topicMemberList", topicMemberList);
+			return "chat/topic_invite";
+		}
+		
+		//토픽 정보변경
+		@PostMapping("/topic_invite")
+		public String editTopic(@ModelAttribute TopicDto topicDto) {
+			topicDao.editTopic(topicDto);
+			return "redirect:/chat/topic_invite?topic_no="+topicDto.getTopic_no();
+		}
+		
+		//토픽 나가기(소유자제외)
+		@GetMapping("/outtopic")
+		public String outTopic(@RequestParam int topic_no) {
+			topicDao.outTopic(topic_no);
+			return "redirect:/chat/topic_invite?topic_no="+topic_no;
+		}
+		
+		//토픽 초대(같은 팀 내 참여자리스트에서 추가하면 바로 토픽 참여)
+//		@GetMapping("/topic_invite")
+//		public String topicInvite(Model model,@RequestParam int topic_no) {
+//			return "chat/topic_invite";
+//		}
+		
+		
+		
+		
+
 }
