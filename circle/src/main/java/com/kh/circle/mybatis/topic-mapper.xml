@@ -54,21 +54,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from topic where topic_no = #{topic_no}
 	</select>
 	
-	<!-- 토픽 참여자 목록-->
-	<select id="topicMemberList" resultType="topicDto" parameterType="int">
-		select distinct tv.member_name 
-		from (select * from teamview)tv
-		inner join
-		(
-		    select team_no 
-		    from topicview
-		    where topic_no=#{topic_no}
-		)T
-		on tv.team_no = T.team_no;
-	</select>
-	
-	
-	
-	
-	
 </mapper>

@@ -314,19 +314,6 @@ public class ChatController {
 			}
 		
 	
-		//토픽 참여자 목록
-		@GetMapping("/topic_invite")
-		public String topicInvite(Model model,@RequestParam int topic_no) {
-			List<TopicMemberDto> topicMemberList = topicDao.topicMemberList(topic_no);
-			model.addAttribute("topicMemberList", topicMemberList);
-			return "chat/topic_invite";
-		}
-		
-		
-		//토픽 초대(같은 팀 내 참여자리스트에서 추가하면 바로 토픽 참여)
-		
-		
-		
-		
-		
+
+	
 }
