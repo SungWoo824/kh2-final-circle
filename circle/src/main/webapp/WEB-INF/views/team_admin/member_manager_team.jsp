@@ -120,42 +120,61 @@ $(function(){
           <div id="fullpage">
                 <div class="section">
                       <div class="mypage-main-content">
+                      <!-- 상단 네비바 -->
+								<nav class="navbar navbar-expand-lg navbar-light bg-light">
+								  <a class="navbar-brand" href="#">팀관리</a>
+								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+								    <span class="navbar-toggler-icon"></span>
+								  </button>
+								 <c:forEach items="${teamlist}" var="teamDto">
+								  <div class="collapse navbar-collapse" id="navbarNav">
+								    <ul class="navbar-nav">
+								      <li class="nav-item active">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/member_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
+								      </li>
+								    </ul>
+								  </div>
+								   </c:forEach>
+								</nav>	 
+                      
        					   <!-- 팀 정보 보기 -->
         				   <div class="mypage-div">
-	                            <h1>팀관리</h1>
-<%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
-	                            <span> 팀 이름 = ${teamDto.team_name}</span>
-	                                    		
+	                
 		                        <form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
-																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+									<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 																
-																<div class="mypage-team-div">
-																	<button id="param_submit_btn" type="submit">이동하기</button>
-																</div>
-															</form>                
+										<div class="mypage-team-div">
+											<button id="param_submit_btn" type="submit">이동하기</button>
+										</div>
+								</form>                
 	                       </div>
 	                       
   						   <!-- 정보보기 시작 -->    
 						   <article class="modify-article">
 						   		<div>
-									<div class="modify-items">
-										<div class="modify-item-name">
-											이메일 관리
-										</div>
-											<div class="modify-item-content modify-item2">
-												<div class="modify-origin-div">
-													${memberDto.member_email }
-												</div>
-				
-													<div class="modify-fix-div">
-														<form action="#">
-															<input type="text" name="member_email" value="${memberDto.member_email }">
-															<button>확인</button>
-														</form>
-															<button class="modify-cancel">취소</button>
-													</div>
-												</div>
+						   		<!-- 팀 정보보기  -->
+								<div class="modify-items">
+									<div class="modify-item-name">
+											팀 정보보기  
 									</div>
+	                                     <div class="modify-item-content modify-item2">
+												<div class="modify-origin-div">
+													보기 
+												</div>
+			                             			<div class="modify-fix-div">
+	                                                   	 팀 이름 : ${teamDto.team_name}
+	                                                   		<hr><br>
+	                                                   	 등급 : ${teamMemberDto.member_position}  
+	                                                  	  	  ${teamMemberDto.member_auth}  
+	                                                   		  ${teamMemberDto.member_grade}
+	                                                   		<hr><br>
+	                                                   	이메일 : ${memberDto.member_email}
+	                                                   		<hr><br>
+	                                                    <button class="modify-cancel">닫기 </button>
+	                                    			</div>
+	                                    </div>
+	                                 </div>	
+									
 			
 				<!-- 팀 탈퇴하기 -->
 				<div class="modify-items">

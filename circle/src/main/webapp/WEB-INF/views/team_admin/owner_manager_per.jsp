@@ -78,36 +78,87 @@ $(function(){
                       <div class="section">
                            <div class="mypage-main-content">
                      <!-- 상단 네비바 -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">개인설정</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리</a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정<span class="sr-only">(current)</span></a>
-      </li>
-<!--       <li class="nav-item"> -->
-<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
-<!--       </li> -->
-    </ul>
-  </div>
-</nav>	 
-<div class="mypage-div">
+								<nav class="navbar navbar-expand-lg navbar-light bg-light">
+								  <a class="navbar-brand" href="#">개인설정</a>
+								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+								    <span class="navbar-toggler-icon"></span>
+								  </button>
+								  <div class="collapse navbar-collapse" id="navbarNav">
+								    <ul class="navbar-nav">
+								      <li class="nav-item">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리</a>
+								      </li>
+								      <li class="nav-item">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리</a>
+								      </li>
+								      <li class="nav-item active">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정<span class="sr-only">(current)</span></a>
+								      </li>
+								<!--       <li class="nav-item"> -->
+								<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+								<!--       </li> -->
+								    </ul>
+								  </div>
+								</nav>	 
+								<div class="mypage-div">
 <%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
 	                                    		<span> 팀 이름 = ${teamDto.team_name}</span>
 	                                    		<br>
 	                                    		<span> 내 등급 = ${teamMemberDto.member_position},</span>
 	                                    		<span>${teamMemberDto.member_auth} </span>
 	                                    </div>
-                     
+                    					<!-- 변경하기 부분 -->
+	                                    <article class="modify-article">
+	                               		     <div>
+	                               		     
+	                               		    
+
+	                                    		<!-- 팀 소유자 탈퇴하기 / 양도 해야 함 -->
+												<div class="modify-items">
+													<div class="modify-item-name">
+														 팀탈퇴
+													</div>
+														 <div class="modify-item-content modify-item4">
+															<!-- 팀 삭제하기 버튼을 누르면 -->
+															<div class="modify-origin-div">
+																팀 탈퇴하기
+															</div>	
+																 <div class="modify-fix-div">
+																	 <form action="${pageContext.request.contextPath}/team_admin/edit_team_exit" method="post" id="modify-delete-member">
+																		<h5>비밀번호</h5>
+																		<input type="hidden" name="team_no" value="${param.team_no}">
+		                                       							<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
+																			<div class="modify-alert">
+																				<h4>"${param.team_name}" 팀에서 소유자를 양도하셔야 합니다.<br>
+																	 				계정 비밀번호를 입력후 양도할 소유자를 선택해 주세요</h4>
+															 				</div>
+																	</form>
+											
+					                                    				<button id="modify-delete-submit">팀 탈퇴하기</button>
+																		<button class="modify-cancel">취소</button>
+																</div>
+														</div>
+												</div>
+												</div>
+											
+									</article>			
+								
+							</div>
+					</div>
+			</div>
+		</div>
+</div>	                                  
+	                                     
+	                                        
+	                                        
+
+
+
+<!-- 멤버 관리 부분 --> 
+
+
+</body>
+</html>
        					   </div>
 					</div>
 			</div>

@@ -10,7 +10,7 @@ public interface TopicDao {
 	void topicMemberInsert(TopicMemberDto topicMemberDto);
 	int teamTopicFirst(int team_no);
 	TopicDto topicChange(int topic_no);
-
+	void inviteTopic(TopicMemberDto topicMemberDto);
 	
 
 }

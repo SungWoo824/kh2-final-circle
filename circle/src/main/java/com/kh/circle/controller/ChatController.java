@@ -291,33 +291,32 @@ public class ChatController {
 		}
 		
 		@PostMapping("/team_member_regist")
-		public String team_member_regist(@ModelAttribute TeamDto teamDto,
-										 @RequestParam int topic_no,
-										 @RequestParam int team_no,
-										 @ModelAttribute MemberDto memberDto,
-										 Model model,
-										 HttpSession session) {
-			
-			model.addAttribute("team_no", team_no);
-			model.addAttribute("topic_no", topic_no);
-			int member_no = (int) session.getAttribute("member_no");
-	
-			
-			//팀멤버로 추가
-			teamDao.teamMemberCreate2(member_no, team_no);
-			//토픽 멤버추가 
-			TopicMemberDto topicMemberDto = TopicMemberDto.builder()
-											.member_no((int) session.getAttribute("member_no"))
-											.team_no(team_no)
-											.topic_no(topic_no)
-											.build();
-			topicDao.topicMemberInsert(topicMemberDto);
-			return "redirect:../chat/topic_main";
-//			return "redirect:../
-//			return "redirect:../";	//redirec로 설정해야 원하는url 주소로 바뀜
-			}
-		
-	
+	      public String team_member_regist(@ModelAttribute TeamDto teamDto,
+	                               @RequestParam int topic_no,
+	                               @RequestParam int team_no,
+	                               @ModelAttribute MemberDto memberDto,
+	                               TopicMemberDto topicMemberDto,
+	                               Model model,
+	                               HttpSession session) {
+	         
+	         model.addAttribute("team_no", team_no);
+	         model.addAttribute("topic_no", topic_no);
+	         int member_no = (int) session.getAttribute("member_no");
+	   
+	         
+	         //팀멤버로 추가
+	         teamDao.teamMemberCreate2(member_no, team_no);
+	         //토픽 멤버추가 
+//	         TopicMemberDto topicMemberDto = TopicMemberDto.builder()
+//	                                 .member_no((int) session.getAttribute("member_no"))
+//	                                 .team_no(team_no)
+//	                                 .topic_no(topic_no)
+//	                                 .build();
+	         topicDao.inviteTopic(topicMemberDto);
+	         return "redirect:../chat/topic_main";
+//	         return "redirect:../
+//	         return "redirect:../";   //redirec로 설정해야 원하는url 주소로 바뀜
+	         }
 
 	
 }

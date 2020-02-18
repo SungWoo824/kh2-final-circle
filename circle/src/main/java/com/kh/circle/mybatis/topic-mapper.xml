@@ -38,9 +38,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where topic.topic_name = #{topic_name}
 	</select>
 	
-	<insert id="topicMemberInsert" parameterType="topicMemberDto">
-		insert into topic_member values(#{topic_no},#{member_no},#{team_no})
-	</insert>
+  <insert id="topicMemberInsert" parameterType="topicMemberDto">
+      insert into topic_member values(#{topic_no},#{member_no},#{team_no},'토픽소유자')
+   </insert>
 	
 	<select id="teamTopicFirst" parameterType="int" resultType="int">
 		select * from (select topic_no from topic_member where team_no = #{team_no} order by topic_no) where rownum &lt;=1
@@ -55,5 +55,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="topicChange" parameterType="int" resultType="topicDto">
 		select * from topic where topic_no = #{topic_no}
 	</select>
+	
+	  <insert id="inviteTopic" parameterType="list">
+       <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual">
+         insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
+      </foreach>
+   </insert>
 	
 </mapper>

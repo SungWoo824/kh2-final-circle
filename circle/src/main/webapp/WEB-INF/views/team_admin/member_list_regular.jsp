@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>소유자 팀관리 / 멤버설정 페이지</title>
+<title>소유자 팀관리 / 멤버설정 페이지 / 정회원 리스트 보기</title>
 </head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/fullpage.css" />
@@ -102,30 +102,32 @@ $(function(){
                            
 								<!-- 상단 네비바 -->
 								<nav class="navbar navbar-expand-lg navbar-light bg-light">
-									  <a class="navbar-brand" href="#">멤버관리</a>
-									  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-									    <span class="navbar-toggler-icon"></span>
-									  </button>
-									  
-									    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-									   	  <ul class="navbar-nav mr-auto">
-									     	 <li class="nav-item">
-									       		 <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리</a>
-									    	 </li>
-									    	 
-									     	 <li class="nav-item active">
-									    		    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
-									     	 </li>
-									     	 
-									     	 <li class="nav-item">
-									        	<a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
-									      	</li>
-									     </ul>
-									     	<form class="form-inline my-2 my-lg-0">
-									      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-									      		<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-									   		</form>
-									  </div>
+								  <a class="navbar-brand" href="#">멤버관리</a>
+								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+								    <span class="navbar-toggler-icon"></span>
+								  </button>
+								  
+								    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+								     <ul class="navbar-nav mr-auto">
+								      <li class="nav-item">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리</a>
+								      </li>
+								      <li class="nav-item active">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
+								      </li>
+								      <li class="nav-item">
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
+								      </li>
+								      
+								<!--       <li class="nav-item"> -->
+								<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+								<!--       </li> -->
+								    </ul>
+								    <form class="form-inline my-2 my-lg-0">
+								      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+								      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+								    </form>
+								  </div>
 								</nav>
 								
 								<!--멤버관리 : 정보보기 -->
@@ -136,13 +138,13 @@ $(function(){
 	                                   <span> 내 등급 = ${teamMemberDto.member_position},</span>
 	                                   <span>${teamMemberDto.member_auth} </span>
 	                                    </div>
+	<!-- 팀 멤버 리스트 보기 : 정회원 -->
 						
-<!-- 팀 멤버 리스트 보기 -->
 <div class="row">
   <div class="col-3">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <a class="nav-link active " id="v-pills-home-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-home" aria-selected="true">참여중인 팀멤버</a>
-      <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_regular?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-profile" aria-selected="false">정회원</a>
+      <a class="nav-link" id="v-pills-home-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-home" aria-selected="true">참여중인 팀멤버</a>
+      <a class="nav-link active" id="v-pills-profile-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_regular?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-profile" aria-selected="false">정회원</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_associate?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">준회원</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_owner?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">소유자</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/grant_position?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">권한부여</a>	
@@ -152,8 +154,8 @@ $(function(){
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">...
       </div>
-      		<p>준회원 보기  </p>
-			<c:forEach items="${memberList}" var="memberListVO">	
+      		<p>정회원 보기  </p>
+			<c:forEach items="${memberListRegular}" var="memberListVO">	
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
 				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
 				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 

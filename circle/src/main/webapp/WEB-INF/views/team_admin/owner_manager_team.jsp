@@ -233,11 +233,7 @@ $(function(){
 
                                 		<!-- 팀 정보 보기 -->
 	                                    <div class="mypage-div">
-<%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
-	                                    		<span> 팀 이름 = ${teamDto.team_name}</span>
-	                                    		<br>
-	                                    		<span> 내 등급 = ${teamMemberDto.member_position},</span>
-	                                    		<span>${teamMemberDto.member_auth} </span>
+                      
 	                                    </div>
 	                                    		
 		                                  
@@ -246,10 +242,11 @@ $(function(){
 	                                    <article class="modify-article">
 	                               		     <div>
 	                               		     
-													<div class="modify-item-name">
+						<div class="modify-item-name">
 														<a href="../pay/planoption">보유중인 플랜 보기</a>
 													</div>
 	                               		     <!-- 팀 정보보기  -->
+
 												<div class="modify-items">
 												
 													<div class="modify-item-name">
@@ -258,14 +255,17 @@ $(function(){
 	                                        			<div class="modify-item-content modify-item2">
 															<div class="modify-origin-div">
 																보기 
-																
 															</div>
 			                             					    <div class="modify-fix-div">
-                                                   				    팀 이름 = ${teamDto.team_name}
-                                                   				    내 등급 = ${teamMemberDto.member_position} , ${teamMemberDto.member_auth}
-                                                   				   
-                                                   				    이메일 = ${memberDto.member_email}
-                                                    					 <button class="modify-cancel">닫기 </button>
+	                                                   				    팀 이름 : ${teamDto.team_name}
+	                                                   				    <hr><br>
+	                                                   				    등급 : ${teamMemberDto.member_position}  
+	                                                   				   	   ${teamMemberDto.member_auth}  
+	                                                   				   	   ${teamMemberDto.member_grade}
+	                                                   				  	<hr><br>
+	                                                   				    이메일 : ${memberDto.member_email}
+	                                                   				    <hr><br>
+	                                                    			<button class="modify-cancel">닫기 </button>
 	                                    						</div>
 	                                    				</div>
 	                                    	    </div>	
@@ -273,7 +273,9 @@ $(function(){
 			                               	    <!-- 팀 이름 변경하기 -->
 												<div class="modify-items">
 													<div class="modify-item-name">
-														팀 이름   
+														팀 이름  변경
+														
+														
 													</div>
 	                                        			<div class="modify-item-content modify-item2">
 															<div class="modify-origin-div">
@@ -333,8 +335,8 @@ $(function(){
 																		<input type="hidden" name="team_no" value="${param.team_no}">
 		                                       							<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
 																			<div class="modify-alert">
-																				<h4>"${param.team_name}" 팀에서 소유자를 양도하셔야 합니다.<br>
-																	 				계정 비밀번호를 입력후 양도할 소유자를 선택해 주세요</h4>
+																				<h4>"${param.team_name}" 팀의 모든 멤버가 같이 삭제됩니다. 그래도 원하신다면<br>
+																	 				계정 비밀번호를 입력후 팀을 삭제해주세요</h4>
 															 				</div>
 																	</form>
 											
