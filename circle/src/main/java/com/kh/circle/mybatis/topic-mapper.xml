@@ -98,25 +98,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	
 	<!-- 토픽 초대하기(같은 팀 멤버를 같은 토픽번호로 추가) -->
-	<insert id="inviteTopic" parameterType="list">
-	    <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual">
+	<insert id="inviteTopic" parameterType="topicMemberDto">
 			insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
-		</foreach>
 	</insert>
 	
-<!-- 	<insert id="inviteTopicOne" parameterType="topicMemberDto">	 -->
-<!-- 			insert into topic_member values(#{topic_no},#{member_no},#{team_no},'') -->
-<!-- 	</insert> -->
+	
+	<!-- 토픽 초대하기(여러명) -->
+	<insert id="inviteMember" parameterType="map">
+<!-- 	    <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual"> -->
+<!-- 			into topic_member values(#{topicMemberDto.topic_no},#{topicMemberDto.member_no},#{topicMemberDto.team_no},'') -->
+<!-- 		</foreach> -->
+
+			<foreach collection="list" item="member_no" open="insert all" close="select * from dual">
+				into topic_member values(#{topic_no}, #{member_no}, #{team_no}, '')
+			</foreach>
+	</insert>
+	
 	
 	<!-- 토픽 초대목록(현재 토픽에없는 팀리스트) -->
 	<select id="inviteTopicList" resultType="memberListVO" parameterType="map">
-			select * from topic_member 
-			inner join member 
-			on topic_member.member_no = member.member_no 
-			where 
-			team_no = #{team_no} and topic_no != #{topic_no}
+			select * from 
+			(
+			    select distinct member_no from topic_member where team_no = #{team_no}
+			    minus
+			    select distinct member_no from topic_member where topic_no = #{topic_no}
+			)A 
+			inner join member on A.member_no = member.member_no
 	</select>
 	
 </mapper>
