@@ -65,12 +65,6 @@ public class TeamController {
 		return "team/create";
 	}
 	
-	@GetMapping("/oldmain")
-	public String oldmain() {
-		return "team/oldmain";
-				
-	}
-	
 	//팀 생성을 하는 컨트롤러 / 생성 후 topic창으로 연결 
 	@PostMapping("/create")
 	public String create(@ModelAttribute TeamDto teamDto,
@@ -115,37 +109,8 @@ public class TeamController {
 		if(count>0) return "Y"; //있으면
 		else return "N";
 	}
-	
-	//invite_create 초대하기 버튼 
 
-	@GetMapping("/invite_create") 
-	public String invite_create(@RequestParam int team_no,
-								Model model) {
-		model.addAttribute("team_no", team_no);
-		return "team/invite_create";
-	}
-	
-	
-	
-	
-	//토픽 메인 화면에서 보이는 '팀초대하기' 버튼과 연결된 jsp
-	@GetMapping("/main")
-	public String main(@RequestParam int team_no,
-					   Model model) {	
-		model.addAttribute("team_no", team_no); //team_no이름으로 team_no를 파라미터값으로 넘기겠다
-		return "team/main";
-	}
-	
-	//modal_invite1 초대하기 모달 화면 1과 연결된 jsp 
-	@GetMapping("/modal_invite1")
-	public String modal_invite1(@RequestParam(value="team_no") int team_no,
-			Model model) {
-	
-		model.addAttribute("team_no", team_no);
-		return "team/modal_invite1";
-	}
-	
-	
+
 
 		
 	
@@ -183,19 +148,12 @@ public class TeamController {
 		return emailService.sendCertMessage(email, cert); 	
 	}
 	
-	
-	//멤버 초대 이메일 전송하는 컨트롤러 
-	@PostMapping("/modal_invite2")
-	public String modal_invite2(@RequestParam String cert_email,
-								@RequestParam int team_no,
-								@RequestParam int topic_no
-								) throws MessagingException
-	{ 	
 
-		teamEmailService.sendConfirmMessage(cert_email,team_no,topic_no);
-	return "redirect:result";
+
+//		teamEmailService.sendConfirmMessage(cert_email,team_no,topic_no);
+//	return "redirect:result";
 		
-	}
+//	}
 	
 
 

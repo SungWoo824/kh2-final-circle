@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="driveFile">
+
+	<insert id="upload" parameterType="driveFileDto">
+		insert into drive_file 
+		values(
+			#{drive_file_no},
+			#{member_no},
+			#{team_no},
+			#{drive_name},
+			#{drive_file_uploadname},
+			#{drive_file_size}
+		)
+	</insert>
+	
+	<!-- 시퀀스저장 -->
+	<select id="getSeq" resultType="int">
+		select drive_file_no_seq.nextval from dual
+	</select>
+	
+	<!-- 중복검사 -->
+	<select id="nameCheck" parameterType="driveFileVo" resultType="int">
+		select count(drive_name) 
+		from 
+			drive_file
+		where 
+			team_no = #{team_no}
+		and 
+			drive_name = #{drive_name}
+	</select>
+	
+
+	<!-- 파일다운로드 -->
+	<select id="getFileNo" resultType="driveFileDto" parameterType="int" >
+		select * from drive_file where drive_file_no=#{drive_file_no}
+	</select>
+	
+	<!-- 파일목록 -->
+	<select id="fileList" resultType="driveFileDto" parameterType="driveFileVo">
+<!-- 		select * from drive_file where team_no=#{team_no} -->
+		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
+	</select>
+	
+	
+	<!-- 드라이브 폴더 목록 -->
+	<select id="driveFolderList" parameterType="int" resultType="String">
+		select distinct drive_name from drive_file where team_no=#{team_no}
+	</select>
+	
+	<!-- 파일삭제 -->
+	<delete id="fileDelete" parameterType="int">
+		delete from drive_file where drive_file_no=#{drive_file_no}	
+	</delete>
+	
+	<!-- 드라이브 폴더 삭제 -->
+	<delete id="driveDelete" parameterType="driveFileVo" >
+		delete from drive_file where drive_file_no=#{drive_file_no} and team_no=#{team_no} and drive_name=#{drive_name}
+<!-- 		delete from drive_file where team_no=#{team_no} and drive_name=#{drive_name} -->
+	
+	</delete>
+
+</mapper>
+
+
+
+
