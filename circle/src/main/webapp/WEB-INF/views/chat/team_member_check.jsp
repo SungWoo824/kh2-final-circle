@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>팀멤버 중복 가입 확인 </title>
+<title>팀멤버 가입 중복 확인 하는 곳 </title>
 </head>
 <body>
-<h1>이미 가입된 팀 입니다. 리스트를 확인해 주세요 <h1>
+
 </body>
 </html>

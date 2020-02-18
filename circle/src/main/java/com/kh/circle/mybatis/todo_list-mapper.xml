@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="todoList">
+	<!-- 할일 겟 시퀀스  -->
+	<select id="getSequence" resultType="int">
+		select todo_list_no_seq.nextval
+		from dual
+	</select>
+	
+	<!-- 할일 추가 하기  -->
+	<insert id="todoListCreate" parameterType="todoListDto"> 
+		insert into todo_list 
+		values(#{todo_list_no},#{topic_no},#{member_no},#{team_no},#{todo_list_content})
+	</insert>
+	
+	
+	
+	
+
+</mapper>

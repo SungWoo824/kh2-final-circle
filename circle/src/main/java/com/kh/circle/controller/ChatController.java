@@ -31,6 +31,7 @@ import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
+import com.kh.circle.entity.TodoListDto;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.ChatDao;
@@ -40,6 +41,7 @@ import com.kh.circle.service.TeamService;
 import com.kh.circle.repository.MemberDao;
 import com.kh.circle.repository.TeamCertDao;
 import com.kh.circle.repository.TeamDao;
+import com.kh.circle.repository.TodoListDao;
 import com.kh.circle.repository.TopicDao;
 import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.repository.VoteCreateDao;
@@ -76,6 +78,9 @@ public class ChatController {
 
 	@Autowired
 	private MemberDao memberDao;
+	
+	@Autowired
+	private TodoListDao todoListDao;
 
 	@GetMapping("/chat")
 	public String chat(@RequestParam int topic_no) {
@@ -285,7 +290,6 @@ public class ChatController {
 
 		
 		//팀 멤버로 등록하는 페이지 접속
-		
 		@GetMapping("/team_member_regist")
 		public String team_member_regist(@RequestParam int team_no,
 										 @RequestParam int topic_no,
@@ -296,6 +300,7 @@ public class ChatController {
 			return "chat/team_member_regist";
 		}
 		
+		//멤버 등록되기전 기존 멤버인지 중복검사하는 곳 
 		@PostMapping("/team_member_check")
 		public String team_member_check(@ModelAttribute TeamMemberDto teamMemberDto,
 										 @RequestParam int team_no,
@@ -325,7 +330,30 @@ public class ChatController {
 				return "redirect:../member/mypage";
 			}
 		}
-				
+
+	@GetMapping("/todo_list_create")
+	public String todo_list_create(@RequestParam int team_no, 
+									@RequestParam int topic_no,
+								 Model model, HttpSession session) {
+		
+		return "chat/todo_list_create";
+	}
+	@PostMapping("/todo_list_create")
+	public String todo_list_create(@RequestParam int team_no, 
+								   @RequestParam int topic_no,
+								   @ModelAttribute TodoListDto todoListDto,
+								   HttpSession session) {
+		//투두 리스트 넘버 
+		int todo_list_no =todoListDao.getSequence();	
+		
+
+		
+	todoListDao.todoListCreate(todoListDto);
+		return "redirect:./chat/todo_list_create";
+	}
+		
+		
+		
 }
 	
 

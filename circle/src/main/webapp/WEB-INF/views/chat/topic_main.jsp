@@ -469,10 +469,16 @@ background-color:#f8f8f8;
             	<div class="chat-aside">
                     <div class="chat-menu-bar">
                     
-                      <!-- 팀멤버 보기 드롭다운 시작-->
 
            </div>           
-                      
+					<!-- 투두 리스트 가기 임시버튼 -->
+					<form action="todo_list_create" method="get">
+					<input type="hidden" name="team_no" value="${param.team_no}">
+					<input type="hidden" name="topic_no" value="${param.topic_no}">
+					<button type="submit">투두리스트 가기 임시버튼</button>
+					</form>
+					
+                      <!-- 팀멤버 보기 드롭다운 시작-->
                       <div class="btn-group" id="membertList">
  						 <button  type="button" id="myDropdown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     						팀멤버 보기 </button>
@@ -494,6 +500,7 @@ background-color:#f8f8f8;
  							 </div>
 						</div>
 						<!-- 팀멤버 보기 드롭다운 끝-->
+						
 						
                         <div class="chat-img">
                             <div class="chat-img-bg">
