@@ -101,6 +101,10 @@ public class ChatController {
 		List<TopicMemberDto> topicMemberList = topicDao.topicMemberList(topic_no);
 		model.addAttribute("topicMemberList", topicMemberList);
 		
+		//토픽 초대리스트
+		List<TopicMemberDto> inviteTopicList = topicDao.inviteTopicList(team_no,topic_no);
+		model.addAttribute("inviteTopicList", inviteTopicList);
+		
 		return "chat/topic_main";
 	}
 	
@@ -334,18 +338,25 @@ public class ChatController {
 		
 		//토픽소유자 나가기(선택멤버 토픽소유자로 변경하고 나가기)
 		@PostMapping("/topic_masterchange")
-		public String topicMasterChange(@RequestParam int topic_no, @RequestParam int team_no, HttpSession session) {
-			topicDao.topicMasterChange(topic_no,team_no);
-			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
-			return "redirect:/chat/topic_main?team_no="+team_no+"&topic_no="+topic_no;
+		public String topicMasterChange(@RequestParam int team_no, 
+				@RequestParam int topic_no, @RequestParam int member_no,
+				Model model) {
+			topicDao.topicMasterChange(topic_no,member_no);
+			topicDao.outTopic(topic_no, member_no);
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("member_no", member_no);
+			model.addAttribute("topic_mp",topic_no);
+			return "redirect:/chat/topic_main";
 		}
 		
 		
 		//토픽멤버 나가기(토픽소유자 제외)
 		@PostMapping("/outtopic")
-		public String outTopic(@RequestParam int topic_no,@RequestParam int team_no,HttpSession session) {
+		public String outTopic(@RequestParam int topic_no,
+												@RequestParam int team_no,
+												HttpSession session) {
 			topicDao.outTopic(topic_no,(int)session.getAttribute("member_no"));
-			return "redirect:/chat/topic_main?team_no="+team_no+"&topic_no="+topic_no;
+			return "redirect:/chat/topic_main";
 		}
 		
 		
@@ -353,7 +364,7 @@ public class ChatController {
 		@PostMapping("/invitetopic")
 		public String topicInvite(@ModelAttribute TopicMemberDto topicMemberDto) {
 			topicDao.inviteTopic(topicMemberDto);
-			return "redirect:/chat/topic_invite";
+			return "redirect:/chat/topic_main";
 		}
 		
 		

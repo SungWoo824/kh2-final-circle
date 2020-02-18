@@ -511,20 +511,20 @@ function MovePage(no){
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#"
 							role="button" aria-haspopup="true" aria-expanded="false">더 보기</a>
 							<div class="dropdown-menu" style="">
-									<c:choose>
-										<c:when test="${topicMemberDto.topic_member_position == '토픽소유자'}">
+<%-- 									<c:choose> --%>
+<%-- 										<c:when test="${param.topic_member_position eq '토픽소유자'}"> --%>
 											<a class="dropdown-item" data-toggle="modal" data-target="#inTopic">토픽 참여 목록보기</a> 
 											<a class="dropdown-item" data-toggle="modal" data-target="#inviteTopic">토픽 초대하기</a> 
 											<a class="dropdown-item" data-toggle="modal" data-target="#editTopic">토픽 정보변경</a>
 											<a class="dropdown-item" href="#">토픽 삭제하기</a> 
-											<a class="dropdown-item" data-toggle="modal" data-target="#topicMasterChange">토픽 나가기</a>
-										</c:when>
-										<c:otherwise>
-											<a class="dropdown-item" data-toggle="modal" data-target="#inTopic">토픽 참여 목록보기</a> 
-											<a class="dropdown-item" data-toggle="modal" data-target="#inviteTopic">토픽 초대하기</a> 
+											<a class="dropdown-item" data-toggle="modal" data-target="#topicMasterChange">토픽 나가기(소유자)</a>
+<%-- 										</c:when> --%>
+<%-- 										<c:otherwise> --%>
+<!-- 											<a class="dropdown-item" data-toggle="modal" data-target="#inTopic">토픽 참여 목록보기</a>  -->
+<!-- 											<a class="dropdown-item" data-toggle="modal" data-target="#inviteTopic">토픽 초대하기</a>  -->
 											<a class="dropdown-item" data-toggle="modal" data-target="#outTopic">토픽 나가기</a>
-										</c:otherwise>
-									</c:choose>
+<%-- 										</c:otherwise> --%>
+<%-- 									</c:choose> --%>
 							</div>
 						</li>
 					</ul>
@@ -771,15 +771,15 @@ function MovePage(no){
 			<span>다음 토픽 관리자를 선택해주세요</span><br><hr>
 		    		<c:forEach var="tmList" items="${topicMemberList}">
 	    				<c:choose>
-		    				<c:when test="${tmList.member_no== param.member_no}">
-				        		<input type="checkbox" name="member_no" value="${tmList.member_no }" disabled>
+		    				<c:when test="${tmList.member_no eq sessionScope.member_no}">
+				        		<input type="checkbox" name="member_no" value="${sessionScope.member_no }" disabled>
 		    				</c:when>
 				        	<c:otherwise>
-					        	<input type="checkbox" name="member_no" value="${tmList.member_no }">	
+					        	<input type="checkbox" name="member_no" value="${sessionScope.member_no }">	
 				        	</c:otherwise>
 			    		</c:choose>
-					        	<input type="hidden" name="topic_no" value="${tmList.topic_no }">
-					        	<input type="hidden" name="team_no" value="${tmList.team_no }">
+					        	<input type="hidden" name="topic_no" value="${param.topic_no }">
+					        	<input type="hidden" name="team_no" value="${param.team_no }">
 					        	<span>
 					        		${tmList.member_name}-${tmList.member_email}(${tmList.topic_member_position })
 					        	</span>
@@ -807,12 +807,22 @@ function MovePage(no){
         </button>
       </div>
       <div class="modal-body">
-	        <c:forEach var="team" items="${memberList}">
-	        	<input type="checkbox" name="member_no" value="${team.member_no }">
-	        	<input type="hidden" name="team_no" value="${team.team_no }">
-	        	<input type="hidden" name="topic_no" value="${team.topic_no }">
- 	        		<span>${team.member_name}/${team.member_position }</span>
-	        	<br>
+	        <c:forEach var="tmlist" items="${inviteTopicList}">
+	        	<c:choose>
+	   				<c:when test="${tmlist.member_no eq sessionScope.member_no}">
+		        		<input type="checkbox" name="member_no" value="${sessionScope.member_no }" disabled>
+	   				</c:when>
+		        	<c:otherwise>
+			        	<input type="checkbox" name="member_no" value="${sessionScope.member_no }">	
+		        	</c:otherwise>
+			 	</c:choose>
+		        	<input type="hidden" name="team_no" value="${param.team_no }">
+		        	<input type="hidden" name="topic_no" value="${param.topic_no }">
+	 	        	<span>${tmlist.member_name}/${tmlist.member_email}</span>
+		        <c:if test="${tmlist.topic_no eq param.topic_no}">
+		        	<span>${tmlist.topic_member_position}</span>
+		        </c:if>
+	 	        	<br>
 	        </c:forEach>
       </div>
       <div class="modal-footer">

@@ -60,15 +60,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 토픽 참여자 목록-->
 	<select id="topicMemberList" resultType="memberListVO" parameterType="int">
-		select distinct tv.member_email, tv.member_name,  t.topic_member_position
-		from (select * from teamview)tv
-		inner join
-		(
-		    select member_no, topic_member_position 
-		    from topic_member
-		    where topic_no=#{topic_no}
-		)T
-		on tv.member_no = T.member_no
+		select * from topic_member 
+		inner join member 
+		on topic_member.member_no = member.member_no 
+		where topic_no = #{topic_no}
 	</select>
 	
 	<!-- 토픽 정보 수정-->
@@ -83,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 1.토픽소유자 인계-->
-	<update id="topicMasterChange" parameterType="int">
+	<update id="topicMasterChange" parameterType="map">
 		update topic_member 
 		set 
 			topic_member_position='토픽소유자'
@@ -93,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<!-- 2. 토픽 나가기 -->
-	<delete id="outTopic" parameterType="int">
+	<delete id="outTopic" parameterType="map">
 		delete from topic_member where topic_no=#{topic_no} and member_no =#{member_no} 
 	</delete>
 	
@@ -111,7 +106,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</insert>
 	
-
+<!-- 	<insert id="inviteTopicOne" parameterType="topicMemberDto">	 -->
+<!-- 			insert into topic_member values(#{topic_no},#{member_no},#{team_no},'') -->
+<!-- 	</insert> -->
 	
+	<!-- 토픽 초대목록(현재 토픽에없는 팀리스트) -->
+	<select id="inviteTopicList" resultType="memberListVO" parameterType="map">
+			select * from topic_member 
+			inner join member 
+			on topic_member.member_no = member.member_no 
+			where 
+			team_no = #{team_no} and topic_no != #{topic_no}
+	</select>
 	
 </mapper>

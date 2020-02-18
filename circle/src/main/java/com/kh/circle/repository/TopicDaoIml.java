@@ -53,17 +53,15 @@ public class TopicDaoIml implements TopicDao{
 		sqlSession.update("topic.editTopic",topicDto);
 	}
 
-	@Override
-	public void outTopic(int topic_no, int member_no) {
-		Map<String, Integer> param = new HashMap<>();
-		param.put("member_no", member_no);
-		param.put("topic_no",topic_no);
-		sqlSession.delete("team.topicExit", param);
-	}
 
 	@Override
 	public void inviteTopic(TopicMemberDto topicMemberDto) {
 		sqlSession.insert("topic.inviteTopic",topicMemberDto);
+	}
+	
+	@Override
+	public void inviteTopicOne(TopicMemberDto topicMemberDto) {
+		sqlSession.insert("topic.inviteTopicOne",topicMemberDto);
 	}
 
 	@Override
@@ -74,6 +72,22 @@ public class TopicDaoIml implements TopicDao{
 		sqlSession.update("topic.topicMasterChange",param);
 	}
 	
+	@Override
+	public void outTopic(int topic_no, int member_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("member_no", member_no);
+		param.put("topic_no",topic_no);
+		sqlSession.delete("topic.outTopic", param);
+	}
+
+	@Override
+	public List<TopicMemberDto> inviteTopicList(int team_no,int topic_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("topic_no",topic_no);
+		return sqlSession.selectList("topic.inviteTopicList",param);
+
+	}
 	
 	
 	
