@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 public class PayAmountVO {
-	private int total, tax_free, vat, point, discount;
+	private int total, tax_free, vat, point, discount, term, price;
 }

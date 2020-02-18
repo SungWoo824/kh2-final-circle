@@ -51,8 +51,7 @@ public class PayController {
 		String tid = (String) session.getAttribute("tid");
 		PayReadyVO vo = (PayReadyVO)session.getAttribute("ready");
 		
-		session.removeAttribute("tid");
-		session.removeAttribute("ready");
+		
 		
 		CirclePaySuccessReadyVO data = CirclePaySuccessReadyVO.builder()
 															.cid("TC0ONETIME")
@@ -60,8 +59,13 @@ public class PayController {
 															.partner_order_id(vo.getPartner_order_id())
 															.partner_user_id(vo.getPartner_user_id())
 															.pg_token(pg_token)
+															.price(vo.getPrice())
+															.term(vo.getTerm())
 														.build();
 		CirclePaySuccessReturnVO result = payService.approve(data);
+		
+		session.removeAttribute("tid");
+		session.removeAttribute("ready");
 		model.addAttribute("result", result);
 		
 		return "pay/success";

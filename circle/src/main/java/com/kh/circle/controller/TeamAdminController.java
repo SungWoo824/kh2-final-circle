@@ -93,6 +93,8 @@ public String owner_manager_member(@RequestParam String team_name,
 		
 	//반복문 . 참여멤버리스트 출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberList",teamDao.memberList(team_no));
+	
+	//준회원 목록 출력
 		
 	return "team_admin/owner_manager_member";
 }

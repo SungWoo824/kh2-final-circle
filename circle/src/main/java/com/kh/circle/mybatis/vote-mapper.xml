@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="vote">
 	<insert id="create" parameterType="voteDto">
-		insert into vote_create values(#{vote_create_no}, #{vote_create_title}, #{vote_create_detail}, #{vote_create_anonymous, jdbcType=VARCHAR}, #{vote_create_plural, jdbcType=VARCHAR}, #{vote_create_date}, #{vote_create_status, jdbcType=VARCHAR}, #{vote_create_time}, #{vote_create_topic}, #{vote_create_userno})
+		insert into vote_create values(#{vote_create_no}, #{vote_create_title}, #{vote_create_detail}, #{vote_create_plural, jdbcType=VARCHAR}, #{vote_create_date}, #{vote_create_status, jdbcType=VARCHAR}, #{vote_create_time}, #{vote_create_topic}, #{vote_create_userno}, #{vote_create_team_no})
 	</insert>
 	
 	<insert id="createCategory" parameterType="voteCategoryDto">

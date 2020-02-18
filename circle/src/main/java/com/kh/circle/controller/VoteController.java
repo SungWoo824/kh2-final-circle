@@ -70,7 +70,6 @@ public class VoteController {
 		VoteDto vdto = VoteDto.builder()
 				.vote_create_title(vote.getVote_create_title())
 				.vote_create_detail(vote.getVote_create_detail())
-				.vote_create_anonymous(vote.getVote_create_anonymous())
 				.vote_create_plural(vote.getVote_create_plural())
 				.vote_create_status(vote.getVote_create_status())
 				.vote_create_date(vote.getVote_create_date())
@@ -114,8 +113,9 @@ public class VoteController {
 	}
 	
 	@GetMapping("/closevote")
-	public String close(@RequestParam("vote_create_no") int a, @RequestParam("member_no") int b, @RequestParam("team_no") int c, @RequestParam("topic_no") int d) {
+	public String close(HttpSession session, @RequestParam("vote_create_no") int a, @RequestParam("team_no") int c, @RequestParam("topic_no") int d) {
+		
 		voteCreateDao.close(a);
-		return "redirect:./vote_result?vote_create_no="+a+"&member_no="+b+"&team_no="+c+"&topic_no="+d;
+		return "redirect:./vote_result?vote_create_no="+a+"&member_no="+session.getAttribute("member_no")+"&team_no="+c+"&topic_no="+d;
 	}
 }

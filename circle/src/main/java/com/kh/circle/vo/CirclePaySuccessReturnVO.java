@@ -20,7 +20,7 @@ public class CirclePaySuccessReturnVO {
 	created_at,
 	approved_at,
 	payload;
-	private int quantity, term, price, total_amount;
+	private int quantity, total_amount;
 	private PayAmountVO amount;
 	private PaySuccessCardInfoVO card_info;
 }

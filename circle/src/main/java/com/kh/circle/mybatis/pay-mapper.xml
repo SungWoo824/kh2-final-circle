@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					#{item_name},
 					#{quantity},
 					#{total_amount},
-					'완료',
+					'취소',
 					#{aid},
 					#{term},
 					#{price}

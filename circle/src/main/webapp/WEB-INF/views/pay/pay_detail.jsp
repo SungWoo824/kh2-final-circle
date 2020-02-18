@@ -48,6 +48,7 @@ function rs(){
 			console.log(sum);
 		$('#total_amount6').val(sum);
 		$("input[name=total_amount]").val(sum);
+		$("input[name=partner_order_id]").val(rs().toString());
 		});
 	});
 	
@@ -60,6 +61,7 @@ function rs(){
 			console.log(sum);
 		$('#total_amount12').val(sum);
 		$("input[name=total_amount]").val(sum);
+		$("input[name=partner_order_id]").val(rs().toString());
 		});
 	});
 </script>
@@ -80,7 +82,7 @@ function rs(){
 5000원/명<br>
 <input type="hidden" class="price1" value="5000">
 수량: <input type="text" name="quantity" class="quantity1" id="quantity1"><br><br>
-총 금액: <input type="text" id="total_amount1" value="">
+총 금액: <input type="text" id="total_amount1" value="" disabled="disabled">
 </h3>
 
 <input type="hidden" name="partner_user_id" value="${member_email }">
@@ -96,7 +98,6 @@ function rs(){
 <input type="submit" value="선택">
 <br>
 </form>
-<!-- 위의 폼은 테스트용임 js로 .val()해서 총금액 구해줘야함 -->
 <form action="pay_detail" method="post">
 <h3>6개월<br>
 27000원/명<br>

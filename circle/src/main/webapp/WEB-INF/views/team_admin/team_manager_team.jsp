@@ -229,13 +229,11 @@ $(function(){
 													</div>
 	                                        			<div class="modify-item-content modify-item2">
 															<div class="modify-origin-div">
-																보기 
-																
+																보기 				
 															</div>
 			                             					    <div class="modify-fix-div">
                                                    				    팀 이름 = ${teamDto.team_name}
                                                    				    내 등급 = ${teamMemberDto.member_position} , ${teamMemberDto.member_auth}
-                                                   				   
                                                    				    이메일 = ${memberDto.member_email}
                                                     					 <button class="modify-cancel">닫기 </button>
 	                                    						</div>
