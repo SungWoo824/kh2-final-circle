@@ -141,7 +141,7 @@ $(function(){
         				   <div class="mypage-div">
 	                
 		                        <form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
-									<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+									<input type="hidden" name="team_no" class="team_no_value" value="${param.team_no}">
 																
 										<div class="mypage-team-div">
 											<button id="param_submit_btn" type="submit">이동하기</button>

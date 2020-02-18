@@ -56,10 +56,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from topic where topic_no = #{topic_no}
 	</select>
 	
-	  <insert id="inviteTopic" parameterType="list">
+	<insert id="inviteTopic" parameterType="list">
        <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual">
          insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
       </foreach>
-   </insert>
+   	</insert>
+   	
+   	<insert id="mailInviteTopic" parameterType="topicMemberDto">
+         insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
+   	</insert>
 	
 </mapper>

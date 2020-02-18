@@ -43,6 +43,12 @@ public class TopicDaoIml implements TopicDao{
 	public void inviteTopic(TopicMemberDto topicMemberDto) {
 	    sqlSession.insert("topic.inviteTopic",topicMemberDto);
 	   }
+
+	@Override
+	public void mailInviteTopic(TopicMemberDto topicMemberDto) {
+		sqlSession.insert("topic.mailInviteTopic", topicMemberDto);
+		
+	}
 	
 	
 

@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.entity.TeamDto;
+import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.ChatDao;
@@ -228,6 +229,7 @@ public class ChatController {
 				   					@RequestParam String topic_no,
 				   					HttpSession session, Model model) {
 			
+		
 			
 			MemberDto memberDto = memberDao.signin(member_email,member_pw);
 			if(memberDto != null) {
@@ -238,6 +240,10 @@ public class ChatController {
 				model.addAttribute("team_no", team_no);
 				return "redirect:./team_member_regist";
 			}
+//				else if(teamMemberDto!=null) {
+//			}
+				
+				
 			
 		else {	//
 			return "redirect:./invite_signup";
@@ -290,33 +296,36 @@ public class ChatController {
 			return "chat/team_member_regist";
 		}
 		
-		@PostMapping("/team_member_regist")
-	      public String team_member_regist(@ModelAttribute TeamDto teamDto,
-	                               @RequestParam int topic_no,
-	                               @RequestParam int team_no,
-	                               @ModelAttribute MemberDto memberDto,
-	                               TopicMemberDto topicMemberDto,
-	                               Model model,
-	                               HttpSession session) {
-	         
-	         model.addAttribute("team_no", team_no);
-	         model.addAttribute("topic_no", topic_no);
-	         int member_no = (int) session.getAttribute("member_no");
-	   
-	         
-	         //팀멤버로 추가
-	         teamDao.teamMemberCreate2(member_no, team_no);
-	         //토픽 멤버추가 
-//	         TopicMemberDto topicMemberDto = TopicMemberDto.builder()
-//	                                 .member_no((int) session.getAttribute("member_no"))
-//	                                 .team_no(team_no)
-//	                                 .topic_no(topic_no)
-//	                                 .build();
-	         topicDao.inviteTopic(topicMemberDto);
-	         return "redirect:../chat/topic_main";
-//	         return "redirect:../
-//	         return "redirect:../";   //redirec로 설정해야 원하는url 주소로 바뀜
-	         }
-
-	
+		@PostMapping("/team_member_check")
+		public String team_member_check(@ModelAttribute TeamMemberDto teamMemberDto,
+										 @RequestParam int team_no,
+										 @RequestParam int topic_no,
+										 HttpSession session, Model model) {
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no", topic_no);
+			int member_no = (int) session.getAttribute("member_no");
+			
+			boolean enter = teamDao.teamMemberCheck(member_no, team_no);
+			if(!enter) { //db에 데이터가 확인되지 않을 경우 / db에 등록됨 
+		         //팀멤버로 추가
+		         teamDao.teamMemberCreate2(member_no, team_no);
+		         //토픽 멤버추가 
+		        TopicMemberDto topicMemberDto = TopicMemberDto.builder()
+		                                 .member_no((int) session.getAttribute("member_no"))
+		                                 .team_no(team_no)
+		                                 .topic_no(topic_no)
+		                                 .build();
+		        topicDao.mailInviteTopic(topicMemberDto);
+		        System.out.println(topicMemberDto.toString());
+		        return "redirect:../chat/topic_main";
+				
+			}
+			else { //db에 데이터가 확인 될 경우 / 회원 리스트 보여줌 
+				
+				return "redirect:../member/mypage";
+			}
+		}
+				
 }
+	
+

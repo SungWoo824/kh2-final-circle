@@ -214,14 +214,14 @@ $(function(){
 								  <div class="collapse navbar-collapse" id="navbarNav">
 								    <ul class="navbar-nav">
 								      <li class="nav-item active">
-								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${param.team_no}&team_name=${teamDto.team_name}&team_domain=${param.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
 								      </li>
 								      <li class="nav-item">
-								    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리</a>
+								    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">멤버관리</a>
 								     
 								      </li>
 								      <li class="nav-item">
-								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
+								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
 								      </li>
 								<!--       <li class="nav-item"> -->
 								<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->

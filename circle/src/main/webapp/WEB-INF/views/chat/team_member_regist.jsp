@@ -61,14 +61,14 @@
 													<br>
 													<h3>이제 팀 멤버로 등록하세요</h3>
 														<br>		
-														<form action="team_member_regist" method="post">
+														<form action="team_member_check" method="post">
 															<input type="hidden" value="${param.team_no}" name="team_no">
 															<input type="hidden" value="${param.topic_no}" name="topic_no">
-																	<input type="submit" value="가입하기" class="btn btn-primary">
+															<input type="submit" value="가입하기" class="btn btn-primary">
+														</form>
 													</div>
 																
 																
-														</form>
 														
 											</div>
 									   </div>
