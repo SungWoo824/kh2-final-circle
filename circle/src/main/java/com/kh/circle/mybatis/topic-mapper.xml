@@ -48,12 +48,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 	
-	<select id="teamTopicList" parameterType="int" resultType="topicDto">
-		select topic.* from (select topic_no from topic_member where team_no = #{team_no}) tm inner join topic on topic.topic_no=tm.topic_no order by topic.topic_no
+	<select id="teamTopicList" parameterType="Map" resultType="topicDto">
+		select topic.* from (select topic_no from topic_member where member_no =#{member_no} and team_no = #{team_no}) tm inner join topic on topic.topic_no=tm.topic_no order by topic.topic_no
 	</select>
 	
 	<select id="topicChange" parameterType="int" resultType="topicDto">
 		select * from topic where topic_no = #{topic_no}
 	</select>
 	
+	<select id="topicStatusSearch" parameterType="chatVo" resultType="int">
+		select chat_no from CHAT_LIST where member_no = #{member_no} and CHAT_STATUS=#{status} and topic_no = #{topic_no} and rownum &lt;= 1 order by chat_no desc
+	</select>
+	<select id="topicChatCount" parameterType="Map" resultType="int">
+		select count(*) from chat_list where topic_no=#{topic_no} and chat_no &gt; #{exit}
+	</select>
 </mapper>

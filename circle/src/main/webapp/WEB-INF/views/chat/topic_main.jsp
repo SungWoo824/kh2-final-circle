@@ -53,7 +53,7 @@
 
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
-			$("<p>").text(message).appendTo("#chat-content");
+			$("<p>").text(message.chat_content).appendTo("#chat-content");
 		}
 		
 // 		웹소켓 연결 함수
@@ -77,7 +77,12 @@
 			window.socket.onmessage = function(e){
 				var msg = JSON.parse(e.data);
 				console.log(msg);
-				appendMessage(msg.chat_content);
+				if(param.topic_no==msg.topic_no && msg.status==2){
+				appendMessage(msg);
+				}
+				if(msg.status==3){
+					
+				}
 			};
 			
 			window.socket.onerror = function(){
@@ -428,9 +433,17 @@ background-color:#f8f8f8;
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
 
-                	<c:forEach items="${topicList}" var="topicListDto">
-                		<li class="nav-item">
-		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">${topicListDto.topic_name}</a>
+                	<c:forEach items="${topicList}" var="topicListDto" varStatus="status" >
+                		<li class="nav-item ${topicListDto.topic_no}">
+		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">
+		                    	${topicListDto.topic_name}
+		                    	<c:if test="${memberChatCount[status.index].count ne 0}">
+			                    	<span class="badge badge-primary badge-pill">
+			                    		${memberChatCount[status.index].count}
+			                    	</span>
+		                    	</c:if>
+		                    </a>
+		           
 		                </li>
                 	</c:forEach>
 

@@ -86,9 +86,10 @@ public class ChatController {
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,
 							Model model, HttpSession session) {
-		List<TopicDto> topicList = teamService.teamTopicList(team_no);
+		List<TopicDto> topicList = teamService.teamTopicList(team_no,(int)session.getAttribute("member_no"));
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
+		model.addAttribute("memberChatCount", teamService.memberChatCount(team_no,(int)session.getAttribute("member_no")));
 		model.addAttribute("topicChatList", chatDao.topicChatList(topic_no));
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
