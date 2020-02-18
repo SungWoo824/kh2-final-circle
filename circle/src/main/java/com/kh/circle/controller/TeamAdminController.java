@@ -50,8 +50,8 @@ public String team_member_team(@RequestParam String team_name,
 	model.addAttribute("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
 	
 	//팀 멤버 테이블 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
-		
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
+	
 	return "team_admin/member_manager_team";
 }
 	
@@ -60,14 +60,20 @@ public String team_member_team(@RequestParam String team_name,
 public String owner_manager_team(@RequestParam String team_name,
 								@RequestParam int team_no,
 								@RequestParam String team_domain,
-								HttpSession session,Model model) {
-	
+								HttpSession session,Model model
+								) {
+
 //팀 테이블 정보 리스트 출력
 	model.addAttribute("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
-	//팀 멤버 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
+	//팀 멤버 자기 정보 셀렉원 출력
+//	int member_no = (int) session.getAttribute("member_no");
+//	teamDao.teamMemberinfo(member_no, team_no);
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
+	
+	//관리자용 팀 멤버 리스트 출력
+//	model.addAttribute("memberList", teamDao.memberList(team_no));
 	
 	//비밀번호 확인 할때 이메일 세션 가져오기 
 	model.addAttribute("memberDto", memberDao.info((String)session.getAttribute("member_email")));
@@ -89,8 +95,8 @@ public String owner_manager_member(@RequestParam String team_name,
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
 	//팀 멤버 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
-		
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
+
 	//반복문 . 참여멤버리스트 출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberList",teamDao.memberList(team_no));
 		
@@ -110,8 +116,8 @@ public String member_list_regular(@RequestParam String team_name,
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
 	//팀 멤버 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
-		
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
+	
 	//반복문 . 정회원 출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberListRegular",teamDao.memberListRegular(team_no));
 			
@@ -131,8 +137,8 @@ public String member_list_associate(@RequestParam String team_name,
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
 	//팀 멤버 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
-			
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
+	
 	//반복문 . 준회원출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberListAssociate",teamDao.memberListAssociate(team_no));
 
@@ -153,8 +159,8 @@ public String member_list_owner(@RequestParam String team_name,
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
 	//팀 멤버 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
-			
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
+	
 	//반복문 . 준회원출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberListOwner",teamDao.memberListOwner(team_no));
 
@@ -176,7 +182,7 @@ public String grant_position(@RequestParam String team_name,
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
 	//팀 멤버 테이블 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
 	
 	//반복문 . 참여멤버리스트 출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberList",teamDao.memberList(team_no));
@@ -199,7 +205,7 @@ public String grant_position(@RequestParam int team_no,
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
 	//팀 멤버 테이블 정보 출력
-	model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
+	model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
 	
 	//반복문 . 참여멤버리스트 출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberList",teamDao.memberList(team_no));
@@ -221,8 +227,8 @@ public String grant_position(@RequestParam int team_no,
 		//팀 테이블 정보 리스트 출력
 		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 		//팀 멤버 정보 출력
-		model.addAttribute("teamMemberDto", teamDao.teamMemberinfo((int)session.getAttribute("member_no")));
-				
+		model.addAttribute("teamMemberDto", teamDao.teamMemberInfo((int)session.getAttribute("member_no"), team_no));
+	
 		
 		return "team_admin/owner_manager_per";
 	}

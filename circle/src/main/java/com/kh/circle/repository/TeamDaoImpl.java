@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -144,10 +146,23 @@ public class TeamDaoImpl implements TeamDao {
 	
 	//팀멤버 테이블 전체 목록 셀렉원으로 출력
 	@Override
-	public TeamMemberDto teamMemberinfo(int member_no) {
-		return sqlSession.selectOne("team.teamMemberinfo", member_no);
+	public TeamMemberDto teamMemberInfo(int member_no, int team_no) {
+		TeamMemberDto teamMemberDto = TeamMemberDto.builder()
+													.member_no(member_no)
+													.team_no(team_no)
+													.build();
+		return sqlSession.selectOne("team.teamMemberInfo", teamMemberDto);
 	}
 
+
+	@Override
+	public boolean teamMemberCheck(int member_no, int team_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("member_no", member_no);
+		param.put("team_no", team_no);
+		TeamMemberDto teamMemberDto = sqlSession.selectOne("team.teamMemberCheck", param);
+		return teamMemberDto != null; 
+}
 	
 	
 	

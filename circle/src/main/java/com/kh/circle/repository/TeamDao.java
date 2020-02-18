@@ -25,7 +25,7 @@ public interface TeamDao {
 	void editTeamDomain(String team_domain, int team_no);
 	void teamExit(TeamMemberDto teamMemberDto);
 	void topicExit(TopicMemberDto topicMemberDto);
-	TeamMemberDto teamMemberinfo(int member_no);
+	TeamMemberDto teamMemberInfo(int member_no, int team_no);
 	void grantPosition(int member_no, int team_no, String member_position);
-
+	boolean teamMemberCheck(int member_no, int team_no);
 }
