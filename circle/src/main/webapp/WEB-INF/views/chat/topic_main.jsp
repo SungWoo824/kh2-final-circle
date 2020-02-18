@@ -77,11 +77,16 @@
 			window.socket.onmessage = function(e){
 				var msg = JSON.parse(e.data);
 				console.log(msg);
-				if(param.topic_no==msg.topic_no && msg.status==2){
+				var ptopic_no = ${param.topic_no};
+				if(ptopic_no==msg.topic_no && msg.status==2){
 				appendMessage(msg);
 				}
-				if(msg.status==3){
-					
+				if(ptopic_no!=msg.topic_no){
+					var topic_no = msg.topic_no;
+					var count = $('.'+topic_no).text();
+					count *=1;
+					count++;
+					$('.'+topic_no).text(count);
 				}
 			};
 			
@@ -434,14 +439,14 @@ background-color:#f8f8f8;
                 <ul class="nav flex-column sub-menu">
 
                 	<c:forEach items="${topicList}" var="topicListDto" varStatus="status" >
-                		<li class="nav-item ${topicListDto.topic_no}">
+                		<li class="nav-item">
 		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">
 		                    	${topicListDto.topic_name}
-		                    	<c:if test="${memberChatCount[status.index].count ne 0}">
-			                    	<span class="badge badge-primary badge-pill">
+			                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
+			                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
 			                    		${memberChatCount[status.index].count}
+			                    	</c:if>
 			                    	</span>
-		                    	</c:if>
 		                    </a>
 		           
 		                </li>
