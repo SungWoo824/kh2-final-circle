@@ -419,7 +419,7 @@ background-color:#f8f8f8;
             </a>
             </li>
             <li class="nav-item" id="topic-create">
-            	<a data-toggle="modal" data-target="#exampleModalCenter">
+            	<a data-toggle="modal" data-target="#newTopicCreate">
 					새 토픽 생성
             	</a>	<i class="fa fa-plus"></i>
             </li>
@@ -448,7 +448,6 @@ background-color:#f8f8f8;
 			                    	</c:if>
 			                    	</span>
 		                    </a>
-		           
 		                </li>
                 	</c:forEach>
 
@@ -544,30 +543,7 @@ background-color:#f8f8f8;
                     
                  <div>  
 
-                    <article class="message-wrap">
-                    
-                        <div class="message" style="text-align: right">
-
-							<h1>${topicDto.topic_name}</h1>
-							<div id="chat-content">
-								<c:forEach items="${topicChatList}" var="chatVo">
-									<p>[${chatVo.member_name}] ${chatVo.chat_content}
-								</c:forEach>
-							</div>
-							<div class="chat-send-content">
-								<div class="chat-send-text">
-
-									<input type="text" class="user-input">
-								</div>
-								<div class="chat-send-button">
-									<button class="send-btn" type="submit">보내기</button>
-								</div>
-							</div>
-						<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="#">Separated link</a>
-					</div>
-				</div>
-				<!-- 팀멤버 보기 드롭다운 끝-->
+                  
 
 		
 				<!-- 토픽 더보기 -->
@@ -596,51 +572,43 @@ background-color:#f8f8f8;
 					</ul>
 				</div>
 				<!-- 토픽 더보기 end -->
+				
 			</div>
 			<!-- partial -->
 
 
 
-			<div>
+			     <article class="message-wrap">
+                    
+                        <div class="message" style="text-align: right">
 
-				<article class="message-wrap">
+							<h1>${topicDto.topic_name}</h1>
+							<div id="chat-content">
+								<c:forEach items="${topicChatList}" var="chatVo">
+									<p>[${chatVo.member_name}] ${chatVo.chat_content}
+								</c:forEach>
+							</div>
+							<div class="chat-send-content">
+								<div class="chat-send-text">
 
-					<div class="message" style="text-align: right">
-
-						<h1>${topicDto.topic_name}</h1>
-						<div id="chat-content">
-							<c:forEach items="${topicChatList}" var="chatVo">
-								<p>[${chatVo.member_name}] ${chatVo.chat_content}
-							</c:forEach>
+									<input type="text" class="user-input">
+								</div>
+								<div class="chat-send-button">
+									<button class="send-btn" type="submit">보내기</button>
+								</div>
+							</div>
+									
 						</div>
-				</div>
-			</article>
+					</article>
 					
-						
-				        
+				</div>
+					
 					        	 
  		 <!-- partical : Team_Member_List-->	 			
          <!-- 팀멤버 목록보기 버튼 -->
          
 
-		<div>
-			<button type="sumbit" class="btn btn-secondary" id="memberlist_btn">팀멤버 보기 </button>
-	<!-- 	        <button type="submit" id="memberlist_btn" name="">참여중인멤버</button> -->
-	            <!-- 팀멤버 목록 모달 -->
-	            <div id="modal2" class="modal2">
-					 <!--모달창 디자인-->
-					 <div class="modal-view2"></div> 
-						 <div style="position: absolute; top: 50%; left: 50%; width: 300px; height: 400px; margin-left: -150px; margin-top: -200px;">
-							 <div style="height: 30px;"></div>
-								<h4>멤버 목록 보기</h4>
-									<c:forEach items="${memberList}" var="memberListVO">	
-										<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-										<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-									</c:forEach>
-										<br><br>
-									<button type="button" id="memberlist_close" class="memberlist_close">닫기</button>	
-	        			</div> 
-		    	</div>
+		
         <!-- partical end : Team_Member_List -->
 
 					<div id="gnb-detail-slide">
