@@ -580,18 +580,18 @@ background-color:#f8f8f8;
 
 			     <article class="message-wrap">
                     
-                        <div class="message" style="text-align: right">
+                        <div class="message" style="text-align: left">
 
 							<h1>${topicDto.topic_name}</h1>
-							<div id="chat-content">
+							<div id="chat-content" class="chat-content">
 								<c:forEach items="${topicChatList}" var="chatVo">
 									<p>[${chatVo.member_name}] ${chatVo.chat_content}
 								</c:forEach>
 							</div>
 							<div class="chat-send-content">
 								<div class="chat-send-text">
-
-									<input type="text" class="user-input">
+									<textarea class="user-input"></textarea>
+									
 								</div>
 								<div class="chat-send-button">
 									<button class="send-btn" type="submit">보내기</button>

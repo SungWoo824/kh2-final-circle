@@ -59,6 +59,9 @@
                             <div class="section">
                                 	<div class="mypage-main-content">
 	                                    <div class="mypage-div">
+	                                    	<div class="member-mypage-img">
+	                                    		<img id="member-profile-img" src='download?member_no=${member_no}'>
+	                                    	</div>
 	                                    	<div class="mypage-name-div">
 		                                        <span>${memberDto.member_name}</span>
 		                                        <p>${memberDto.member_email}
@@ -71,7 +74,7 @@
 	                                   
 			                                    <c:forEach items="${teamlist}" var="teamDto">
 			                                    	<div>
-	                                    				<div class="mypage-div">
+	                                    				<div class="mypage-div">	
 	                                    					<div class="mypage-name-div">
 																<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
 															</div>
