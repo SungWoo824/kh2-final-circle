@@ -12,6 +12,7 @@ public interface TopicDao {
 	void topicMemberInsert(TopicMemberDto topicMemberDto);
 	int teamTopicFirst(int team_no);
 	TopicDto topicChange(int topic_no);
+	List<TopicDto> teamTopicList(int team_no);
 	List<TopicMemberDto> topicMemberList(int topic_no);
 	List<TopicMemberDto> inviteTopicList(int team_no,int topic_no);
 	void editTopic(TopicDto topicDto);
@@ -20,4 +21,5 @@ public interface TopicDao {
 	void inviteMember(List<Integer> list, int team_no, int topic_no);
 	void topicMasterChange(int topic_no, int member_no);
 	void deleteTopic(int topic_no);
+
 }

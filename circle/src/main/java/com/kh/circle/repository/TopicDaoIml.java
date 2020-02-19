@@ -1,5 +1,6 @@
 package com.kh.circle.repository;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,12 +39,18 @@ public class TopicDaoIml implements TopicDao{
 		return sqlSession.selectOne("topic.teamTopicFirst", team_no);
 	}
 
+	
 	@Override
 	public TopicDto topicChange(int topic_no) {
 		return sqlSession.selectOne("topic.topicChange", topic_no);
 	}
 
 	@Override
+	public List<TopicDto> teamTopicList(int team_no) {
+		
+		return sqlSession.selectList("topic.teamTopicList", team_no);
+	}
+
 	public List<TopicMemberDto> topicMemberList(int topic_no) {
 		return sqlSession.selectList("topic.topicMemberList",topic_no);
 	}
@@ -94,12 +101,12 @@ public class TopicDaoIml implements TopicDao{
 
 	}
 
+
 	@Override
 	public void deleteTopic(int topic_no) {
 		sqlSession.delete("topic.deleteTopic", topic_no);
 	}
-	
-	
+
 	
 
 }

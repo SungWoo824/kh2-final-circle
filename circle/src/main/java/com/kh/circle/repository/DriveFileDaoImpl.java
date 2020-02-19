@@ -4,15 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+import javax.annotation.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.vo.DriveFileVO;
 
+@Repository
 public class DriveFileDaoImpl implements DriveFileDao{
 
 	private File dir = new File("D:/upload/kh2e/drivefile");
