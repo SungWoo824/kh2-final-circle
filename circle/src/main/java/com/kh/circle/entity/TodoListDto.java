@@ -6,11 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
-public class TeamMemberDto {
-	private int member_no;
-	private int team_no;
-	private String member_position;
-	private String member_grade;
-	private String member_auth;
+public class TodoListDto {
+	private int todo_list_no, topic_no,member_no,team_no;
+	private String todo_list_content;
 
 }

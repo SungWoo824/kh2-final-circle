@@ -45,7 +45,13 @@ public class TopicDaoIml implements TopicDao{
 		return sqlSession.selectOne("topic.topicChange", topic_no);
 	}
 
+
+
 	@Override
+	public void mailInviteTopic(TopicMemberDto topicMemberDto) {
+		sqlSession.insert("topic.mailInviteTopic", topicMemberDto);
+	}
+
 	public List<TopicDto> teamTopicList(int team_no) {
 		
 		return sqlSession.selectList("topic.teamTopicList", team_no);
