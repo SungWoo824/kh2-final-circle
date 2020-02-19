@@ -18,7 +18,7 @@
 </head>
 <body>
 
-
+	
 	 <div class="circle-header">
 
                 <div class="header-wrap">
@@ -32,6 +32,9 @@
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
                             <c:choose>
+                            	<c:when	test="${not empty member_grade}">
+                            		<li><a href="${pageContext.request.contextPath}/manager/main">관리자 페이지</a></li>
+                            	</c:when>
 		                        <c:when test="${not empty member_email}">
 							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
 							    </c:when>

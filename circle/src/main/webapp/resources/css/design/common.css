@@ -15,11 +15,14 @@
 * {
    box-sizing: border-box;
    font-family: NotoSans-r;
+   font-color: #222;
 }
 
 body{
     margin: 0;
     font-size: 14px;
+    overflow-y:hidden;
+    
 }
 
 article, aside, figure, footer, header, main, nav, section,div{
@@ -41,6 +44,10 @@ ul, li{
 a{
    text-decoration: none;
    color:#222;
+}
+
+span{
+	color:#222;
 }
 
 .circle-header{
@@ -81,6 +88,193 @@ a{
     top: 4px;
 }
 
+.sidebar .sidebar-brand{
+	position:relative;
+}
+
+
+/* 채팅 탑 메뉴바 css */
+.logowrap{
+	position:absolute;
+	left:0;
+	height:70px;
+	width:100%;
+	background-color:#2196f3;
+}
+
+.newline{
+	border-right: 1px solid #ececec;
+}
+
+.newborder{
+	border-bottom:1px solid #ececec;
+}
+
+.logo-back {
+  width: 50px;
+  height:50px;
+  background-color:#fff;
+  border-radius: 6px;
+  position:absolute;
+  left:20px;
+  top:10px;
+}
+
+
+.chat-img{
+  left: 0;
+  top: 0;
+  width: 80px;
+  padding: 12px 10px 9px 14px;
+  height: inherit;
+  line-height: inherit;
+}
+
+
+.chat-img-bg {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  line-height: 33px;
+}
+
+.chat-img-bg > div{
+  position: absolute;
+  border-radius: 50%;
+  width: inherit;
+  height: inherit;
+  top: 0;
+  left: 0;
+  background-color: #2196f3;
+  
+}
+
+.chat-img-bg > .fa-comment{
+  position: relative;
+  font-size: 18px;
+  top: 10px;
+}
+
+.chat-menu-center{
+  vertical-align: middle;
+  height: auto;
+}
+
+.chat-menu-title{
+  position: relative;
+  font-size: 18px;
+  font-weight:800;
+  line-height: 18px;
+  margin-bottom:8px;
+}
+
+.chat-menu-sub{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+}
+.chat-menu-sub .label{
+  background-color: #dadfeb;
+  border-radius:50px;
+}
+
+/* 채팅 탑 메뉴바 css 끝*/
+
+/*오른쪽 메뉴 바*/
+
+.menu-wrap{
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f9f9f9;
+  z-index:1000;
+}
+
+
+.menu-con{
+  width: 60px;
+  height: 100%;
+  border-left: 1px solid #dadfeb;
+}
+
+.menu-bar{
+  position: relative;
+  padding: 7px;
+  line-height: inherit;
+}
+
+.menu-bar  > li{
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.menu-top{
+	height:70px;
+	border-bottom:1px solid  #ececec;
+}
+
+.gnb-btn{
+  line-height: 50px;
+  text-align: center;
+  cursor: pointer;
+}
+
+
+/* 오른쪽 토글 메뉴 */
+#gnb-detail-slide {
+	height:100%;
+	right: 60px;
+	top:0;
+	position:absolute;
+  	z-index:1000;
+}
+
+
+.slide{
+	display:none;
+	width:400px;
+	height:100%;
+  	background-color:#fff;
+  	border-left:1px solid #ececec;
+}
+
+.slide-close{
+	width:100%;
+	height:50px;
+/* 	background-color:#eee;	 */
+	position:relative;
+	right:0;
+	
+}
+
+
+.slide-close ul > li{
+	height:100%;	
+	font-size: 20px;
+	line-height:50px;
+	font-weight:500;
+	width:50px;
+	position:absolute;
+	text-align:center;
+	right:0;
+	cursor:pointer;
+}
+
+#content{
+	position:absolute;
+	left:223px;
+	right:60px;
+	height:100%;
+	
+}
+
+
+/*오른쪽 메뉴 바 끝*/
 
 .header-gnb{
     float: right;
@@ -342,11 +536,25 @@ a{
 	width:100%;
 	height:5rem;
 }
+
+/*채팅 창 css*/
+
+.chat-wrap{
+	height:100%;	
+}
+
+.container-fluid{
+	padding:0;
+}
 .chat-send-content{
 	bottom: 0;
     width: 100%;
-    margin-bottom:3rem;
     display :flex;
+    background-color: #f9f9f9;
+    border:1px solid #ececec;
+    position:absolute;
+    left:0;
+    z-index:50;
 }
 .chat-send-text{
 	width:60%;
@@ -368,7 +576,120 @@ a{
 	width: 100%;
     height: 100%;
 }
-.chat-content{
+
+#chat-content{
 	overflow: auto;
-	height: 35rem;
 }
+
+#chat-content >div{
+	position: relative;
+}
+
+#chat-content .msg {
+	border-radius:10px;
+	background-color: #f8f8f8;
+	padding:20px;
+	margin-bottom: 20px;	
+	max-width: 500px;
+	min-heigh: 100px;
+}
+
+.message-wrap{
+	margin:0 20px;
+}
+
+.message{
+	height:600px;
+	overflow:hidden;	
+}
+.msg-profile{
+	width:50px;
+	height:50px;
+	border-radius:50%;
+	background-color: #f8f8f8;
+	border:1px solid #eee;
+	float:left;
+	margin-right:20px;
+}
+
+.msg-con {
+	margin-left:80px;
+}
+
+
+/*모달 css*/
+#invite-create,
+#topic-create{
+ cursor: pointer;
+border-top:1px solid #eee;
+border-bottom: 1px solid #eee;
+background-color:#f8f8f8;
+ height:40px;
+}
+#invite-create a,
+#topic-create a{
+		position:absolute;
+      	display:inline-block;
+      	line-height:40px;
+      	left:55px;
+      	
+}
+
+	/* 소희 : 멤버초대 모달 화면 디자인 */
+   .modal{
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background-color:rgba(139, 133, 133, 0.5);
+            
+            display: none;
+        }
+        
+        .modal > .modal-view{
+            position: fixed;
+            width:300px;
+            height:400px;
+            background-color: white;
+            border:1px solid; padding:10px;
+            /* 가운데 배치 */
+            top:50%;
+            left:50%;
+            margin-left: -150px;
+            margin-top: -200px;
+                       
+        }
+        
+        /* 소희 : 멤버초대 모달 화면 디자인 */
+       .modal2{
+            position: fixed;
+            top:0;
+            left:0;
+            right:0;
+            bottom:0;
+            background-color:rgba(139, 133, 133, 0.5);
+            
+            display: none;
+        }
+        
+         .modal2 > .modal-view2{
+            position: fixed;
+            width:300px;
+            height:400px;
+            background-color: white;
+            border:1px solid; padding:10px;
+            /* 가운데 배치 */
+            top:50%;
+            left:50%;
+            margin-left: -150px;
+            margin-top: -200px;
+                       
+        }
+        
+        
+        #membertList{
+        position: absolute;
+   		 right: 0;
+        }
+/*모달 css 종료*/
