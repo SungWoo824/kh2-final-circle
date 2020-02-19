@@ -212,7 +212,6 @@ a{
 	margin-left:auto;
 	margin-right:auto;
 }
-
 .modify-items{
 	margin:1.5rem;
 	width : 100%;
@@ -255,7 +254,10 @@ a{
     height: 70px;
     border-radius: 50px;
 }
-
+.member-mypage-img{
+	margin: auto;
+	margin-left:2rem;
+}
 .member-profile-button{
 	top: 0;
     left: 0;
@@ -299,7 +301,7 @@ a{
 	margin: 0px;
 	text-align:left;
 	padding:2rem;
-	padding-left:7rem;
+	
 	font-size:1.5rem;
 }
 .mypage-team-div{
@@ -335,7 +337,6 @@ a{
 .mypage-team-create{
 	width:100%;
 	padding:2rem;
-	padding-left:7rem;
 }
 .mypage-team-create-submit{
 	width:100%;
@@ -343,7 +344,6 @@ a{
 }
 .chat-send-content{
 	bottom: 0;
-    position: absolute;
     width: 100%;
     margin-bottom:3rem;
     display :flex;
@@ -367,4 +367,8 @@ a{
 .send-btn{
 	width: 100%;
     height: 100%;
+}
+.chat-content{
+	overflow: auto;
+	height: 35rem;
 }
