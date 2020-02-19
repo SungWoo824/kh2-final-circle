@@ -53,8 +53,14 @@ $(function(){
 	        			<div id="bodyContents" class="menu33-slide">   
 	        			
 							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
-	        				<!-- 목록으로 버튼 if처리해야함 -->
+	        				
 				            <h3>투두 리스트</h3>
+				            
+				            <!-- 할일 검색하기 -->
+				            <form action="todo_list_search" method="post">
+				            	<input type="search" name="todo_list_content" placeholder="할일의 제목을 입력하세요">
+				            	<input type="submit" value="검색">
+				            </form>
 
 							<!-- 할일 추가하기 버튼 -->
 							<form action="todo_list_create" method="post">
@@ -62,16 +68,21 @@ $(function(){
 								<input type="hidden" name="topic_no" value="${param.topic_no}">
 								<input type="text" name="todo_list_content" required>
 								<input type="submit" value="추가">
-						
-								<!-- 추가된 것 목록 리스트 -->
-								<div>
+							</form>
+								<!-- 할일 목록 -->
 								<p>할일 목록보기	</p>
+								
 								<c:forEach items="${todoPerAll}" var="todoListJoinVO">
-									<c:out value="${todoListJoinVO.todo_list_content}">${todoListJoinVO.todo_list_content}</c:out>
-									<c:out value="${todoListJoinVO.topic_name}">${todoListJoinVO.topic_name}</c:out>
+								<hr> 
+									<!-- 할일 목록 누르면 할일상세페이지(todo_list_detail)로 이동 -->
+									<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}">
+									${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name}
+									</a>
+									
+								<hr>
+								
 								</c:forEach>						
 								</div>
-							</form>
 							
 							
 	        

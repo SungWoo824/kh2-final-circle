@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import com.kh.circle.entity.TodoListDto;
 import com.kh.circle.vo.TodoListJoinVO;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Repository
 public class TodoListImpl implements TodoListDao {
 	
@@ -32,11 +34,17 @@ public class TodoListImpl implements TodoListDao {
 	@Override
 	public List<TodoListJoinVO> todoPerAll(int team_no, int member_no) {
 		TodoListJoinVO todoListJoinVO = TodoListJoinVO.builder()
-										.member_no(member_no)
 										.team_no(team_no)
+										.member_no(member_no)
 										.build();
-		
+		log.info("todoListJoinVO={}",todoListJoinVO);
 		return sqlSession.selectList("todoList.todoPerAll", todoListJoinVO);
+	}
+
+	@Override
+	public void deleteTodo(TodoListDto todoListDto) {
+		sqlSession.delete("todoList.deleteTodo", todoListDto);
+		
 	}
 
 }

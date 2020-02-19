@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.circle.vo.MemberListVO" alias="memberListVO"/>
 		<typeAlias type="com.kh.circle.entity.TodoListDto" alias="todoListDto"/>
 		<typeAlias type="com.kh.circle.vo.TodoListJoinVO" alias="todoListJoinVO"/>
+		<typeAlias type="com.kh.circle.vo.TeamMainVO" alias="teamMainVO"/>
 	</typeAliases>
 	
 	

@@ -210,7 +210,7 @@ $(function(){
 								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 								    <span class="navbar-toggler-icon"></span>
 								  </button>
-								 <c:forEach items="${teamlist}" var="teamDto">
+			
 								  <div class="collapse navbar-collapse" id="navbarNav">
 								    <ul class="navbar-nav">
 								      <li class="nav-item active">
@@ -223,12 +223,10 @@ $(function(){
 								      <li class="nav-item">
 								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
 								      </li>
-								<!--       <li class="nav-item"> -->
-								<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
-								<!--       </li> -->
+
 								    </ul>
 								  </div>
-								  </c:forEach>
+
 								</nav>	 
 
                                 		<!-- 팀 정보 보기 -->

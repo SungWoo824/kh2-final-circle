@@ -126,15 +126,14 @@ $(function(){
 								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 								    <span class="navbar-toggler-icon"></span>
 								  </button>
-								 <c:forEach items="${teamlist}" var="teamDto">
+<
 								  <div class="collapse navbar-collapse" id="navbarNav">
 								    <ul class="navbar-nav">
 								      <li class="nav-item active">
 								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/member_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
 								      </li>
 								    </ul>
-								  </div>
-								   </c:forEach>
+
 								</nav>	 
                       
        					   <!-- 팀 정보 보기 -->
