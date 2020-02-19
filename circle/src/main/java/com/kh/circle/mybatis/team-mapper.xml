@@ -50,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="memberList" resultType="memberListVO" parameterType="int">
 <!-- 	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm  -->
 <!-- 	inner join member on member.member_no = tm.member_no -->
-		select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+		select member.member_no,member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
 		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no})tm 
 			inner join member on member.member_no = tm.member_no
 	</select>
@@ -169,14 +169,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where team_no = #{team_no}
 	</update>
 	
-	<!-- 등급 양도 -->
-	<update id="grantPosition" parameterType="map">
+	<!-- 회원 권환 변경 -->
+	<update id="changeAuth" parameterType="teamMemberDto">
 	update team_member 
-	set member_position = ${member_position} 
+	set member_auth = #{member_auth} 
 	where member_no=#{member_no} and team_no=#{team_no} 
 	</update>
 	
-
+	<!-- 소유자인지 확인 -->
+	<select id="selectPosition" parameterType="teamMemberDto" resultType="String">
+		select member_position from team_member where member_no=#{member_no} and team_no=#{team_no}
+	</select>
+	
+	
+	
 </mapper>
 
 

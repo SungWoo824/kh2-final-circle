@@ -7,7 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>소유자 팀관리 / 멤버설정 페이지</title>
-</head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/fullpage.css" />
 <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
@@ -17,6 +16,7 @@
 <script src="${pageContext.request.contextPath}/resources/js/crypto/crypto-js.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/crypto/hmac-sha256.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>   
+</head>
 <script>
 // 클릭 하면 열고 닫기 
 $(function(){
@@ -49,19 +49,22 @@ $(function(){
         $(this).parent().parent().children(".modify-fix-div").hide('fast');
 	})
 });
-//준회원한테 회원권 적용할 때 사용되는 쿼리
-$(function(){
-	$("#assist").change(function() {
-		$("input[name=member_email]:checked").each(function() {
-			var test = $(this).val();
-			console.log(test);
-		});
-		var total = $(".assist").val();
-		console.log(total);
-	});
-});
-</script>
+// 준회원한테 회원권 적용할 때 사용되는 쿼리
+// $(function(){
+// 	$("#assist").change(function() {
 
+//         //input 태그가 name=changeAuth인 놈들 중에서 반복하겠다.
+// 		$("input[name=changeAuth]").each(function() {
+//             if($(this).prop("checked")){
+//                 $("<input>").attr("type", "hidden").attr("name", "member_no").val($(this).val()).insertAfter($(this));
+//             }
+//             else{
+//                 $(this).next("input").remove();
+//             }
+// 		});
+// 	});
+// });
+</script>
 <body>
  	 <!-- 상단 헤더 -->
 	 <div class="circle-header">
@@ -149,9 +152,11 @@ $(function(){
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
       		<p>준회원 목록</p>
+      	<c:if test="${not empty position }">
+      		<form action="./owner_manager_member" method="post">
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '준회원'}">
-		      	<input type="checkbox" name="member_email" class="assist" id="assist" value="${memberListVO.member_email}">
+		      	<input type="checkbox" name="changeAuth" class="assist" id="assist" value="${memberListVO.member_no}">
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
 				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
 				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
@@ -159,8 +164,26 @@ $(function(){
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out><br>
 				<br>
    			</c:if>
-   			</c:forEach><br><br>
-				<input type="button" value="확인" onclick="change()"> 
+   			</c:forEach>
+   			<input type="hidden" name="team_no" value="${param.team_no }">
+   			<input type="hidden" name="team_name" value="${param.team_name }">
+   			<input type="hidden" name="team_domain" value="${param.team_domain }">
+				<input type="submit" value="확인">
+   			</form>
+		</c:if>
+		<c:if test="${empty position }">
+			<c:forEach items="${memberList}" var="memberListVO">	
+		      <c:if test="${memberListVO.member_auth eq '준회원'}">
+   				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
+				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
+				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
+				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out><br>
+				<br>
+   			</c:if>
+   			</c:forEach>
+		</c:if>
+   			<br><br>
    			<p>정회원 목록</p>
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '정회원'}">

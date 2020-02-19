@@ -1,4 +1,6 @@
 package com.kh.circle.controller;
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -13,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.MemberDto;
-import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.MemberDao;
+import com.kh.circle.repository.PayDao;
 import com.kh.circle.repository.TeamDao;
-import com.kh.circle.repository.TopicDao;
-import com.kh.circle.service.TeamService;
 
 @Controller
 @RequestMapping("/team_admin")
@@ -28,7 +28,7 @@ public class TeamAdminController {
 @Autowired private TeamDao teamDao;
 @Autowired private SqlSession sqlSession;
 @Autowired private MemberDao memberDao;
-
+@Autowired private PayDao payDao;
 	
 	
 
@@ -99,12 +99,37 @@ public String owner_manager_member(@RequestParam String team_name,
 
 	//반복문 . 참여멤버리스트 출력( 이너조인 : 이메일 , 멤버 등급 , 멤버 포지션 , 멤버어쓰, 멤버이름)
 	model.addAttribute("memberList",teamDao.memberList(team_no));
-	
-	//준회원 목록 출력
-		
+	//소유자인지 아닌지 확인
+	model.addAttribute("position", teamDao.checkPosition((int) session.getAttribute("member_no"), team_no));
+	//소유자가 보유한 플랜 옵션 출력
+//	System.out.println(session.getAttribute("member_email"));
+	model.addAttribute("oneMonth", payDao.getQty1((String) session.getAttribute("member_email")));
+	model.addAttribute("sixMonth", payDao.getQty6((String) session.getAttribute("member_email")));
+	model.addAttribute("oneYear", payDao.getQty12((String) session.getAttribute("member_email")));
 	return "team_admin/owner_manager_member";
 }
-	
+@PostMapping("/owner_manager_member")
+public String grantAuth(@RequestParam List<Integer> changeAuth,
+								@RequestParam String team_name,
+								 @RequestParam int team_no,
+							    @RequestParam String team_domain, HttpSession session) {
+			
+//			for(TeamMemberDto teamMemberDto:member_email) {	
+//				teamDao.changeAuth(teamMemberDto);
+//			}
+	for(int i=0; i<changeAuth.size(); i++) {
+		TeamMemberDto teamMemberDto = TeamMemberDto.builder()
+				.member_no(changeAuth.get(i))
+				.team_no(team_no)
+				.member_auth("정회원")
+				.build();
+		teamDao.changeAuth(teamMemberDto);
+	}
+
+	return "redirect:./owner_manager_member?team_no="+team_no+"&team_name="+team_name+"&team_domain="+team_domain;
+}
+
+
 //소유자 : 관리 / 멤버 설정 / 정회원 리스트 페이지
 @GetMapping("/member_list_regular")
 public String member_list_regular(@RequestParam String team_name,

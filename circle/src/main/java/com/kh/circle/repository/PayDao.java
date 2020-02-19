@@ -12,5 +12,7 @@ public interface PayDao {
 	List<PayDto> getList();
 	PayDto get(int no);
 	void insertRevoke(PayDto payDto);
-
+	int getQty1(String partner_user_id);
+	int getQty6(String partner_user_id);
+	int getQty12(String partner_user_id);
 }
