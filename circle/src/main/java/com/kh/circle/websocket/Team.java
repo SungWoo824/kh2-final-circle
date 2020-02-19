@@ -2,45 +2,69 @@ package com.kh.circle.websocket;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.springframework.web.socket.TextMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.WebSocketSession;
-import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.circle.repository.ChatDao;
+import com.kh.circle.repository.TopicDao;
 import com.kh.circle.vo.ChatVo;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class Team{
 	private Map<Integer,Topic> topicList = new HashMap<>();
 	
+	@Autowired
+	private TopicDao topicDao;
+	
+	@Autowired
+	private ChatDao chatDao;
 	//방에 신규인원을 추가하는 메소드
-	public void add(WebSocketSession session, ChatVo chatVo) throws IOException {
-		Topic topic = new Topic();
-		boolean exist = topicList.containsKey(chatVo.getTopic_no());
-		if(!exist) {
-			Topic room = new Topic();
-			topicList.put(chatVo.getTopic_no(), room);
-		}
-		topicList.get(chatVo.getTopic_no()).add(session);
+	public void add(WebSocketSession session, ChatVo chatVo, List<Integer> containList) throws IOException {
 		
+		for(int topic_no : containList) {
+			boolean exist = topicList.containsKey(topic_no);
+			
+			if(!exist) {
+				Topic room = new Topic();
+				topicList.put(topic_no, room);
+			}
+			
+			topicList.get(topic_no).add(session);
+		}
 		
 	}
 	
 	//방에 있는 인원을 삭제하는 메소드
-	public void remove(WebSocketSession session, ChatVo chatVo) throws IOException {
-		topicList.get(chatVo.getTopic_no()).remove(session);
-		if(topicList.get(chatVo.getTopic_no()).isEmpty()) {
-			topicList.remove(chatVo.getTopic_no());
+	public void remove(WebSocketSession session, ChatVo chatVo, List<Integer> containList) throws IOException {
+		for(int topic_no : containList) {
+			topicList.get(topic_no).remove(session);
+			
+			if(topicList.get(topic_no).isEmpty()) {
+				topicList.remove(topic_no);
+			}
 		}
 	}
 	
 	//방에 있는 인원에게 메시지를 전송하는 메소드
-	public void broadcast(WebSocketSession user, ChatVo chatVo) throws IOException {
+	public void broadcast(WebSocketSession user, ChatVo chatVo, List<Integer> containList) throws IOException {
 		
-		topicList.get(chatVo.getTopic_no()).broadcast(user, chatVo.getChat_content());
+		for(int topic_no : containList) {
+			log.info("topic_no = {}",topic_no);
+			if(topic_no==chatVo.getTopic_no()) {
+				chatVo.setStatus(2);
+				log.info("chatVo.getTopic_no ={}",chatVo.getTopic_no());
+			topicList.get(topic_no).broadcast(user, chatVo);
+			}else {
+				chatVo.setStatus(3);
+				topicList.get(topic_no).broadcast(user, chatVo);
+			}
+		}
+		
 	}
 
 	//방 인원수를 알려주는 메소드

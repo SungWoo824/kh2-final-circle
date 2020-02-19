@@ -19,6 +19,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.circle.entity.TopicDto" alias="topicDto"/>
 		<typeAlias type="com.kh.circle.entity.TopicMemberDto" alias="topicMemberDto"/>
 		<typeAlias type="com.kh.circle.vo.TopicRestVO" alias="topicRestVo"/>
+		<typeAlias type="com.kh.circle.entity.DriveFileDto" alias="driveFileDto"/>
+		<typeAlias type="com.kh.circle.vo.DriveFileVO" alias="driveFileVo"/>
 		<typeAlias type="com.kh.circle.entity.TeamDto" alias="teamDto"/>
 		<typeAlias type="com.kh.circle.entity.TeamMemberDto" alias="teamMemberDto"/>
 		<typeAlias type="com.kh.circle.entity.TeamCertDto" alias="TeamCertDto"/>

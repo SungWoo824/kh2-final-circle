@@ -53,7 +53,7 @@
 
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
-			$("<p>").text(message).appendTo("#chat-content");
+			$("<p>").text(message.chat_content).appendTo("#chat-content");
 		}
 		
 // 		웹소켓 연결 함수
@@ -75,8 +75,21 @@
 				appendMessage("서버와 연결이 종료되었습니다");
 			};
 			window.socket.onmessage = function(e){
-				appendMessage(e.data);
+				var msg = JSON.parse(e.data);
+				console.log(msg);
+				var ptopic_no = ${param.topic_no};
+				if(ptopic_no==msg.topic_no && msg.status==2){
+				appendMessage(msg);
+				}
+				if(ptopic_no!=msg.topic_no){
+					var topic_no = msg.topic_no;
+					var count = $('.'+topic_no).text();
+					count *=1;
+					count++;
+					$('.'+topic_no).text(count);
+				}
 			};
+			
 			window.socket.onerror = function(){
 				appendMessage("연결 오류가 발생했습니다");
 			};
@@ -89,6 +102,8 @@
 			var message = {
 				team_no:team_no,
 				topic_no:topic_no,
+				member_no:'',
+				member_name:'',
 				status:status,
 				chat_content:chat_content
 			};
@@ -387,8 +402,7 @@ background-color:#f8f8f8;
                             <a class="dropdown-item" href="#">test</a>
                             <a class="dropdown-item" href="#">test2</a>
                             <a class="dropdown-item" href="#">test3</a>
-                            <!-- <div class="dropdown-divider"></div> -->
-                            <!-- <a class="dropdown-item" href="#">Separated link</a> -->
+                            
                         </div> 
                   </div>
                 </div>
@@ -412,14 +426,27 @@ background-color:#f8f8f8;
             	<a id="invite_btn" data-toggle="modal"> 멤버 초대하기
 				</a>	<i class="fa fa-plus"></i>
             </li>
+            <li class="nav-item">
+	            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+	                <span class="menu-title">토픽</span>
+	                <i class="menu-arrow fa fa-caret-down" aria-hidden="false"></i>
+	                <!-- <i class="menu-arrow fa fa-caret-down"></i> -->
+	            </a>
             
             <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
 
-                	<c:forEach items="${topicList}" var="topicListDto">  
-
+                	<c:forEach items="${topicList}" var="topicListDto" varStatus="status" >
                 		<li class="nav-item">
-		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic?team_no=${param.team_no }&topic_no=${topicListDto.topic_no}">${topicListDto.topic_name}</a>
+		                    <a class="nav-link" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">
+		                    	${topicListDto.topic_name}
+			                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
+			                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
+			                    		${memberChatCount[status.index].count}
+			                    	</c:if>
+			                    	</span>
+		                    </a>
+		           
 		                </li>
                 	</c:forEach>
 

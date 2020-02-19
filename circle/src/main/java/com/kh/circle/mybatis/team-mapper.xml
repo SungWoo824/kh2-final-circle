@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -168,17 +167,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	set team_domain = #{team_domain}
 	where team_no = #{team_no}
 	</update>
-	
+
 	<!-- 등급 양도 -->
 	<update id="grantPosition" parameterType="map">
 	update team_member 
 	set member_position = ${member_position} 
 	where member_no=#{member_no} and team_no=#{team_no} 
 	</update>
-	
 
 </mapper>
-
-
-
-

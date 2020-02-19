@@ -120,7 +120,7 @@ public class TeamController {
 		session.setAttribute("cert", cert);
 		return emailService.sendCertMessage(email, cert); 	
 	}
-	
+
 
 	@Autowired
 	private TeamService teamService;
