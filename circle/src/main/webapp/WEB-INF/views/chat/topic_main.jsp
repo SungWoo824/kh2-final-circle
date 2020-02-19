@@ -159,30 +159,30 @@ $(function(){
       $('.email-form').submit(function(e){
       	e.preventDefault();
       	
-      	$(this).find("input[type=submit]").prop("disabled", true);
+      	$(this).find("input[type=submit]").prop("disabled", true); 
 			$(this).find("input[type=submit]").val("인증번호 발송중...");
      
-			var url = $(this).attr("action"); 
-			var method = $(this).attr("method");
+			var url = $(this).attr("action");  //form안의 action으로 url 설정 
+			var method = $(this).attr("method"); //form안의 method 방식을 설정 
 			var data = $(this).serialize();
 			
 			$.ajax({
               type : "POST", //전송방식을 지정한다 (POST,GET)
-              url : url,
-              data : data,
+              url : url,  //위에 지정한 url
+              data : data,            
               error : function(){
             	  alert("통신실패!!!!");
+
             	  $('#modal').hide();
+            	
               },
               success : function(resp){
                   //console.log(resp);
       				alert("발송완료되었습니다");
       			//입력창 초기화
                     $(".form-control").val("");
-                    
-      				$('#modal').hide();
-                  	("input[type=submit]").prop("disabled",false)
-                    .val("이메일 전송");
+                  	("input[type=submit]").prop("disabled",false).val("");
+//       				$('#modal').hide();
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
    
@@ -227,9 +227,7 @@ $(function(){
 // 		$('.dropdown-toggle').on('shown.bs.dropdown');
 	});
 	
-// 	$('#myDropdown').on('show.bs.dropdown', function () {
-// 		  // do something...
-// 		});
+
 
 </script>
 <script>
@@ -498,6 +496,15 @@ background-color:#f8f8f8;
             	<div class="chat-aside">
                     <div class="chat-menu-bar">
                     
+
+           </div>           
+					<!-- 투두 리스트 가기 임시버튼 -->
+					<form action="todo_list_create" method="get">
+					<input type="hidden" name="team_no" value="${param.team_no}">
+					<input type="hidden" name="topic_no" value="${param.topic_no}">
+					<button type="submit">투두리스트 가기 임시버튼</button>
+					</form>
+					
                       <!-- 팀멤버 보기 드롭다운 시작-->
                       <div class="btn-group" id="membertList">
  						 <button  type="button" id="myDropdown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -520,6 +527,7 @@ background-color:#f8f8f8;
  							 </div>
 						</div>
 						<!-- 팀멤버 보기 드롭다운 끝-->
+						
 						
                         <div class="chat-img">
                             <div class="chat-img-bg">

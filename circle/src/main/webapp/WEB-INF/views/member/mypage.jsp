@@ -75,15 +75,28 @@
 	                                    					<div class="mypage-name-div">
 																<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
 															</div>
-															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/team_manager_team" method="get">
-																
+															
+															<!-- 팀관리 : 비소유자가 보이는 버튼 -->
+															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/member_manager_team" method="get">
+																 
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}">
-<!-- 																<input type="hidden" name="topic_no" class="topic_no_value" value=""> -->
+																<input type="hidden" name="team_domain" class="team_domain_value" value="${teamDto.team_domain}">
+																
 																<div class="mypage-team-div">
-																	<button type="submit">팀관리</button>
+																	<button type="submit">논소유자관리</button>
 																</div>
 															</form>
+															<!-- 팀관리 : 소유자만 보이는 버튼 -->
+															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/owner_manager_team" method="get">
+																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}">
+																<input type="hidden" name="team_domain" class="team_domain_value" value="${teamDto.team_domain}">
+																<div class="mypage-team-div">
+																	<button type="submit">소유자관리</button>
+																</div>
+															</form>
+																
 															<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
 																<input type="hidden" name="topic_no" class="topic_no_value" value="">
