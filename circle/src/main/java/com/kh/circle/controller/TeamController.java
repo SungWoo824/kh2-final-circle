@@ -73,6 +73,7 @@ public class TeamController {
 		int topic_no = topicDao.getSequence();
 		teamDto.setTeam_no(team_no);
 		teamDao.teamCreate(teamDto);
+		
 		teamDao.teamMemberCreate((int)session.getAttribute("member_no"), team_no);
 		TopicDto topicDto = TopicDto.builder()
 				.topic_no(topic_no).topic_name("공지사항")
