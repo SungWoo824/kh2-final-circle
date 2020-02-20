@@ -499,7 +499,8 @@ background-color:#f8f8f8;
 
            </div>           
 					<!-- 투두 리스트 가기 임시버튼 -->
-					<form action="todo_list_create" method="get">
+					<form action="todo_list_main" method="get">
+				
 					<input type="hidden" name="team_no" value="${param.team_no}">
 					<input type="hidden" name="topic_no" value="${param.topic_no}">
 					<button type="submit">투두리스트 가기 임시버튼</button>

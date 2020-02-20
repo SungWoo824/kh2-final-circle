@@ -10,4 +10,6 @@ public interface TodoListDao {
 	void todoListCreate(TodoListDto todoListDto);
 	List<TodoListJoinVO> todoPerAll(int team_no, int member_no);
 	void deleteTodo(TodoListDto todoListDto);
+	List<TodoListJoinVO> searchTodo(int team_no, int member_no, String todo_list_content );
+	int countTodo(int team_no, int member_no);
 }

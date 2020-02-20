@@ -47,4 +47,23 @@ public class TodoListImpl implements TodoListDao {
 		
 	}
 
+	@Override
+	public List<TodoListJoinVO> searchTodo(int team_no, int member_no, String todo_list_content) {
+		TodoListJoinVO todoListJoinVO = TodoListJoinVO.builder()
+				.team_no(team_no)
+				.member_no(member_no)
+				.todo_list_content(todo_list_content)
+				.build();
+		return sqlSession.selectList("todoList.searchTodo", todoListJoinVO);
+	}
+
+	@Override
+	public int countTodo(int team_no, int member_no) {
+		TodoListJoinVO todoListJoinVO = TodoListJoinVO.builder()
+				.team_no(team_no)
+				.member_no(member_no)
+				.build();
+			return sqlSession.selectOne("todoList.countTodo",todoListJoinVO);
+	}
+
 }

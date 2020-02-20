@@ -19,27 +19,57 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 개인의 전체 할일 목록 반복문 / 팀 넘버 , 멤버 넘버 기준으로 -->
 	<select id="todoPerAll" resultType="todoListJoinVO" parameterType="todoListJoinVO">
-	select*from
-	(select m.member_name , m.member_email , m.member_no,
-	        t.team_no , t.member_position ,
-	        todo.todo_list_content, todo.todo_list_no,
-	 topi.topic_name,topi.topic_no
-	from member m inner join team_member t
-		on m.member_no = t.member_no
-			inner join todo_list todo
-		on t.member_no = todo.member_no
-			inner join topic topi
-		on todo.topic_no = topi.topic_no)
-	where team_no=#{team_no} and member_no=#{member_no}
-	order by todo_list_content
+		select*from
+		(select m.member_name , m.member_email , m.member_no,
+		        t.team_no , t.member_position ,
+		        todo.todo_list_content, todo.todo_list_no,
+		 topi.topic_name,topi.topic_no
+		from member m inner join team_member t
+			on m.member_no = t.member_no
+				inner join todo_list todo
+			on t.team_no = todo.team_no
+				inner join topic topi
+			on todo.topic_no = topi.topic_no)
+		where team_no=#{team_no} and member_no=#{member_no}
+		
+		order by todo_list_content
 	</select>
 	
 	<!-- 원하는 리스트 삭제 -->
 	<delete id="deleteTodo" parameterType="todoListDto">
 		delete from todo_list where member_no=#{member_no} and todo_list_no=#{todo_list_no}
 	</delete>
+	
+	<!-- 할일 전체 검색 -->
+	<select id="searchTodo" resultType="todoListJoinVO" parameterType="todoListJoinVO">
+	select * from
+		(select*from
+		(select m.member_name , m.member_email , m.member_no,
+		        t.team_no , t.member_position ,
+		        todo.todo_list_content, todo.todo_list_no,
+		 topi.topic_name,topi.topic_no
+		from member m inner join team_member t
+			on m.member_no = t.member_no
+				inner join todo_list todo
+			on t.team_no = todo.team_no
+				inner join topic topi
+			on todo.topic_no = topi.topic_no)
+		where team_no=#{team_no} and member_no=#{member_no}
+		order by todo_list_content)
+		WHERE todo_list_content LIKE '%'||#{todo_list_content}||'%'
+	</select>
 
+	<!-- 할일 전체 개수 카운트 -->
+	<select id="countTodo" resultType="int" parameterType="todoListJoinVO">
+	select count(*) from todo_list where member_no=#{member_no} and team_no=#{team_no}
+	</select>
 	
 	
+	<!-- 할일 수정하기 -->
+	<select id="editTodo" resultType="todolistJoinVo" parameterType="todoListJoinVO">
+	update todo_list
+	set todo_list_content = #{todo_list_content}
+	where member_no=#{member_no} and todo_list_no= #{todo_list_no}
+	</select>
 
 </mapper>
