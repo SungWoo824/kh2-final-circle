@@ -72,10 +72,10 @@
 				var msg = JSON.parse(e.data);
 				console.log(msg);
 				var ptopic_no = ${param.topic_no};
+				console.log(ptopic_no);
 				if(ptopic_no==msg.topic_no && msg.status==2){
 				appendMessage(msg);
-				}
-				if(ptopic_no!=msg.topic_no){
+				}else if(ptopic_no!=msg.topic_no){
 					var topic_no = msg.topic_no;
 					var count = $('.'+topic_no).text();
 					count *=1;
