@@ -9538,7 +9538,6 @@ opacity
 
 .dropdown .dropdown-menu .dropdown-header {
 	font-weight: 800;
-	font-size: .65rem;
 	color: #b7b9cc
 }
 
@@ -9646,8 +9645,7 @@ opacity
 }
 
 .topbar .dropdown-list .dropdown-header {
-	background-color: #4e73df;
-	border: 1px solid #4e73df;
+	background-color: #2196f3;
 	padding-top: .75rem;
 	padding-bottom: .75rem;
 	color: #fff
@@ -9687,7 +9685,7 @@ opacity
 }
 
 .topbar .dropdown-list .dropdown-item .text-truncate {
-	max-width: 10rem
+	max-width: 14rem
 }
 
 .topbar .dropdown-list .dropdown-item:active {
@@ -9704,7 +9702,7 @@ opacity
 		right: 0
 	}
 	.topbar .dropdown-list {
-		width: 20rem !important
+		width: 10rem !important
 	}
 	.topbar .dropdown-list .dropdown-item .text-truncate {
 		max-width: 13.375rem

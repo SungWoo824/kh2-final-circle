@@ -45,8 +45,6 @@
 							<c:otherwise>
 								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
 							</c:otherwise>
-                       
-                        
                         </c:choose>
                         </ul>
                     </div>
@@ -86,6 +84,7 @@
 																<div class="mypage-team-div">
 																	<button type="submit">팀관리</button>
 																</div>
+																
 															</form>
 															<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
