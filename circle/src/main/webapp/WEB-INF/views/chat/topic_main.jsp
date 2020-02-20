@@ -47,7 +47,7 @@
 
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
-			$("<p>").text(message.chat_content).appendTo("#chat-content");
+			$("<div>").text(message.chat_content).appendTo("#chat-content");
 		}
 		
 // 		웹소켓 연결 함수
@@ -380,10 +380,9 @@ function MovePage(no){
 	    <div class="sidebar-brand-icon logo-back">
 	            <img style="width:44px" src="${pageContext.request.contextPath}/resources/image/logo.png" alt="logo" />
 	    </div>
-    </div>
-    <div class="sidebar-brand-text mx-3">
-    	<!-- 팀 리스트 드롭다운 -->
+    <div class="sidebar-brand-text">
     	test
+    </div>
     </div>
     </div>
 
@@ -459,7 +458,7 @@ function MovePage(no){
       <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top newborder">
+        <nav class="navbar navbar-expand navbar-light bg-white topbar static-top newborder">
 			
           <!-- Sidebar Toggle (Topbar) -->
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -478,7 +477,7 @@ function MovePage(no){
                        <span>${topicDto.topic_name}</span>
                    </div>
                    <div class="chat-menu-sub">
-                       <span class="label">기본토픽</span>
+                       <span class="label">토픽정보</span>
                        <span>${topicDto.topic_explain}</span>
                    </div>
              </div> 
@@ -515,7 +514,7 @@ function MovePage(no){
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                  Alerts Center
+                  멤버 보기
                 </h6>
                 <a class="dropdown-item d-flex align-items-center" href="#">
                   <div class="mr-3">
@@ -646,7 +645,7 @@ function MovePage(no){
            	<div class="chat-aside">
                    <div class="chat-menu-bar">
         <!-- 채팅 창 -->
-        <div class="container-fluid">
+        <div class="container-fluid" style="overflow:auto">
 		
           	<article class="message-wrap">
 <!-- 		          <h5 class="h5 mb-4 text-gray-800"> -->
@@ -657,7 +656,7 @@ function MovePage(no){
                         <div class="message" style="text-align: left">
 							<div id="chat-content">
 								<c:forEach items="${topicChatList}" var="chatVo">
-									<div>
+									<div class="msg-wrap">
 										<div class="msg-profile"></div>
 											<div class="msg-con">
 												<span>${chatVo.member_name} </span>
