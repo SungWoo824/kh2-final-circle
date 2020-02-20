@@ -42,17 +42,57 @@ function MovePage(no){
 	var team_no = ${param.team_no};
 	var member_no = ${member_no};
 	var todo_list_content = $("#todo_list_content").val();  //인풋에 있는 벨류를 가져올게 
-	var  ajaxOption = {
+
+		var  ajaxOption = {
 			url : "./todo_list_search_result?team=no"+no,
 			type : "post",
 			dataType : "html",
 			data : {team_no:team_no, member_no:member_no, todo_list_content:todo_list_content},
 			cache : false
 	};
-	$.ajax(ajaxOption).done(function(data){
-		$('#bodyContents').html(data);
-	});
+		$.ajax(ajaxOption).done(function(data){
+				$('#bodyContents').html(data);
+				$('#list-content').hide();
+			});
 }
+// 	$('#submit-search').click(function(){
+	
+// 	//등록버튼 비활성화를 위한 준비 
+// 	var team_no = ${param.team_no};
+// 	var member_no = ${member_no};
+// 	var todo_list_content = $("#todo_list_content").val();  //인풋에 있는 벨류를 가져올게 
+	
+// 	//입력을 마치면(blur) 비동기통신으로 아이디 유무를 검사 
+// 	$("input[todo_list_content]").blur(function(){
+// 		var todo_list_content = $(this).val();
+		
+// 		if(todo_list_content == ""){   //빈칸이 공란일 때 = 비동기통신이 작동하지 않아서 팀이름 입력
+// 			$('#list-content').show();
+// 			todo_list_content=false;	
+// 		}
+		
+// 		else{	//빈칸이 공란이아닐때 = 비동기통신이 작동하여 팀이름 사용유무 확인가능
+
+// 			$.ajax({
+// 				url:"./todo_list_search_result",
+// 				type:"get",
+// 				dataType : "html",
+// 	 			data : {team_no:team_no, member_no:member_no, todo_list_content:todo_list_content},
+	 			
+// 	 			success:function(data){
+// 	 				$('#bodyContents').html(data);
+// 	 				$('#list-content').hide();
+						
+// 	 			}
+		
+// 	 			});
+// 		}
+		
+// 	});
+// 	});	
+
+		
+
 </script>
 </head>
 <body>
@@ -84,10 +124,11 @@ function MovePage(no){
 <!-- 				            </form> -->
 				            
 				           <!-- 할일 검색하기 비동기 -->
-				          
+				          <form action=todo_list_main >
 				            	<input type="text" id="todo_list_content" name="todo_list_content" placeholder="비동기 검색">
-				            	<input type="submit" onclick="MovePage()" value="검색">
+				            	<input type="submit" id="submit-search" onclick="MovePage()" value="검색">
 							<br><br>
+				          </form>
 							<!-- 할일 추가하기 버튼 -->
 							<form action="todo_list_create" method="post">
 								<input type="hidden" name="team_no" value="${param.team_no}">
@@ -97,15 +138,17 @@ function MovePage(no){
 							</form>
 							
 								<!-- 할일 전체 목록 -->
+								<div id="list-content">
 								<p>할일 전체 목록보기	</p>
 								<c:forEach items="${todoPerAll}" var="todoListJoinVO">
 								<hr> 
 									<!-- 할일 목록 누르면 할일상세페이지(todo_list_detail)로 이동 -->
-									<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}">
+									<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}&team_no=${todoListJoinVO.team_no}&topic_no=${todoListJoinVO.topic_no}&todo_list_content=${todoListJoinVO.todo_list_content}">
 									${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name}
 									</a>
 								<hr>
 								</c:forEach>						
+								</div>
 								
 								<!--동기 검색 결과 보기 -->
 									<c:forEach items="${searchTodo}" var="todoListJoinVO">

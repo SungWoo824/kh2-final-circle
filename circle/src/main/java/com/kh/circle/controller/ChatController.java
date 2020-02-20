@@ -323,11 +323,12 @@ public class ChatController {
 	//투두 리스트 반복문 출력 
 	@GetMapping("/todo_list_main")
 	public String todo_list_create(@RequestParam int team_no, 
-								   
+								  
 								   @ModelAttribute TodoListDto todoListDto,
 								   @ModelAttribute TodoListJoinVO todoListJoinVO,
 								   Model model, HttpSession session) {
-
+	
+		model.addAttribute("team_no", team_no);
 		int member_no = (int)session.getAttribute("member_no");
 			
 		//할일 목록 출력
@@ -378,7 +379,9 @@ public class ChatController {
 	}
 	//투두 리스트에서 목록 누르면 / 상세보기 
 	@GetMapping("/todo_list_detail")
-	public String todo_list_detail() {
+	public String todo_list_detail(@RequestParam int team_no, @RequestParam String todo_list_content, Model model) {
+		model.addAttribute("team_no", team_no);
+		model.addAttribute("todo_list_content", todo_list_content);
 		return "chat/todo_list_detail";
 	}
 	
@@ -429,9 +432,18 @@ public class ChatController {
 	
 	//투두리스트 삭제 
 	@PostMapping("/todo_list_delete")
-	public String todo_list_delte(@ModelAttribute TodoListDto todoListDto) {
+	public String todo_list_delte(@RequestParam int team_no, @RequestParam int topic_no, HttpSession session,
+			@RequestParam String todo_list_content,
+			Model model,
+			@ModelAttribute TodoListDto todoListDto) {
+		
+		model.addAttribute("team_no", team_no);
+//		model.addAttribute("todo_list_no",todo_list_no);
+int member_no = (int)session.getAttribute("member_no");
+		//검색하기 리스트 보내기
+				model.addAttribute("searchTodo", todoListDao.searchTodo(team_no,member_no, todo_list_content));
 		todoListDao.deleteTodo(todoListDto);
-		return "redirect:../chat/todo_list_main";
+		return "redirect:./chat/todo_list_main";
 	}
 	
 	

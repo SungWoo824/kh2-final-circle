@@ -8,9 +8,10 @@
 </head>
 <body>
 
-<form action="todo_list_create" method="post">
+<form action="${pageContext.request.contextPath}/chat/todo_list_delete" method="post">
 <input type="hidden" name="team_no"	value="${param.team_no}">
-<input type="hidden" name="todo_list_no" value="${param.todo_list_no}">
+<input type="hidden" name="topic_no"	value="${param.topic_no}">
+<%-- <input type="hidden" name="todo_list_no" value="${param.todo_list_no}"> --%>
 <input type="submit" value="삭제">
 								
 </form>
