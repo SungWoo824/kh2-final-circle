@@ -19,7 +19,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'준비',
 			#{aid},
 			#{term},
-			#{price}
+			#{price},
+			#{countAll}
 		)
 	</insert>
 	
@@ -37,7 +38,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			'완료',
 			#{aid},
 			#{term},
-			#{price}
+			#{price},
+			#{countAll}
 		)
 	</insert>
 	
@@ -63,7 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					'취소',
 					#{aid},
 					#{term},
-					#{price}
+					#{price},
+					#{countAll}
 		)
 	 </insert>
 	
@@ -90,5 +93,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="cancelQty12" parameterType="String" resultType="Integer">
 		select count(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1년권'
+	</select>
+	
+	<insert id="insertCount" parameterType="payCountDto">
+		insert into pay_count values(#{member_email}, #{term}, #{total_count})
+	</insert>
+	
+	<select id="totalCount" parameterType="String" resultType="Integer">
+		select total_count from pay_count where term=#{term}
+	</select>
+	
+	<select id="countAll" parameterType="payDto" resultType="Integer">
+		select sum(quantity) as total_count from pay where status=#{status} and item_name=#{item_name}
 	</select>
 </mapper>

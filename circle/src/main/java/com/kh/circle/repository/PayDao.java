@@ -15,4 +15,7 @@ public interface PayDao {
 	int getQty1(String partner_user_id);
 	int getQty6(String partner_user_id);
 	int getQty12(String partner_user_id);
+	void insertCount(Object object, String term, int total_count);
+	List<Object> totalCount(String term);
+	int countAll(String status, String item_name);
 }

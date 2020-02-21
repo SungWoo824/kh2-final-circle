@@ -165,8 +165,7 @@ public class TeamDaoImpl implements TeamDao {
 }
 
 	@Override
-	public void changeAuth(TeamMemberDto teamMemberDto) {
-		
+	public void changeAuth(TeamMemberDto teamMemberDto) {	
 		sqlSession.update("team.changeAuth", teamMemberDto);
 	}
 

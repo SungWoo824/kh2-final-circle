@@ -29,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.circle.entity.VoteCompareDto" alias="voteCompareDto"/>
 		<typeAlias type="com.kh.circle.vo.MemberListVO" alias="memberListVO"/>
 		<typeAlias type="com.kh.circle.entity.PayDto" alias="payDto"/>
+		<typeAlias type="com.kh.circle.entity.PayCountDto" alias="payCountDto"/>
 	</typeAliases>
 	
 	

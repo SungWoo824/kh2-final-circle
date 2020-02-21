@@ -227,6 +227,7 @@ $(function(){
 });
 
 function MovePage(no){
+	var content = $('#content').val();
 	var team_no = ${param.team_no};
 	var topic_no = ${param.topic_no};
 	var  ajaxOption = {

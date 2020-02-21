@@ -83,6 +83,7 @@ public class PayServiceImpl implements PayService{
 				.aid("")
 				.term(vo.getTerm())
 				.price(vo.getPrice())
+				.countAll(payDao.countAll("준비", vo.getItem_name()))
 			.build();
 		payDao.insertReady(payDto);
 		return returnVO;

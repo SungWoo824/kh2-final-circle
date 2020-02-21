@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.kh.circle.entity.PayCountDto;
 import com.kh.circle.entity.PayDto;
 
 public class PayDaoImpl implements PayDao{
@@ -65,5 +66,33 @@ public class PayDaoImpl implements PayDao{
 		
 		int total = complete-cancel;
 		return total;
+	}
+
+	@Override
+	public void insertCount(Object member_email, String term, int total_count) {
+		
+		PayCountDto payCountDto = PayCountDto.builder()
+				.member_email((String) member_email)
+				.term(term)
+				.total_count(total_count)
+				.build();
+		
+		sqlSession.insert("pay.insertCount", payCountDto);
+		
+	}
+
+	@Override
+	public List<Object> totalCount(String term) {
+		
+		return sqlSession.selectList("pay.totalCount", term);
+	}
+
+	@Override
+	public int countAll(String status, String item_name) {
+		PayDto payDto = PayDto.builder()
+				.status(status)
+				.item_name(item_name)
+				.build();
+		return sqlSession.selectOne("pay.countAll", payDto);
 	}
 }

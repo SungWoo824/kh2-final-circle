@@ -151,13 +151,24 @@ $(function(){
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      보유중인 플랜 옵션<br>
+      <ul>
+      	<li>1개월권: <c:out value="${oneMonth }"/>개</li>
+      	<li>6개월권: <c:out value="${sixMonth }"/>개</li>
+      	<li>1년권: <c:out value="${oneYear }"/>개</li>
+      </ul>
       		<p>준회원 목록</p>
       	<c:if test="${not empty position }">
       		<form action="./owner_manager_member" method="post">
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '준회원'}">
-		      	<input type="checkbox" name="changeAuth" class="assist" id="assist" value="${memberListVO.member_no}">
-   				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+		      <select name="term">
+		      <option value="1개월권">1개월권</option>
+		      <option value="6개월권">6개월권</option>
+		      <option value="1년권">1년권</option>
+		      </select>
+		      <input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
+		      	<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
 				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
 				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
@@ -199,10 +210,7 @@ $(function(){
     </div>
   </div>
 </div>	 
-
-										
-                     
-       					   </div>
+     					   </div>
 					</div>
 			</div>
 		</div>
