@@ -38,6 +38,7 @@ $(function(){
 	});
 });
 
+//검색 결과 비동기
 function MovePage(no){
 	var team_no = ${param.team_no};
 	var member_no = ${member_no};
@@ -54,6 +55,27 @@ function MovePage(no){
 				$('#bodyContents').html(data);
 				$('#list-content').hide();
 			});
+		
+}
+
+//완료된 할일 목록 비동기
+function listDone(no){
+	var team_no = ${param.team_no};
+	var member_no = ${member_no};
+
+
+		var  ajaxOption = {
+			url : "./todo_done?team=no"+no,
+			type : "get",
+			dataType : "html",
+			data : {team_no:team_no, member_no:member_no},
+			cache : false 
+	};
+		$.ajax(ajaxOption).done(function(data){
+				$('#list-done').html(data);
+				$('#list-content').hide();
+			});
+		
 }
 // 	$('#submit-search').click(function(){
 	
@@ -124,30 +146,63 @@ function MovePage(no){
 <!-- 				            </form> -->
 				            
 				           <!-- 할일 검색하기 비동기 -->
-				          <form action=todo_list_main >
+
 				            	<input type="text" id="todo_list_content" name="todo_list_content" placeholder="비동기 검색">
 				            	<input type="submit" id="submit-search" onclick="MovePage()" value="검색">
 							<br><br>
-				          </form>
+
+					
 							<!-- 할일 추가하기 버튼 -->
 							<form action="todo_list_create" method="post">
 								<input type="hidden" name="team_no" value="${param.team_no}">
-								<input type="hidden" name="topic_no" value="${param.topic_no}">
+								<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
 								<input type="text" name="todo_list_content" placeholder="할일을 추가하세요" required>
 								<input type="submit" value="추가">
 							</form>
-							
+								<hr>
+								
+							<!-- 완료된 할일 목록 보기  비동기로 받기-->
+							<input type="submit" id="submit-list-done" onclick="listDone()" value="완료된 목록 보기">
+								<!-- 완료된 할일 목록 보기 결과창 -->
+								<div id="list-done"></div>
+								
+									<hr>
 								<!-- 할일 전체 목록 -->
 								<div id="list-content">
-								<p>할일 전체 목록보기	</p>
-								<c:forEach items="${todoPerAll}" var="todoListJoinVO">
-								<hr> 
-									<!-- 할일 목록 누르면 할일상세페이지(todo_list_detail)로 이동 -->
-									<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}&team_no=${todoListJoinVO.team_no}&topic_no=${todoListJoinVO.topic_no}&todo_list_content=${todoListJoinVO.todo_list_content}">
-									${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name}
-									</a>
-								<hr>
-								</c:forEach>						
+									<p>할일 전체 목록보기	</p> 
+										<c:forEach items="${todoPerAll}" var="todoListJoinVO">
+										<!-- 진행중인 목록만 뽑는다 / 완료버튼 누르면 목록에서 사라짐-->
+											<c:choose>
+												<c:when test="${todoListJoinVO.todo_list_done=='진행'}">
+												<hr> 
+													<!-- 할일 목록 누르면 할일상세페이지(todo_list_detail)로 이동 -->
+													<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}&team_no=${todoListJoinVO.team_no}&topic_no=${todoListJoinVO.topic_no}&todo_list_content=${todoListJoinVO.todo_list_content}">
+													${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}
+													</a>
+													<span></span>
+											
+										<!-- 할일 완료 시키기 -->	
+										<form action="todo_done" method="post">
+											<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}">
+											<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
+											<input type="hidden" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
+											<button id="done">완료</button>
+										</form>
+											<span></span>
+											
+										<form action="todo_back_done" method="post">
+											<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}">
+											<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
+											<input type="hidden" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
+											<button id="done">진행으로 돌리기</button>
+										</form>
+													</c:when>
+											</c:choose>
+										
+												<hr>
+												
+										</c:forEach>
+														
 								</div>
 								
 								<!--동기 검색 결과 보기 -->
@@ -161,7 +216,8 @@ function MovePage(no){
 							<!--비동기 검색 결과   -->
 							<div id="bodyContents"></div>
 							
-							
+							<!-- 완료된 할일 결과 -->
+						
 	        
 				            </div>
 			        </div>

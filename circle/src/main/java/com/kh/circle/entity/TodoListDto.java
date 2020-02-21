@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class TodoListDto {
 	private int todo_list_no, topic_no,member_no,team_no;
-	private String todo_list_content;
+	private String todo_list_content, todo_list_done;
 
 }

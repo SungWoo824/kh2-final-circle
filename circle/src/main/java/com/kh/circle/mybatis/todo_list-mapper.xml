@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 할일 추가 하기  -->
 	<insert id="todoListCreate" parameterType="todoListDto"> 
 		insert into todo_list 
-		values(#{todo_list_no},#{topic_no},#{member_no},#{team_no},#{todo_list_content})
+		values(#{todo_list_no},#{topic_no},#{member_no},#{team_no},#{todo_list_content},'진행')
 	</insert>
 	
 	<!-- 개인의 전체 할일 목록 반복문 / 팀 넘버 , 멤버 넘버 기준으로 -->
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select*from
 		(select m.member_name , m.member_email , m.member_no,
 		        t.team_no , t.member_position ,
-		        todo.todo_list_content, todo.todo_list_no,
+		        todo.todo_list_content, todo.todo_list_no, todo.todo_list_done,
 		 topi.topic_name,topi.topic_no
 		from member m inner join team_member t
 			on m.member_no = t.member_no
@@ -66,10 +66,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 할일 수정하기 -->
-	<select id="editTodo" resultType="todolistJoinVo" parameterType="todoListJoinVO">
+	<update id="editTodo" parameterType="todoListJoinVO">
 	update todo_list
 	set todo_list_content = #{todo_list_content}
 	where member_no=#{member_no} and todo_list_no= #{todo_list_no}
-	</select>
+	</update>
+	
+	<!-- 할일 완료로 시키기 -->
+	<update id="todoDone" parameterType="todoListJoinVO">
+		update todo_list
+		set todo_list_done='완료'
+		where member_no=#{member_no} and todo_list_no=#{todo_list_no}
+	</update>
+	
+	<!-- 할일 진행으로 되돌리기 -->
+	<update id="todoBackDone" parameterType="todoListJoinVO">
+	    update todo_list
+		set todo_list_done='진행'
+		where member_no=#{member_no} and todo_list_no=#{todo_list_no}
+	</update>
 
 </mapper>
