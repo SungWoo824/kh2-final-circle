@@ -45,8 +45,6 @@
 							<c:otherwise>
 								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
 							</c:otherwise>
-                       
-                        
                         </c:choose>
                         </ul>
                     </div>
@@ -59,6 +57,9 @@
                             <div class="section">
                                 	<div class="mypage-main-content">
 	                                    <div class="mypage-div">
+	                                    	<div class="member-mypage-img">
+	                                    		<img id="member-profile-img" src='download?member_no=${member_no}'>
+	                                    	</div>
 	                                    	<div class="mypage-name-div">
 		                                        <span>${memberDto.member_name}</span>
 		                                        <p>${memberDto.member_email}
@@ -71,7 +72,7 @@
 	                                   
 			                                    <c:forEach items="${teamMainList}" var="teamMainVO">
 			                                    	<div>
-	                                    				<div class="mypage-div">
+	                                    				<div class="mypage-div">	
 	                                    					<div class="mypage-name-div">
 																<h4>team_name = ${teamMainVO.team_name} team_domain = ${teamMainVO.team_domain}</h4>
 															</div>
@@ -91,6 +92,7 @@
 																	</form>
 																</c:when>
 																
+
 																<c:otherwise>
 																	<!-- 팀관리 : 소유자만 보이는 버튼 -->
 																	<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/owner_manager_team" method="get">
@@ -104,6 +106,16 @@
 																</c:otherwise>
 																
 																</c:choose>	
+
+																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}">
+																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}">
+<!-- 																<input type="hidden" name="topic_no" class="topic_no_value" value=""> -->
+																<div class="mypage-team-div">
+																	<button type="submit">팀관리</button>
+																</div>
+																
+															</form>
+
 															<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamMainVO.team_no}">
 																<input type="hidden" name="topic_no" class="topic_no_value" value="">

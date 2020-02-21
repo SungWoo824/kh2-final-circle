@@ -1,24 +1,17 @@
 package com.kh.circle.controller;
 
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-
-
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,32 +22,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
-import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TodoListDto;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.ChatDao;
-import com.kh.circle.repository.TopicDao;
-import com.kh.circle.repository.VoteCreateDao;
-import com.kh.circle.service.TeamService;
 import com.kh.circle.repository.MemberDao;
 import com.kh.circle.repository.TeamCertDao;
 import com.kh.circle.repository.TeamDao;
 import com.kh.circle.repository.TodoListDao;
 import com.kh.circle.repository.TopicDao;
-import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.repository.VoteCreateDao;
+import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.service.TeamService;
-import com.kh.circle.vo.MemberListVO;
 import com.kh.circle.vo.TodoListJoinVO;
 import com.kh.circle.vo.TopicRestVO;
 
-
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
@@ -540,35 +527,64 @@ public class ChatController {
 		//토픽소유자 나가기(선택멤버 토픽소유자로 변경하고 나가기)
 		@PostMapping("/topic_masterchange")
 		public String topicMasterChange(@RequestParam int team_no, 
-				@RequestParam int topic_no, @RequestParam int member_no,
-				Model model) {
+																	@RequestParam int topic_no, 
+																	@RequestParam int member_no,
+																	HttpSession session,
+																	Model model) {
+			System.out.println(member_no);
+			System.out.println(team_no);
+			System.out.println(topic_no);
 			topicDao.topicMasterChange(topic_no,member_no);
-			topicDao.outTopic(topic_no, member_no);
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
 			model.addAttribute("team_no", team_no);
 			model.addAttribute("member_no", member_no);
-			model.addAttribute("topic_mp",topic_no);
+			model.addAttribute("topic_no",topic_no);
 			return "redirect:/chat/topic_main";
 		}
 		
 		
 		//토픽멤버 나가기(토픽소유자 제외)
-		@PostMapping("/outtopic")
-		public String outTopic(@RequestParam int topic_no,
+		@GetMapping("/outtopic")
+		public String outTopic(@RequestParam int topic_no, 
 												@RequestParam int team_no,
-												HttpSession session) {
-			topicDao.outTopic(topic_no,(int)session.getAttribute("member_no"));
-			return "redirect:/chat/topic_main";
+												@RequestParam int member_no,
+												Model model) {
+			topicDao.outTopic(topic_no,member_no);
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("topic_no",topic_no);
+			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
 		
 		
-//		//토픽 초대(같은 토픽에 참여하고있지 않은 팀 리스트)
-//		@PostMapping("/invitetopic")
-//		public String topicInvite(@ModelAttribute TopicMemberDto topicMemberDto) {
-//			topicDao.inviteTopic(topicMemberDto);
-//			return "redirect:/chat/topic_main";
-//		}
+
+		//토픽 초대(같은 토픽에 참여하고있지 않은 팀 리스트)
+		@PostMapping("/invitetopic")
+		public String topicInvite(@RequestParam List<Integer> member_no, 
+													@RequestParam int team_no, 
+													@RequestParam int topic_no,
+													Model model) { 
+			topicDao.inviteMember(member_no, team_no, topic_no);
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("topic_no",topic_no);
+			
+			return "redirect:/chat/topic_main";
+			
+		}
+
 		
 		
+		//토픽 삭제
+		@GetMapping("/deletetopic")
+		public String deletetopic(@RequestParam int topic_no,
+													@RequestParam int team_no, 
+													@RequestParam int member_no,
+													Model model) {
+			topicDao.deleteTopic(topic_no,team_no);
+			topicDao.outTopic(topic_no, member_no);
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("topic_no",topic_no);
+			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
+		}
 		
 		
 

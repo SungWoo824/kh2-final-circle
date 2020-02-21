@@ -60,22 +60,27 @@ public class TopicDaoIml implements TopicDao{
 	public List<TopicMemberDto> topicMemberList(int topic_no) {
 		return sqlSession.selectList("topic.topicMemberList",topic_no);
 	}
-
+	
 	@Override
 	public void editTopic(TopicDto topicDto) {
 		sqlSession.update("topic.editTopic",topicDto);
 	}
 
-
 	@Override
 	public void inviteTopic(TopicMemberDto topicMemberDto) {
-		sqlSession.insert("topic.inviteTopic",topicMemberDto);
+		sqlSession.insert("topic.inviteTopic", topicMemberDto);
 	}
 	
+
 	@Override
-	public void inviteTopicOne(TopicMemberDto topicMemberDto) {
-		sqlSession.insert("topic.inviteTopicOne",topicMemberDto);
+	public void inviteMember(List<Integer> list, int team_no, int topic_no) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("list", list);
+		param.put("team_no", team_no);
+		param.put("topic_no", topic_no);
+		sqlSession.insert("topic.inviteMember",param);
 	}
+	
 
 	@Override
 	public void topicMasterChange(int topic_no, int member_no) {
@@ -100,6 +105,15 @@ public class TopicDaoIml implements TopicDao{
 		param.put("topic_no",topic_no);
 		return sqlSession.selectList("topic.inviteTopicList",param);
 
+	}
+
+
+	@Override
+	public void deleteTopic(int topic_no, int team_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("topic_no",topic_no);
+		sqlSession.delete("topic.deleteTopic", param);
 	}
 
 	
