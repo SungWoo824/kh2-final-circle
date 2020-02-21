@@ -372,8 +372,10 @@ public class ChatController {
 		@GetMapping("/deletetopic")
 		public String deletetopic(@RequestParam int topic_no,
 													@RequestParam int team_no, 
+													@RequestParam int member_no,
 													Model model) {
-			topicDao.deleteTopic(topic_no);
+			topicDao.deleteTopic(topic_no,team_no);
+			topicDao.outTopic(topic_no, member_no);
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("topic_no",topic_no);
 			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동

@@ -9872,9 +9872,10 @@ opacity
 
 .sidebar .sidebar-heading {
 	text-align: center;
-	padding: 0 1rem;
+	padding: 0 1rem 1rem 1rem;
 	font-weight: 800;
-	font-size: .65rem
+	font-size: 14px;
+	cursor:pointer;
 }
 
 @media ( min-width :768px) {

@@ -299,21 +299,21 @@ function MovePage(no){
 	                    <a class="fa fa-bars nav-link dropdown-toggle"  id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <a class="dropdown-item d-flex align-items-center" >
-                  <div>
-                    <span>팀 전환 하기</span>
-                  </div>
+                <a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/member/mypage">
+	                <div>
+	                    <span>팀 전환 하기</span>
+	                 </div>
                 </a>
-                <c:forEach items="${teamlist}" var="teamDto">
-	                <c:when test="${teamDto.member_position eq '소유자'}">
-		                <a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/team_admin/team_manager_team" >
-		                  <div >
-		                 	<span>관리자 메뉴</span>
-		                  </div>
-		                </a>
-	                </c:when>
-                </c:forEach>
-<!--                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
+		        <a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/team_admin/team_manager_team" >
+	               <c:set var="team" value="${memberList.get(0)}"></c:set>
+	               <c:choose>
+						<c:when test="${team.member_position eq '소유자' }">
+			                  <div>
+			                 	<span>관리자 메뉴</span>
+			                  </div>
+		                </c:when>
+	                </c:choose>
+		      	</a>
               </div>
 	            </li>
 	        </ul>
@@ -367,10 +367,10 @@ function MovePage(no){
 					            	<c:forEach var="voteList" items="${voteList }" >
 					            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
 					            		<li>
-		        					<c:if test="${param.team_no eq no}">
-					            		<c:out value="${voteList.vote_create_no}"/>번 투표
-					            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
-					            	</c:if>
+			        					<c:if test="${param.team_no == no}">
+						            		<c:out value="${voteList.vote_create_no}"/>번 투표
+						            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
+						            	</c:if>
 					            		</li>
 					            		<br>
 					            	</c:forEach>   	
@@ -401,7 +401,6 @@ function MovePage(no){
 	            <img style="width:44px" src="${pageContext.request.contextPath}/resources/image/logo.png" alt="logo" />
 	    </div>
     <div class="sidebar-brand-text">
-    	test
     </div>
     </div>
     </div>
@@ -420,9 +419,14 @@ function MovePage(no){
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-<!--       <div class="sidebar-heading"> -->
-<!--         토픽 -->
-<!--       </div> -->
+      <div class="sidebar-heading">
+		    <a class="nav-link" data-toggle="modal" data-target="#newTopicCreate">
+			     <i style="color:#2196f3" class="fa fa-fw fa-plus"></i> 
+			     <span style="color:#666">토픽 생성하기</span>
+		     </a>
+      </div>
+
+	<hr class="sidebar-divider">
 
       <!-- 토픽 목록 시작-->
       <li class="nav-item active">
@@ -449,11 +453,15 @@ function MovePage(no){
       </li>
       <!-- 토픽 목록 끝 -->
       
+      <hr class="sidebar-divider">
       <!-- Heading -->
-<!--       <div class="sidebar-heading"> -->
-<!--        	채팅 -->
-<!--       </div> -->
-
+ 	<div class="sidebar-heading">
+		    <a class="nav-link" href="#">
+			     <i style="color:#2196f3" class="fa fa-fw fa-plus"></i> 
+			     <span style="color:#666">채팅 시작하기</span>
+		     </a>
+      </div>
+ 	<hr class="sidebar-divider">
       <!-- 채팅목록 시작 -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -556,40 +564,62 @@ function MovePage(no){
               </a>
               <!-- Dropdown - Messages -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
-                  <div>
-                    <div class="text-truncate">토픽 멤버 보기</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTopic">
-                  <div>
-                    <div class="text-truncate">토픽 초대하기</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#editTopic">
-                  <div>
-                    <div class="text-truncate">토픽 정보 변경</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="deletetopic?topic_no=${param.topic_no }">
-                  <div>
-                    <div class="text-truncate">토픽 삭제하기</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#topicMasterChange">
-                  <div>
-                    <div class="text-truncate">토픽 나가기(소유자)</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
-                  <div>
-                    <div class="text-truncate">토픽 나가기</div>
-                  </div>
-                </a>
+<%--               <c:forEach var="tmList" items="${topicMemberList}"> --%>
+				<c:set var="tmList" value="${topicMemberList.get(0)}"></c:set>
+	              <c:choose>
+	              		<c:when test="${tmList.topic_member_position eq '토픽소유자' }">
+			                 <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
+				                  <div>
+				                    <div class="text-truncate">토픽 멤버 보기</div>
+				                  </div>
+					        </a>
+					        <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 초대하기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#editTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 정보 변경</div>
+			                  </div>
+			                </a>
+			                <c:if test="${topicList.size() > 1}">
+				                <a class="dropdown-item d-flex align-items-center" href="deletetopic?topic_no=${param.topic_no }&team_no=${param.team_no}">
+				                  <div>
+				                    <div class="text-truncate">토픽 삭제하기</div>
+				                  </div>
+				                </a>
+			                </c:if>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#topicMasterChange">
+			                  <div>
+			                    <div class="text-truncate">토픽 나가기</div>
+			                  </div>
+			                </a>
+	              		</c:when>
+	              		<c:otherwise>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 멤버 보기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 초대하기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
+			                  <div>
+			                    <div class="text-truncate">토픽 나가기</div>
+			                  </div>
+			                </a>
+	              		</c:otherwise>
+	              </c:choose>
+<%--               </c:forEach> --%>
+                
               </div>
             </li>
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+            <li class="topbar-divider d-none d-sm-block"></li>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
@@ -792,16 +822,20 @@ function MovePage(no){
 				</button>
 			</div>
 			<div class="modal-body">
+			<!-- 내가 토픽 소유자일 때 나를 제외하고 내보내기 할 수 있는 기능 -->
 				<c:forEach var="tmList" items="${topicMemberList}">
-					<input type="hidden" name="team_no" value="${tmList.team_no }">
-						   ${tmList.member_name}-${tmList.member_email}(${tmList.topic_member_position })
-							   <c:if test="${tmList.member_no ne sessionScope.member_no }">
+						   ${tmList.member_name}(${tmList.member_email})(${tmList.topic_member_position })
+						<c:choose>
+							   <c:when test="${tmList.topic_member_position ne '토픽소유자' and tmList.member_no ne sessionScope.member_no}">
 							   		<a style="color:red" 
 							   		href="outtopic?topic_no=${param.topic_no }&member_no=${tmList.member_no}&team_no=${tmList.team_no}">
 							   		내보내기
-							   		</a>
-							   </c:if>
-						       <br>
+							   		</a><br>
+							   </c:when>
+							   <c:otherwise>
+									<br>
+							   </c:otherwise>
+						</c:choose>
 				</c:forEach>
 			</div>
 			<div class="modal-footer">

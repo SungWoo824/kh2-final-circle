@@ -20,6 +20,6 @@ public interface TopicDao {
 	void inviteTopic(TopicMemberDto topicMemberDto);
 	void inviteMember(List<Integer> list, int team_no, int topic_no);
 	void topicMasterChange(int topic_no, int member_no);
-	void deleteTopic(int topic_no);
+	void deleteTopic(int topic_no, int team_no);
 
 }
