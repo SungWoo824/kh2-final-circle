@@ -72,10 +72,10 @@
 				var msg = JSON.parse(e.data);
 				console.log(msg);
 				var ptopic_no = ${param.topic_no};
-				console.log(ptopic_no);
 				if(ptopic_no==msg.topic_no && msg.status==2){
 				appendMessage(msg);
-				}else if(ptopic_no!=msg.topic_no){
+				}
+				if(ptopic_no!=msg.topic_no){
 					var topic_no = msg.topic_no;
 					var count = $('.'+topic_no).text();
 					count *=1;
@@ -153,30 +153,30 @@ $(function(){
       $('.email-form').submit(function(e){
       	e.preventDefault();
       	
-      	$(this).find("input[type=submit]").prop("disabled", true); 
+      	$(this).find("input[type=submit]").prop("disabled", true);
 			$(this).find("input[type=submit]").val("인증번호 발송중...");
      
-			var url = $(this).attr("action");  //form안의 action으로 url 설정 
-			var method = $(this).attr("method"); //form안의 method 방식을 설정 
+			var url = $(this).attr("action"); 
+			var method = $(this).attr("method");
 			var data = $(this).serialize();
 			
 			$.ajax({
               type : "POST", //전송방식을 지정한다 (POST,GET)
-              url : url,  //위에 지정한 url
-              data : data,            
+              url : url,
+              data : data,
               error : function(){
             	  alert("통신실패!!!!");
-
             	  $('#modal').hide();
-            	
               },
               success : function(resp){
                   //console.log(resp);
       				alert("발송완료되었습니다");
       			//입력창 초기화
                     $(".form-control").val("");
-                  	("input[type=submit]").prop("disabled",false).val("");
-//       				$('#modal').hide();
+                    
+      				$('#modal').hide();
+                  	("input[type=submit]").prop("disabled",false)
+                    .val("이메일 전송");
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
    
@@ -221,7 +221,9 @@ $(function(){
 // 		$('.dropdown-toggle').on('shown.bs.dropdown');
 	});
 	
-
+// 	$('#myDropdown').on('show.bs.dropdown', function () {
+// 		  // do something...
+// 		});
 
 </script>
 <!-- 투표 스크립트 -->

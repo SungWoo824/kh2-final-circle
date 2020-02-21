@@ -692,3 +692,7 @@ background-color:#f8f8f8;
    		 right: 0;
         }
 /*모달 css 종료*/
+
+.admin-wrap{
+	display:flex;
+}

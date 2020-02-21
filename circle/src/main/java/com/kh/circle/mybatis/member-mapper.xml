@@ -30,12 +30,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update member set member_pw = #{member_pw} where member_email = #{member_email} 
 	</update>
 	
-	<select id="memberList" resultType="memberDto" parameterType="Map">
-		select * from member
+	<select id="memberList" resultType="memberDto" parameterType="boardVo">
+		select * from (select rownum rn, A.* from 
+		 (select * from member
 		<if test="!type.equals('')">
 			 where ${type} like '%'||#{value}||'%' 
 		</if>
-		order by member_no desc
+		 order by member_no desc)A ) where rn between #{startIndex} and #{countPerPage}
 	</select>
 	
 	<select id="memberinfo" resultType="memberDto" parameterType="java.lang.String">
@@ -52,6 +53,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="memberprofileno" parameterType="Integer" resultType="Integer">
 		select member_profile_no from member_profile where member_no = #{member_no}
+	</select>
+	
+	<select id="memberCount" resultType="int">
+		select count(*) from member
+	</select>
+	<select id="managerCount" resultType="int">
+		select count(*) from member where member_grade='o'
+	</select>
+	<select id="memberListCount" resultType="int" parameterType="boardVo">
+		select count(*) from member
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by member_no desc
 	</select>
 </mapper>
 
