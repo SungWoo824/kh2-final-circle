@@ -186,45 +186,6 @@ $(function(){
  });
  
 
-  	//멤버 초대 모달 화면
-// 	$(function(){
-	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
-
-	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
-// 	      $('#invite_close').click(function(){
-// 	           $('#modal').hide();
-// 	      });
-// 	      $('#invite_btn').click(function(){
-// 	              $('#modal').show();
-// 	      		});
-// 	});
-  	
-  	
-  	
-	//멤버 리스트 모달 화면
-// 	$(function(){
-	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
-
-	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
-// 	      $('#memberlist_close').click(function(){
-// 	           $('#modal2').hide();
-// 	      });
-// 	      $('#memberlist_btn').click(function(){
-// 	              $('#modal2').show();
-// 	      });
-
-// 	});
-	
-	//멤버 리스트 드롭다운
-	$(function () {
-// 		$('.dropdown-toggle').dropdown('show');
-// 		$('.dropdown-toggle').on('shown.bs.dropdown');
-	});
-	
-// 	$('#myDropdown').on('show.bs.dropdown', function () {
-// 		  // do something...
-// 		});
-
 </script>
 <!-- 투표 스크립트 -->
 <script>
@@ -336,7 +297,7 @@ function MovePage(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="#"></a>
+	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&member_no=${sessionScope.member_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
