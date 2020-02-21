@@ -184,11 +184,11 @@ $(function(){
 
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
-   
           });
-
       });
  });
+   
+
  
 
 	
@@ -249,6 +249,46 @@ function MovePage(no){
 // 		$('#bodyContents').html(data);
 // 	});
 // }
+</script>
+
+<!-- 투두 리스트 관련 스크립트 -->
+<script>
+//투두 리스트 검색 결과 비동기
+function TodoSearch(no){
+
+	var team_no = ${param.team_no};
+	var member_no = ${member_no};
+	var todo_list_content = $("#todo_list_content").val();  //인풋에 있는 벨류를 가져올게 
+
+		var  ajaxOption = {
+			url : "./todo_list_search_result",
+			type : "post",
+			dataType : "html",
+			data : {team_no:team_no, member_no:member_no, todo_list_content:todo_list_content},
+			cache : false
+	};
+		$.ajax(ajaxOption).done(function(data){
+				$('#todo-list-search').html(data);
+				$('#list-content').hide();
+			});
+}
+
+// function todoCreate(no){
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
+// 	var  ajaxOption = {
+// 			url : "./todo_list_create?team_no="+no,
+// 			type : "POST",
+// 			dataType : "html",
+// 			data : {team_no:team_no, topic_no:topic_no},
+// 			cache : false
+// 	};
+// 	$.ajax(ajaxOption).done(function(data){
+// 		$('#todo-create').html(data);
+// 	});
+// }
+
+	
 </script>
 
 
@@ -353,14 +393,99 @@ function MovePage(no){
 				            	</ul>
 				    </div>
         			<!-- 투표 기능 종료 -->
-        			<div class="slide todolist-slide">
-	        			<div class="slide-close">
-	        				<ul>
-		            			<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
-	        				</ul>
-	            		</div>  
-	        			todoList- slide
-        			</div>
+        			
+   <!--투두리스트 시작 -->
+   <div class="slide todolist-slide">
+	   <div class="slide-close">
+	       <ul>
+		       <li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
+	       </ul>
+	   </div>  
+	        <a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
+	        	todoList- slide
+	        	<h3>투두 리스트</h3>
+	        	
+				<!-- 개수 나오는 곳 출력 -->
+				<p>${countTodo} 개의 할일</p>
+				    <br>
+				            
+				<!-- 할일 검색하기 비동기 -->
+				<input type="text" id="todo_list_content" name="todo_list_content" placeholder="비동기 검색">
+				<input type="submit" id="submit-search" onclick="TodoSearch()" value="검색">
+					<br><br>
+							
+				<!-- 할일 추가하기 버튼 -->
+				<form action="todo_list_create" method="post">
+					 <input type="hidden" name="team_no" value="${param.team_no}">
+					 <input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
+					 <input type="text" name="todo_list_content" placeholder="할일을 추가하세요" required>
+					 <input type="submit" id="submit-todo-create" onclick="TodoCreate()" value="추가">
+				</form>
+					 <br>
+							
+				<!-- 완료된 할일 목록 보기  동기로 받기-->
+				<a href="${pageContext.request.contextPath}/chat/todo_done?todo_list_no=${todoListJoinVO.todo_list_no}&team_no=${todoListJoinVO.team_no}&topic_no=${todoListJoinVO.topic_no}&todo_list_content=${todoListJoinVO.todo_list_content}" >완료된 목록보기</a>
+			
+				<!-- 완료된 할일 목록보기 비동기로 받기 -->
+<!-- 				<input type="submit" id="submit-list-done" onclick="listDone()" value="완료된 목록 보기"> -->
+					<!-- 완료된 할일 목록 보기 결과창 -->
+								
+								
+				<!-- 할일 전체 목록 -->
+				<div id="list-content">
+					
+					<p>할일 전체 목록보기	</p> 
+					<c:forEach items="${todoPerAll}" var="todoListJoinVO">
+						
+						<!-- 진행중인 목록만 뽑는다 / 완료버튼 누르면 목록에서 사라짐-->
+						<c:choose>
+							<c:when test="${todoListJoinVO.todo_list_done=='진행'}">
+								<hr> 
+								
+								<form action ="todo_list_detail" method="get">
+								
+								
+								</form>
+								
+<!-- 								할일 목록 누르면 할일상세페이지(todo_list_detail)로 이동 -->
+								<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}&team_no=${todoListJoinVO.team_no}&topic_no=${todoListJoinVO.topic_no}&todo_list_content=${todoListJoinVO.todo_list_content}">
+								          ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}
+								</a>
+									<span></span>
+											
+								<!-- 할일 완료 시키기 -->	
+								<form action="todo_done" method="post">
+									<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}">
+									<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
+									<input type="hidden" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
+									<button id="done">완료</button>
+								</form>
+									<span></span>
+								
+								<!--할일 진행중으로 돌리기 -->			
+								<form action="todo_back_done" method="post">
+									<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}">
+									<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
+									<input type="hidden" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
+									<button id="done">진행으로 돌리기</button>
+								</form>
+							</c:when>
+						</c:choose>
+							<hr>
+					</c:forEach>
+		  	   </div>
+										
+			   <!-- 할일 추가 된 것 결과 -->									
+			   <div id="todo-create"></div>				
+								
+			   <!--비동기 검색 결과   -->
+			   <div id="todo-list-search"></div>
+							
+			   <!-- 완료된 할일 결과 -->
+			   <div id="list-done"></div>				
+
+     </div>
+     <!-- 투두리스트 종료 -->
         	</div>
 			        
 	</div>

@@ -24,19 +24,6 @@
 
 
 <script>
-$(function(){
-	$("#toggle1").click(function(){
-		$(".menu1-slide").toggle();
-	});
-	
-	$("#toggle4").click(function(){
-		$(".menu4-slide").toggle();
-	});
-	
-	$("#toggle33").click(function(){
-		$(".menu33-slide").toggle();
-	});
-});
 
 //검색 결과 비동기
 function MovePage(no){
@@ -145,8 +132,8 @@ function listDone(no){
 <!-- 				            	<input type="submit" value="검색"> -->
 <!-- 				            </form> -->
 				            
-				           <!-- 할일 검색하기 비동기 -->
 
+				           <!-- 할일 검색하기 비동기 -->
 				            	<input type="text" id="todo_list_content" name="todo_list_content" placeholder="비동기 검색">
 				            	<input type="submit" id="submit-search" onclick="MovePage()" value="검색">
 							<br><br>

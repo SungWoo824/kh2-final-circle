@@ -108,11 +108,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 
-	<!-- 토픽 초대하기(같은 팀 멤버를 같은 토픽번호로 추가) -->
-	<insert id="inviteTopic" parameterType="topicMemberDto">
-			insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
+ 	<!-- 토픽 초대하기(같은 팀 멤버를 같은 토픽번호로 추가) --> 
+<!-- 	<insert id="inviteTopic" parameterType="topicMemberDto"> -->
+<!-- 			insert into topic_member values(#{topic_no},#{member_no},#{team_no},'') -->
 
-	</insert>
+<!-- 	</insert> -->
 	
 	
 	<!-- 토픽 초대하기(여러명) -->
