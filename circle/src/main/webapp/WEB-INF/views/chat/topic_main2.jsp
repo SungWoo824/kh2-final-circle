@@ -159,8 +159,8 @@ $(function(){
       $('.email-form').submit(function(e){
       	e.preventDefault();
       	
-      	$(this).find("input[type=submit]").prop("disabled", true);
-			$(this).find("input[type=submit]").val("인증번호 발송중...");
+      	$(this).find('#invite-send').prop("disabled", true);
+			$(this).find('#invite-send').val("인증번호 발송중...");
      
 			var url = $(this).attr("action"); 
 			var method = $(this).attr("method");
@@ -172,17 +172,16 @@ $(function(){
               data : data,
               error : function(){
             	  alert("통신실패!!!!");
-            	  $('#modal').hide();
+            	  $('#inviteTeam').hide();
               },
               success : function(resp){
                   //console.log(resp);
       				alert("발송완료되었습니다");
       			//입력창 초기화
                     $(".form-control").val("");
-                    
-      				$('#modal').hide();
-                  	("input[type=submit]").prop("disabled",false)
-                    .val("이메일 전송");
+      				$('#inviteTeam').hide();
+                  	('#invite-send').prop("disabled",false)
+                    .val("초대하기");
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
    
@@ -498,45 +497,45 @@ background-color:#f8f8f8;
                     <div class="chat-menu-bar">
                     
                       <!-- 팀멤버 보기 드롭다운 시작-->
-                      <div class="btn-group" id="membertList">
- 						 <button  type="button" id="myDropdown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    						팀멤버 보기 </button>
-  							<div class="dropdown-menu">
-  							<p>멤버 검색 </p>
-  								<input type="search" value="멤버 찾기">
-  							<div class="dropdown-divider"></div>	
-  							<br>
-   								 	<p>멤버 보기  </p>
-									  <c:forEach items="${memberList}" var="memberListVO">	
-   								 <div class="dropdown-item"> 
-									<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-									<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-									<br>
-   								 </div>
-								    </c:forEach>
-    						<div class="dropdown-divider"></div>
-  								  <a class="dropdown-item" href="#">Separated link</a>
- 							 </div>
-						</div>
+<!--                       <div class="btn-group" id="membertList"> -->
+<!--  						 <button  type="button" id="myDropdown" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
+<!--     						팀멤버 보기 </button> -->
+<!--   							<div class="dropdown-menu"> -->
+<!--   							<p>멤버 검색 </p> -->
+<!--   								<input type="search" value="멤버 찾기"> -->
+<!--   							<div class="dropdown-divider"></div>	 -->
+<!--   							<br> -->
+<!--    								 	<p>멤버 보기  </p> -->
+<%-- 									  <c:forEach items="${memberList}" var="memberListVO">	 --%>
+<!--    								 <div class="dropdown-item">  -->
+<%-- 									<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out> --%>
+<%-- 									<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out>  --%>
+<!-- 									<br> -->
+<!--    								 </div> -->
+<%-- 								    </c:forEach> --%>
+<!--     						<div class="dropdown-divider"></div> -->
+<!--   								  <a class="dropdown-item" href="#">Separated link</a> -->
+<!--  							 </div> -->
+<!-- 						</div> -->
 						<!-- 팀멤버 보기 드롭다운 끝-->
 						
-                        <div class="chat-img">
-                            <div class="chat-img-bg">
-                                <div></div>
-                                <i class="fa fa-comment"></i>
-                            </div>
-                        </div>
-                        <div class="chat-menu-center">
-                            <div class="chat-menu-title">
-                                <span>${topicDto.topic_name}</span>
-                            </div>
-                            <div class="chat-menu-sub">
-                                <span class="label">기본토픽</span>
-                                <span>${topicDto.topic_explain}</span>
-                            </div>
-                        </div> 
+<!--                         <div class="chat-img"> -->
+<!--                             <div class="chat-img-bg"> -->
+<!--                                 <div></div> -->
+<!--                                 <i class="fa fa-comment"></i> -->
+<!--                             </div> -->
+<!--                         </div> -->
+<!--                         <div class="chat-menu-center"> -->
+<!--                             <div class="chat-menu-title"> -->
+<%--                                 <span>${topicDto.topic_name}</span> --%>
+<!--                             </div> -->
+<!--                             <div class="chat-menu-sub"> -->
+<!--                                 <span class="label">기본토픽</span> -->
+<%--                                 <span>${topicDto.topic_explain}</span> --%>
+<!--                             </div> -->
+<!--                         </div>  -->
                         
-                      </div>
+<!--                       </div> -->
             <!-- partial -->                 
 
                     
@@ -578,28 +577,28 @@ background-color:#f8f8f8;
 
 
 
-			     <article class="message-wrap">
+<!-- 			     <article class="message-wrap"> -->
                     
-                        <div class="message" style="text-align: left">
+<!--                         <div class="message" style="text-align: left"> -->
 
-							<h1>${topicDto.topic_name}</h1>
-							<div id="chat-content" class="chat-content">
-								<c:forEach items="${topicChatList}" var="chatVo">
-									<p>[${chatVo.member_name}] ${chatVo.chat_content}
-								</c:forEach>
-							</div>
-							<div class="chat-send-content">
-								<div class="chat-send-text">
-									<textarea class="user-input"></textarea>
+<%-- 							<h1>${topicDto.topic_name}</h1> --%>
+<!-- 							<div id="chat-content" class="chat-content"> -->
+<%-- 								<c:forEach items="${topicChatList}" var="chatVo"> --%>
+<%-- 									<p>[${chatVo.member_name}] ${chatVo.chat_content} --%>
+<%-- 								</c:forEach> --%>
+<!-- 							</div> -->
+<!-- 							<div class="chat-send-content"> -->
+<!-- 								<div class="chat-send-text"> -->
+<!-- 									<textarea class="user-input"></textarea> -->
 									
-								</div>
-								<div class="chat-send-button">
-									<button class="send-btn" type="submit">보내기</button>
-								</div>
-							</div>
+<!-- 								</div> -->
+<!-- 								<div class="chat-send-button"> -->
+<!-- 									<button class="send-btn" type="submit">보내기</button> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
 									
-						</div>
-					</article>
+<!-- 						</div> -->
+<!-- 					</article> -->
 					
 				</div>
 					
@@ -621,7 +620,7 @@ background-color:#f8f8f8;
 				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
 				            <h3>진행중인 투표 목록</h3>
 	
-	        <!-- 화면 동적 전환(투표 상세 페이지) -->
+	       						 <!-- 화면 동적 전환(투표 상세 페이지) -->
 				            		<ul>
 				            	<c:forEach var="voteList" items="${voteList }" >
 				            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>

@@ -60,7 +60,7 @@ public class TopicDaoIml implements TopicDao{
 	public List<TopicMemberDto> topicMemberList(int topic_no) {
 		return sqlSession.selectList("topic.topicMemberList",topic_no);
 	}
-
+	
 	@Override
 	public void editTopic(TopicDto topicDto) {
 		sqlSession.update("topic.editTopic",topicDto);
@@ -109,8 +109,11 @@ public class TopicDaoIml implements TopicDao{
 
 
 	@Override
-	public void deleteTopic(int topic_no) {
-		sqlSession.delete("topic.deleteTopic", topic_no);
+	public void deleteTopic(int topic_no, int team_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("topic_no",topic_no);
+		sqlSession.delete("topic.deleteTopic", param);
 	}
 
 	

@@ -204,7 +204,7 @@ span{
 
 .menu-bar{
   position: relative;
-  padding: 7px;
+  padding: 5px;
   line-height: inherit;
 }
 
@@ -599,7 +599,8 @@ span{
 }
 
 .message{
-	height:700px;
+	height:721px;
+	
 }
 .msg-profile{
 	width:50px;

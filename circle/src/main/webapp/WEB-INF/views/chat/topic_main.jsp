@@ -153,8 +153,8 @@ $(function(){
       $('.email-form').submit(function(e){
       	e.preventDefault();
       	
-      	$(this).find("input[type=submit]").prop("disabled", true);
-			$(this).find("input[type=submit]").val("인증번호 발송중...");
+      	$(this).find('#invite-send').prop("disabled", true);
+			$(this).find('#invite-send').val("인증번호 발송중...");
      
 			var url = $(this).attr("action"); 
 			var method = $(this).attr("method");
@@ -166,7 +166,7 @@ $(function(){
               data : data,
               error : function(){
             	  alert("통신실패!!!!");
-            	  $('#modal').hide();
+            	  $('#inviteTeam').hide();
               },
               success : function(resp){
                   //console.log(resp);
@@ -174,9 +174,9 @@ $(function(){
       			//입력창 초기화
                     $(".form-control").val("");
                     
-      				$('#modal').hide();
-                  	("input[type=submit]").prop("disabled",false)
-                    .val("이메일 전송");
+      				$('#inviteTeam').hide();
+                  	('#invite-send').prop("disabled",false)
+                    .val("초대하기");
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
    
@@ -187,33 +187,33 @@ $(function(){
  
 
   	//멤버 초대 모달 화면
-	$(function(){
+// 	$(function(){
 	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
 
 	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
-	      $('#invite_close').click(function(){
-	           $('#modal').hide();
-	      });
-	      $('#invite_btn').click(function(){
-	              $('#modal').show();
-	      		});
-	});
+// 	      $('#invite_close').click(function(){
+// 	           $('#modal').hide();
+// 	      });
+// 	      $('#invite_btn').click(function(){
+// 	              $('#modal').show();
+// 	      		});
+// 	});
   	
   	
   	
 	//멤버 리스트 모달 화면
-	$(function(){
+// 	$(function(){
 	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
 
 	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
-	      $('#memberlist_close').click(function(){
-	           $('#modal2').hide();
-	      });
-	      $('#memberlist_btn').click(function(){
-	              $('#modal2').show();
-	      });
+// 	      $('#memberlist_close').click(function(){
+// 	           $('#modal2').hide();
+// 	      });
+// 	      $('#memberlist_btn').click(function(){
+// 	              $('#modal2').show();
+// 	      });
 
-	});
+// 	});
 	
 	//멤버 리스트 드롭다운
 	$(function () {
@@ -295,8 +295,26 @@ function MovePage(no){
 	<div class="menu-con bg-base">
 	    <div class="menu-top">
 	        <ul class="menu-bar">
-	            <li class="gnb-btn">
-	                    <i class="fa fa-bars"></i>
+	            <li class="gnb-btn nav-item dropdown no-arrow mx-1">
+	                    <a class="fa fa-bars nav-link dropdown-toggle"  id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+              <!-- Dropdown - Alerts -->
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/member/mypage">
+	                <div>
+	                    <span>팀 전환 하기</span>
+	                 </div>
+                </a>
+		        <a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/team_admin/team_manager_team" >
+	               <c:set var="team" value="${memberList.get(0)}"></c:set>
+	               <c:choose>
+						<c:when test="${team.member_position eq '소유자' }">
+			                  <div>
+			                 	<span>관리자 메뉴</span>
+			                  </div>
+		                </c:when>
+	                </c:choose>
+		      	</a>
+              </div>
 	            </li>
 	        </ul>
 	    </div>
@@ -318,7 +336,7 @@ function MovePage(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd"></a>
+	                <a class="fa fa-hdd" href="#"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -327,7 +345,7 @@ function MovePage(no){
             	<div class="slide search-slide">
             		<div class="slide-close">
             			<ul>
-            				<li class="slide-close-btn">X</li>
+            				<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>
             			search- slide
@@ -335,7 +353,7 @@ function MovePage(no){
             	<div class="slide vote-slide">
             		<div class="slide-close">
             			<ul>
-	            			<li class="slide-close-btn">X</li>
+	            			<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>   
 	<!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
@@ -349,10 +367,10 @@ function MovePage(no){
 					            	<c:forEach var="voteList" items="${voteList }" >
 					            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
 					            		<li>
-		        					<c:if test="${param.team_no eq no}">
-					            		<c:out value="${voteList.vote_create_no}"/>번 투표
-					            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
-					            	</c:if>
+			        					<c:if test="${param.team_no == no}">
+						            		<c:out value="${voteList.vote_create_no}"/>번 투표
+						            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
+						            	</c:if>
 					            		</li>
 					            		<br>
 					            	</c:forEach>   	
@@ -362,7 +380,7 @@ function MovePage(no){
         			<div class="slide todolist-slide">
 	        			<div class="slide-close">
 	        				<ul>
-		            			<li class="slide-close-btn">X</li>
+		            			<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
 	        				</ul>
 	            		</div>  
 	        			todoList- slide
@@ -383,7 +401,6 @@ function MovePage(no){
 	            <img style="width:44px" src="${pageContext.request.contextPath}/resources/image/logo.png" alt="logo" />
 	    </div>
     <div class="sidebar-brand-text">
-    	test
     </div>
     </div>
     </div>
@@ -393,8 +410,8 @@ function MovePage(no){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="index.html">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
+        <a class="nav-link" href="${pageContext.request.contextPath}">
+          <i class="fas fa-fw fa-home"></i>
           <span>서클 메인</span></a>
       </li>
 
@@ -402,9 +419,14 @@ function MovePage(no){
       <hr class="sidebar-divider">
 
       <!-- Heading -->
-<!--       <div class="sidebar-heading"> -->
-<!--         토픽 -->
-<!--       </div> -->
+      <div class="sidebar-heading">
+		    <a class="nav-link" data-toggle="modal" data-target="#newTopicCreate">
+			     <i style="color:#2196f3" class="fa fa-fw fa-plus"></i> 
+			     <span style="color:#666">토픽 생성하기</span>
+		     </a>
+      </div>
+
+	<hr class="sidebar-divider">
 
       <!-- 토픽 목록 시작-->
       <li class="nav-item active">
@@ -431,15 +453,19 @@ function MovePage(no){
       </li>
       <!-- 토픽 목록 끝 -->
       
+      <hr class="sidebar-divider">
       <!-- Heading -->
-<!--       <div class="sidebar-heading"> -->
-<!--        	채팅 -->
-<!--       </div> -->
-
+ 	<div class="sidebar-heading">
+		    <a class="nav-link" href="#">
+			     <i style="color:#2196f3" class="fa fa-fw fa-plus"></i> 
+			     <span style="color:#666">채팅 시작하기</span>
+		     </a>
+      </div>
+ 	<hr class="sidebar-divider">
       <!-- 채팅목록 시작 -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
+          <i class="fas fa-fw fa-comments"></i>
           <span>채팅</span>
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -508,53 +534,29 @@ function MovePage(no){
               </div>
             </li>
 
-            <!-- 팀, 토픽 기능-->
+            <!-- 팀, 토픽 기능 시작-->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user-friends fa-lg"></i>
               </a>
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                <h6 class="dropdown-header">
-                  멤버 보기
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
+                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTeam">
                   <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                    <span>팀 멤버 전체 보기</span>
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
+                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTeam">
                   <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
+                 	<span>팀 초대하기</span>
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+<!--                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a> -->
               </div>
             </li>
-
+			<!-- 팀, 토픽 기능 종료-->
+			
+			
             <!-- Nav Item - Messages -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -562,79 +564,80 @@ function MovePage(no){
               </a>
               <!-- Dropdown - Messages -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                <h6 class="dropdown-header">
-                  Message Center
-                </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">I have the photos that you ordered last month, how would you like them sent to you?</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-                    <div class="status-indicator bg-warning"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Last month's report looks great, I am very happy with the progress so far, keep up the good work!</div>
-                    <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...</div>
-                    <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+<%--               <c:forEach var="tmList" items="${topicMemberList}"> --%>
+				<c:set var="tmList" value="${topicMemberList.get(0)}"></c:set>
+	              <c:choose>
+	              		<c:when test="${tmList.topic_member_position eq '토픽소유자' }">
+			                 <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
+				                  <div>
+				                    <div class="text-truncate">토픽 멤버 보기</div>
+				                  </div>
+					        </a>
+					        <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 초대하기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#editTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 정보 변경</div>
+			                  </div>
+			                </a>
+			                <c:if test="${topicList.size() > 1}">
+				                <a class="dropdown-item d-flex align-items-center" href="deletetopic?topic_no=${param.topic_no }&team_no=${param.team_no}">
+				                  <div>
+				                    <div class="text-truncate">토픽 삭제하기</div>
+				                  </div>
+				                </a>
+			                </c:if>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#topicMasterChange">
+			                  <div>
+			                    <div class="text-truncate">토픽 나가기</div>
+			                  </div>
+			                </a>
+	              		</c:when>
+	              		<c:otherwise>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 멤버 보기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 초대하기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
+			                  <div>
+			                    <div class="text-truncate">토픽 나가기</div>
+			                  </div>
+			                </a>
+	              		</c:otherwise>
+	              </c:choose>
+<%--               </c:forEach> --%>
+                
               </div>
             </li>
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+            <li class="topbar-divider d-none d-sm-block"></li>
 
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">사용자</span>
                 <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/member/modify">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
+                  내 정보보기
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/member/signout" >
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  로그아웃
                 </a>
               </div>
             </li>
@@ -688,16 +691,6 @@ function MovePage(no){
       </div>
       <!-- End of Main Content -->
 
-      <!-- Footer -->
-<!--       <footer class="sticky-footer bg-white"> -->
-<!--         <div class="container my-auto"> -->
-<!--           <div class="copyright text-center my-auto"> -->
-<!--             <span>Copyright &copy; Your Website 2019</span> -->
-<!--           </div> -->
-<!--         </div> -->
-<!--       </footer> -->
-      <!-- End of Footer -->
-
     </div>
     <!-- End of Content Wrapper -->
 
@@ -709,28 +702,258 @@ function MovePage(no){
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
+ 
+
+
+<!-- ----------------------------------------------팀  모달 시작 ----------------------------------------------------- -->
+<!-- 팀 리스트 -->
+<div class="modal fade" id="inTeam" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">
+				팀 멤버 보기</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+  				<input type="search" value="멤버 찾기">
+			  <c:forEach items="${memberList}" var="memberListVO">	
+					<div class="dropdown-item"> 
+						<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+						<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
+						<br>
+					</div>
+				</c:forEach>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 팀 리스트end -->
+<!-- 팀 초대 -->
+<div class="modal fade" id="inviteTeam" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle"> 팀 초대하기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+			<form class="email-form" action="topic_main" method="post">
+	      		<div class="modal-body">
+	        	<input class="form-control" id="exampleInputEmail1"
+							aria-describedby="emailHelp" name="cert_email" type="email"
+							placeholder="Enter email"> <br> 
+				<input type="hidden" value="${param.team_no}" name="team_no"> 
+				<input type="hidden" value="${param.topic_no}" name="topic_no"> <br>
+	<!-- 			<input type="submit" value="이메일전송" id="invite-send" -->
+	<!-- 						class="invite-send" data-dismiss="modal"><span></span> -->
+	      			</div>
+			      <div class="modal-footer">
+			        <button type="button" id="invite_close" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			        <input type="submit" id="invite-send" class="btn btn-primary invite-send" value="초대하기"><span></span>
+			<!--       <button type="submit" class="btn btn-primary">초대하기</button> -->
+			      </div>
+			</form>
+    </div>
+  </div>
+  </div>
+<!-- 팀 초대 end -->
+<!-- ----------------------------------------------팀  모달 종료 ----------------------------------------------------- -->
+
+
+
+<!-- ----------------------------------------------토픽 모달 시작 ----------------------------------------------------- -->
+<!-- 토픽 기능 모달-->
+		<!-- 토픽생성 모달 -->
+		<form action="topic_create" method="post">
+			<div class="modal fade" id="newTopicCreate" tabindex="-1"
+				role="dialog" aria-labelledby="exampleModalCenterTitle"
+				aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalCenterTitle">새 토픽 생성</h5>
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<input type="hidden" name="team_no" value="${param.team_no}">
+							이름 :<input type="text" name="topic_name"><span></span><br>
+							<br> 공개여부 :<input type="radio" name="topic_confidential"
+								value="1" checked="checked">비공개 <input type="radio"
+								name="topic_confidential" value="0">공개<br>
+							<br> 토픽 설명 :
+							<textarea name="topic_explain" rows="" cols=""></textarea>
+							<br>
+							<br>
+
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-dismiss="modal">닫기</button>
+							<button type="submit" id="check-btn" class="btn btn-primary">생성하기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	<!-- 새토픽 생성 end -->
+<!-- 토픽 참여자리스트 -->
+<div class="modal fade" id="inTopic" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalCenterTitle">
+				토픽 참여 멤버 보기</h5>
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			<!-- 내가 토픽 소유자일 때 나를 제외하고 내보내기 할 수 있는 기능 -->
+				<c:forEach var="tmList" items="${topicMemberList}">
+						   ${tmList.member_name}(${tmList.member_email})(${tmList.topic_member_position })
+						<c:choose>
+							   <c:when test="${tmList.topic_member_position ne '토픽소유자' and tmList.member_no ne sessionScope.member_no}">
+							   		<a style="color:red" 
+							   		href="outtopic?topic_no=${param.topic_no }&member_no=${tmList.member_no}&team_no=${tmList.team_no}">
+							   		내보내기
+							   		</a><br>
+							   </c:when>
+							   <c:otherwise>
+									<br>
+							   </c:otherwise>
+						</c:choose>
+				</c:forEach>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- 토픽 참여자end -->
+<!-- 토픽 정보변경 -->
+<form action="edittopic" method="post">
+	<div class="modal fade" id="editTopic" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">토픽 정보 변경</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="team_no" value="${param.team_no}">
+					<input type="hidden" name="topic_no" value="${param.topic_no}">
+					이름 :<input type="text" name="topic_name"><span></span><br>
+					<br> 토픽 설명 :
+					<textarea name="topic_explain" rows="" cols=""></textarea>
+					<br>
+					<br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+					<button type="submit" id="check-btn" class="btn btn-primary">수정하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<!-- 토픽 정보변경end -->
+<!-- 토픽 나가기(소유자) -->
+<form action="topic_masterchange" method="post">
+<div class="modal fade" id="topicMasterChange" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle"> 토픽 관리자 변경</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+       <div class="modal-body">
+			<span>다음 토픽 관리자를 선택해주세요</span><br><hr>
+					        	<input type="hidden" name="topic_no" value="${param.topic_no }">
+					        	<input type="hidden" name="team_no" value="${param.team_no }">
+		    		<c:forEach var="tmList" items="${topicMemberList}">
+	    				<c:choose>
+		    				<c:when test="${tmList.member_no eq sessionScope.member_no}">
+				        		<input type="checkbox" disabled>
+		    				</c:when>
+				        	<c:otherwise>
+					        	<input type="checkbox" name="member_no" value="${tmList.member_no }">	
+				        	</c:otherwise>
+			    		</c:choose>
+					        	<span>
+					        		${tmList.member_no}/${tmList.member_name}-${tmList.member_email}(${tmList.topic_member_position })
+					        	</span>
+			        			<br>
+			        </c:forEach>
+		 </div>
+		 <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="submit"  class="btn btn-primary" >토픽 나가기</button>
+		</div>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div>
-
+</form>
+<!-- 토픽 나가기(소유자) end -->
+<!-- 토픽 초대 -->
+<form action="invitetopic" method="post">
+<div class="modal fade" id="inviteTopic" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenterTitle"> 토픽 멤버 초대하기</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        	<input type="hidden" name="team_no" value="${param.team_no }">
+        	<input type="hidden" name="topic_no" value="${param.topic_no }">
+	        <c:forEach var="tmlist" items="${inviteTopicList}">
+	        	<c:choose>
+	   				<c:when test="${tmlist.member_no eq sessionScope.member_no}">
+	   					<!--  자기자신은 체크할 일이 없으므로 모양만 보여준다 -->
+		        		<input type="checkbox"  disabled>
+	   				</c:when>
+		        	<c:otherwise>
+			        	<input type="checkbox" name="member_no" value="${tmlist.member_no }">	
+		        	</c:otherwise>
+			 	</c:choose>
+		 	        	<span>${tmlist.member_no}/${tmlist.member_name}/${tmlist.member_email}</span>
+	 	        	<br>
+	        </c:forEach>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+        <button type="submit" class="btn btn-primary">초대하기</button>
+      </div>
+    </div>
+  </div>
+  </div>
+</form>
+<!-- 토픽 초대 end -->
+<!-- ---------------------------------------------------------------토픽 모달 종료----------------------------------------------------------------- -->
   <!-- Bootstrap core JavaScript-->
   <script src="${pageContext.request.contextPath}/resources/js/design/jquery.min.js"></script>
   <script src="${pageContext.request.contextPath}/resources/js/design/bootstrap.bundle.min.js"></script>
@@ -740,7 +963,9 @@ function MovePage(no){
 
   <!-- Custom scripts for all pages-->
   <script src="${pageContext.request.contextPath}/resources/js/design/sb-admin-2.min.js"></script>
-
+</div>
+</div>
+</div>
 </body>
 
 </html>
