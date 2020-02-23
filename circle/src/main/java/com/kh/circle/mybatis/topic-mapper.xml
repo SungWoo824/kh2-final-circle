@@ -37,10 +37,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		on topic.topic_no = T.topic_no 
 		where topic.topic_name = #{topic_name}
 	</select>
-	
-  <insert id="topicMemberInsert" parameterType="topicMemberDto">
-      insert into topic_member values(#{topic_no},#{member_no},#{team_no},'토픽소유자')
-   </insert>
+
+	<!-- 토픽 소유자로 등록 -->
+	<insert id="topicMemberInsert" parameterType="topicMemberDto">
+		insert into topic_member values(#{topic_no},#{member_no},#{team_no},'토픽소유자')
+	</insert>
 	
 	<select id="teamTopicFirst" parameterType="int" resultType="int">
 		select * from (select topic_no from topic_member where team_no = #{team_no} order by topic_no) where rownum &lt;=1
@@ -48,12 +49,88 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	</select>
 	
-	<select id="teamTopicList" parameterType="int" resultType="topicDto">
-		select topic.* from (select topic_no from topic_member where team_no = #{team_no}) tm inner join topic on topic.topic_no=tm.topic_no order by topic.topic_no
+	<select id="teamTopicList" parameterType="Map" resultType="topicDto">
+		select topic.* from (select topic_no from topic_member where member_no =#{member_no} and team_no = #{team_no}) tm inner join topic on topic.topic_no=tm.topic_no order by topic.topic_no
 	</select>
 	
 	<select id="topicChange" parameterType="int" resultType="topicDto">
 		select * from topic where topic_no = #{topic_no}
+	</select>
+
+	<select id="topicStatusSearch" parameterType="chatVo" resultType="int">
+		select chat_no from CHAT_LIST where member_no = #{member_no} and CHAT_STATUS=#{status} and topic_no = #{topic_no} and rownum &lt;= 1 order by chat_no desc
+	</select>
+	<select id="topicChatCount" parameterType="Map" resultType="int">
+		select count(*) from chat_list where topic_no=#{topic_no} and chat_no &gt; #{exit}
+	</select>
+
+	<!-- 토픽 참여자 목록-->
+	<select id="topicMemberList" resultType="memberListVO" parameterType="int">
+		select * from topic_member 
+		inner join member 
+		on topic_member.member_no = member.member_no 
+		where topic_no = #{topic_no}
+	</select>
+	
+	<!-- 토픽 정보 수정-->
+	<update id="editTopic" parameterType="topicDto">
+		update topic 
+		set 
+			topic_name=#{topic_name}, 
+			topic_explain=#{topic_explain}
+		where 
+			topic_no = #{topic_no}
+	</update>
+	
+	
+	<!-- 1.토픽소유자 인계-->
+	<update id="topicMasterChange" parameterType="map">
+		update topic_member 
+		set 
+			topic_member_position='토픽소유자'
+		where 
+			topic_no = #{topic_no} and member_no=#{member_no}
+	</update>
+
+
+	<!-- 2. 토픽 나가기 -->
+	<delete id="outTopic" parameterType="map">
+		delete from topic_member where topic_no=#{topic_no} and member_no =#{member_no} 
+	</delete>
+	
+	<!-- 토픽삭제 -->
+	<delete id="deleteTopic" parameterType="int">
+		delete from topic where topic_no=#{topic_no}
+	</delete>
+	
+	
+	<!-- 토픽 초대하기(같은 팀 멤버를 같은 토픽번호로 추가) -->
+	<insert id="inviteTopic" parameterType="topicMemberDto">
+			insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
+	</insert>
+	
+	
+	<!-- 토픽 초대하기(여러명) -->
+	<insert id="inviteMember" parameterType="map">
+<!-- 	    <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual"> -->
+<!-- 			into topic_member values(#{topicMemberDto.topic_no},#{topicMemberDto.member_no},#{topicMemberDto.team_no},'') -->
+<!-- 		</foreach> -->
+
+			<foreach collection="list" item="member_no" open="insert all" close="select * from dual">
+				into topic_member values(#{topic_no}, #{member_no}, #{team_no}, '')
+			</foreach>
+	</insert>
+	
+	
+	<!-- 토픽 초대목록(현재 토픽에없는 팀리스트) -->
+	<select id="inviteTopicList" resultType="memberListVO" parameterType="map">
+			select * from 
+			(
+			    select distinct member_no from topic_member where team_no = #{team_no}
+			    minus
+			    select distinct member_no from topic_member where topic_no = #{topic_no}
+			)A 
+			inner join member on A.member_no = member.member_no
 	</select>
 	
 	<insert id="inviteTopic" parameterType="list">

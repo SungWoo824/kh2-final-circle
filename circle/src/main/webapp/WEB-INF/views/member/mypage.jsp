@@ -45,8 +45,6 @@
 							<c:otherwise>
 								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
 							</c:otherwise>
-                       
-                        
                         </c:choose>
                         </ul>
                     </div>
@@ -59,6 +57,9 @@
                             <div class="section">
                                 	<div class="mypage-main-content">
 	                                    <div class="mypage-div">
+	                                    	<div class="member-mypage-img">
+	                                    		<img id="member-profile-img" src='download?member_no=${member_no}'>
+	                                    	</div>
 	                                    	<div class="mypage-name-div">
 		                                        <span>${memberDto.member_name}</span>
 		                                        <p>${memberDto.member_email}
@@ -71,7 +72,7 @@
 	                                   
 			                                    <c:forEach items="${teamlist}" var="teamDto">
 			                                    	<div>
-	                                    				<div class="mypage-div">
+	                                    				<div class="mypage-div">	
 	                                    					<div class="mypage-name-div">
 																<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
 															</div>
@@ -86,6 +87,7 @@
 																<div class="mypage-team-div">
 																	<button type="submit">논소유자관리</button>
 																</div>
+																
 															</form>
 															<!-- 팀관리 : 소유자만 보이는 버튼 -->
 															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/owner_manager_team" method="get">

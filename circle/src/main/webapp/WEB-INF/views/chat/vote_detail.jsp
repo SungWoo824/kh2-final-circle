@@ -26,17 +26,19 @@ $(function(){
 		$('.voteSelect').attr("type", "radio");
 	}
 });
+
 function MovePage(no){
 	var str = new Array();
 	$('.voteSelect:checked').each(function(){
 		str +=$(this).val()+",";
-// 		str.push($(this).val());
-// 		console.log(str);
 	});
+	
 	var selection = 0;
+	
 	if($(".voteSelect").is(":checked") == true) {
 		  var selection=selection+1; 
-		}
+		};
+		
 	var  ajaxOption = {
 			url:"./voteselect?vote_create_no="+no,
 			type:"GET",
@@ -46,11 +48,12 @@ function MovePage(no){
 					  member_no:${member_no},
 					  vote_category_content:str,
 					  vote_select_true:selection,
-					  member_name:"${memberName}",
+					  member_name:'${memberName}',
 					  team_no:${param.team_no}, 
 					  topic_no:${param.topic_no}
 					}
 			};
+	
 	$.ajax(ajaxOption).done(function(data){
 		$('#bodyContents').html(data);
 	});

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -129,7 +128,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from team where team_no=#{team_no}
 	</select>
 	
-	<!-- 팀 멤버 디티오 정보 -->
 	<select id="teamMemberInfo" resultType="teamMemberDto" parameterType="teamMemberDto">
 		select * from team_member where member_no = #{member_no} and team_no=#{team_no}
 	</select>
@@ -169,6 +167,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where team_no = #{team_no}
 	</update>
 	
+
 	<!-- 회원 권환 변경 -->
 	<update id="changeAuth" parameterType="teamMemberDto">
 	update team_member 
@@ -181,10 +180,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select member_position from team_member where member_no=#{member_no} and team_no=#{team_no}
 	</select>
 	
-	
-	
 </mapper>
-
-
-
-

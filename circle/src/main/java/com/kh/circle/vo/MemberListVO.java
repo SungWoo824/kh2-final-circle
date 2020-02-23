@@ -13,4 +13,10 @@ public class MemberListVO {
 	private String member_email;
 	private String member_grade;
 	private String member_no;
+
+	private String topic_member_position;
+	private int topic_no, team_no;
+	
+
+
 }

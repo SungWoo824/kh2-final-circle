@@ -1,24 +1,17 @@
 package com.kh.circle.controller;
 
 
-import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-
-
+import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,22 +27,14 @@ import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.repository.ChatDao;
-import com.kh.circle.repository.TopicDao;
-import com.kh.circle.repository.VoteCreateDao;
-import com.kh.circle.service.TeamService;
 import com.kh.circle.repository.MemberDao;
 import com.kh.circle.repository.TeamCertDao;
 import com.kh.circle.repository.TeamDao;
 import com.kh.circle.repository.TopicDao;
-import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.repository.VoteCreateDao;
+import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.service.TeamService;
-import com.kh.circle.vo.MemberListVO;
 import com.kh.circle.vo.TopicRestVO;
-
-
-import lombok.Builder;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/chat")
@@ -87,9 +72,10 @@ public class ChatController {
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,
 							Model model, HttpSession session) {
-		List<TopicDto> topicList = teamService.teamTopicList(team_no);
+		List<TopicDto> topicList = teamService.teamTopicList(team_no,(int)session.getAttribute("member_no"));
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
 		model.addAttribute("topicList", topicList);
+		model.addAttribute("memberChatCount", teamService.memberChatCount(team_no,(int)session.getAttribute("member_no")));
 		model.addAttribute("topicChatList", chatDao.topicChatList(topic_no));
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
@@ -98,13 +84,21 @@ public class ChatController {
 		//멤버 리스트 
 		model.addAttribute("memberList",teamDao.memberList(team_no));
 		
+		//토픽 멤버리스트
+		List<TopicMemberDto> topicMemberList = topicDao.topicMemberList(topic_no);
+		model.addAttribute("topicMemberList", topicMemberList);
+		
+		//토픽 초대리스트
+		List<TopicMemberDto> inviteTopicList = topicDao.inviteTopicList(team_no,topic_no);
+		model.addAttribute("inviteTopicList", inviteTopicList);
+		
 		return "chat/topic_main";
 	}
 	
-	@GetMapping("/topic_create")
-	public String topic_create() {
-		return "chat/topic_create";
-	}
+//	@GetMapping("/topic_create")
+//	public String topic_create() {
+//		return "chat/topic_create";
+//	}
 	
 	@PostMapping("/topic_create")
 	public String topic_create( @ModelAttribute TopicDto topicDto, HttpSession session,@RequestParam int team_no) {
@@ -305,6 +299,7 @@ public class ChatController {
 			model.addAttribute("topic_no", topic_no);
 			int member_no = (int) session.getAttribute("member_no");
 			
+
 			boolean enter = teamDao.teamMemberCheck(member_no, team_no);
 			if(!enter) { //db에 데이터가 확인되지 않을 경우 / db에 등록됨 
 		         //팀멤버로 추가
@@ -326,6 +321,81 @@ public class ChatController {
 			}
 		}
 				
-}
+
 	
+
+		
+		
+		
+		
+		//토픽 정보변경(토픽소유자만)
+		@PostMapping("/edittopic")
+		public String editTopic(@ModelAttribute TopicDto topicDto, @RequestParam int team_no) {
+			topicDao.editTopic(topicDto);
+			return "redirect:/chat/topic_main?team_no="+team_no+"&topic_no="+topicDto.getTopic_no();
+		}
+		
+		//토픽소유자 나가기(선택멤버 토픽소유자로 변경하고 나가기)
+		@PostMapping("/topic_masterchange")
+		public String topicMasterChange(@RequestParam int team_no, 
+																	@RequestParam int topic_no, 
+																	@RequestParam int member_no,
+																	HttpSession session,
+																	Model model) {
+			System.out.println(member_no);
+			System.out.println(team_no);
+			System.out.println(topic_no);
+			topicDao.topicMasterChange(topic_no,member_no);
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("member_no", member_no);
+			model.addAttribute("topic_no",topic_no);
+			return "redirect:/chat/topic_main";
+		}
+		
+		
+		//토픽멤버 나가기(토픽소유자 제외)
+		@GetMapping("/outtopic")
+		public String outTopic(@RequestParam int topic_no, 
+												@RequestParam int team_no,
+												@RequestParam int member_no,
+												Model model) {
+			topicDao.outTopic(topic_no,member_no);
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("topic_no",topic_no);
+			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
+		}
+		
+		
+		//토픽 초대(같은 토픽에 참여하고있지 않은 팀 리스트)
+		@PostMapping("/invitetopic")
+		public String topicInvite(@RequestParam List<Integer> member_no, 
+													@RequestParam int team_no, 
+													@RequestParam int topic_no,
+													Model model) { 
+			topicDao.inviteMember(member_no, team_no, topic_no);
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("topic_no",topic_no);
+			
+			return "redirect:/chat/topic_main";
+			
+		}
+		
+		
+		//토픽 삭제
+		@GetMapping("/deletetopic")
+		public String deletetopic(@RequestParam int topic_no,
+													@RequestParam int team_no, 
+													@RequestParam int member_no,
+													Model model) {
+			topicDao.deleteTopic(topic_no,team_no);
+			topicDao.outTopic(topic_no, member_no);
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("topic_no",topic_no);
+			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
+		}
+		
+		
+
+}
 
