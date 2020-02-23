@@ -79,7 +79,7 @@ function closevote(no){
 </script>
 <div id="bodyContents">
 <h3>투표상세페이지</h3><br>
-<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
+<%-- <a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a> --%>
 <ul>
 	<li>
 		<c:out value="${memberName }"/>

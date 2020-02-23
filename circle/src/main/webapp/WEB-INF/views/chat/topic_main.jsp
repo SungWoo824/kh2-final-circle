@@ -359,7 +359,8 @@ function MovePage(no){
 							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
 	        				<!-- 목록으로 버튼 if처리해야함 -->
 				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
-				            <h3>진행중인 투표 목록</h3>
+				            <div id="bodyContents">
+				           	 진행중인 투표 목록
 	        					<!-- 화면 동적 전환(투표 상세 페이지) -->
 				            	<ul>
 					            	<c:forEach var="voteList" items="${voteList }" >
@@ -373,6 +374,7 @@ function MovePage(no){
 					            		<br>
 					            	</c:forEach>   	
 				            	</ul>
+				            	</div>
 				    </div>
         			<!-- 투표 기능 종료 -->
         			<div class="slide todolist-slide">
