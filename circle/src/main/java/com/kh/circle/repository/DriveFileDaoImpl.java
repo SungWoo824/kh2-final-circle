@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.entity.DriveFileDto;
+import com.kh.circle.vo.BoardVo;
 import com.kh.circle.vo.DriveFileVO;
 
 @Repository
@@ -67,6 +68,11 @@ public class DriveFileDaoImpl implements DriveFileDao{
 	public List<DriveFileDto> getFolderList(int team_no) {
 		return sqlSession.selectList("driveFile.driveFolderList", team_no);
 	}
+	
+	@Override
+	public List<DriveFileDto> getFolderName(int team_no) {
+		return sqlSession.selectList("driveFile.driveFolderName", team_no);
+	}
 
 	//드라이브파일 목록 가져오기
 	@Override
@@ -88,6 +94,25 @@ public class DriveFileDaoImpl implements DriveFileDao{
 	public void driveDelete(DriveFileVO driveFileVo) {
 		sqlSession.delete("driveFile.driveDelete",driveFileVo);
 	}
+
+	@Override
+	public void fileEdit(int drive_file_no, String drive_file_uploadname) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("drive_file_no", drive_file_no);
+		param.put("drive_file_uploadname", drive_file_uploadname);
+		sqlSession.update("driveFile.fileEdit", param);
+		
+	}
+
+	//드라이브 파일 검색
+//	@Override
+//   public List<DriveFileDto> driveList(String keyword,int start, int finish) throws Exception {
+//      Map<String, Object> map = new HashMap<>();
+//      map.put("keyword",keyword);
+//      map.put("start",start);
+//      map.put("finish",finish);
+//      return sqlSession.selectList("driveFile.driveList",map);
+//   }
 
 
 

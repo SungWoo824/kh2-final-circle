@@ -140,5 +140,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	<insert id="mailInviteTopic" parameterType="topicMemberDto">
          insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
    	</insert>
+   	
+   	
 	
 </mapper>

@@ -44,13 +44,6 @@ $(function(){
 });
 </script>
 
-<!-- 파일 업로드하고 업로드된 파일 미리보기 -->
-<script>
-$(function(){
-	
-
-});
-</script>
 
 
 
@@ -102,9 +95,9 @@ $(function(){
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
 <!--             <h6 class="collapse-header">Login Screens:</h6> -->
-            <c:forEach items="${driveFolderList}" var="drive" >
+            <c:forEach items="${driveFolderName}" var="drive" >
 		            <a class="collapse-item" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&drive_name=${drive.drive_name}">
-		                 ${drive.drive_name}
+		                 ${drive}
 		            </a>
             </c:forEach>
             <div class="collapse-divider"></div>
@@ -148,7 +141,6 @@ $(function(){
 		
 			<div class="upload-wrap">
 			
-				
 				 <form action="driveupload" method="post" enctype="multipart/form-data">
 				 	<input type="hidden" name="drive_name" value="${param.drive_name}">
 					<input type="hidden" name="team_no" value="${param.team_no}">
@@ -173,7 +165,8 @@ $(function(){
 													<input type="checkbox" >
 														<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}"><br>
 															다운로드
-												</a>
+												</a>/
+												<a data-toggle="modal" data-target="#editFile">이름 변경</a>
 														/<a href="filedelete?drive_file_no=${fileList.drive_file_no}&team_no=${fileList.team_no}&drive_name=${fileList.drive_name}">삭제</a>
 												</c:if>
 										</form>
@@ -181,28 +174,23 @@ $(function(){
 								
 								</div>
 			                   
-			                   <nav class="paging" aria-label="Page navigation example">
-									  <ul class="pagination">
-									    <li class="page-item">
-									      <a class="page-link" href="#" aria-label="Previous">
-									        <span aria-hidden="true">&laquo;</span>
-									      </a>
-									    </li>
-									    <li class="page-item"><a class="page-link" href="#">1</a></li>
-									    <li class="page-item"><a class="page-link" href="#">2</a></li>
-									    <li class="page-item"><a class="page-link" href="#">3</a></li>
-									    <li class="page-item">
-									      <a class="page-link" href="#" aria-label="Next">
-									        <span aria-hidden="true">&raquo;</span>
-									      </a>
-									    </li>
-									  </ul>
-							</nav>
+			                  <!-- 페이징 -->
+<!-- 			                  <form action="driveSearch" method="post"> -->
+<%-- 				                  <input type="search" name="value" value="${value }"> --%>
+<!-- 				                  <input type="submit" value="검색"> -->
+<!-- 			                  </form> -->
+					         <!-- 네비게이터(navigator) -->
+<%-- 					         <jsp:include page="/WEB-INF/views/drive/paging.jsp"> --%>
+<%-- 					            <jsp:param name="pno" value="${pno}" /> --%>
+<%-- 					            <jsp:param name="count" value="${count}" /> --%>
+<%-- 					            <jsp:param name="navsize" value="${navsize}" /> --%>
+<%-- 					            <jsp:param name="pagesize" value="${pagesize}" /> --%>
+<%-- 					         </jsp:include> --%>
 			
-			      </div>
-			    </div>
-			  </div>
-		</article>	
+					      </div>
+					    </div>
+					  </div>
+				</article>	
 			</c:when>
 			<c:when test="${dfList.drive_file_uploadname=='null' }">
 			<!-- 폴더를 생성만 했을 때 보이는 화면 -->
@@ -224,7 +212,7 @@ $(function(){
 						
 							<div class="flist-wrap">
 					           	파일이 없습니다.
-					  </div>
+					  		</div>
 				</article>	
 			</c:when>
 			<c:otherwise>
@@ -247,6 +235,7 @@ $(function(){
 
 <!-- --------------------- 모달 ---------------------- -->
 
+<!-- 드라이브 폴더 생성 -->
 <form action="drive" method="post">
 
 	
@@ -263,7 +252,7 @@ $(function(){
 		      <div class="modal-body">
 		      			<input type="hidden" name="team_no" value="${param.team_no}">
 						<input type="hidden" name="member_no" value="${param.member_no}">
-		      		드라이브 이름 : <input type="text" name ="drive_name"><span></span><br><br>
+		      		<input type="text" name ="drive_name"><span></span><br><br>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -274,6 +263,35 @@ $(function(){
 		</div>
 		
 
+</form>
+
+<!-- 파일명 변경 -->
+<form action="editfile" method="post">
+	<div class="modal fade" id="editFile" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalCenterTitle">파일명 변경</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="topic_no" value="${param.drive_file_no}">
+					이름 :<input type="text" name="drive_file_uploadname"><span></span><br>
+					<br>
+					<br>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">닫기</button>
+					<button type="submit" id="edit-btn" class="btn btn-primary">수정하기</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </form>
 
 <!-- ------------------------------- 모달 종료--------------------------------- -->

@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
@@ -25,8 +27,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.DriveFileDto;
+import com.kh.circle.entity.MemberDto;
 import com.kh.circle.repository.DriveFileDao;
 import com.kh.circle.service.DriveFileService;
+import com.kh.circle.service.Pagination;
+import com.kh.circle.vo.BoardVo;
 import com.kh.circle.vo.DriveFileVO;
 
 import oracle.jdbc.proxy.annotation.Post;
@@ -49,18 +54,50 @@ public class DriveFileController {
 									//기본값을 null로 받을때 defaultValue
 									Model model) {
 		
+//		int pagesize = 10;
+//		int navsize = 10;
+//		int pno;
+//		
+//		try {
+//			pno = Integer.parseInt(req.getParameter("pno"));
+//			if(pno <=0) throw new Exception();
+//		} catch (Exception e) {
+//			pno=1;
+//		}
+//		int finish=pno*pagesize;
+//		int start = finish - (pagesize -1);
+//		
+//		String type = req.getParameter("type");
+//		String keyword= req.getParameter("keyword");
+//		
+//		boolean isSearch = type != null && keyword !=null;
+//		
+//		List<DriveFileDto> list;
+//		
+//		if(isSearch) {
+//
+//		}
+//		else {
+//			
+//		}
+//		
+//		int count;
+		
+		
 		List<DriveFileDto> folderList= driveFileDao.getFolderList(team_no);
 		model.addAttribute("team_no",team_no);
 		model.addAttribute("driveFolderList", folderList);
+		List<DriveFileDto> folderName= driveFileDao.getFolderName(team_no);
+		model.addAttribute("driveFileName", folderName);
 		
 		if(folderList != null) {
-			
 			List<DriveFileDto> fileList= driveFileDao.getFileList(team_no,drive_name);
 			model.addAttribute("driveFileList", fileList);
-			
 		}
 		
+		
 		return "drive/drive";
+		
 	}
 
 	
@@ -74,6 +111,7 @@ public class DriveFileController {
 		else return "N";
 	}
 	
+
 	
 	//폴더 생성
 	@PostMapping("/drive")
@@ -88,7 +126,16 @@ public class DriveFileController {
 		return "redirect:../drive/drive";
 	}
 	
-	
+	//파일명 변경
+	@PostMapping("/editfile")
+	public String editfile(@RequestParam int drive_file_no, 
+											@RequestParam String drive_file_uploadname,
+											 Model model
+										) {
+		driveFileDao.fileEdit(drive_file_no, drive_file_uploadname);
+		return "redirect:../drive/drive";
+		
+	}
 	
 //	@GetMapping("/drive_create")
 //	public String upload(@RequestParam int team_no, @RequestParam int member_no) {
@@ -169,7 +216,6 @@ public class DriveFileController {
 			return buffer.toString();
 		
 	}
-	
 		
 	
 		//팀 드라이브 파일 목록

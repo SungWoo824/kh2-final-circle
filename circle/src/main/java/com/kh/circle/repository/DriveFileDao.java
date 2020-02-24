@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.kh.circle.entity.DriveFileDto;
+import com.kh.circle.vo.BoardVo;
 import com.kh.circle.vo.DriveFileVO;
 
 public interface DriveFileDao {
@@ -18,5 +19,11 @@ public interface DriveFileDao {
 //	void driveDelete(String drive_name);
 	void fileDelete(int drive_file_no);
 	List<DriveFileDto>  getFolderList(int team_no);
+	List<DriveFileDto> getFolderName(int team_no);
 	void driveDelete(DriveFileVO driveFileVo);
+	void fileEdit(int drive_file_no, String drive_file_uploadname);
+	
+//	List<DriveFileDto> driveList(String keyword, int start, int finish) throws Exception;
+	
+	
 }

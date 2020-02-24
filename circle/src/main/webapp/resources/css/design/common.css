@@ -743,11 +743,20 @@ background-color:#f8f8f8;
 .flist-wrap{
 	height:100%;
 }
-
-.paging{
-	position:absolute;
-	margin-bottom:0;
+#fileview{
+	height:640px;
+	overflow:auto;
 }
+
+.page-num{
+	width:100%;
+	position:relative;
+}
+
+
+
+
+/*어드민*/
 .admin-wrap{
 	display:flex;
 }
