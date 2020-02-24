@@ -11,11 +11,12 @@ public interface DriveFileDao {
 
 	int getSequence();
 	void upload(DriveFileDto driveFileDto);
-	DriveFileDto get(int drive_file_no);
-	List<DriveFileDto> get2(DriveFileVO driveFileVo);
+	void newFolder(DriveFileDto driveFileDto);
+	DriveFileDto getNum(int drive_file_no);
+	List<DriveFileDto> getFileList(int team_no, String drive_name);
 	byte[] getUploadNo(int drive_file_no) throws IOException;
 //	void driveDelete(String drive_name);
 	void fileDelete(int drive_file_no);
-	List<DriveFileDto> getFolder(int team_no);
+	List<DriveFileDto>  getFolderList(int team_no);
 	void driveDelete(DriveFileVO driveFileVo);
 }

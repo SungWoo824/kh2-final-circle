@@ -737,3 +737,14 @@ background-color:#f8f8f8;
 	top:10px;
 	
 }
+
+
+/*파일 리스트*/
+.flist-wrap{
+	height:100%;
+}
+
+.paging{
+	position:absolute;
+	margin-bottom:0;
+}

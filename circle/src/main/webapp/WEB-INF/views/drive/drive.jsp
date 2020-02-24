@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	
+<link href="${pageContext.request.contextPath}/resources/css/design/sb-admin-2.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/design/all.min.css" rel="stylesheet" type="text/css">
 
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+<link href="${pageContext.request.contextPath}/resources/css/design/common.css" rel="stylesheet" type="text/css">
 
 <script>
 $(function(){
@@ -38,18 +44,16 @@ $(function(){
 });
 </script>
 
-<html>
-<!--bootstrap template-->
-	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<!-- 파일 업로드하고 업로드된 파일 미리보기 -->
+<script>
+$(function(){
 	
-    <link href="${pageContext.request.contextPath}/resources/css/design/sb-admin-2.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/design/all.min.css" rel="stylesheet" type="text/css">
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-   <link href="${pageContext.request.contextPath}/resources/css/design/common.css" rel="stylesheet" type="text/css">
-	
+});
+</script>
+
+
+
 </head>
 
 <body id="page-top">
@@ -98,8 +102,8 @@ $(function(){
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
 <!--             <h6 class="collapse-header">Login Screens:</h6> -->
-            <c:forEach items="${driveFolderList}" var="drive" varStatus="status" >
-		            <a class="collapse-item" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">
+            <c:forEach items="${driveFolderList}" var="drive" >
+		            <a class="collapse-item" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&drive_name=${drive.drive_name}">
 		                 ${drive.drive_name}
 		            </a>
             </c:forEach>
@@ -111,7 +115,6 @@ $(function(){
       
      
     </ul>
-    
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -136,68 +139,104 @@ $(function(){
              </div> 
 			<!-- 상단 토픽 정보 끝-->
 			</nav>
-			
-		<div class="upload-wrap">
 		
-			<h5>멤버 : ${param.member_no} / 팀 :${param.team_no }번 의 드라이브</h5>
-			
-			 <form action="drive_create" method="post" enctype="multipart/form-data">
-			 	<input type="hidden" name="drive_name" value="${param.drive_name}">
-				<input type="hidden" name="team_no" value="${param.team_no}">
-				<input type="hidden"  name="member_no"  value="${param.member_no}">
-				<input type="file" name ="file" multiple="multiple" >
-				<input id="check-btn" type="submit" value="업로드">
-			</form>
-			
-			
+		<c:set var="dfList" value="${driveFolderList.get(0)}"></c:set>
+		<c:choose>
+			<c:when test="${dfList.drive_folder == '1'}">
+			<!-- 파일을 하나라도 업로드하면 보이는 화면 -->
+			<article id="file-wrap">
 		
-		</div>
+			<div class="upload-wrap">
 			
+				
+				 <form action="driveupload" method="post" enctype="multipart/form-data">
+				 	<input type="hidden" name="drive_name" value="${param.drive_name}">
+					<input type="hidden" name="team_no" value="${param.team_no}">
+					<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
+					<input type="file" name ="file" multiple="multiple" >
+					<input id="upload-btn" type="submit" value="업로드">
+				</form>
+				
+			</div>
+				
+					<div class="flist-wrap">
+			           	<div class="chat-aside">
+			                   <div class="chat-menu-bar">
+			                   <div id="fileview">
+			                   
+									<c:forEach var="fileList" items="${driveFileList}">
+										<form action="download" method="post">
+												<c:if test="${fileList.drive_file_uploadname != 'null' }">
+												<input type="hidden" name="drive_file_no" value="${fileList.drive_file_no}">
+											    <div>${fileList.drive_file_no }</div> 
+												<a href="download?drive_file_no=${fileList.drive_file_no}">
+													<input type="checkbox" >
+														<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}"><br>
+															다운로드
+												</a>
+														/<a href="filedelete?drive_file_no=${fileList.drive_file_no}&team_no=${fileList.team_no}&drive_name=${fileList.drive_name}">삭제</a>
+												</c:if>
+										</form>
+									</c:forEach>
+								
+								</div>
+			                   
+			                   <nav class="paging" aria-label="Page navigation example">
+									  <ul class="pagination">
+									    <li class="page-item">
+									      <a class="page-link" href="#" aria-label="Previous">
+									        <span aria-hidden="true">&laquo;</span>
+									      </a>
+									    </li>
+									    <li class="page-item"><a class="page-link" href="#">1</a></li>
+									    <li class="page-item"><a class="page-link" href="#">2</a></li>
+									    <li class="page-item"><a class="page-link" href="#">3</a></li>
+									    <li class="page-item">
+									      <a class="page-link" href="#" aria-label="Next">
+									        <span aria-hidden="true">&raquo;</span>
+									      </a>
+									    </li>
+									  </ul>
+							</nav>
+			
+			      </div>
+			    </div>
+			  </div>
+		</article>	
+			</c:when>
+			<c:when test="${dfList.drive_file_uploadname=='null' }">
+			<!-- 폴더를 생성만 했을 때 보이는 화면 -->
+						<article id="file-wrap">
+		
+							<div class="upload-wrap">
+							
+								<h5>팀 :${param.team_no }번 의 드라이브</h5>
+								
+								 <form action="driveupload" method="post" enctype="multipart/form-data">
+								 	<input type="hidden" name="drive_name" value="${param.drive_name}">
+									<input type="hidden" name="team_no" value="${param.team_no}">
+									<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
+									<input type="file" name ="file" multiple="multiple" >
+									<input id="upload-btn" type="submit" value="업로드">
+								</form>
+								
+									</div>
+						
+							<div class="flist-wrap">
+					           	파일이 없습니다.
+					  </div>
+				</article>	
+			</c:when>
+			<c:otherwise>
+			<!-- 폴더 생성안했을때 기본화면 -->
+					<article>
+						파일이 없습니다. 폴더를 생성하세요.
+					</article>
+			</c:otherwise>
+		</c:choose>
+		
          
         <!-- End of Topbar -->
-		<div class="chat-wrap">
-           	<div class="chat-aside">
-                   <div class="chat-menu-bar">
-                   <div id="fileview">
-                   
-						<c:forEach var="fileList" items="${fileList}">
-						<!-- 	<form action="download" method="post"> -->
-									<input type="hidden" name="drive_file_no" value="${fileList.drive_file_no}">
-								    <div>${fileList.drive_file_no }</div> 
-								    
-									<a href="download?drive_file_no=${fileList.drive_file_no}">
-										<input type="checkbox" >
-										<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}"><br>
-										다운로드
-									</a>
-									/<a href="filedelete?drive_file_no=${fileList.drive_file_no}&team_no=${fileList.team_no}&drive_name=${fileList.drive_name}">삭제</a>
-						<!-- 	</form> -->
-							
-						</c:forEach>
-					
-					</div>
-                   
-                   <nav aria-label="Page navigation example">
-						  <ul class="pagination">
-						    <li class="page-item">
-						      <a class="page-link" href="#" aria-label="Previous">
-						        <span aria-hidden="true">&laquo;</span>
-						      </a>
-						    </li>
-						    <li class="page-item"><a class="page-link" href="#">1</a></li>
-						    <li class="page-item"><a class="page-link" href="#">2</a></li>
-						    <li class="page-item"><a class="page-link" href="#">3</a></li>
-						    <li class="page-item">
-						      <a class="page-link" href="#" aria-label="Next">
-						        <span aria-hidden="true">&raquo;</span>
-						      </a>
-						    </li>
-						  </ul>
-				</nav>
-
-      </div>
-    </div>
-  </div>
   <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
@@ -253,4 +292,3 @@ $(function(){
 </div>
 </body>
 
-</html>
