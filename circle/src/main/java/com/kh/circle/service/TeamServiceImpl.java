@@ -41,11 +41,10 @@ public class TeamServiceImpl implements TeamService {
 		List<TopicDto> topicList = teamTopicList(team_no,member_no);
 		List<ChatCountVo> chatCount = new ArrayList<>();
 		for(TopicDto topicDto : topicList) {
-			log.info("topicDto = {}", topicDto);
+			
 			ChatVo enterChatVo = ChatVo.builder().member_no(member_no).topic_no(topicDto.getTopic_no()).status(0).build();
-			log.info("enterChatVo = {}", enterChatVo);
 			ChatVo exitChatVo = ChatVo.builder().member_no(member_no).topic_no(topicDto.getTopic_no()).status(1).build();
-			log.info("exitChatVo = {}", exitChatVo);
+			
 			int enter;
 			int exit;
 			if(sqlSession.selectOne("topic.topicStatusSearch", enterChatVo)==null) {

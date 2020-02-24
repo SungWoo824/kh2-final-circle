@@ -54,11 +54,14 @@ public class Team{
 	public void broadcast(WebSocketSession user, ChatVo chatVo, List<Integer> containList) throws IOException {
 		
 		for(int topic_no : containList) {
-			log.info("topic_no = {}",topic_no);
+			
 			if(topic_no==chatVo.getTopic_no()) {
-				chatVo.setStatus(2);
-				log.info("chatVo.getTopic_no ={}",chatVo.getTopic_no());
-			topicList.get(topic_no).broadcast(user, chatVo);
+				if(chatVo.getStatus()!=4) {
+					chatVo.setStatus(2);
+					topicList.get(topic_no).broadcast(user, chatVo);					
+				}else {
+					topicList.get(topic_no).broadcast(user, chatVo);
+				}
 			}else {
 				chatVo.setStatus(3);
 				topicList.get(topic_no).broadcast(user, chatVo);

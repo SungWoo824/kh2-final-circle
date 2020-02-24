@@ -18,7 +18,7 @@
 </head>
 <body>
 
-
+	
 	 <div class="circle-header">
 
                 <div class="header-wrap">
@@ -32,6 +32,9 @@
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
                             <c:choose>
+                            	<c:when	test="${not empty member_grade}">
+                            		<li><a href="${pageContext.request.contextPath}/manager/main">관리자 페이지</a></li>
+                            	</c:when>
 		                        <c:when test="${not empty member_email}">
 							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
 							    </c:when>
@@ -45,8 +48,6 @@
 							<c:otherwise>
 								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
 							</c:otherwise>
-                       
-                        
                         </c:choose>
                         </ul>
                     </div>
@@ -59,6 +60,9 @@
                             <div class="section">
                                 	<div class="mypage-main-content">
 	                                    <div class="mypage-div">
+	                                    	<div class="member-mypage-img">
+	                                    		<img id="member-profile-img" src='download?member_no=${member_no}'>
+	                                    	</div>
 	                                    	<div class="mypage-name-div">
 		                                        <span>${memberDto.member_name}</span>
 		                                        <p>${memberDto.member_email}
@@ -71,7 +75,7 @@
 	                                   
 			                                    <c:forEach items="${teamlist}" var="teamDto">
 			                                    	<div>
-	                                    				<div class="mypage-div">
+	                                    				<div class="mypage-div">	
 	                                    					<div class="mypage-name-div">
 																<h4>team_name = ${teamDto.team_name} team_domain = ${teamDto.team_domain}</h4>
 															</div>
@@ -95,6 +99,7 @@
 																<div class="mypage-team-div">
 																	<button type="submit">소유자관리</button>
 																</div>
+																
 															</form>
 																
 															<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
