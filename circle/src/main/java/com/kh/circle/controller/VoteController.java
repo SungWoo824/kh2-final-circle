@@ -57,7 +57,7 @@ public class VoteController {
 	
 	@GetMapping("/vote_create")
 	public String create(Model model, HttpSession session, @RequestParam("team_no") int team_no) {
-		model.addAttribute("topicList", voteCreateDao.getTopicList());
+		model.addAttribute("topicList", voteCreateDao.getTopicList((int) session.getAttribute("team_no")));
 		model.addAttribute("member_no", session.getAttribute("member_no"));
 		return "chat/vote_create";
 	}

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>팀멤버 가입 중복 확인 하는 곳 </title>
+<title>Insert title here</title>
 </head>
 <body>
 

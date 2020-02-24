@@ -32,6 +32,12 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<typeAlias type="com.kh.circle.vo.MemberListVO" alias="memberListVO"/>
 		<typeAlias type="com.kh.circle.entity.PayDto" alias="payDto"/>
 		<typeAlias type="com.kh.circle.entity.PayCountDto" alias="payCountDto"/>
+		<typeAlias type="com.kh.circle.entity.TodoListDto" alias="todoListDto"/>
+		<typeAlias type="com.kh.circle.entity.ChatSearchDto" alias="chatSearchDto"/>
+		<typeAlias type="com.kh.circle.vo.TodoListJoinVO" alias="todoListJoinVO"/>
+		<typeAlias type="com.kh.circle.vo.BoardVo" alias="boardVo"/>
+		<typeAlias type="com.kh.circle.vo.ChatFileVo" alias="chatFileVo"/>
+
 	</typeAliases>
 	
 	

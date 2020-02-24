@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class MemberListVO {
+
 	private String member_name; 
 	private String member_position;
 	private String member_auth;
@@ -16,7 +17,5 @@ public class MemberListVO {
 
 	private String topic_member_position;
 	private int topic_no, team_no;
-	
-
 
 }

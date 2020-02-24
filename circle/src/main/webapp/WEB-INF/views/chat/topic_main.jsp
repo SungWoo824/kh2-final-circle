@@ -22,6 +22,9 @@
 // 		페이지가 로딩되면 웹소켓 서버에 접속
 		connect();
 
+		$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
+
+
 		//페이지를 나가기 전에 웹소켓 서버 접속을 종료
 		$(window).on("beforeunload", function(){
 			sendMessage(exit);
@@ -29,7 +32,8 @@
 		});
 		
 		
-		$('.user-input').keydown(function(e) {
+		$('.user-input').keydown(function(e
+				) {
 		    if (e.keyCode == 13) {
 		    	var chat_content = $(".user-input").val();//입력값을 불러오고
 				if(!chat_content) return;//미입력시 중단
@@ -47,7 +51,29 @@
 
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
-			$("<div>").text(message.chat_content).appendTo("#chat-content");
+			if(message.status==2){
+				var cont = $("<p>").addClass("msg").text(message.chat_content);
+				var spanin = $("<span>").text(message.member_name);
+				var msg_con =$("<div>").addClass("msg-con");
+				spanin.appendTo(msg_con);
+				cont.appendTo(msg_con);
+				var createduv = $("<div>").addClass("msg-profile");
+				var messagecontent = $("<div>").addClass("msg-wrap")
+				createduv.appendTo(messagecontent);
+				msg_con.appendTo(messagecontent);
+				messagecontent.prependTo("#chat-content");				
+			}else if(message.status==4){
+				var cont = $("<p>").addClass("msg").text(message.chat_content);
+				var spanin = $("<span>").text(message.member_name);
+				var msg_con =$("<div>").addClass("msg-con");
+				spanin.appendTo(msg_con);
+				cont.appendTo(msg_con);
+				var createduv = $("<div>").addClass("msg-profile");
+				var messagecontent = $("<div>").addClass("msg-wrap")
+				createduv.appendTo(messagecontent);
+				msg_con.appendTo(messagecontent);
+				messagecontent.prependTo("#chat-content");
+			}
 		}
 		
 // 		웹소켓 연결 함수
@@ -72,8 +98,8 @@
 				var msg = JSON.parse(e.data);
 				console.log(msg);
 				var ptopic_no = ${param.topic_no};
-				if(ptopic_no==msg.topic_no && msg.status==2){
-				appendMessage(msg);
+				if(ptopic_no==msg.topic_no && (msg.status==2 ||msg.status==4)){
+					appendMessage(msg);
 				}
 				if(ptopic_no!=msg.topic_no){
 					var topic_no = msg.topic_no;
@@ -104,9 +130,76 @@
 			var value = JSON.stringify(message);
 			window.socket.send(value);
 		}
+		
+		var obj = $("#dropzone");
+
+	    obj.on('dragenter', function (e) {
+	         e.stopPropagation();
+	         e.preventDefault();
+	         $(this).css('border', '2px solid #5272A0');
+	    });
+
+	    obj.on('dragleave', function (e) {
+	         e.stopPropagation();
+	         e.preventDefault();
+	         $(this).css('border', '2px dotted #8296C2');
+	    });
+
+	    obj.on('dragover', function (e) {
+	         e.stopPropagation();
+	         e.preventDefault();
+	    });
+
+	    obj.on('drop', function (e) {
+	         e.preventDefault();
+	         $(this).css('border', '2px dotted #8296C2');
+
+	         var files = e.originalEvent.dataTransfer.files;
+	         if(files.length < 1)
+	              return;
+				console.log(obj);
+	         F_FileMultiUpload(files, obj);
+	    });
+	    
+	    function F_FileMultiUpload(files, obj) {
+	        if(confirm(files.length + "개의 파일을 업로드 하시겠습니까?") ) {
+	            var data = new FormData();
+	            var team_no = ${param.team_no};
+	            var topic_no = ${param.topic_no};
+	            var member_no = ${member_no};
+	            data.append('team_no',team_no);
+	            data.append('topic_no',topic_no);
+	            data.append('member_no',member_no);
+	            for (var i = 0; i < files.length; i++) {
+	               data.append('file', files[i]);
+	            }
+
+	            var url = "./fileupload";
+	            $.ajax({
+	               url: url,
+	               method: 'post',
+	               data: data,
+	               processData: false,
+	               contentType: false,
+	               success: function(res) {
+	                   sendMessage(4,res);
+	               }
+	            });
+	        }
+	    }
+
+	    //파일 멀티 업로드 Callback
+	    function F_FileMultiUpload_Callback(files) {
+	        for(var i=0; i < files.length; i++)
+	            console.log(files[i].file_nm + " - " + files[i].file_size);
+	    }
 	});	
 
-</script> 
+
+
+
+
+</script>
 <!-- 토픽 생성 이름 중복검사 -->
 <script>
 $(function(){
@@ -162,11 +255,10 @@ $(function(){
 			
 			$.ajax({
               type : "POST", //전송방식을 지정한다 (POST,GET)
-              url : url,  //위에 지정한 url
-              data : data,            
+              url : url,
+              data : data,
               error : function(){
-            	  alert("통신실패!!!!");
-            	  
+            	  alert("통신실패!!!!");        	  
             	  $('#modal').hide();
 
               },
@@ -174,10 +266,10 @@ $(function(){
                   //console.log(resp);
       				alert("발송완료되었습니다");
       			//입력창 초기화
+
                     $(".form-control").val("");
                   	("input[type=submit]").prop("disabled",false).val("");
 //       				$('#modal').hide();
-
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
    
@@ -251,7 +343,7 @@ $(function(){
 
 //투표
 function MovePage(no){
-	var content = $('#content').val();
+// 	var content = $('#content').val();
 	var team_no = ${param.team_no};
 	var topic_no = ${param.topic_no};
 	var  ajaxOption = {
@@ -263,6 +355,23 @@ function MovePage(no){
 	};
 	$.ajax(ajaxOption).done(function(data){
 		$('#bodyContents').html(data);
+	});
+}
+
+//검색결과
+function searchResult(no){
+	var keyword = $('#searchkey').val();
+	var topic_name = $('#topicSelection').val();
+	var term = $('#termSelection').val();
+	var ajaxOption = {
+			url : "./chat_search?team_no="+no,
+			type : "POST",
+			dataType : "html",
+			data : {keyword:keyword, topic_name:topic_name, term:term},
+			cache : false		
+	};
+	$.ajax(ajaxOption).done(function(data){
+		$('#searchResult').html(data);
 	});
 }
 
@@ -286,7 +395,6 @@ function MovePage(no){
 
   <!-- Page Wrapper -->
   <div id="wrapper">
-
 
 	<!-- 오른쪽 메뉴 바 시작 -->
 	<div class="menu-wrap">
@@ -346,8 +454,25 @@ function MovePage(no){
             				<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>
-            			search- slide
+					<div id="searchResult">
+            			채팅 내용 검색<br><br>	
+            			<select name="topic_name" id="topicSelection">
+            				<option value="all">전체 토픽</option>
+            			<c:forEach items="${topicList }" var="topicList">
+            				<option value="${topicList.topic_name }">${topicList.topic_name }</option>
+            			</c:forEach>
+            			</select>
+            			<select name="term" id="termSelection">
+            				<option value="0">전체기간</option>
+            				<option value="7">1주일</option>
+            				<option value="30">1개월</option>
+            				<option value="90">3개월</option>
+            			</select><br><br>
+            				<input type="text" name="keyword" id="searchkey" required>
+            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
+            		</div>	
             	</div>
+            	</div> 
             	<div class="slide vote-slide">
             		<div class="slide-close">
             			<ul>
@@ -623,9 +748,8 @@ function MovePage(no){
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">사용자</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
-                
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${member_name }</span>
+                <img class="img-profile rounded-circle" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -658,10 +782,12 @@ function MovePage(no){
                     
 						<!-- 메세지 결과 창 -->          
                         <div class="message" style="text-align: left">
-							<div id="chat-content">
+							<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
 								<c:forEach items="${topicChatList}" var="chatVo">
 									<div class="msg-wrap">
-										<div class="msg-profile"></div>
+										<div class="msg-profile">
+											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+										</div>
 											<div class="msg-con">
 												<span>${chatVo.member_name} </span>
 												<p class="msg">${chatVo.chat_content}</p>
@@ -674,13 +800,20 @@ function MovePage(no){
 							
 							<!-- 전송 -->
 							<div class="chat-send-content">
+						<%-- 	<form action="./fileupload" name="uploadForm" id="uploadForm" enctype="multipart/form-data" method="post">
+								<input type="file" name="file">
+								<input type="hidden" name="team_no" value="${param.team_no }">
+								<input type="hidden" name="topic_no" value="${param.topic_no }">
+							</form> --%>
 								<div class="chat-send-text">
-									<input class="form-control user-input" type="text" placeholder="메시지를 입력하세요">
+									<input id="dropzone" class="form-control user-input" type="text" placeholder="메시지를 입력하세요">
 								</div>
 								<div class="chat-send-button">
 									<button type="submit" class="btn btn-lg btn-primary send-btn">전송</button>
 								</div>
+							
 							</div>
+							
 									
 			</article>
 

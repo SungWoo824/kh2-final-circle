@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="search">
+	<select id="all" parameterType="chatSearchDto" resultType="chatSearchDto">
+		select c.team_no, c.chat_no, m.member_no, m.member_name, c.chat_content, c.chat_time, t.topic_name
+		from member m, chat_list c, topic t where m.member_no = c.member_no and 
+		c.topic_no=t.topic_no and team_no=#{team_no} and <![CDATA['202000101'< to_char(chat_time, 'yyyymmdd')]]> 
+		and chat_content like '%'||#{keyword}||'%' order by chat_no
+	</select>
+	
+	<select id="byTopic" parameterType="chatSearchDto" resultType="chatSearchDto">
+		select c.team_no, c.chat_no,m.member_no, m.member_name, c.chat_content, c.chat_time, t.topic_name
+		from member m, chat_list c, topic t where m.member_no = c.member_no and 
+		c.topic_no=t.topic_no and team_no=#{team_no} and topic_name=#{topic_name} and <![CDATA['202000101'< to_char(chat_time, 'yyyymmdd')]]> 
+		and chat_content like '%'||#{keyword}||'%' order by chat_no
+	</select>
+	
+	<select id="allByDate" parameterType="chatSearchDto" resultType="chatSearchDto">
+		select c.team_no, c.chat_no, m.member_no, m.member_name, c.chat_content, c.chat_time, t.topic_name
+		from member m, chat_list c, topic t where m.member_no = c.member_no and 
+		c.topic_no=t.topic_no and team_no=#{team_no} and <![CDATA[sysdate-#{term} < to_char(chat_time, 'yyyymmdd')]]> 
+		and chat_content like '%'||#{keyword}||'%' order by chat_no
+	</select>
+	
+	<select id="topicByDate" parameterType="chatSearchDto" resultType="chatSearchDto">
+		select c.team_no, c.chat_no,m.member_no, m.member_name, c.chat_content, c.chat_time, t.topic_name
+		from member m, chat_list c, topic t where m.member_no = c.member_no and 
+		c.topic_no=t.topic_no and team_no=#{team_no} and topic_name=#{topic_name} and <![CDATA[sysdate-#{term} < to_char(chat_time, 'yyyymmdd')]]> 
+		and chat_content like '%'||#{keyword}||'%' order by chat_no
+	</select>
+</mapper>
