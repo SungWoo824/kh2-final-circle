@@ -61,7 +61,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 할일 전체 개수 카운트 -->
 	<select id="countTodo" resultType="int" parameterType="todoListJoinVO">
-	select count(*) from todo_list where member_no=#{member_no} and team_no=#{team_no}
+	select count(*) 
+	from todo_list 
+	where member_no=#{member_no} and team_no=#{team_no} and todo_list_done='진행'
 	</select>
 	
 	

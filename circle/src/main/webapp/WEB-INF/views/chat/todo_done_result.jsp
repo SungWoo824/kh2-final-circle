@@ -3,11 +3,47 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<script>
+// 투두 리스트 검색 결과 비동기
+function TodoSearch(no){
 
+	var team_no = ${param.team_no};
+	var member_no = ${member_no};
+	var todo_list_content = $("#todo_list_content").val();  //인풋에 있는 벨류를 가져올게 
+
+		var  ajaxOption = {
+			url : "./todo_list_search_result",
+			type : "post",
+			dataType : "html",
+			data : {team_no:team_no, member_no:member_no, todo_list_content:todo_list_content},
+			cache : false
+	};
+		$.ajax(ajaxOption).done(function(data){
+// 				$('#todo-list-search').html(data);
+				$('#todo-list-search').html(data);
+				$('#list-done-result').hide();
+				
+			});
+		
+}
+
+
+</script>
 <title>완료된 할일 </title>
 </head>
 <body>
-<!-- 완료된 할일 보기 -->
+
+				<!-- 할일 검색하기 비동기 -->
+				<input type="text" id="todo_list_content" name="todo_list_content" placeholder="비동기 검색">
+				<input type="submit" onclick="TodoSearch()" value="검색">
+					<br><br>
+					<!--비동기 검색 결과   -->
+					<p>검색 결과 </p>
+			   <div id="todo-list-search"></div>
+			   
+
+<!-- 완료 목록보기   -->		
+<div id="list-done-result">
 <h2>완료된 할일</h2>
 	<c:forEach items="${todoPerAll}" var="todoListJoinVO">
 			<c:choose>
@@ -29,5 +65,7 @@
 		</c:when>
 		</c:choose>
 	</c:forEach>
+</div>
+	
 </body>
 </html>
