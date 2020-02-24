@@ -107,9 +107,10 @@ public class ChatController {
 		int member_no = (int)session.getAttribute("member_no");	
 			//할일 목록 출력
 			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			
 			//할일 개수 출력
 			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
-			//할일 생성
+			
 			
 		
 		return "chat/topic_main";

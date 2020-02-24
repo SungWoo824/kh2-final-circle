@@ -1,5 +1,7 @@
 package com.kh.circle.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.TodoListDto;
 import com.kh.circle.repository.TodoListDao;
@@ -160,7 +163,7 @@ public class TodoListController {
 					.build();
 			todoListDao.deleteTodo(todoListDto);
 			
-			return "redirect:./todo_list_main";
+			return "redirect:./topic_main";
 		}
 		
 		//할일 수정(list_detail-> 에서 옴)
@@ -184,34 +187,77 @@ public class TodoListController {
 		
 		//할일 완료 시키기
 		@PostMapping("/todo_done")
-		public String todo_done(@RequestParam int team_no,
-								@RequestParam int topic_no,
-								@ModelAttribute TodoListDto todoListDto,
+		
+		public String todo_done(
+				@RequestParam int team_no,
+				 @RequestParam int topic_no,
+
+					@ModelAttribute TodoListDto todoListDto,
+					 @ModelAttribute TodoListJoinVO todoListJoinVO, 		
 								HttpSession session, Model model) {
-			
+
 			//보낼 데이터들
 			int member_no = (int)session.getAttribute("member_no");
 			model.addAttribute("team_no", team_no);
 			model.addAttribute("topic_no", topic_no);	
-			
+//			model.addAttribute("todo_list_no", todo_list_no);
 			
 			//완료 메소드 실행
 			int todo_list_no = todoListDto.getTodo_list_no();
+//			int todo_list_no = todoListJoinVO.getTodo_list_no();
 			todoListDao.todoDone(member_no, todo_list_no);
 			
-			return "redirect:./todo_list_main";
+
+				
+			//할일 목록 출력
+			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			
+			//할일 전체 개수 출력 
+			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
+			
+			return "chat/todo_done";
+//			return "redirect./todo_done";
 		}
 		
 		@GetMapping("/todo_done")
+		public String todo_done(HttpSession session, Model model,
+				@RequestParam int team_no,
+				 @RequestParam int topic_no,
+				 @ModelAttribute TodoListDto todoListDto,
+				 @ModelAttribute TodoListJoinVO todoListJoinVO
+								) {
+			//보낼 데이터들
+			int member_no = (int)session.getAttribute("member_no");
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no", topic_no);	
+//			model.addAttribute("todo_list_no", todo_list_no);
+			
+			
+			//할일 목록 출력
+			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			
+			//할일 전체 개수 출력 
+			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));		
+			return "chat/todo_done";
+		}
+		
+		
+		
+		
+		@GetMapping("/todo_done_result")
 		public String todo_done(@RequestParam int team_no,
-								
+				@RequestParam int topic_no,
+				@ModelAttribute TodoListDto todoListDto,
+				 @ModelAttribute TodoListJoinVO todoListJoinVO, 
 								Model model, HttpSession session) {
 			
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no", topic_no);	
 			int member_no = (int)session.getAttribute("member_no");
 			//할일 목록 출력
 			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
 					
-			return "chat/todo_done";
+			return "chat/todo_done_result";
 		}
 				
 		
