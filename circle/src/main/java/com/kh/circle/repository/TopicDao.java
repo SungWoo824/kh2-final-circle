@@ -12,6 +12,7 @@ public interface TopicDao {
 	void topicMemberInsert(TopicMemberDto topicMemberDto);
 	int teamTopicFirst(int team_no);
 	TopicDto topicChange(int topic_no);
+	void mailInviteTopic(TopicMemberDto topicMemberDto);
 	List<TopicDto> teamTopicList(int team_no);
 	List<TopicMemberDto> topicMemberList(int topic_no);
 	List<TopicMemberDto> inviteTopicList(int team_no,int topic_no);

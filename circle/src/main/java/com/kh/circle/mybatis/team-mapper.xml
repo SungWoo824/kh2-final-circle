@@ -33,6 +33,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		count(*) from team where team_domain=#{team_domain}
 	</select>
 	
+	<!-- 링크로 초대되었을 때 기존팀멤버 인지 중복 확인하기 -->
+	<select id="teamMemberCheck" parameterType="map" resultType="teamMemberDto">
+	select * from team_member where team_no=#{team_no} and member_no=#{member_no}
+	</select>
 
 	<!-- 팀 목록보기 -->
 	<select id="teamlist" resultType="teamDto" parameterType="int">
@@ -41,9 +45,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      inner join team on tm.team_no=team.team_no order by team.team_no
 	</select>
 	
-	<!-- 어떤 팀에 참여중인 멤버 리스트 보기 -->
+	<!-- 지정된 팀에 참여중인 모든 멤버 리스트 보기 -->
 	<select id="memberList" resultType="memberListVO" parameterType="int">
-	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm 
+<!-- 	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm  -->
+<!-- 	inner join member on member.member_no = tm.member_no -->
+		select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no})tm 
+			inner join member on member.member_no = tm.member_no
+	</select>
+	
+	<!-- 지정된 팀에 참여중인 정회원만 출력 -->
+	<select id="memberListRegular" resultType="memberListVO" parameterType="int">
+	select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+	 from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='정회원'and member_position is null)tm 
+	inner join member on member.member_no = tm.member_no
+	</select>
+	
+	<!-- 지정된 팀에 참여중인 준회원만 출력 -->
+	<select id="memberListAssociate" resultType="memberListVO" parameterType="int">
+	select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+	 from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='준회원'and member_position is null)tm 
+	inner join member on member.member_no = tm.member_no
+	</select>
+	
+	<!-- 지정된 팀에 참여중인 소유자만 출력 -->
+	<select id="memberListOwner" resultType="memberListVO" parameterType="int">
+	select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+	 from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_position='소유자')tm 
 	inner join member on member.member_no = tm.member_no
 	</select>
 	
@@ -100,6 +128,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	 	select * from team where team_no=#{team_no}
 	</select>
 	
+	<!-- 팀 멤버 디티오 정보 -->
+	<select id="teamMemberInfo" resultType="teamMemberDto" parameterType="teamMemberDto">
+		select * from team_member where member_no = #{member_no} and team_no=#{team_no}
+	</select>
+	
 	<!-- 팀 아예 삭제 ( 모든 멤버까지 다삭제) -->
 	<delete id="teamDelete" parameterType="int" >
 		delete team where team_no=#{team_no}
@@ -134,7 +167,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	set team_domain = #{team_domain}
 	where team_no = #{team_no}
 	</update>
+
+	<!-- 등급 양도 -->
+	<update id="grantPosition" parameterType="map">
+	update team_member 
+	set member_position = ${member_position} 
+	where member_no=#{member_no} and team_no=#{team_no} 
+	</update>
 	
-
-
+	<select id="teamCount" resultType="int">
+		select count(*) from team
+	</select>
+	
+	<select id="managerTeamList" resultType="teamDto" parameterType="boardVo">
+		select * from (select rownum rn, A.* from 
+		(select * from team
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by team_no desc)A ) where rn between #{startIndex} and #{countPerPage}
+		
+	</select>
+	<select id="managerTeamListCount" resultType="int" parameterType="boardVo">
+		select count(*) from team
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by team_no desc
+	</select>
 </mapper>

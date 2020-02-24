@@ -19,13 +19,13 @@ public class Topic {
 		//방에 신규인원을 추가하는 메소드
 		public void add(WebSocketSession session) throws IOException {
 			userList.add(session);
-			
+			toString();
 		}
 		
 		//방에 있는 인원을 삭제하는 메소드
 		public void remove(WebSocketSession session) throws IOException {
 			userList.remove(session);
-			
+			toString();
 		}
 		
 		//방에 있는 인원에게 메시지를 전송하는 메소드
