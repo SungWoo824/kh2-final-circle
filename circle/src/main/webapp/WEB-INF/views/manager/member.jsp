@@ -48,6 +48,11 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>서클 메인</span></a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/manager/main">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>관리자 메인</span></a>
+      </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider">

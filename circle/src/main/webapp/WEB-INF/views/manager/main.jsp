@@ -48,7 +48,11 @@
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>서클 메인</span></a>
       </li>
-
+	  <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/manager/main">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>관리자 메인</span></a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider">
 
@@ -274,27 +278,19 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">${member_name }</span>
+                <img class="img-profile rounded-circle" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/member/modify">
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
+                  내 정보보기
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="${pageContext.request.contextPath}/member/signout" >
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
+                  로그아웃
                 </a>
               </div>
             </li>
@@ -311,65 +307,65 @@
 		
           	<article class="admin-wrap" style="padding-top: 5rem;">
                     
-						<div class="card border-primary mb-3" style="width: 20rem; height: 15rem; margin:auto;">
+						<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem; margin:auto;">
 						  <div class="card-header">접속자</div>
-						  <div class="card-body">
+						  <div class="card-body admin-card-body">
 						    <h4 class="card-title">Primary card title</h4>
 						    <p class="card-text">
-						    	<a href="#">Some quick example text to build on the card title and make up the bulk of the card's content.</a>
+						    	<a href="#"></a>
 						    </p>
 						  	
 						  </div>
 						</div>
 						                    
-						<div class="card border-primary mb-3" style="width: 20rem; height: 15rem;  margin:auto;">
+						<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem;  margin:auto;">
 						  <div class="card-header">총회원</div>
-						  <div class="card-body">
-						    <h4 class="card-title">Primary card title</h4>
+						  <div class="card-body admin-card-body">
+						    <h4 class="card-title">${memberCount} 명</h4>
 						    <p class="card-text">
-						    	<a href="#">${memberCount} 명</a>
+						    	<a href="#"></a>
 						    </p>
 						  </div>
 						</div>
 						                    
-						<div class="card border-primary mb-3" style="width: 20rem; height: 15rem; margin:auto;">
+						<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem; margin:auto;">
 						  <div class="card-header">등록팀수</div>
-						  <div class="card-body">
-						    <h4 class="card-title">Primary card title</h4>
+						  <div class="card-body admin-card-body">
+						    <h4 class="card-title">${teamCount} 팀</h4>
 						    <p class="card-text">
-						    	<a href="#">${teamCount} 팀</a>
+						    	<a href="#"></a>
 						    </p>
 						  </div>
 						</div>	
 			</article>
 			<article class="admin-wrap" style="padding-top: 9rem;">
                     
-						<div class="card border-primary mb-3" style="width: 20rem; height: 15rem; margin:auto;">
+						<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem; margin:auto;">
 						  <div class="card-header">파일용량</div>
-						  <div class="card-body">
-						    <h4 class="card-title">Primary card title</h4>
+						  <div class="card-body admin-card-body">
+						    <h4 class="card-title">${fileTotalSize}</h4>
 						    <p class="card-text">
-						    	<a href="#">${fileTotalSize}</a>
+						    	<a href="#"></a>
 						    </p>
 						  </div>
 						</div>
 						                    
-						<div class="card border-primary mb-3" style="width: 20rem; height: 15rem; margin:auto;">
+						<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem; margin:auto;">
 						  <div class="card-header">이번달 매출</div>
-						  <div class="card-body">
+						  <div class="card-body admin-card-body">
 						    <h4 class="card-title">Primary card title</h4>
 						    <p class="card-text">
-						    	<a href="#">Some quick example text to build on the card title and make up the bulk of the card's content.</a>
+						    	<a href="#"></a>
 						    </p>
 						  </div>
 						</div>
 						                    
-						<div class="card border-primary mb-3" style="width: 20rem; height: 15rem; margin:auto;">
+						<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem; margin:auto;">
 						  <div class="card-header">등록 관리자 수</div>
-						  <div class="card-body">
-						    <h4 class="card-title">Primary card title</h4>
+						  <div class="card-body admin-card-body">
+						    <h4 class="card-title">${managerCount} 명</h4>
 						    <p class="card-text">
-						    	<a href="#">${managerCount} 명</a>
+						    	<a href="#"></a>
 						    </p>
 						  </div>
 						</div>	

@@ -56,8 +56,12 @@ public class Team{
 		for(int topic_no : containList) {
 			
 			if(topic_no==chatVo.getTopic_no()) {
-				chatVo.setStatus(2);
-				topicList.get(topic_no).broadcast(user, chatVo);
+				if(chatVo.getStatus()!=4) {
+					chatVo.setStatus(2);
+					topicList.get(topic_no).broadcast(user, chatVo);					
+				}else {
+					topicList.get(topic_no).broadcast(user, chatVo);
+				}
 			}else {
 				chatVo.setStatus(3);
 				topicList.get(topic_no).broadcast(user, chatVo);

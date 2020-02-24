@@ -35,6 +35,8 @@ import com.kh.circle.repository.TopicDao;
 import com.kh.circle.repository.VoteCreateDao;
 import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.service.TeamService;
+import com.kh.circle.vo.ChatFileVo;
+import com.kh.circle.vo.ChatVo;
 import com.kh.circle.vo.TodoListJoinVO;
 import com.kh.circle.vo.TopicRestVO;
 
@@ -433,7 +435,25 @@ public class ChatController {
 			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
 		
-		
+		@PostMapping("fileupload")
+		@ResponseBody
+		public String fileupLoad(@RequestParam MultipartFile file,
+								@ModelAttribute ChatFileVo chatFileVo,
+								HttpSession	session) throws IllegalStateException, IOException {
+			int chat_no = sqlSession.selectOne("chat.getSequence");
+			ChatVo chatVo = ChatVo.builder().chat_no(chat_no).topic_no(chatFileVo.getTopic_no())
+					.member_no(chatFileVo.getMember_no()).team_no(chatFileVo.getTeam_no())
+					.member_no((int)session.getAttribute("member_no")).chat_content(file.getOriginalFilename()).status(4).build();
+			
+			sqlSession.insert("chat.insert", chatVo);
+			chatFileVo.setChat_no(chat_no);
+			chatFileVo.setMember_no((int)session.getAttribute("member_no"));
+			chatFileVo.setChat_file_uploadname(file.getOriginalFilename());
+			chatFileVo.setChat_file_size(file.getSize());
+			chatDao.chatFileUpload(chatFileVo, file);
+			
+			return chatFileVo.getChat_file_uploadname();
+		}
 
 }
 
