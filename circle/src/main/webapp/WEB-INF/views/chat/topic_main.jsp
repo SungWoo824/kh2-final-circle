@@ -442,7 +442,7 @@ function searchResult(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&member_no=${sessionScope.member_no}"></a>
+	                <a class="fa fa-hdd" href="#"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -454,38 +454,41 @@ function searchResult(no){
             				<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>
-					<div id="searchResult">
-            			채팅 내용 검색<br><br>	
-            			<select name="topic_name" id="topicSelection">
-            				<option value="all">전체 토픽</option>
-            			<c:forEach items="${topicList }" var="topicList">
-            				<option value="${topicList.topic_name }">${topicList.topic_name }</option>
-            			</c:forEach>
-            			</select>
-            			<select name="term" id="termSelection">
-            				<option value="0">전체기간</option>
-            				<option value="7">1주일</option>
-            				<option value="30">1개월</option>
-            				<option value="90">3개월</option>
-            			</select><br><br>
-            				<input type="text" name="keyword" id="searchkey" required>
-            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
-            		</div>	
+	            		<div id="searchResult">
+	            			채팅 내용 검색<br><br>
+	            			
+	<!--             			<form action="./chat_search" method="post"> -->
+	            			<select name="topic_name" id="topicSelection">
+	            				<option value="all">전체 토픽</option>
+	            			<c:forEach items="${topicList }" var="topicList">
+	            				<option value="${topicList.topic_name }">${topicList.topic_name }</option>
+	            			</c:forEach>
+	            			</select>
+	            			<select name="term" id="termSelection">
+	            				<option value="0">전체기간</option>
+	            				<option value="7">1주일</option>
+	            				<option value="30">1개월</option>
+	            				<option value="90">3개월</option>
+	            			</select><br><br>
+	            				<input type="text" name="keyword" id="searchkey" required>
+	<%--             				<input type="hidden" name="team_no" value="${param.team_no}"> --%>
+	            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
+	<!--             			</form> -->
+	            		</div>	
             	</div>
-            	</div> 
+            	</div>
             	<div class="slide vote-slide">
             		<div class="slide-close">
             			<ul>
 	            			<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>   
-
 	<!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
 							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
 	        				<!-- 목록으로 버튼 if처리해야함 -->
 				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
-				            <div id="bodyContents">
-				           	 진행중인 투표 목록
+				            <h3>진행중인 투표 목록</h3>
+	
 	        					<!-- 화면 동적 전환(투표 상세 페이지) -->
 				            	<ul>
 					            	<c:forEach var="voteList" items="${voteList }" >
@@ -499,7 +502,6 @@ function searchResult(no){
 					            		<br>
 					            	</c:forEach>   	
 				            	</ul>
-				            	</div>
 				    </div>
         			<!-- 투표 기능 종료 -->
         			<div class="slide todolist-slide">
@@ -511,6 +513,7 @@ function searchResult(no){
 	        			todoList- slide
         			</div>
         	</div>
+			        
 	</div>
 	</div>
     <!-- 오른쪽 메뉴 바 끝 -->
@@ -1099,5 +1102,4 @@ function searchResult(no){
 </div>
 </div>
 </body>
-
 </html>
