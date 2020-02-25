@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <!--bootstrap template-->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -737,7 +738,18 @@ function MovePage(no){
 											<span>${chatVo.member_name}</span>
 											<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem;">
 											  <div class="card-body admin-card-body">
-											    <h4 class="card-title">미리보기</h4>
+											  <c:choose>
+											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'text')}">
+											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg"></div>
+											    </c:when>
+											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'image')}">
+											    	<div><img id="chat_dummy" src='${pageContext.request.contextPath}/chat/download?chat_no=${chatVo.chat_no}'></div>
+											    </c:when>
+											    <c:otherwise>
+											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/filedummy.jpeg"></div>
+											    </c:otherwise>
+											    
+											  </c:choose>
 											    <p class="card-text">
 											    	<a href="#"></a>
 											    </p>

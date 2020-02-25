@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +50,8 @@ public class ChatDaoImpl implements ChatDao{
 	    dir.mkdirs();
 	    File target = new File(dir, String.valueOf(chat_file_no));
 	    multipartFile.transferTo(target);
+	    String mimeType = new Tika().detect(target);
+	    chatFileVo.setChat_file_type(mimeType);
 	    sqlSession.insert("chat.fileinsert", chatFileVo);
 		
 	}
