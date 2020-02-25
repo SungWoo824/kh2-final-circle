@@ -35,6 +35,8 @@ function TodoDone(no){
 	
 }
 </script>
+
+
 </head>
 <body>
 <h3>할일 상세보기 페이지</h3>
@@ -56,7 +58,8 @@ function TodoDone(no){
 		<input type="hidden" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
 <%-- 		<input type="hidden" name="todo_list_content" value="${param.todo_list_content}"> --%>
 	<input type="submit" onclick="TodoDelete" value="삭제">
-								
 </form>
+
+								
 </body>
 </html>
