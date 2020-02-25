@@ -9,7 +9,6 @@ import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.MemberListVO;
 
 public interface TeamDao {
-	
 	int getSequence();
 	void teamCreate(TeamDto teamDto);
 	List<TeamDto> teamList(int member_no);
@@ -28,4 +27,6 @@ public interface TeamDao {
 	TeamMemberDto teamMemberInfo(int member_no, int team_no);
 	void grantPosition(int member_no, int team_no, String member_position);
 	boolean teamMemberCheck(int member_no, int team_no);
+	void changeAuth(TeamMemberDto teamMemberDto);
+	String checkPosition(int member_no, int team_no);
 }

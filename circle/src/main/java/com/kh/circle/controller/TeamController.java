@@ -110,8 +110,23 @@ public class TeamController {
 		if(count>0) return "Y"; //있으면
 		else return "N";
 	}
+	
+	//modal_invite2 가기 초대하기 모달 화면 2
+	@GetMapping("/modal_invite2") 
+	public String modal_invite2(@RequestParam int team_no,
+								Model model) {
+		model.addAttribute("team_no", team_no);
+		return "team/modal_invite2";
+	}
 
-
+	
+	//modal_invite3 가기 초대하기 모달 화면 3
+	@GetMapping("/modal_invite3") 
+	public String modal_invite3() {
+		return "team/modal_invite3";
+	}
+	
+	//인증 번호6자리를 보낼 수 있는 컨트롤러 / 현재 team에서 사용하지 않는 메소드 
 	@GetMapping("/send")
 	@ResponseBody
 	public String send(@RequestParam String email, HttpSession session) {
@@ -121,7 +136,6 @@ public class TeamController {
 		session.setAttribute("cert", cert);
 		return emailService.sendCertMessage(email, cert); 	
 	}
-
 
 	@Autowired
 	private TeamService teamService;

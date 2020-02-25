@@ -68,7 +68,9 @@
 </label>
 <br><br>
 
-<h3>마감 시각			<input type="date" name="vote_create_date">	<select name="vote_create_time">
+<h3>마감 시각			
+<input type="date" name="vote_create_date" required>	
+<select name="vote_create_time">
 <option value="00:00">12:00 AM</option>
 <option value="01:00">01:00 AM</option>
 <option value="02:00">02:00 AM</option>

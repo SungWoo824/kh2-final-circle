@@ -16,4 +16,5 @@ public interface ManagerDao {
 	int paySum();
 	List<TeamDto> teamList(BoardVo boardVo);
 	int teamListCount(BoardVo boardVo);
+	void memberAdminGrant(int member_no);
 }

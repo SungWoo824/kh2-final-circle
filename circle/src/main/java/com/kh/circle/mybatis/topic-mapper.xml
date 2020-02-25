@@ -37,7 +37,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		on topic.topic_no = T.topic_no 
 		where topic.topic_name = #{topic_name}
 	</select>
-	
 
 	<!-- 토픽 소유자로 등록 -->
 	<insert id="topicMemberInsert" parameterType="topicMemberDto">
@@ -104,10 +103,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from topic where topic_no=#{topic_no}
 	</delete>
 
-
+<!-- 토픽 초대하기(같은 팀 멤버를 같은 토픽번호로 추가) --> 
+<!-- <insert id="inviteTopic" parameterType="topicMemberDto">  -->
+<!-- 		insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')  -->
+<!-- </insert>  -->
 	
-	
-	 	<!-- 토픽 초대하기(여러명) -->
+	<!-- 토픽 초대하기(여러명) -->
 	<insert id="inviteMember" parameterType="map">
 <!-- 	    <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual"> -->
 <!-- 			into topic_member values(#{topicMemberDto.topic_no},#{topicMemberDto.member_no},#{topicMemberDto.team_no},'') -->
@@ -140,5 +141,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	<insert id="mailInviteTopic" parameterType="topicMemberDto">
          insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
    	</insert>
+   	
+   	
 	
 </mapper>

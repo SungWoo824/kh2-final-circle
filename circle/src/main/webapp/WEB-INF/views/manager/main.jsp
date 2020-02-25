@@ -111,7 +111,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
 <!--             <h6 class="collapse-header">Login Screens:</h6> -->
-            <a class="collapse-item" href="#">채팅1</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/manager/admin?type=&value=">회원 목록</a>
             <a class="collapse-item" href="#">채팅2</a>
             <div class="collapse-divider"></div>
           </div>
@@ -314,7 +314,6 @@
 						    <p class="card-text">
 						    	<a href="#"></a>
 						    </p>
-						  	
 						  </div>
 						</div>
 						                    

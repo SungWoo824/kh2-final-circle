@@ -68,6 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		order by member_no desc
 	</select>
+	<update id="adminGrant" parameterType="int">
+		update member set member_grade = 'o' where member_no =#{member_no}
+	</update>
 </mapper>
 
 
