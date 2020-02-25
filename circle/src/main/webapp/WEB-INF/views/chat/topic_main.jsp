@@ -280,8 +280,7 @@ $(function(){
 
       });
  });
- 
-<<<<<<< HEAD
+
   	//멤버 초대 모달 화면
 	$(function(){
 	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
@@ -317,9 +316,6 @@ $(function(){
 // 		$('.dropdown-toggle').on('shown.bs.dropdown');
 	});
 
-=======
-
->>>>>>> refs/remotes/origin/drive3c
 </script>
 <!-- 투표 스크립트 -->
 <script>
