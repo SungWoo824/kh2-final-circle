@@ -15,6 +15,7 @@
    <link href="${pageContext.request.contextPath}/resources/css/design/common.css" rel="stylesheet" type="text/css">
 	
 	
+	
 <!-- 채팅메시지 스크립트 -->	
 <script>
 	var enter = 0, exit = 1, message = 2;
@@ -278,6 +279,7 @@ $(function(){
       });
  });
  
+<<<<<<< HEAD
   	//멤버 초대 모달 화면
 	$(function(){
 	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
@@ -313,6 +315,9 @@ $(function(){
 // 		$('.dropdown-toggle').on('shown.bs.dropdown');
 	});
 
+=======
+
+>>>>>>> refs/remotes/origin/drive3c
 </script>
 <!-- 투표 스크립트 -->
 <script>
@@ -471,9 +476,7 @@ function searchResult(no){
 	            				<option value="90">3개월</option>
 	            			</select><br><br>
 	            				<input type="text" name="keyword" id="searchkey" required>
-	<%--             				<input type="hidden" name="team_no" value="${param.team_no}"> --%>
 	            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
-	<!--             			</form> -->
 	            		</div>	
             	</div>
             	</div>

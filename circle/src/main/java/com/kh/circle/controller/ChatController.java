@@ -102,11 +102,7 @@ public class ChatController {
 		return "chat/topic_main";
 	}
 	
-//	@GetMapping("/topic_create")
-//	public String topic_create() {
-//		return "chat/topic_create";
-//	}
-	
+
 	@PostMapping("/topic_create")
 	public String topic_create( @ModelAttribute TopicDto topicDto, HttpSession session,@RequestParam int team_no) {
 		//topic_create
@@ -380,9 +376,6 @@ public class ChatController {
 																	@RequestParam int member_no,
 																	HttpSession session,
 																	Model model) {
-			System.out.println(member_no);
-			System.out.println(team_no);
-			System.out.println(topic_no);
 			topicDao.topicMasterChange(topic_no,member_no);
 			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
 			model.addAttribute("team_no", team_no);
