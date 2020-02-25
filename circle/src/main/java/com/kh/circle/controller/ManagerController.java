@@ -81,4 +81,30 @@ public class ManagerController {
 		model.addAttribute("teamList", teamList);
 		return "manager/team";
 	}
+	@GetMapping("/admin")
+	public String admin(Model model,
+						HttpSession session,
+						@RequestParam(defaultValue="1") int curPage,
+						@ModelAttribute BoardVo boardVo) {
+		int listCount = managerDao.memberListCount(boardVo);
+		
+		Pagination pagination = new Pagination(listCount, curPage);
+		
+		boardVo.setStartIndex(pagination.getStartIndex()+1);
+		boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
+		List<MemberDto> memberList = managerDao.memberList(boardVo);
+		
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("memberList", memberList);
+		model.addAttribute("pagination", pagination);
+	
+		return "manager/admin";
+	}
+	
+	@GetMapping("/adminGrant")
+	public String adminGrant(@RequestParam int member_no) {
+		managerDao.memberAdminGrant(member_no);
+		
+		return "redirect:./admin?type=&value=";
+	}
 }

@@ -14,7 +14,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
    <link href="${pageContext.request.contextPath}/resources/css/design/common.css" rel="stylesheet" type="text/css">
-
+<script type="text/javascript">
+$(function(){
+	$(".adminGrant").click(function(e){
+		e.preventDefault();
+		
+		var con = confirm("부여/회수 하시겠습니까?");
+		if(con){
+			$(this).parent().submit();
+		}
+	})
+})
+</script>
 </head>
 
 <body id="page-top">
@@ -312,6 +323,8 @@
 							<th scope="col">번호</th>
 							<th scope="col">이메일</th>
 							<th scope="col">이름</th>
+							<th scope="col">관리자여부</th>
+							<th scope="col">관한 부여</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -320,6 +333,14 @@
 								<td>${memberDto.member_no}</td>
 								<td>${memberDto.member_email}</td>
 								<td>${memberDto.member_name}</td>
+								<td>${memberDto.member_grade}</td>
+								<td>
+									<form action="./adminGrant">
+										<input type="hidden" name="member_no" value="${memberDto.member_no}">
+										<button type="button" class="btn btn-primary adminGrant">부여/회수</button>
+									</form>
+								</td>
+								
 							</tr>
 						</c:forEach>
 						
@@ -344,7 +365,7 @@
                             </c:when>
                             <c:otherwise>
 	                            <li class="page-item">
-							      <a href="${pageContext.request.contextPath}/manager/member?type=${param.type}&value=${param.value}&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+							      <a href="${pageContext.request.contextPath}/manager/admin?type=${param.type}&value=${param.value}&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
 							    </li>
                                 
                             </c:otherwise>
