@@ -69,15 +69,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
 	</select>
 	
+	<select  id="driveFolderName" resultType="driveFileDto" parameterType="int">
+		select distinct drive_name from drive_file where team_no = #{team_no}
+	</select>
+	
 	
 	<!-- 드라이브 폴더 목록 -->
-	<select id="driveFolderList" parameterType="int" resultType="driveFileDto">
-		select * from drive_file where team_no=#{team_no}
+	<select id="driveFolderList" parameterType="map" resultType="driveFileDto">
+			select * from drive_file where team_no= #{team_no} 
+			and drive_name=#{drive_name} and drive_folder='1'
 	</select>
 	
-	<select id="driveFolderName" parameterType="int" resultType="driveFileDto">
-		select distinct drive_name from drive_file where team_no=#{team_no}
-	</select>
 	
 	
 	<!-- 파일명 변경 -->

@@ -44,7 +44,15 @@ $(function(){
 });
 </script>
 
+<script>
 
+$("#exit-btn").click(function(){
+	location.href="";
+});
+
+
+
+</script>
 
 
 </head>
@@ -63,8 +71,9 @@ $(function(){
 	<div class="menu-con bg-base">
 	    <div class="menu-top">
 	        <ul class="menu-bar">
-	            <li class="gnb-btn nav-item dropdown no-arrow mx-1">
-	                    <a class="fa fa-2x fa-times nav-link" style="color:#ddd"></a>
+	            <li id="exit-btn" class="gnb-btn nav-item dropdown no-arrow mx-1">
+	                    <a class="fa fa-2x fa-times nav-link" style="color:#ddd" 
+	                    href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${param.topic_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -97,7 +106,7 @@ $(function(){
 <!--             <h6 class="collapse-header">Login Screens:</h6> -->
             <c:forEach items="${driveFolderName}" var="drive" >
 		            <a class="collapse-item" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&drive_name=${drive.drive_name}">
-		                 ${drive}
+		                 ${drive.drive_name}
 		            </a>
             </c:forEach>
             <div class="collapse-divider"></div>
@@ -133,9 +142,9 @@ $(function(){
 			<!-- 상단 토픽 정보 끝-->
 			</nav>
 		
-		<c:set var="dfList" value="${driveFolderList.get(0)}"></c:set>
+		<!-- 파일까지 업로드됐을 때 리스트-->
 		<c:choose>
-			<c:when test="${dfList.drive_folder == '1'}">
+			<c:when test="${driveFolderList.size()>0}">
 			<!-- 파일을 하나라도 업로드하면 보이는 화면 -->
 			<article id="file-wrap">
 		
@@ -156,20 +165,27 @@ $(function(){
 			                   <div class="chat-menu-bar">
 			                   <div id="fileview">
 			                   
-									<c:forEach var="fileList" items="${driveFileList}">
-										<form action="download" method="post">
-												<c:if test="${fileList.drive_file_uploadname != 'null' }">
-												<input type="hidden" name="drive_file_no" value="${fileList.drive_file_no}">
-											    <div>${fileList.drive_file_no }</div> 
-												<a href="download?drive_file_no=${fileList.drive_file_no}">
-													<input type="checkbox" >
+									<c:forEach var="fileList" items="${driveFolderList}">
+										<div class="upload-box">
+											<form action="download" method="post">
+													<c:if test="${fileList.drive_file_uploadname != 'null' }">
+													<input type="hidden" name="drive_file_no" value="${fileList.drive_file_no}">
+													<div class="img-view">
 														<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}"><br>
-															다운로드
-												</a>/
-												<a data-toggle="modal" data-target="#editFile">이름 변경</a>
-														/<a href="filedelete?drive_file_no=${fileList.drive_file_no}&team_no=${fileList.team_no}&drive_name=${fileList.drive_name}">삭제</a>
-												</c:if>
-										</form>
+													</div>
+													<div class="text-view">
+													    <p>${fileList.drive_file_no }/${fileList.drive_file_uploadname }</p>
+													    <div>
+															<a href="download?drive_file_no=${fileList.drive_file_no}">
+															<input type="checkbox" >
+																다운로드
+															</a>
+															/<a href="filedelete?drive_file_no=${fileList.drive_file_no}&team_no=${param.team_no}&drive_name=${param.drive_name}">삭제</a>
+													    </div> 
+													</div>
+													</c:if>
+											</form>
+										</div>
 									</c:forEach>
 								
 								</div>
@@ -192,13 +208,24 @@ $(function(){
 					  </div>
 				</article>	
 			</c:when>
-			<c:when test="${dfList.drive_file_uploadname=='null' }">
+			<c:when test="${driveFileList.size()<1}">
 			<!-- 폴더를 생성만 했을 때 보이는 화면 -->
-						<article id="file-wrap">
+					<article>
+						<c:forEach var="drFN" items="${driveFolderName}">
+								<div>
+									<a>
+										${drFN.drive_name}
+									</a>
+								</div>
+						</c:forEach>
+					</article>
+			</c:when>
+			<c:otherwise>
+			<!-- 폴더 생성안했을때 기본화면 -->
+					<article id="file-wrap">
 		
 							<div class="upload-wrap">
 							
-								<h5>팀 :${param.team_no }번 의 드라이브</h5>
 								
 								 <form action="driveupload" method="post" enctype="multipart/form-data">
 								 	<input type="hidden" name="drive_name" value="${param.drive_name}">
@@ -214,12 +241,6 @@ $(function(){
 					           	파일이 없습니다.
 					  		</div>
 				</article>	
-			</c:when>
-			<c:otherwise>
-			<!-- 폴더 생성안했을때 기본화면 -->
-					<article>
-						파일이 없습니다. 폴더를 생성하세요.
-					</article>
 			</c:otherwise>
 		</c:choose>
 		
@@ -236,7 +257,7 @@ $(function(){
 <!-- --------------------- 모달 ---------------------- -->
 
 <!-- 드라이브 폴더 생성 -->
-<form action="drive" method="post">
+<form action="drivecreate" method="post">
 
 	
 <!-- Modal -->
@@ -251,7 +272,7 @@ $(function(){
 		      </div>
 		      <div class="modal-body">
 		      			<input type="hidden" name="team_no" value="${param.team_no}">
-						<input type="hidden" name="member_no" value="${param.member_no}">
+						<input type="hidden" name="member_no" value="${sessionScope.member_no}">
 		      		<input type="text" name ="drive_name"><span></span><br><br>
 		      </div>
 		      <div class="modal-footer">
@@ -266,33 +287,34 @@ $(function(){
 </form>
 
 <!-- 파일명 변경 -->
-<form action="editfile" method="post">
-	<div class="modal fade" id="editFile" tabindex="-1" role="dialog"
-		aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">파일명 변경</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<input type="hidden" name="topic_no" value="${param.drive_file_no}">
-					이름 :<input type="text" name="drive_file_uploadname"><span></span><br>
-					<br>
-					<br>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">닫기</button>
-					<button type="submit" id="edit-btn" class="btn btn-primary">수정하기</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</form>
+<!-- <form action="editfile" method="post"> -->
+<!-- 	<div class="modal fade" id="editFile" tabindex="-1" role="dialog" -->
+<!-- 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"> -->
+<!-- 		<div class="modal-dialog modal-dialog-centered" role="document"> -->
+<!-- 			<div class="modal-content"> -->
+<!-- 				<div class="modal-header"> -->
+<!-- 					<h5 class="modal-title" id="exampleModalCenterTitle">파일명 변경</h5> -->
+<!-- 					<button type="button" class="close" data-dismiss="modal" -->
+<!-- 						aria-label="Close"> -->
+<!-- 						<span aria-hidden="true">&times;</span> -->
+<!-- 					</button> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-body"> -->
+					
+<%-- 					<input type="hidden" name="drive_file_no" value="${driveFileList.drive_file_no}"> --%>
+<!-- 					이름 :<input type="text" name="drive_file_uploadname"><br> -->
+<!-- 					<br> -->
+<!-- 					<br> -->
+<!-- 				</div> -->
+<!-- 				<div class="modal-footer"> -->
+<!-- 					<button type="button" class="btn btn-secondary" -->
+<!-- 						data-dismiss="modal">닫기</button> -->
+<!-- 					<button type="submit" id="edit-btn" class="btn btn-primary">수정하기</button> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </form> -->
 
 <!-- ------------------------------- 모달 종료--------------------------------- -->
 

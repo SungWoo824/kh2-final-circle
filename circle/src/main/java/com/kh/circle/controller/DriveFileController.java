@@ -50,51 +50,21 @@ public class DriveFileController {
 	
 	@GetMapping("/drive")
 	public String drive(@RequestParam int team_no,
-									@RequestParam(defaultValue = "") String drive_name,
 									//기본값을 null로 받을때 defaultValue
+									@RequestParam(defaultValue = "") String drive_name,
+//									@RequestParam(defaultValue = "") int topic_no,
 									Model model) {
-		
-//		int pagesize = 10;
-//		int navsize = 10;
-//		int pno;
-//		
-//		try {
-//			pno = Integer.parseInt(req.getParameter("pno"));
-//			if(pno <=0) throw new Exception();
-//		} catch (Exception e) {
-//			pno=1;
-//		}
-//		int finish=pno*pagesize;
-//		int start = finish - (pagesize -1);
-//		
-//		String type = req.getParameter("type");
-//		String keyword= req.getParameter("keyword");
-//		
-//		boolean isSearch = type != null && keyword !=null;
-//		
-//		List<DriveFileDto> list;
-//		
-//		if(isSearch) {
-//
-//		}
-//		else {
-//			
-//		}
-//		
-//		int count;
-		
-		
-		List<DriveFileDto> folderList= driveFileDao.getFolderList(team_no);
-		model.addAttribute("team_no",team_no);
+
+		List<DriveFileDto> folderList= driveFileDao.getFolderList(team_no,drive_name);
 		model.addAttribute("driveFolderList", folderList);
+		model.addAttribute("team_no",team_no);
 		List<DriveFileDto> folderName= driveFileDao.getFolderName(team_no);
-		model.addAttribute("driveFileName", folderName);
-		
-		if(folderList != null) {
+		model.addAttribute("driveFolderName", folderName);
+		if(folderName != null) {
 			List<DriveFileDto> fileList= driveFileDao.getFileList(team_no,drive_name);
 			model.addAttribute("driveFileList", fileList);
 		}
-		
+//		model.addAttribute("topic_no", topic_no);
 		
 		return "drive/drive";
 		
@@ -114,8 +84,9 @@ public class DriveFileController {
 
 	
 	//폴더 생성
-	@PostMapping("/drive")
+	@PostMapping("/drivecreate")
 	public String newFolder(@ModelAttribute DriveFileDto driveFileDto,
+												@RequestParam(defaultValue = "") String drive_name,
 												HttpSession session, Model model
 											) {
 		int drive_file_no = driveFileDao.getSequence();
@@ -123,6 +94,7 @@ public class DriveFileController {
 		driveFileDto.setDrive_file_no(drive_file_no);
 		driveFileDao.newFolder(driveFileDto);
 		model.addAttribute("member_no",session.getAttribute("member_no"));
+		model.addAttribute("drive_name",drive_name);
 		return "redirect:../drive/drive";
 	}
 	
@@ -137,10 +109,7 @@ public class DriveFileController {
 		
 	}
 	
-//	@GetMapping("/drive_create")
-//	public String upload(@RequestParam int team_no, @RequestParam int member_no) {
-//		return "drive/drive_create";
-//	}
+
 
 	@Autowired
 	private DriveFileService driveFileService;
@@ -161,16 +130,6 @@ public class DriveFileController {
 	}
 
 
-	
-//	//드라이브 폴더 목록
-//	@GetMapping("/drive_folderlist")
-//	public String folderlist(Model model, @RequestParam int team_no, 
-//											@RequestParam String drive_name) {
-//		List<DriveFileDto> fileList = driveFileDao.getFileList(team_no, drive_name);
-//		model.addAttribute("fileList", fileList);
-//		
-//		return "drive/drive_folderlist";
-//	}
 	
 	//드라이브 이미지 미리보기
 	@GetMapping("/drive_file_view")
@@ -218,25 +177,20 @@ public class DriveFileController {
 	}
 		
 	
-		//팀 드라이브 파일 목록
-		@GetMapping("/drive_view")
-		public String driveview(@RequestParam int team_no,
-													@RequestParam String drive_name,
-													Model model) throws IOException{		
-			List<DriveFileDto> fileList = driveFileDao.getFileList(team_no, drive_name);
-			model.addAttribute("fileList", fileList);
-			
-			
-			return "drive/drive_view";
-		}
-		
 		//드라이브 파일삭제
 		@GetMapping("/filedelete")
-		public String fileDelete(@ModelAttribute DriveFileVO driveFileVo) {
-			driveFileDao.fileDelete(driveFileVo.getDrive_file_no());
-			File target = new File("D:/upload/kh2e/drivefile/"+driveFileVo.getDrive_file_no());
+		public String fileDelete(@RequestParam int drive_file_no,
+				@RequestParam(defaultValue = "") int team_no,
+				@RequestParam(defaultValue = "") String drive_name,
+				@RequestParam(defaultValue = "") int topic_no,
+				Model model) {
+			driveFileDao.fileDelete(drive_file_no);
+			File target = new File("D:/upload/kh2e/drivefile/"+drive_file_no);
 			target.delete();
-			return  "redirect:/drive/drive_view?team_no="+driveFileVo.getTeam_no()+"&drive_name="+driveFileVo.getDrive_name();
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("drive_name",drive_name);
+			model.addAttribute("topic_no", topic_no);
+			return  "redirect:../drive/drive";
 		}
 		
 //		드라이브 파일 일괄 삭제

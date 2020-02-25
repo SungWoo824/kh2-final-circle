@@ -746,6 +746,7 @@ background-color:#f8f8f8;
 #fileview{
 	height:640px;
 	overflow:auto;
+	padding: 30px;
 }
 
 .page-num{
@@ -753,8 +754,37 @@ background-color:#f8f8f8;
 	position:relative;
 }
 
+.upload-box{
+	width:240px;
+	height:240px;
+	border:1px solid #ddd;
+	float:left;
+	border-radius: 6px;
+	margin-right:20px;
+	margin-bottom:20px;
+}
 
+.upload-box .img-view{
+	width:150px;
+	height:150px;
+	background-color:#eee;
+	margin:20px auto;
+}
 
+.upload-box .img-view img{
+	width:140px;
+	margin:auto;
+}
+
+.upload-box .text-view{
+	margin:0 20px;	
+}
+
+.upload-box .text-view p{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
 
 /*어드민*/
 .admin-wrap{

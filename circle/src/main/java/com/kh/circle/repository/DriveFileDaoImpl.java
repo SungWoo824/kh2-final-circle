@@ -65,8 +65,11 @@ public class DriveFileDaoImpl implements DriveFileDao{
 
 	//팀 드라이브폴더 목록 가져오기
 	@Override
-	public List<DriveFileDto> getFolderList(int team_no) {
-		return sqlSession.selectList("driveFile.driveFolderList", team_no);
+	public List<DriveFileDto> getFolderList(int team_no, String drive_name) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("drive_name", drive_name);
+		return sqlSession.selectList("driveFile.driveFolderList", param);
 	}
 	
 	@Override
