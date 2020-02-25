@@ -14,4 +14,6 @@ public class BoardVo {
 	private String value;
 	private int startIndex;
 	private int countPerPage;
+	private int team_no;
+	private String drive_name;
 }

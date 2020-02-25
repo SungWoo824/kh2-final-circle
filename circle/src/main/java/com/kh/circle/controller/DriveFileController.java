@@ -53,6 +53,8 @@ public class DriveFileController {
 									//기본값을 null로 받을때 defaultValue
 									@RequestParam(defaultValue = "") String drive_name,
 //									@RequestParam(defaultValue = "") int topic_no,
+									@RequestParam(defaultValue="1") int curPage,
+									@ModelAttribute BoardVo boardVo,
 									Model model) {
 
 		List<DriveFileDto> folderList= driveFileDao.getFolderList(team_no,drive_name);
@@ -61,11 +63,24 @@ public class DriveFileController {
 		List<DriveFileDto> folderName= driveFileDao.getFolderName(team_no);
 		model.addAttribute("driveFolderName", folderName);
 		if(folderName != null) {
-			List<DriveFileDto> fileList= driveFileDao.getFileList(team_no,drive_name);
+			List<DriveFileDto> fileList= driveFileDao.getFileList(boardVo);
 			model.addAttribute("driveFileList", fileList);
 		}
 //		model.addAttribute("topic_no", topic_no);
 		
+		
+		//페이징
+//		int listCount= driveFileDao.driveListCount(boardVo);
+//		Pagination pagination = new Pagination(listCount,curPage);
+//		
+//		boardVo.setStartIndex(pagination.getStartIndex()+1);
+//		boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
+//		List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
+//		
+//		model.addAttribute("listCount",listCount);
+//		model.addAttribute("driveFileList",driveFileList);
+//		model.addAttribute("pagination",pagination);
+//		
 		return "drive/drive";
 		
 	}
@@ -96,17 +111,6 @@ public class DriveFileController {
 		model.addAttribute("member_no",session.getAttribute("member_no"));
 		model.addAttribute("drive_name",drive_name);
 		return "redirect:../drive/drive";
-	}
-	
-	//파일명 변경
-	@PostMapping("/editfile")
-	public String editfile(@RequestParam int drive_file_no, 
-											@RequestParam String drive_file_uploadname,
-											 Model model
-										) {
-		driveFileDao.fileEdit(drive_file_no, drive_file_uploadname);
-		return "redirect:../drive/drive";
-		
 	}
 	
 
@@ -190,24 +194,25 @@ public class DriveFileController {
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("drive_name",drive_name);
 			model.addAttribute("topic_no", topic_no);
+			model.addAttribute("drive_file_no",drive_file_no);
 			return  "redirect:../drive/drive";
 		}
 		
 //		드라이브 파일 일괄 삭제
-//		@GetMapping("/drivedelete")
-//		public String driveDelete(@ModelAttribute DriveFileVO driveFileVo, Model model) {
-//			
-//			List<DriveFileDto> fileList = driveFileDao.get2(driveFileVo);
+		@GetMapping("/drivedelete")
+		public String driveDelete(@ModelAttribute DriveFileVO driveFileVo, Model model) {
+			
+//			List<DriveFileDto> fileList = driveFileDao.getFolderList(driveFileVo);
 //			model.addAttribute("fileList", fileList);
 //			for(int i = 0; i < fileList.size(); i++) {
 //				driveFileDao.driveDelete(driveFileVo);
-////				driveFileDao.fileDelete(driveFileVo.getDrive_file_no());
+//				driveFileDao.fileDelete(driveFileVo.getDrive_file_no());
 //				File target = new File("D:/upload/kh2e/drivefile/"+driveFileVo.getDrive_file_no());
 //				target.delete();
 //			}
-//			
-//			return  "redirect:/drive/drive_folderlist?team_no="+driveFileVo.getTeam_no();
-//		}
+			
+			return  "redirect:/drive/drive_folderlist?team_no="+driveFileVo.getTeam_no();
+		}
 		
 		
 		

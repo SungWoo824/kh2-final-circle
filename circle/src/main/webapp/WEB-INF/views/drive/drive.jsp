@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+ <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+ 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	
 <link href="${pageContext.request.contextPath}/resources/css/design/sb-admin-2.min.css" rel="stylesheet">
@@ -149,15 +151,23 @@ $("#exit-btn").click(function(){
 			<article id="file-wrap">
 		
 			<div class="upload-wrap">
-			
-				 <form action="driveupload" method="post" enctype="multipart/form-data">
-				 	<input type="hidden" name="drive_name" value="${param.drive_name}">
-					<input type="hidden" name="team_no" value="${param.team_no}">
-					<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
-					<input type="file" name ="file" multiple="multiple" >
-					<input id="upload-btn" type="submit" value="업로드">
-				</form>
 				
+				<div class="upload-wrap-box">
+				
+						<h3>${param.drive_name} </h3>
+						<div class="fileupload-box">
+							 <form action="driveupload" method="post" enctype="multipart/form-data">
+							 	<input type="hidden" name="drive_name" value="${param.drive_name}">
+								<input type="hidden" name="team_no" value="${param.team_no}">
+								<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
+								<input type="file" name ="file" multiple="multiple" >
+								<input id="upload-btn" type="submit" value="업로드">
+							</form>
+						</div>
+						<a href="filedelete?drive_file_no=${param.drive_file_no}&team_no=${param.team_no}&drive_name=${param.drive_name}">
+							선택삭제
+						</a>
+				</div>
 			</div>
 				
 					<div class="flist-wrap">
@@ -171,7 +181,14 @@ $("#exit-btn").click(function(){
 													<c:if test="${fileList.drive_file_uploadname != 'null' }">
 													<input type="hidden" name="drive_file_no" value="${fileList.drive_file_no}">
 													<div class="img-view">
-														<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}"><br>
+														<c:choose>
+															<c:when test="${fn:startsWith(fileList.drive_file_type,'image')}">
+																<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}">
+															</c:when>
+															<c:otherwise>
+																<img src="${pageContext.request.contextPath}/resources/image/filedummy.jpeg">
+															</c:otherwise>
+														</c:choose>
 													</div>
 													<div class="text-view">
 													    <p>${fileList.drive_file_no }/${fileList.drive_file_uploadname }</p>
@@ -202,7 +219,38 @@ $("#exit-btn").click(function(){
 <%-- 					            <jsp:param name="navsize" value="${navsize}" /> --%>
 <%-- 					            <jsp:param name="pagesize" value="${pagesize}" /> --%>
 <%-- 					         </jsp:include> --%>
-			
+									
+									
+								<div>
+									<ul class="pagination" style="justify-content: center;">
+					                    <c:if test="${pagination.curPage ne 1}">
+					                    	<li class="page-item disabled">
+					                        	<a class="page-link" href="#" onClick="fn_paging('${pagination.prevPage }')">&laquo;</a> 
+					                        </li>
+					                    </c:if>
+					                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+					                        <c:choose>
+					                            <c:when test="${pageNum eq  pagination.curPage}">
+					                            	<li class="page-item active">
+												      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
+												    </li>
+					                            </c:when>
+					                            <c:otherwise>
+						                            <li class="page-item">
+												      <a href="${pageContext.request.contextPath}/drive/drive?type=${param.type}&value=${param.value}&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+												    </li>
+					                                
+					                            </c:otherwise>
+					                        </c:choose>
+					                    </c:forEach>
+					                    <c:if test="${pagination.curPage ne pagination.pageCount && pagination.pageCount > 0}">
+					                    	<li class="page-item">
+					                        	<a href="#" class="page-link" onClick="fn_paging('${pagination.nextPage }')">&raquo;</a> 
+					                    	</li>
+					                    </c:if> 
+					                </ul>
+					              </div>
+	
 					      </div>
 					    </div>
 					  </div>
@@ -211,14 +259,34 @@ $("#exit-btn").click(function(){
 			<c:when test="${driveFileList.size()<1}">
 			<!-- 폴더를 생성만 했을 때 보이는 화면 -->
 					<article>
-						<c:forEach var="drFN" items="${driveFolderName}">
-								<div>
-									<a>
-										${drFN.drive_name}
-									</a>
+					<div class="upload-wrap">
+						
+				
+					</div>
+					   <div id="fileview">
+									<c:forEach var="drFN" items="${driveFolderName}">
+										<div class="upload-box">
+												<div class="img-view">
+													<a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&drive_name=${drFN.drive_name}">
+														<img src="${pageContext.request.contextPath}/resources/image/filedummy.jpeg">
+													</a>
+												</div>
+												<div class="text-view">
+												    <p class="folder-title">${drFN.drive_name }</p>
+												    <div class="folder-title-box">
+													    <div class="checkbox">
+															<input type="checkbox" >
+													    </div> 
+														<div class="folder-btn">
+															<a href="">수정</a> 
+															<a href="">삭제</a>
+														</div>
+												    </div>
+												</div>
+										</div>
+									</c:forEach>
 								</div>
-						</c:forEach>
-					</article>
+				</article>
 			</c:when>
 			<c:otherwise>
 			<!-- 폴더 생성안했을때 기본화면 -->
@@ -226,16 +294,20 @@ $("#exit-btn").click(function(){
 		
 							<div class="upload-wrap">
 							
-								
-								 <form action="driveupload" method="post" enctype="multipart/form-data">
-								 	<input type="hidden" name="drive_name" value="${param.drive_name}">
-									<input type="hidden" name="team_no" value="${param.team_no}">
-									<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
-									<input type="file" name ="file" multiple="multiple" >
-									<input id="upload-btn" type="submit" value="업로드">
-								</form>
-								
+								<div class="upload-wrap-box">
+									<h3>${param.drive_name} </h3>
+									<div class="fileupload-box">
+										 <form action="driveupload" method="post" enctype="multipart/form-data">
+										 	<input type="hidden" name="drive_name" value="${param.drive_name}">
+											<input type="hidden" name="team_no" value="${param.team_no}">
+											<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
+											<input type="file" name ="file" multiple="multiple" >
+											<input id="upload-btn" type="submit" value="업로드">
+										</form>
 									</div>
+								</div>
+								
+							</div>
 						
 							<div class="flist-wrap">
 					           	파일이 없습니다.

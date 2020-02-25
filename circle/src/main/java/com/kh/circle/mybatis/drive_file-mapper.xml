@@ -17,7 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{drive_name},
 			'null',
 			0,
-			'0'
+			'0',
+			null
+			
 		)
 	</insert>
 
@@ -31,7 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{drive_name},
 			#{drive_file_uploadname},
 			#{drive_file_size},
-			'1'
+			'1',
+			#{drive_file_type}
 		)
 	</insert>
 	
@@ -59,14 +62,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 파일목록 -->
-	<select id="driveFileList" resultType="driveFileDto" parameterType="map">
-<!-- 		select * from  -->
-<!-- 		(select rownum rn, A.* from  -->
-<!-- 		 (select * from drive_file  -->
-<!-- 		 where team_no=#{team_no} and drive_name=#{drive_name} -->
-<!-- 		 order by drive_file_no desc)A  -->
-<!-- 		 ) where rn between #{startIndex} and #{countPerPage} -->
-		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
+	<select id="driveFileList" resultType="driveFileDto" parameterType="boardVo">
+		select * from (select rownum rn, A.* from 
+		 (select * from drive_file 
+		 where team_no=#{team_no} 
+		 and drive_name=#{drive_name}
+<!-- 		 <if test="type != null  || type != ''"> -->
+<!-- 			 and ${type} like '%'||#{value}||'%'  -->
+<!-- 		</if> -->
+		 order by drive_file_no desc)A 
+		 ) where rn between #{startIndex} and #{countPerPage}
+	</select>
+	
+	<!-- 파일목록 -->
+	<select id="driveFileListCount" resultType="int" parameterType="boardVo">
+		select count(*) from drive_file 
+		where team_no=#{team_no} 
+		and drive_name=#{drive_name}
+<!-- 		<if test="type != null  || type != ''"> -->
+<!-- 			 and ${type} like '%'||#{value}||'%'  -->
+<!-- 		</if> -->
+		order by drive_file_no desc
 	</select>
 	
 	<select  id="driveFolderName" resultType="driveFileDto" parameterType="int">
@@ -93,7 +109,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 파일삭제 -->
 	<delete id="fileDelete" parameterType="int">
-		delete from drive_file where drive_file_no=#{drive_file_no}	
+			delete from drive_file 
+				where drive_file_no=#{drive_file_no}	
+	</delete>
+	
+	<!-- 파일삭제 -->
+	<delete id="fileDelete2" parameterType="int">
+			delete from drive_file 
+			<foreach collection="list" item="drive_file_no" open="where 1=1">
+				or drive_file_no=#{drive_file_no}	
+			</foreach>
 	</delete>
 	
 	<!-- 드라이브 폴더 삭제 -->

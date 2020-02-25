@@ -112,7 +112,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 	    <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual"> -->
 <!-- 			into topic_member values(#{topicMemberDto.topic_no},#{topicMemberDto.member_no},#{topicMemberDto.team_no},'') -->
 <!-- 		</foreach> -->
-
 			<foreach collection="list" item="member_no" open="insert all" close="select * from dual">
 				into topic_member values(#{topic_no}, #{member_no}, #{team_no}, '')
 			</foreach>
@@ -131,11 +130,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			inner join member on A.member_no = member.member_no
 	</select>
 	
-	<insert id="inviteTopic" parameterType="list">
-       <foreach collection="list" item="topicMemberDto" open="insert all" close="select * from dual">
-         insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
-      </foreach>
-   	</insert>
    	
    	<insert id="mailInviteTopic" parameterType="topicMemberDto">
          insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')

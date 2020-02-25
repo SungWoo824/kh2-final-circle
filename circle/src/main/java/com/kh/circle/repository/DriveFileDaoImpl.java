@@ -79,13 +79,15 @@ public class DriveFileDaoImpl implements DriveFileDao{
 
 	//드라이브파일 목록 가져오기
 	@Override
-	public List<DriveFileDto> getFileList(int team_no, String drive_name) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("team_no", team_no);
-		param.put("drive_name", drive_name);
-		return sqlSession.selectList("driveFile.driveFileList", param);
+	public List<DriveFileDto> getFileList(BoardVo boardVo) {
+		return sqlSession.selectList("driveFile.driveFileList", boardVo);
 	}
 
+	@Override
+	public int driveListCount(BoardVo boardVo) {
+		return 0;
+	}
+	
 	//드라이브파일 삭제
 	@Override
 	public void fileDelete(int drive_file_no) {
@@ -106,6 +108,7 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		sqlSession.update("driveFile.fileEdit", param);
 		
 	}
+
 
 	//드라이브 파일 검색
 //	@Override

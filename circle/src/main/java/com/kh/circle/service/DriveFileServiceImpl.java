@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +27,7 @@ public class DriveFileServiceImpl implements DriveFileService{
 		
 		for(MultipartFile mf : driveFileVo.getFile()) {
 			int drive_file_no=driveFileDao.getSequence();
+			
 			list.add(DriveFileDto.builder()
 												.drive_file_no(drive_file_no)
 												.drive_name(driveFileVo.getDrive_name())
@@ -46,6 +48,11 @@ public class DriveFileServiceImpl implements DriveFileService{
 			
 			File target = new File(dir, String.valueOf(list.get(i).getDrive_file_no()));
 			mf.transferTo(target);
+			
+			//파일 타입추가
+			String mimeType=new Tika().detect(target);
+			driveFileDto.setDrive_file_type(mimeType);
+			
 			driveFileDao.upload(driveFileDto);
 		}
 		
