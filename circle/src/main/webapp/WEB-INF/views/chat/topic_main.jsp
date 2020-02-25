@@ -718,15 +718,15 @@ function MovePage(no){
 						<c:forEach items="${topicChatList}" var="chatVo">
 							<c:choose>
 								<c:when test="${chatVo.chat_status==2}">
-								<div class="msg-wrap">
-									<div class="msg-profile">
-										<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+									<div class="msg-wrap">
+										<div class="msg-profile">
+											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+										</div>
+										<div class="msg-con">
+											<span>${chatVo.member_name} </span>
+											<p class="msg">${chatVo.chat_content}</p>
+										</div>
 									</div>
-									<div class="msg-con">
-										<span>${chatVo.member_name} </span>
-										<p class="msg">${chatVo.chat_content}</p>
-									</div>
-								</div>
 								</c:when>
 								
 								<c:when test="${chatVo.chat_status==4}">
