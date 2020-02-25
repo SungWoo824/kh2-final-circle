@@ -13,10 +13,10 @@ $(function(){
 <h3>팀번호 : ${param.team_no} </h3>
 <br>
 
-<c:forEach var="driveFolderList" items="${driveFolderList}">
+<c:forEach var="folderList" items="${driveFolderList}">
 <!-- 		   <input type="checkbox" > -->
 		   <a  href="drive_view?team_no=${param.team_no}&drive_name=${driveFolderList}">
-		   <h3>${driveFolderList}</h3>
+		   <h3>${folderList}</h3>
 		   </a>
 <%-- 		   		   <a href="drivedelete?team_no=${param.team_no}&drive_name=${driveFolderList}&drive_file_no=${param.drive_file_no}">삭제</a> --%>
 <%-- 		   <a href="drivedelete?team_no=${param.team_no}&drive_name=${driveFolderList}">삭제</a> --%>

@@ -22,10 +22,7 @@
 	$(function(){
 // 		페이지가 로딩되면 웹소켓 서버에 접속
 		connect();
-
 		$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
-
-
 		//페이지를 나가기 전에 웹소켓 서버 접속을 종료
 		$(window).on("beforeunload", function(){
 			sendMessage(exit);
@@ -49,7 +46,6 @@
 			sendMessage(message, chat_content);
 			$(".user-input").val("");//입력창 초기화
 		});
-
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
 			if(message.status==2){
@@ -62,8 +58,7 @@
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
-				messagecontent.prependTo("#chat-content");	
-				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
+				messagecontent.prependTo("#chat-content");				
 			}else if(message.status==4){
 				var cont = $("<p>").addClass("msg").text(message.chat_content);
 				var spanin = $("<span>").text(message.member_name);
@@ -75,7 +70,6 @@
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
 				messagecontent.prependTo("#chat-content");
-				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}
 		}
 		
@@ -85,7 +79,6 @@
 			var context = "${pageContext.request.contextPath}";
 			var uri = "ws://"+host+context+"/topic";
 			console.log(uri);
-
 			window.socket = new WebSocket(uri);
 			
 // 			연결 시 예약 작업을 설정
@@ -135,28 +128,23 @@
 		}
 		
 		var obj = $("#dropzone");
-
 	    obj.on('dragenter', function (e) {
 	         e.stopPropagation();
 	         e.preventDefault();
 	         $(this).css('border', '2px solid #5272A0');
 	    });
-
 	    obj.on('dragleave', function (e) {
 	         e.stopPropagation();
 	         e.preventDefault();
 	         $(this).css('border', '2px dotted #8296C2');
 	    });
-
 	    obj.on('dragover', function (e) {
 	         e.stopPropagation();
 	         e.preventDefault();
 	    });
-
 	    obj.on('drop', function (e) {
 	         e.preventDefault();
 	         $(this).css('border', '2px dotted #8296C2');
-
 	         var files = e.originalEvent.dataTransfer.files;
 	         if(files.length < 1)
 	              return;
@@ -176,7 +164,6 @@
 	            for (var i = 0; i < files.length; i++) {
 	               data.append('file', files[i]);
 	            }
-
 	            var url = "./fileupload";
 	            $.ajax({
 	               url: url,
@@ -190,18 +177,12 @@
 	            });
 	        }
 	    }
-
 	    //파일 멀티 업로드 Callback
 	    function F_FileMultiUpload_Callback(files) {
 	        for(var i=0; i < files.length; i++)
 	            console.log(files[i].file_nm + " - " + files[i].file_size);
 	    }
 	});	
-
-
-
-
-
 </script>
 <!-- 토픽 생성 이름 중복검사 -->
 <script>
@@ -237,12 +218,10 @@ $(function(){
 		});			
 	});
 });
-
 </script>
 <!-- 팀 관련 스크립트 -->
 <script>
 // 소희 스크립트 공간 
-
 //소희 : 멤버초대 이메일 보내기 
 $(function(){
       //이메일 보내기 버튼을 누르면 send주소로 비동기 신호를 전송 
@@ -277,14 +256,12 @@ $(function(){
               }
    
           });
-
       });
  });
  
 </script>
 <!-- 투표 스크립트 -->
 <script>
-
 //오른쪽 메뉴 토글
 $(function(){
 	$(".gnb-btn:not(.hdd)").click(function(){
@@ -302,13 +279,10 @@ $(function(){
 			slide.show();
 		}
 	});	
-
 	$(".slide-close-btn").click(function(){
 		$(".slide").hide();
 	});
-
 });
-
 //투표
 function MovePage(no){
 	var team_no = ${param.team_no};
@@ -325,17 +299,23 @@ function MovePage(no){
 	});
 }
 
-// function MoveList(){
-// 	var ajaxOption = {
-// 			url: "./vote_golist",
-// 			type: "GET",
-// 			dataType: "html",
-// 			cache: false
-// 	};
-// 	$.ajax(ajaxOption).done(function(data){
-// 		$('#bodyContents').html(data);
-// 	});
-// }
+//검색결과
+function searchResult(no){
+	var keyword = $('#searchkey').val();
+	var topic_name = $('#topicSelection').val();
+	var term = $('#termSelection').val();
+	var ajaxOption = {
+			url : "./chat_search?team_no="+no,
+			type : "POST",
+			dataType : "html",
+			data : {keyword:keyword, topic_name:topic_name, term:term},
+			cache : false		
+	};
+	$.ajax(ajaxOption).done(function(data){
+		$('#searchResult').html(data);
+	});
+}
+
 </script>
 
 
@@ -392,7 +372,7 @@ function MovePage(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="#"></a>
+	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&member_no=${sessionScope.member_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -404,7 +384,23 @@ function MovePage(no){
             				<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>
-            			search- slide
+            			<div id="searchResult">
+	            			채팅 내용 검색<br><br>
+	            			<select name="topic_name" id="topicSelection">
+	            				<option value="all">전체 토픽</option>
+	            			<c:forEach items="${topicList }" var="topicList">
+	            				<option value="${topicList.topic_name }">${topicList.topic_name }</option>
+	            			</c:forEach>
+	            			</select>
+	            			<select name="term" id="termSelection">
+	            				<option value="0">전체기간</option>
+	            				<option value="7">1주일</option>
+	            				<option value="30">1개월</option>
+	            				<option value="90">3개월</option>
+	            			</select><br><br>
+	            				<input type="text" name="keyword" id="searchkey" required>
+	            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
+	            		</div>
             	</div>
             	<div class="slide vote-slide">
             		<div class="slide-close">
@@ -416,8 +412,8 @@ function MovePage(no){
 							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
 	        				<!-- 목록으로 버튼 if처리해야함 -->
 				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
-				            <h3>진행중인 투표 목록</h3>
-	
+				            <div id="bodyContents">
+				           		<h3>진행중인 투표 목록</h3>
 	        					<!-- 화면 동적 전환(투표 상세 페이지) -->
 				            	<ul>
 					            	<c:forEach var="voteList" items="${voteList }" >
@@ -431,6 +427,7 @@ function MovePage(no){
 					            		<br>
 					            	</c:forEach>   	
 				            	</ul>
+				            </div>
 				    </div>
         			<!-- 투표 기능 종료 -->
         			<div class="slide todolist-slide">
@@ -713,6 +710,7 @@ function MovePage(no){
 <!-- 		          </h5> -->
                     
 						<!-- 메세지 결과 창 -->          
+
         		<div class="message" style="text-align: left">
 					<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
 						<c:forEach items="${topicChatList}" var="chatVo">
@@ -730,10 +728,12 @@ function MovePage(no){
 								</c:when>
 								
 								<c:when test="${chatVo.chat_status==4}">
+
 									<div class="msg-wrap">
 										<div class="msg-profile">
 											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
 										</div>
+
 										<div class="msg-con">
 											<span>${chatVo.member_name}</span>
 											<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem;">
@@ -755,15 +755,16 @@ function MovePage(no){
 											    </p>
 											  </div>
 											<div class="card-header">${chatVo.chat_content}</div>
+
 											</div>
 										</div>
 									</div>
-								</c:when>
-							</c:choose>
-						</c:forEach>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+								
+						</div>
 					</div>
-				</div>
-						
 							
 							<!-- 전송 -->
 							<div class="chat-send-content">
