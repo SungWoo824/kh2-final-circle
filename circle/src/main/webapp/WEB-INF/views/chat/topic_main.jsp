@@ -15,17 +15,13 @@
    <link href="${pageContext.request.contextPath}/resources/css/design/common.css" rel="stylesheet" type="text/css">
 	
 	
-	
 <!-- 채팅메시지 스크립트 -->	
 <script>
 	var enter = 0, exit = 1, message = 2;
 	$(function(){
 // 		페이지가 로딩되면 웹소켓 서버에 접속
 		connect();
-
 		$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
-
-
 		//페이지를 나가기 전에 웹소켓 서버 접속을 종료
 		$(window).on("beforeunload", function(){
 			sendMessage(exit);
@@ -49,7 +45,6 @@
 			sendMessage(message, chat_content);
 			$(".user-input").val("");//입력창 초기화
 		});
-
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
 			if(message.status==2){
@@ -62,8 +57,7 @@
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
-				messagecontent.prependTo("#chat-content");	
-				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
+				messagecontent.prependTo("#chat-content");				
 			}else if(message.status==4){
 				var cont = $("<p>").addClass("msg").text(message.chat_content);
 				var spanin = $("<span>").text(message.member_name);
@@ -75,7 +69,6 @@
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
 				messagecontent.prependTo("#chat-content");
-				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}
 		}
 		
@@ -85,7 +78,6 @@
 			var context = "${pageContext.request.contextPath}";
 			var uri = "ws://"+host+context+"/topic";
 			console.log(uri);
-
 			window.socket = new WebSocket(uri);
 			
 // 			연결 시 예약 작업을 설정
@@ -135,28 +127,23 @@
 		}
 		
 		var obj = $("#dropzone");
-
 	    obj.on('dragenter', function (e) {
 	         e.stopPropagation();
 	         e.preventDefault();
 	         $(this).css('border', '2px solid #5272A0');
 	    });
-
 	    obj.on('dragleave', function (e) {
 	         e.stopPropagation();
 	         e.preventDefault();
 	         $(this).css('border', '2px dotted #8296C2');
 	    });
-
 	    obj.on('dragover', function (e) {
 	         e.stopPropagation();
 	         e.preventDefault();
 	    });
-
 	    obj.on('drop', function (e) {
 	         e.preventDefault();
 	         $(this).css('border', '2px dotted #8296C2');
-
 	         var files = e.originalEvent.dataTransfer.files;
 	         if(files.length < 1)
 	              return;
@@ -176,7 +163,6 @@
 	            for (var i = 0; i < files.length; i++) {
 	               data.append('file', files[i]);
 	            }
-
 	            var url = "./fileupload";
 	            $.ajax({
 	               url: url,
@@ -190,18 +176,12 @@
 	            });
 	        }
 	    }
-
 	    //파일 멀티 업로드 Callback
 	    function F_FileMultiUpload_Callback(files) {
 	        for(var i=0; i < files.length; i++)
 	            console.log(files[i].file_nm + " - " + files[i].file_size);
 	    }
 	});	
-
-
-
-
-
 </script>
 <!-- 토픽 생성 이름 중복검사 -->
 <script>
@@ -237,23 +217,21 @@ $(function(){
 		});			
 	});
 });
-
 </script>
 <!-- 팀 관련 스크립트 -->
 <script>
 // 소희 스크립트 공간 
-
 //소희 : 멤버초대 이메일 보내기 
 $(function(){
       //이메일 보내기 버튼을 누르면 send주소로 비동기 신호를 전송 
       $('.email-form').submit(function(e){
       	e.preventDefault();
       	
-      	$(this).find("input[type=submit]").prop("disabled", true); 
-			$(this).find("input[type=submit]").val("인증번호 발송중...");
-   
-			var url = $(this).attr("action");  //form안의 action으로 url 설정 
-			var method = $(this).attr("method"); //form안의 method 방식을 설정 
+      	$(this).find('#invite-send').prop("disabled", true);
+			$(this).find('#invite-send').val("인증번호 발송중...");
+     
+			var url = $(this).attr("action"); 
+			var method = $(this).attr("method");
 			var data = $(this).serialize();
 			
 			$.ajax({
@@ -261,65 +239,28 @@ $(function(){
               url : url,
               data : data,
               error : function(){
-            	  alert("통신실패!!!!");        	  
-            	  $('#modal').hide();
-
+            	  alert("통신실패!!!!");
+            	  $('#inviteTeam').hide();
               },
               success : function(resp){
                   //console.log(resp);
       				alert("발송완료되었습니다");
       			//입력창 초기화
-
                     $(".form-control").val("");
-                  	("input[type=submit]").prop("disabled",false).val("");
-//       				$('#modal').hide();
+                    
+      				$('#inviteTeam').hide();
+                  	('#invite-send').prop("disabled",false)
+                    .val("초대하기");
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
    
           });
-
       });
  });
-
-  	//멤버 초대 모달 화면
-	$(function(){
-	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
-
-	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
-	      $('#invite_close').click(function(){
-	           $('#modal').hide();
-	      });
-	      $('#invite_btn').click(function(){
-	              $('#modal').show();
-	      		});
-	});
-  	
-  	
-  	
-	//멤버 리스트 모달 화면
-	$(function(){
-	    //팝업 Show 기능(팀 멤버로 초대 버튼 누르면 모달 화면 열림)
-
-	      //팝업 Close 기능(닫기 버튼 누르면 닫아짐)
-	      $('#memberlist_close').click(function(){
-	           $('#modal2').hide();
-	      });
-	      $('#memberlist_btn').click(function(){
-	              $('#modal2').show();
-	      });
-
-	});
-	
-	//멤버 리스트 드롭다운
-	$(function () {
-		$('.dropdown-toggle').dropdown('show');
-// 		$('.dropdown-toggle').on('shown.bs.dropdown');
-	});
-
+ 
 </script>
 <!-- 투표 스크립트 -->
 <script>
-
 //오른쪽 메뉴 토글
 $(function(){
 	$(".gnb-btn:not(.hdd)").click(function(){
@@ -337,16 +278,12 @@ $(function(){
 			slide.show();
 		}
 	});	
-
 	$(".slide-close-btn").click(function(){
 		$(".slide").hide();
 	});
-
 });
-
 //투표
 function MovePage(no){
-// 	var content = $('#content').val();
 	var team_no = ${param.team_no};
 	var topic_no = ${param.topic_no};
 	var  ajaxOption = {
@@ -378,17 +315,6 @@ function searchResult(no){
 	});
 }
 
-// function MoveList(){
-// 	var ajaxOption = {
-// 			url: "./vote_golist",
-// 			type: "GET",
-// 			dataType: "html",
-// 			cache: false
-// 	};
-// 	$.ajax(ajaxOption).done(function(data){
-// 		$('#bodyContents').html(data);
-// 	});
-// }
 </script>
 
 
@@ -445,7 +371,7 @@ function searchResult(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="#"></a>
+	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&member_no=${sessionScope.member_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -457,10 +383,8 @@ function searchResult(no){
             				<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>
-	            		<div id="searchResult">
+            			<div id="searchResult">
 	            			채팅 내용 검색<br><br>
-	            			
-	<!--             			<form action="./chat_search" method="post"> -->
 	            			<select name="topic_name" id="topicSelection">
 	            				<option value="all">전체 토픽</option>
 	            			<c:forEach items="${topicList }" var="topicList">
@@ -475,8 +399,7 @@ function searchResult(no){
 	            			</select><br><br>
 	            				<input type="text" name="keyword" id="searchkey" required>
 	            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
-	            		</div>	
-            	</div>
+	            		</div>
             	</div>
             	<div class="slide vote-slide">
             		<div class="slide-close">
@@ -488,8 +411,8 @@ function searchResult(no){
 							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
 	        				<!-- 목록으로 버튼 if처리해야함 -->
 				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
-				            <h3>진행중인 투표 목록</h3>
-	
+				            <div id="bodyContents">
+				           		<h3>진행중인 투표 목록</h3>
 	        					<!-- 화면 동적 전환(투표 상세 페이지) -->
 				            	<ul>
 					            	<c:forEach var="voteList" items="${voteList }" >
@@ -503,6 +426,7 @@ function searchResult(no){
 					            		<br>
 					            	</c:forEach>   	
 				            	</ul>
+				            </div>
 				    </div>
         			<!-- 투표 기능 종료 -->
         			<div class="slide todolist-slide">
@@ -785,46 +709,22 @@ function searchResult(no){
 <!-- 		          </h5> -->
                     
 						<!-- 메세지 결과 창 -->          
-        		<div class="message" style="text-align: left">
-					<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
-						<c:forEach items="${topicChatList}" var="chatVo">
-							<c:choose>
-								<c:when test="${chatVo.chat_status==2}">
-								<div class="msg-wrap">
-									<div class="msg-profile">
-										<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
-									</div>
-									<div class="msg-con">
-										<span>${chatVo.member_name} </span>
-										<p class="msg">${chatVo.chat_content}</p>
-									</div>
-								</div>
-								</c:when>
-								
-								<c:when test="${chatVo.chat_status==4}">
+                        <div class="message" style="text-align: left">
+							<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
+								<c:forEach items="${topicChatList}" var="chatVo">
 									<div class="msg-wrap">
 										<div class="msg-profile">
 											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
 										</div>
-										<div class="msg-con">
-											<span>${chatVo.member_name}</span>
-											<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem;">
-											  <div class="card-body admin-card-body">
-											    <h4 class="card-title">미리보기</h4>
-											    <p class="card-text">
-											    	<a href="#"></a>
-											    </p>
-											  </div>
-											<div class="card-header">${chatVo.chat_content}</div>
+											<div class="msg-con">
+												<span>${chatVo.member_name} </span>
+												<p class="msg">${chatVo.chat_content}</p>
 											</div>
-										</div>
 									</div>
-								</c:when>
-							</c:choose>
-						</c:forEach>
-					</div>
-				</div>
-						
+								</c:forEach>
+								
+							</div>
+						</div>
 							
 							<!-- 전송 -->
 							<div class="chat-send-content">
@@ -1127,4 +1027,5 @@ function searchResult(no){
 </div>
 </div>
 </body>
+
 </html>

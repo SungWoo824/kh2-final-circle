@@ -22,7 +22,7 @@ body{
     margin: 0;
     font-size: 14px;
     overflow-y:hidden;
-    overflow-x:hidden;
+    
 }
 
 article, aside, figure, footer, header, main, nav, section,div{
@@ -694,54 +694,6 @@ background-color:#f8f8f8;
         }
 /*모달 css 종료*/
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/origin/drive3c
-/*드라이브*/
-.upload-wrap{
-	height:100px;
-	border-bottom: 1px solid #ececec;
-}
-
-.drmenu{
-	position:relative;
-	top: 69px;
-	border-top: 1px solid #ececec;
-}
-.drmenu-wrap{
-	height:70px;
-	background-color:#fff;
-}
-
-.fa-times{
-	position:relative;
-	top:5px;
-	right:5px;	
-}
-
-.drtop{
-	width:100%;
-	text-align:center;	
-	font-size:20px;
-	font-weight:500;
-}
-
-.drback{
-	position:absolute;
-	top:0;
-	left:0;
-	width:70px;
-	height:70px;	
-	
-}
-
-.drback-btn{
-	position:absolute;
-	top:10px;
-	
-}
-
 .admin-wrap{
 	display:flex;
 }
@@ -768,50 +720,4 @@ background-color:#f8f8f8;
 	margin: auto;
 	padding-top:75px;
 }
-=======
-
-
-/*파일 리스트*/
-.flist-wrap{
-	height:100%;
-}
-#fileview{
-	height:640px;
-	overflow:auto;
-}
-
-.page-num{
-	width:100%;
-	position:relative;
-}
-
-
-
-
-/*어드민*/
-.admin-wrap{
-	display:flex;
-}
-
-.msg-wrap{
-	padding-bottom:40px;
-}
-
-.mDashStatus{ -ms-flex:1; flex:1; text-align:center; background:#fff; border-radius:2px;
-      -webkit-box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
-      -moz-box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
-      box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
-      -webkit-transition: .2s ease-out; transition: .2s ease-out;
-    }
- .admin-card{
- 	-webkit-transition: .2s ease-out;
- 	text-align: center;
- }
- .admin-card:hover {
- 	background:#5ea5fe;
- 	color:white;
-  }
-.admin-card-body{
-	margin: auto;
-	padding-top:75px;
-}
+  

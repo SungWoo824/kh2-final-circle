@@ -30,8 +30,8 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 		sqlSession.insert("vote.createCategory", vote);
 	}
 	@Override
-	public List<String> getTopicList(int team_no) {
-		return sqlSession.selectList("vote.getTopic", team_no);
+	public List<String> getTopicList(int member_no) {
+		return sqlSession.selectList("vote.getTopic", member_no);
 	}
 	
 	@Override

@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getTopic" resultType="java.lang.String" parameterType="Integer">
-		select topic_name from topic where team_no=#{team_no}
+		select t.topic_name from topic t, topic_member tm where t.topic_no=tm.topic_no and member_no=#{member_no}
 	</select>
 	
 	<select id="getVoteList" resultType="voteDto">
