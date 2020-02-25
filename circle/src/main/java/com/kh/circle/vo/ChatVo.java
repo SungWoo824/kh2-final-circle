@@ -17,4 +17,5 @@ public class ChatVo {
 	private String member_name;
 	private String chat_content;
 	private int status;//0(enter), 1(exit), 2(message), 4 (file)
+	private int chat_status;
 }
