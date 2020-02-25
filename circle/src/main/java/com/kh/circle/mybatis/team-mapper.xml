@@ -167,7 +167,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	set team_domain = #{team_domain}
 	where team_no = #{team_no}
 	</update>
-
+	
+	<!-- 등급 양도 -->
+	<update id="grantPosition" parameterType="map">
+	update team_member 
+	set member_position = ${member_position} 
+	where member_no=#{member_no} and team_no=#{team_no} 
+	</update>
+	
 	<!-- 회원 권환 변경 -->
 	<update id="changeAuth" parameterType="teamMemberDto">
 	update team_member 
@@ -175,9 +182,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where member_no=#{member_no} and team_no=#{team_no} 
 	</update>
 	
+	<select id="teamCount" resultType="int">
+		select count(*) from team
+	</select>
+	
 	<!-- 소유자인지 확인 -->
 	<select id="selectPosition" parameterType="teamMemberDto" resultType="String">
 		select member_position from team_member where member_no=#{member_no} and team_no=#{team_no}
 	</select>
 	
+	<select id="managerTeamList" resultType="teamDto" parameterType="boardVo">
+		select * from (select rownum rn, A.* from 
+		(select * from team
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by team_no desc)A ) where rn between #{startIndex} and #{countPerPage}
+		
+	</select>
+	<select id="managerTeamListCount" resultType="int" parameterType="boardVo">
+		select count(*) from team
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by team_no desc
+	</select>
 </mapper>
