@@ -54,12 +54,6 @@
 <div class="ins"></div>
 <input type="button" value="+보기 추가" class="option"><br>
 <br><br>
-<!-- <h3> -->
-<!-- 익명투표</h3> -->
-<!-- <label class="switch"> -->
-<!-- <input type="checkbox"  class="switcha" name="vote_create_anonymous" value="y"> -->
-<!-- <span class="slider round"></span> -->
-<!-- </label>			 -->
 <h3>
 복수선택</h3>	
 <label class="switch">

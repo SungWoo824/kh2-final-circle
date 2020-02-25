@@ -87,7 +87,7 @@ public class ChatController {
 		model.addAttribute("topicList", topicList);
 		model.addAttribute("memberChatCount", teamService.memberChatCount(team_no,(int)session.getAttribute("member_no")));
 		model.addAttribute("topicChatList", chatDao.topicChatList(topic_no));
-		log.info("topicChatList= {}",chatDao.topicChatList(topic_no));
+
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));

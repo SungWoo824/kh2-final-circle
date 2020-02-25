@@ -57,7 +57,8 @@
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
-				messagecontent.prependTo("#chat-content");				
+				messagecontent.prependTo("#chat-content");
+				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}else if(message.status==4){
 				var cont = $("<p>").addClass("msg").text(message.chat_content);
 				var spanin = $("<span>").text(message.member_name);
@@ -69,6 +70,7 @@
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
 				messagecontent.prependTo("#chat-content");
+				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}
 		}
 		
