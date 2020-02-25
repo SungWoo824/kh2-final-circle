@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <!--bootstrap template-->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -61,7 +62,8 @@
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
-				messagecontent.prependTo("#chat-content");				
+				messagecontent.prependTo("#chat-content");	
+				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}else if(message.status==4){
 				var cont = $("<p>").addClass("msg").text(message.chat_content);
 				var spanin = $("<span>").text(message.member_name);
@@ -73,6 +75,7 @@
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
 				messagecontent.prependTo("#chat-content");
+				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}
 		}
 		
@@ -711,22 +714,57 @@ function MovePage(no){
 <!-- 		          </h5> -->
                     
 						<!-- 메세지 결과 창 -->          
-                        <div class="message" style="text-align: left">
-							<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
-								<c:forEach items="${topicChatList}" var="chatVo">
+        		<div class="message" style="text-align: left">
+					<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
+						<c:forEach items="${topicChatList}" var="chatVo">
+							<c:choose>
+								<c:when test="${chatVo.chat_status==2}">
+								<div class="msg-wrap">
+									<div class="msg-profile">
+										<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+									</div>
+									<div class="msg-con">
+										<span>${chatVo.member_name} </span>
+										<p class="msg">${chatVo.chat_content}</p>
+									</div>
+								</div>
+								</c:when>
+								
+								<c:when test="${chatVo.chat_status==4}">
 									<div class="msg-wrap">
 										<div class="msg-profile">
 											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
 										</div>
-											<div class="msg-con">
-												<span>${chatVo.member_name} </span>
-												<p class="msg">${chatVo.chat_content}</p>
+										<div class="msg-con">
+											<span>${chatVo.member_name}</span>
+											<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem;">
+											  <div class="card-body admin-card-body">
+											  <c:choose>
+											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'text')}">
+											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg"></div>
+											    </c:when>
+											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'image')}">
+											    	<div><img id="chat_dummy" src='${pageContext.request.contextPath}/chat/download?chat_no=${chatVo.chat_no}'></div>
+											    </c:when>
+											    <c:otherwise>
+											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/filedummy.jpeg"></div>
+											    </c:otherwise>
+											    
+											  </c:choose>
+											    <p class="card-text">
+											    	<a href="#"></a>
+											    </p>
+											  </div>
+											<div class="card-header">${chatVo.chat_content}</div>
 											</div>
+										</div>
 									</div>
-								</c:forEach>
-								
-							</div>
-						</div>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+					</div>
+				</div>
+						
 							
 							<!-- 전송 -->
 							<div class="chat-send-content">

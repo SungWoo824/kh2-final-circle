@@ -67,4 +67,10 @@ public class ManagerDaoImpl implements ManagerDao{
 		return sqlSession.selectOne("team.managerTeamListCount",boardVo);
 	}
 	
+
+	@Override
+	public void memberAdminGrant(int member_no) {
+		sqlSession.update("member.adminGrant", member_no);
+	}
+	
 }
