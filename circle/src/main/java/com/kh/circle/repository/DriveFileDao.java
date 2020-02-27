@@ -13,8 +13,8 @@ public interface DriveFileDao {
 	int getSequence();
 	
 	int driveListCount(BoardVo boardVo);
-	List<DriveFileDto> getFileList(BoardVo boardVo);
-	
+//	List<DriveFileDto> getFileList(BoardVo boardVo);
+	List<DriveFileDto> getFileList(int team_no, String drive_name);
 	void upload(DriveFileDto driveFileDto);
 	void newFolder(DriveFileDto driveFileDto);
 	DriveFileDto getNum(int drive_file_no);

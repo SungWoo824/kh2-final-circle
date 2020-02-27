@@ -61,17 +61,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from drive_file where drive_file_no=#{drive_file_no}
 	</select>
 	
-	<!-- 파일목록 -->
-	<select id="driveFileList" resultType="driveFileDto" parameterType="boardVo">
-		select * from (select rownum rn, A.* from 
-		 (select * from drive_file 
-		 where team_no=#{team_no} 
-		 and drive_name=#{drive_name}
+	<!-- 파일목록 페이징 합쳤을때 -->
+<!-- 	<select id="driveFileList" resultType="driveFileDto" parameterType="boardVo"> -->
+<!-- 		select * from (select rownum rn, A.* from  -->
+<!-- 		 (select * from drive_file  -->
+<!-- 		 where team_no=#{team_no}  -->
+<!-- 		 and drive_name=#{drive_name} -->
 <!-- 		 <if test="type != null  || type != ''"> -->
 <!-- 			 and ${type} like '%'||#{value}||'%'  -->
 <!-- 		</if> -->
-		 order by drive_file_no desc)A 
-		 ) where rn between #{startIndex} and #{countPerPage}
+<!-- 		 order by drive_file_no desc)A  -->
+<!-- 		 ) where rn between #{startIndex} and #{countPerPage} -->
+<!-- 	</select> -->
+	
+	<!-- 파일목록 -->
+	<select id="driveFileList" resultType="driveFileDto" parameterType="map">
+		 select * from drive_file 
+		 where team_no=#{team_no} 
+		 and drive_name=#{drive_name}
 	</select>
 	
 	<!-- 파일목록 갯수 -->
