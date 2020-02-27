@@ -49,38 +49,42 @@ public class DriveFileController {
 	
 	
 	@GetMapping("/drive")
-	public String drive(@RequestParam int team_no,
-									//기본값을 null로 받을때 defaultValue
-									@RequestParam(defaultValue = "") String drive_name,
-//									@RequestParam(defaultValue = "") int topic_no,
-									@RequestParam(defaultValue="1") int curPage,
-									@ModelAttribute BoardVo boardVo,
-									Model model) {
+	public String drive(
+						@RequestParam int team_no,
+						//기본값을 null로, defaultValue
+						@RequestParam(defaultValue = "") String drive_name,
+						@RequestParam(defaultValue="1") int curPage,
+						@ModelAttribute BoardVo boardVo,
+						Model model) {
 
 		List<DriveFileDto> folderList= driveFileDao.getFolderList(team_no,drive_name);
 		model.addAttribute("driveFolderList", folderList);
-		model.addAttribute("team_no",team_no);
 		List<DriveFileDto> folderName= driveFileDao.getFolderName(team_no);
 		model.addAttribute("driveFolderName", folderName);
+		model.addAttribute("team_no",team_no);
+//		model.addAttribute("drive_name",drive_name);
+		
+		//폴더 생성됐을때만 실행
 		if(folderName != null) {
 			List<DriveFileDto> fileList= driveFileDao.getFileList(boardVo);
 			model.addAttribute("driveFileList", fileList);
+			
+			//페이징
+			int listCount= driveFileDao.driveListCount(boardVo);
+			Pagination pagination = new Pagination(listCount,curPage);
+			
+			boardVo.setStartIndex(pagination.getStartIndex()+1);
+			boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
+			List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
+			
+			model.addAttribute("listCount",listCount);
+			model.addAttribute("driveFileList",driveFileList);
+			model.addAttribute("pagination",pagination);
+			
 		}
-//		model.addAttribute("topic_no", topic_no);
 		
 		
-		//페이징
-//		int listCount= driveFileDao.driveListCount(boardVo);
-//		Pagination pagination = new Pagination(listCount,curPage);
-//		
-//		boardVo.setStartIndex(pagination.getStartIndex()+1);
-//		boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
-//		List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
-//		
-//		model.addAttribute("listCount",listCount);
-//		model.addAttribute("driveFileList",driveFileList);
-//		model.addAttribute("pagination",pagination);
-//		
+		
 		return "drive/drive";
 		
 	}

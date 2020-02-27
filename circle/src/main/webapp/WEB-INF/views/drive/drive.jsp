@@ -212,7 +212,7 @@ $("#exit-btn").click(function(){
 <%-- 				                  <input type="search" name="value" value="${value }"> --%>
 <!-- 				                  <input type="submit" value="검색"> -->
 <!-- 			                  </form> -->
-					         <!-- 네비게이터(navigator) -->
+							<!--네비게이터(navigator) -->
 <%-- 					         <jsp:include page="/WEB-INF/views/drive/paging.jsp"> --%>
 <%-- 					            <jsp:param name="pno" value="${pno}" /> --%>
 <%-- 					            <jsp:param name="count" value="${count}" /> --%>
@@ -237,7 +237,7 @@ $("#exit-btn").click(function(){
 					                            </c:when>
 					                            <c:otherwise>
 						                            <li class="page-item">
-												      <a href="${pageContext.request.contextPath}/drive/drive?type=${param.type}&value=${param.value}&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+												      <a href="#" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
 												    </li>
 					                                
 					                            </c:otherwise>

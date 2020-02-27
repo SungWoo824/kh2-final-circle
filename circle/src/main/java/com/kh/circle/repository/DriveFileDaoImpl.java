@@ -76,17 +76,22 @@ public class DriveFileDaoImpl implements DriveFileDao{
 	public List<DriveFileDto> getFolderName(int team_no) {
 		return sqlSession.selectList("driveFile.driveFolderName", team_no);
 	}
-
+	
+	/////////////////////////////////페이징///////////////////////////////////
 	//드라이브파일 목록 가져오기
 	@Override
 	public List<DriveFileDto> getFileList(BoardVo boardVo) {
 		return sqlSession.selectList("driveFile.driveFileList", boardVo);
 	}
 
+	//드라이브 팀의 폴더 속에 있는 파일 목록 갯수
 	@Override
 	public int driveListCount(BoardVo boardVo) {
-		return 0;
+		return sqlSession.selectOne("drieFile.driveFileCount",boardVo);
 	}
+	///////////////////////////////////////////////////////////////////////
+	
+	
 	
 	//드라이브파일 삭제
 	@Override

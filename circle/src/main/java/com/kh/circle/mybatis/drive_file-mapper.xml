@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ) where rn between #{startIndex} and #{countPerPage}
 	</select>
 	
-	<!-- 파일목록 -->
+	<!-- 파일목록 갯수 -->
 	<select id="driveFileListCount" resultType="int" parameterType="boardVo">
 		select count(*) from drive_file 
 		where team_no=#{team_no} 

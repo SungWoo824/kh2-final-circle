@@ -372,7 +372,7 @@ function searchResult(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&member_no=${sessionScope.member_no}"></a>
+	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
