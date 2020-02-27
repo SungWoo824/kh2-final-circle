@@ -139,6 +139,7 @@ $("#exit-btn").click(function(){
                       <div>드라이브</div>
             </div>
 			<div class="chat-menu-center">
+			
 
              </div> 
 			<!-- 상단 토픽 정보 끝-->
