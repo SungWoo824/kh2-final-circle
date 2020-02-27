@@ -11,5 +11,6 @@ public class TeamMemberDto {
 	private int team_no;
 	private String member_position;
 	private String member_grade;
+	private String member_auth;
 
 }

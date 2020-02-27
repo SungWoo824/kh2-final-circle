@@ -737,3 +737,125 @@ background-color:#f8f8f8;
 	top:10px;
 	
 }
+
+
+/*파일 리스트*/
+.chat-menu-bar{
+	max-width:1500px;
+}
+
+.flist-wrap{
+	height:100%;
+}
+#fileview{
+	height:640px;
+	overflow:auto;
+	padding: 30px;
+}
+
+.page-num{
+	width:100%;
+	position:relative;
+}
+
+.upload-box{
+	width:240px;
+	height:240px;
+	border:1px solid #ddd;
+	float:left;
+	border-radius: 6px;
+	margin-right:20px;
+	margin-bottom:20px;
+}
+
+.upload-wrap-box{
+	margin:20px;
+}
+
+.upload-box .img-view{
+	width:100px;
+	height:120px;
+/* 	background-color:#eee; */
+	margin:20px auto;
+	position:relative;
+}
+
+.upload-box .img-view img{
+	width:100px;
+	position:absolute;
+}
+
+.upload-box .text-view{
+	margin:40px 20px 0 20px;
+}
+
+
+
+.upload-box .text-view .checkbox{
+	float:left;
+}
+
+.folder-title-box{
+	width:100%;
+	position:relative;
+}
+
+.folder-btn{
+	marigin-right:0;
+	position:absolute;
+	right:0;
+}
+
+.upload-box .text-view p{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
+
+
+.upload-box .text-view .folder-title{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	text-align:center;
+	font-size:18px;
+	font-weight:700;
+}
+
+.fileupload-box{
+	margin-top:10px;
+}
+
+
+/*어드민*/
+.admin-wrap{
+	display:flex;
+}
+
+.msg-wrap{
+	padding-bottom:40px;
+}
+
+.mDashStatus{ -ms-flex:1; flex:1; text-align:center; background:#fff; border-radius:2px;
+      -webkit-box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
+      -moz-box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
+      box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
+      -webkit-transition: .2s ease-out; transition: .2s ease-out;
+    }
+ .admin-card{
+ 	-webkit-transition: .2s ease-out;
+ 	text-align: center;
+ }
+ .admin-card:hover {
+ 	background:#5ea5fe;
+ 	color:white;
+  }
+.admin-card-body{
+	margin: auto;
+	padding-top:65px;
+}
+#chat_dummy{
+	height: 80px;
+	width: 80px;
+}
+  
