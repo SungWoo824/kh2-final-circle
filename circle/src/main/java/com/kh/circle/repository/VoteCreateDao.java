@@ -9,7 +9,7 @@ import com.kh.circle.entity.VoteDto;
 public interface VoteCreateDao {
 	void create(VoteDto voteDto, int seq);
 	void createCategory(VoteCategoryDto vcdto, int seq);
-	List<String> getTopicList();
+	List<String> getTopicList(int member_no);
 	List<VoteDto> getVoteList();
 	List<VoteDto> getVoteDetail(int vote_create_no);
 	List<VoteCategoryDto> getVoteCategoryDetail(int vote_create_no);
