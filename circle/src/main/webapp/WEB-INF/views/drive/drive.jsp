@@ -141,6 +141,7 @@ $("#exit-btn").click(function(){
 			<div class="chat-menu-center">
 			
 
+
              </div> 
 			<!-- 상단 토픽 정보 끝-->
 			</nav>
