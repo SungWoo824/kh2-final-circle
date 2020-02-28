@@ -106,15 +106,6 @@
 																</c:otherwise>
 																
 																</c:choose>	
-<!--                													<form action=""></form> -->
-<%-- 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}"> --%>
-<%-- 																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}"> --%>
-<!-- <!-- 																<input type="hidden" name="topic_no" class="topic_no_value" value=""> --> -->
-<!-- 																<div class="mypage-team-div"> -->
-<!-- 																	<button type="submit">팀관리</button> -->
-<!-- 																</div> -->
-																
-<!-- 															</form> -->
 
 															<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamMainVO.team_no}">

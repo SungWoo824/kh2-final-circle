@@ -422,15 +422,15 @@ function EditTodo(team_no,todo_list_no,topic_no){
 
 
 		var  ajaxOption = {
-			url : "./todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no+"&todo_list_content="+todo_list_content,
+			url : "./todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
 			type : "get",
 			dataType : "html",
-// 			data : {todo_list_content:todo_list_content},
+			data : {todo_list_content:todo_list_content},
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
 
-// 				$('#todo-edit').html(data);
+				$('#todo-edit').html(data);
 // 				$('#list-content').hide();
 				$(".todo-title").hide();
 
@@ -645,7 +645,7 @@ function EditTodo(team_no,todo_list_no,topic_no){
 <%-- 										<input type="hidden" name="team_no"	value="${todoListJoinVO.team_no}"> --%>
 <%-- 										<input type="hidden" id="todo_list_no_edit" name="todo_list_no" value="${todoListJoinVO.todo_list_no}"> --%>
 <%-- 										<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}"> --%>
-										<textarea type="text" id="todo_list_content_edit" name="todo_list_content" value="${todoListJoinVO.todo_list_content}"></textarea>
+										<textarea type="text" id="todo_list_content_edit" name="todo_list_content">${todoListJoinVO.todo_list_content}</textarea>
 										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정">
 								
 								<!-- 할일 삭제하기 -->
