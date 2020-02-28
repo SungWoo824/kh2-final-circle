@@ -410,20 +410,22 @@ function TodoDelete(){
 
 
 //할일 수정하기
-function EditTodo(){
-
-	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
-	var team_no = ${param.team_no};
-	var topic_no = ${param.topic_no};
+function EditTodo(team_no,todo_list_no,topic_no){
+	console.log("11111team_no"+team_no);
+	console.log("t22222odo_list_content"+todo_list_content);
+	console.log("t333333topic_no"+topic_no);
+// 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
 	var todo_list_content = $("#todo_list_content_edit").val(); 
 	
 
 
 		var  ajaxOption = {
-			url : "./todo_list_edit",
+			url : "./todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no+"&todo_list_content="+todo_list_content,
 			type : "get",
 			dataType : "html",
-			data : {team_no:team_no,topic_no:topic_no, todo_list_no:todo_list_no,todo_list_content:todo_list_content},
+// 			data : {todo_list_content:todo_list_content},
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
@@ -640,11 +642,11 @@ function EditTodo(){
 
 								<!-- 할일 수정  -->
 								<p>할일 수정하기</p>
-										<input type="hidden" name="team_no"	value="${todoListJoinVO.team_no}">
-										<input type="hidden" id="todo_list_no_edit" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
-										<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
-										<textarea type="text" id="todo_list_content_edit" name="todo_list_content" value="${todoListJoinVO.todo_list_content}">${todoListJoinVO.todo_list_content}</textarea>
-										<input type="submit" onclick="EditTodo()" value="수정">
+<%-- 										<input type="hidden" name="team_no"	value="${todoListJoinVO.team_no}"> --%>
+<%-- 										<input type="hidden" id="todo_list_no_edit" name="todo_list_no" value="${todoListJoinVO.todo_list_no}"> --%>
+<%-- 										<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}"> --%>
+										<textarea type="text" id="todo_list_content_edit" name="todo_list_content" value="${todoListJoinVO.todo_list_content}"></textarea>
+										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정">
 								
 								<!-- 할일 삭제하기 -->
 								<br>

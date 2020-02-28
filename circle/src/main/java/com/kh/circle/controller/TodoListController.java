@@ -207,6 +207,9 @@ public class TodoListController {
 									 HttpSession session, Model model) {
 
 			int member_no = (int)session.getAttribute("member_no");
+			log.info("team_no"+team_no);
+			log.info("topic_no"+topic_no);
+			log.info("todo_list_no"+todo_list_no);
 			
 			//할일 수정하기
 			todoListDao.editTodo(todo_list_content, member_no, todo_list_no);
@@ -219,7 +222,7 @@ public class TodoListController {
 								@RequestParam int topic_no,
 								@RequestParam int todo_list_no,
 								HttpSession session, Model model) {
-
+		
 			//보낼 데이터들
 			int member_no = (int)session.getAttribute("member_no");
 			model.addAttribute("team_no", team_no);
