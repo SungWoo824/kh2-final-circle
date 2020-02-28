@@ -142,8 +142,6 @@ $("#exit-btn").click(function(){
 			
 
 
-
-
              </div> 
 			<!-- 상단 토픽 정보 끝-->
 			</nav>
