@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="memberList" resultType="memberListVO" parameterType="int">
 <!-- 	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm  -->
 <!-- 	inner join member on member.member_no = tm.member_no -->
-		select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+		select member.member_no,member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
 		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no})tm 
 			inner join member on member.member_no = tm.member_no
 	</select>
@@ -142,7 +142,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="teamMemberInfo" resultType="teamMemberDto" parameterType="teamMemberDto">
 		select * from team_member where member_no = #{member_no} and team_no=#{team_no}
 	</select>
-	
+
 	<!-- 팀 아예 삭제 ( 모든 멤버까지 다삭제) -->
 	<delete id="teamDelete" parameterType="int" >
 		delete team where team_no=#{team_no}
@@ -177,12 +177,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	set team_domain = #{team_domain}
 	where team_no = #{team_no}
 	</update>
-
+	
 	<!-- 등급 양도 -->
 	<update id="grantPosition" parameterType="map">
 	update team_member 
 	set member_position = ${member_position} 
 	where member_no=#{member_no} and team_no=#{team_no} 
 	</update>
-
+	
+	<!-- 회원 권환 변경 -->
+	<update id="changeAuth" parameterType="teamMemberDto">
+	update team_member 
+	set member_auth = #{member_auth} 
+	where member_no=#{member_no} and team_no=#{team_no} 
+	</update>
+	
+	<select id="teamCount" resultType="int">
+		select count(*) from team
+	</select>
+	
+	<!-- 소유자인지 확인 -->
+	<select id="selectPosition" parameterType="teamMemberDto" resultType="String">
+		select member_position from team_member where member_no=#{member_no} and team_no=#{team_no}
+	</select>
+	
+	<select id="managerTeamList" resultType="teamDto" parameterType="boardVo">
+		select * from (select rownum rn, A.* from 
+		(select * from team
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by team_no desc)A ) where rn between #{startIndex} and #{countPerPage}
+		
+	</select>
+	<select id="managerTeamListCount" resultType="int" parameterType="boardVo">
+		select count(*) from team
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by team_no desc
+	</select>
 </mapper>

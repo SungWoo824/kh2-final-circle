@@ -171,9 +171,20 @@ public class TeamDaoImpl implements TeamDao {
 }
 
 
-	
-	
-	
+	@Override
+	public void changeAuth(TeamMemberDto teamMemberDto) {	
+		sqlSession.update("team.changeAuth", teamMemberDto);
+	}
 
+	@Override
+	public String checkPosition(int member_no, int team_no) {
+		
+		TeamMemberDto teamMemberDto = TeamMemberDto.builder()
+				.member_no(member_no)
+				.team_no(team_no)
+				.build();
+		
+		return sqlSession.selectOne("team.selectPosition", teamMemberDto);
+	}
 
 }

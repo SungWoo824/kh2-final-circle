@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.entity.MemberDto;
+import com.kh.circle.entity.TeamDto;
+import com.kh.circle.vo.BoardVo;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,13 +22,55 @@ public class ManagerDaoImpl implements ManagerDao{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<MemberDto> memberList(String type,String value) {
-		Map<String,String> param = new HashMap<>();
-			param.put("type", type);
-			param.put("value", value);
-		
-		
-		return sqlSession.selectList("member.memberList", param);
+	public List<MemberDto> memberList(BoardVo boardVo) {
+		return sqlSession.selectList("member.memberList", boardVo);
 	}
 
+	@Override
+	public int memberCount() {
+		return sqlSession.selectOne("member.memberCount");
+	}
+
+	@Override
+	public int teamCount() {
+		return sqlSession.selectOne("team.teamCount");
+	}
+
+	@Override
+	public int fileTotalSize() {
+		return sqlSession.selectOne("driveFile.fileTotalSize");
+	}
+
+	@Override
+	public int managerCount() {
+		return sqlSession.selectOne("member.managerCount");
+	}
+
+	@Override
+	public int paySum() {
+		
+		return sqlSession.selectOne("pay.paySum");
+	}
+
+	@Override
+	public List<TeamDto> teamList(BoardVo boardVo) {
+		return sqlSession.selectList("team.managerTeamList", boardVo);
+	}
+
+	@Override
+	public int memberListCount(BoardVo boardVo) {
+		return sqlSession.selectOne("member.memberListCount", boardVo);
+	}
+
+	@Override
+	public int teamListCount(BoardVo boardVo) {
+		return sqlSession.selectOne("team.managerTeamListCount",boardVo);
+	}
+	
+
+	@Override
+	public void memberAdminGrant(int member_no) {
+		sqlSession.update("member.adminGrant", member_no);
+	}
+	
 }

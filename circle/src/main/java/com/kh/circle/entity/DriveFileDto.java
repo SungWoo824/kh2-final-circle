@@ -10,6 +10,6 @@ public class DriveFileDto {
 
 	private int drive_file_no, member_no, team_no;
 	private long drive_file_size;
-	private String drive_name, drive_file_uploadname;
+	private String drive_name, drive_file_uploadname, drive_folder;
 	
 }

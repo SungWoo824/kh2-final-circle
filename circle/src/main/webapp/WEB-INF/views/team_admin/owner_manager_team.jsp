@@ -240,8 +240,13 @@ $(function(){
 	                                    <article class="modify-article">
 	                               		     <div>
 	                               		     
-	                               		    	<!-- 팀 정보보기  -->
+						<div class="modify-item-name">
+														<a href="../pay/planoption">보유중인 플랜 보기</a>
+													</div>
+	                               		     <!-- 팀 정보보기  -->
+
 												<div class="modify-items">
+												
 													<div class="modify-item-name">
 														팀 정보보기  
 													</div>

@@ -25,6 +25,8 @@ public class TeamServer extends TextWebSocketHandler{
 	public static final int exit = 1;
 	public static final int mess = 2;
 	public static final int alert = 3;
+	public static final int file= 4;
+	public static final int vote=5;
 	private ObjectMapper mapper = new ObjectMapper();
 
 	@Autowired
@@ -72,9 +74,15 @@ public class TeamServer extends TextWebSocketHandler{
 			
 			teamList.get(team_no).broadcast(session, data, containList);
 			
+		} else if(status == file ) {
+			int team_no = data.getTeam_no();
+			data.setMember_name((String)session.getAttributes().get("member_name"));
+			data.setMember_no((int)session.getAttributes().get("member_no"));
+			List<Integer> containList = chatDao.memberContainTopic(data.getMember_no(),data.getTeam_no());
+			teamList.get(team_no).broadcast(session, data, containList);
+		
+		} else if(status == vote) {
+			
 		}
 	}
-	
-
-	
 }

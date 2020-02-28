@@ -6,7 +6,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 <mapper namespace="driveFile">
+	
+	<!-- 폴더만 생성 되었을때 -->
+	<insert id="newFolder" parameterType="driveFileDto">
+		insert into drive_file 
+		values(
+			#{drive_file_no},
+			#{member_no},
+			#{team_no},
+			#{drive_name},
+			'null',
+			0,
+			'0'
+		)
+	</insert>
 
+	<!-- 파일이 업로드 되었을때 -->
 	<insert id="upload" parameterType="driveFileDto">
 		insert into drive_file 
 		values(
@@ -15,10 +30,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{team_no},
 			#{drive_name},
 			#{drive_file_uploadname},
-			#{drive_file_size}
+			#{drive_file_size},
+			'1'
 		)
 	</insert>
 	
+
 	<!-- 시퀀스저장 -->
 	<select id="getSeq" resultType="int">
 		select drive_file_no_seq.nextval from dual
@@ -42,16 +59,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 파일목록 -->
-	<select id="fileList" resultType="driveFileDto" parameterType="driveFileVo">
-<!-- 		select * from drive_file where team_no=#{team_no} -->
+	<select id="driveFileList" resultType="driveFileDto" parameterType="map">
+<!-- 		select * from  -->
+<!-- 		(select rownum rn, A.* from  -->
+<!-- 		 (select * from drive_file  -->
+<!-- 		 where team_no=#{team_no} and drive_name=#{drive_name} -->
+<!-- 		 order by drive_file_no desc)A  -->
+<!-- 		 ) where rn between #{startIndex} and #{countPerPage} -->
 		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
 	</select>
 	
 	
 	<!-- 드라이브 폴더 목록 -->
-	<select id="driveFolderList" parameterType="int" resultType="String">
+	<select id="driveFolderList" parameterType="int" resultType="driveFileDto">
+		select * from drive_file where team_no=#{team_no}
+	</select>
+	
+	<select id="driveFolderName" parameterType="int" resultType="driveFileDto">
 		select distinct drive_name from drive_file where team_no=#{team_no}
 	</select>
+	
+	
+	<!-- 파일명 변경 -->
+	<update id="fileEdit" parameterType="map">
+		update drive_file 
+		set
+			drive_file_uploadname=#{drive_file_uploadname}
+		where
+			drive_file_no = #{drive_file_no}	
+	</update>
 	
 	<!-- 파일삭제 -->
 	<delete id="fileDelete" parameterType="int">
@@ -64,7 +100,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 		delete from drive_file where team_no=#{team_no} and drive_name=#{drive_name} -->
 	
 	</delete>
-
+	<select id="fileTotalSize" resultType="int">
+		select sum(drive_file_size) from drive_file
+	</select>
+	
+	
+	<!-- 파일이름 검색 목록  -->
+<!-- 	<select id="driveList" resultType="driveFileDto" parameterType="map"> -->
+<!-- 		select * from (select rownum rn, A.* from  -->
+<!-- 		 (select * from drive_file  -->
+<!-- 		 where drive_file_uploadname like '%'||#{value}||'%'  -->
+<!-- 		 order by drive_file_no desc)A ) where rn between #{startIndex} and #{countPerPage} -->
+<!-- 	</select> -->
+	
 </mapper>
 
 
