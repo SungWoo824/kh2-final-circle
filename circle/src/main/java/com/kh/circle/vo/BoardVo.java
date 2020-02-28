@@ -15,5 +15,6 @@ public class BoardVo {
 	private int startIndex;
 	private int countPerPage;
 	private int team_no;
-	private String drive_name;
+	@Builder.Default//빌더가 있을 때 기본값을 다른 값으로 대체하기 위한 주석
+	private String drive_name = "";
 }

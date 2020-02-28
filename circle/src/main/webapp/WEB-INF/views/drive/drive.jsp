@@ -223,35 +223,35 @@ $("#exit-btn").click(function(){
 <%-- 					         </jsp:include> --%>
 									
 									
-<!-- 								<div> -->
-<!-- 									<ul class="pagination" style="justify-content: center;"> -->
-<%-- 					                    <c:if test="${pagination.curPage ne 1}"> --%>
-<!-- 					                    	<li class="page-item disabled"> -->
-<%-- 					                        	<a class="page-link" href="#" onClick="fn_paging('${pagination.prevPage }')">&laquo;</a>  --%>
-<!-- 					                        </li> -->
-<%-- 					                    </c:if> --%>
-<%-- 					                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }"> --%>
-<%-- 					                        <c:choose> --%>
-<%-- 					                            <c:when test="${pageNum eq  pagination.curPage}"> --%>
-<!-- 					                            	<li class="page-item active"> -->
-<%-- 												      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span> --%>
-<!-- 												    </li> -->
-<%-- 					                            </c:when> --%>
-<%-- 					                            <c:otherwise> --%>
-<!-- 						                            <li class="page-item"> -->
-<%-- 												      <a href="#" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a>  --%>
-<!-- 												    </li> -->
+								<div>
+									<ul class="pagination" style="justify-content: center;">
+					                    <c:if test="${pagination.curPage ne 1}">
+					                    	<li class="page-item disabled">
+					                        	<a class="page-link" href="#" onClick="fn_paging('${pagination.prevPage }')">&laquo;</a> 
+					                        </li>
+					                    </c:if>
+					                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+					                        <c:choose>
+					                            <c:when test="${pageNum eq  pagination.curPage}">
+					                            	<li class="page-item active">
+												      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
+												    </li>
+					                            </c:when>
+					                            <c:otherwise>
+						                            <li class="page-item">
+												      <a href="#" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+												    </li>
 					                                
-<%-- 					                            </c:otherwise> --%>
-<%-- 					                        </c:choose> --%>
-<%-- 					                    </c:forEach> --%>
-<%-- 					                    <c:if test="${pagination.curPage ne pagination.pageCount && pagination.pageCount > 0}"> --%>
-<!-- 					                    	<li class="page-item"> -->
-<%-- 					                        	<a href="#" class="page-link" onClick="fn_paging('${pagination.nextPage }')">&raquo;</a>  --%>
-<!-- 					                    	</li> -->
-<%-- 					                    </c:if>  --%>
-<!-- 					                </ul> -->
-<!-- 					              </div> -->
+					                            </c:otherwise>
+					                        </c:choose>
+					                    </c:forEach>
+					                    <c:if test="${pagination.curPage ne pagination.pageCount && pagination.pageCount > 0}">
+					                    	<li class="page-item">
+					                        	<a href="#" class="page-link" onClick="fn_paging('${pagination.nextPage }')">&raquo;</a> 
+					                    	</li>
+					                    </c:if> 
+					                </ul>
+					              </div>
 	
 					      </div>
 					    </div>
