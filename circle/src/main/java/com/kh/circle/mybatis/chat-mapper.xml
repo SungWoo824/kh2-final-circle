@@ -26,4 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="chatImagePreview" parameterType="int" resultType="chatFileVo">
 		select * from chat_file where chat_no = #{chat_no}
 	</select>
+	<select id="sendChatFile" parameterType="int" resultType="chatFileVo">
+		select * from chat_file where chat_file_no = #{chat_file_no}
+	</select>
 </mapper>

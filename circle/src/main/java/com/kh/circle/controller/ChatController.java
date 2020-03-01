@@ -435,7 +435,7 @@ public class ChatController {
 		
 		@PostMapping("fileupload")
 		@ResponseBody
-		public String fileupLoad(@RequestParam MultipartFile file,
+		public int fileupLoad(@RequestParam MultipartFile file,
 								@ModelAttribute ChatFileVo chatFileVo,
 								HttpSession	session) throws IllegalStateException, IOException {
 			int chat_no = sqlSession.selectOne("chat.getSequence");
@@ -444,6 +444,9 @@ public class ChatController {
 					.member_no((int)session.getAttribute("member_no")).chat_content(file.getOriginalFilename()).status(4).build();
 			
 			sqlSession.insert("chat.insert", chatVo);
+
+			int chat_file_no = sqlSession.selectOne("chat.getFileSequence");
+			chatFileVo.setChat_file_no(chat_file_no);
 			chatFileVo.setChat_no(chat_no);
 			chatFileVo.setMember_no((int)session.getAttribute("member_no"));
 			chatFileVo.setChat_file_uploadname(file.getOriginalFilename());
@@ -451,7 +454,7 @@ public class ChatController {
 			
 			chatDao.chatFileUpload(chatFileVo, file);
 			
-			return chatFileVo.getChat_file_uploadname();
+			return chatFileVo.getChat_file_no();
 		}
 		
 		@GetMapping("/download")

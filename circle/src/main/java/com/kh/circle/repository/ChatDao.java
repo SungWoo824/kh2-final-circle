@@ -13,4 +13,5 @@ public interface ChatDao {
 	List<ChatVo> topicChatList(int topic_no);
 	List<Integer> memberContainTopic(int member_no,int team_no);
 	void chatFileUpload(ChatFileVo chatFileVo,MultipartFile multipartFile) throws IllegalStateException, IOException;
+	ChatFileVo sendChatFile(int chat_file_no);
 }
