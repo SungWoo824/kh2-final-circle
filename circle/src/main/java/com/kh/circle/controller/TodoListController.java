@@ -199,13 +199,19 @@ public class TodoListController {
 		}
 		
 		//할일 수정(list_detail-> 에서 옴)
-		@GetMapping("/todo_list_edit")
+		@PostMapping("/todo_list_edit")
 		public String todo_list_edit(@RequestParam String todo_list_content,
 									 @RequestParam int todo_list_no, 
 									 @RequestParam int team_no,
 									 @RequestParam int topic_no,
 									 HttpSession session, Model model) {
-
+			
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("todo_list_no", todo_list_no);
+			model.addAttribute("todo_list_content", todo_list_content);
+			model.addAttribute("topic_no", topic_no);
+			
+			
 			int member_no = (int)session.getAttribute("member_no");
 			log.info("team_no"+team_no);
 			log.info("topic_no"+topic_no);
@@ -213,6 +219,7 @@ public class TodoListController {
 			
 			//할일 수정하기
 			todoListDao.editTodo(todo_list_content, member_no, todo_list_no);
+//			return "result";
 			return "chat/todo_list_edit";
 		}
 		

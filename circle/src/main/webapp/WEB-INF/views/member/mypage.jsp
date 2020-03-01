@@ -112,9 +112,6 @@
 																</c:choose>	
 
 
-																<div class="mypage-team-div">
-																	<button type="submit">논소유자관리</button>
-																</div>
 															
 															
 <!-- 															팀관리 : 소유자만 보이는 버튼 -->

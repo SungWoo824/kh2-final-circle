@@ -218,12 +218,12 @@
 			}
 		});			
 	});
-<<<<<<< HEAD
+
 // });
 
-=======
-});
->>>>>>> refs/remotes/origin/master
+
+
+
 </script>
 <!-- 팀 관련 스크립트 -->
 <script>
@@ -234,60 +234,32 @@ $(function(){
       $('.email-form').submit(function(e){
       	e.preventDefault();
       	
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
       	$(this).find('#invite-send').prop("disabled", true);
 			$(this).find('#invite-send').val("인증번호 발송중...");
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
-     
 			var url = $(this).attr("action"); 
 			var method = $(this).attr("method");
 			var data = $(this).serialize();
 			
 			$.ajax({
-<<<<<<< HEAD
-              type : "GET", //전송방식을 지정한다 (POST,GET)
-              url : url,  //위에 지정한 url
-              data : data,            
-=======
               type : "POST", //전송방식을 지정한다 (POST,GET)
               url : url,
               data : data,
->>>>>>> refs/remotes/origin/master
               error : function(){
             	  alert("통신실패!!!!");
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
             	  $('#inviteTeam').hide();
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
               },
               success : function(resp){
                   //console.log(resp);
       				alert("발송완료되었습니다");
       			//입력창 초기화
                     $(".form-control").val("");
-<<<<<<< HEAD
-          
-=======
-                    
->>>>>>> refs/remotes/origin/master
       				$('#inviteTeam').hide();
                   	('#invite-send').prop("disabled",false)
                     .val("초대하기");
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/master
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
           });
@@ -295,14 +267,7 @@ $(function(){
  });
    
 
- 
-<<<<<<< HEAD
 
-	
-
-
-=======
->>>>>>> refs/remotes/origin/master
 </script>
 <!-- 투표 스크립트 -->
 <script>
@@ -518,33 +483,49 @@ function TodoDelete(){
 }
 
 
-//할일 수정하기
-function EditTodo(team_no,todo_list_no,topic_no){
-	console.log("11111team_no"+team_no);
-	console.log("t22222odo_list_content"+todo_list_content);
-	console.log("t333333topic_no"+topic_no);
-// 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
-// 	var team_no = ${param.team_no};
-// 	var topic_no = ${param.topic_no};
-	var todo_list_content = $("#todo_list_content_edit").val(); 
+// //할일 수정하기
+// function EditTodo(team_no,todo_list_no,topic_no){
+// 	console.log("11111team_no"+team_no);
+// 	console.log("t22222odo_list_content"+todo_list_content);
+// 	console.log("t333333topic_no"+topic_no);
+// // 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
+// // 	var team_no = ${param.team_no};
+// // 	var topic_no = ${param.topic_no};
+// 	var todo_list_content = $("#todo_list_content_edit").val(); 
 	
 
 
-		var  ajaxOption = {
-			url : "./todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
-			type : "get",
-			dataType : "html",
-			data : {todo_list_content:todo_list_content},
-			cache : false
-	};
-		$.ajax(ajaxOption).done(function(data){
+// 		var  ajaxOption = {
+// 			url : "./todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
+// 			type : "get",
+// 			dataType : "html",
+// 			data : {todo_list_content:todo_list_content},
+// 			cache : false
+// 	};
+// 		$.ajax(ajaxOption).done(function(data){
 
-				$('#todo-edit').html(data);
-// 				$('#list-content').hide();
-				$(".todo-title").hide();
+// 				$('#todo-edit').html(data);
+// // 				$('#list-content').hide();
+// 				$(".todo-title").hide();
 
-			});
-}
+// 			});
+// }
+
+ $('#form_todo_edit').click(function(){    
+			var url=$('#form_todo_edit').attr('action');
+	  		var editData=$('#form_todo_edit').serialize();
+			jQuery.ajax({
+				type:'POST',
+		    	url:url,
+		    	dataType:'html',
+		    	data:editData,
+		    	async :true,
+		    	error:onError,
+		    	success: function onSuccessss(editData){
+		    		$('#todo-edit').html(editData);
+		    	}
+			});		
+		});
 
 
 </script>
@@ -763,11 +744,15 @@ function EditTodo(team_no,todo_list_no,topic_no){
 
 								<!-- 할일 수정  -->
 								<p>할일 수정하기</p>
-<%-- 										<input type="hidden" name="team_no"	value="${todoListJoinVO.team_no}"> --%>
-<%-- 										<input type="hidden" id="todo_list_no_edit" name="todo_list_no" value="${todoListJoinVO.todo_list_no}"> --%>
-<%-- 										<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}"> --%>
-										<textarea type="text" id="todo_list_content_edit" name="todo_list_content">${todoListJoinVO.todo_list_content}</textarea>
-										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정">
+									<form action="todo_list_edit" id="form_todo_edit" method="post"> 
+										<input type="hidden" name="team_no"	value="${todoListJoinVO.team_no}">
+										<input type="hidden" id="todo_list_no_edit" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
+										<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
+										<textarea id="todo_list_content_edit" name="todo_list_content" value="${todoListJoinVO.todo_list_content}">${todoListJoinVO.todo_list_content}</textarea>
+<%-- 										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정"> --%>
+											<button type="submit" id="submit_todo_edit">수정 </button>
+									</form>
+									
 								
 								<!-- 할일 삭제하기 -->
 								<br>
