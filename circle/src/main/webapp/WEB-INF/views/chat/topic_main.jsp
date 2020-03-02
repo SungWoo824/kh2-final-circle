@@ -417,7 +417,7 @@ function EditTodo(team_no,todo_list_no,topic_no){
 // 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
 // 	var team_no = ${param.team_no};
 // 	var topic_no = ${param.topic_no};
-	var todo_list_content = $("#todo_list_content_edit").val(); 
+	var todo_list_content = $("#todo_list_content_edit"+todo_list_no).val(); 
 	
 
 
@@ -645,7 +645,7 @@ function EditTodo(team_no,todo_list_no,topic_no){
 <%-- 										<input type="hidden" name="team_no"	value="${todoListJoinVO.team_no}"> --%>
 <%-- 										<input type="hidden" id="todo_list_no_edit" name="todo_list_no" value="${todoListJoinVO.todo_list_no}"> --%>
 <%-- 										<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}"> --%>
-										<textarea type="text" id="todo_list_content_edit" name="todo_list_content">${todoListJoinVO.todo_list_content}</textarea>
+										<textarea type="text" id="todo_list_content_edit${todoListJoinVO.todo_list_no}" name="todo_list_content">${todoListJoinVO.todo_list_content}</textarea>
 										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정">
 								
 								<!-- 할일 삭제하기 -->
