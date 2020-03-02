@@ -693,3 +693,31 @@ background-color:#f8f8f8;
    		 right: 0;
         }
 /*모달 css 종료*/
+
+.admin-wrap{
+	display:flex;
+}
+
+.msg-wrap{
+	padding-bottom:40px;
+}
+
+.mDashStatus{ -ms-flex:1; flex:1; text-align:center; background:#fff; border-radius:2px;
+      -webkit-box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
+      -moz-box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
+      box-shadow: 0px 2px 1px 0px rgba(205,211,222,1);
+      -webkit-transition: .2s ease-out; transition: .2s ease-out;
+    }
+ .admin-card{
+ 	-webkit-transition: .2s ease-out;
+ 	text-align: center;
+ }
+ .admin-card:hover {
+ 	background:#5ea5fe;
+ 	color:white;
+  }
+.admin-card-body{
+	margin: auto;
+	padding-top:75px;
+}
+  

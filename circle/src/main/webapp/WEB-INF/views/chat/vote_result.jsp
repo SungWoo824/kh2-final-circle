@@ -27,11 +27,14 @@ $(function(){
 	}
 });
 	function closevote(no){
+		var team_no = ${param.team_no};
+		var topic_no = ${param.topic_no};
 		var  ajaxOption = {
 				url : "./closevote?vote_create_no="+no,
 				type : "GET",
 				dataType : "html",
-				cache : false,
+				data : {team_no:team_no, topic_no:topic_no},
+				cache : false
 				};
 		$.ajax(ajaxOption).done(function(data){
 			$('#bodyContents').html(data);
@@ -40,7 +43,7 @@ $(function(){
 </script>
 <h3>투표 결과 페이지</h3>
 <div id="bodyContents">
-<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
+<%-- <a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a> --%>
 <ul>
 		
 	<c:forEach var="voteDetail" items="${voteDetail }">

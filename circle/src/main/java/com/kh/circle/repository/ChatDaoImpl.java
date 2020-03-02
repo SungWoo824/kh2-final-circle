@@ -1,5 +1,7 @@
 package com.kh.circle.repository;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +9,9 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.circle.vo.ChatFileVo;
 import com.kh.circle.vo.ChatVo;
 
 @Repository
@@ -18,6 +22,7 @@ public class ChatDaoImpl implements ChatDao{
 	
 	@Override
 	public void chatDataSave(ChatVo chatVo) {
+		chatVo.setChat_no(sqlSession.selectOne("chat.getSequence"));
 		sqlSession.insert("chat.insert", chatVo);
 	}
 
@@ -34,6 +39,18 @@ public class ChatDaoImpl implements ChatDao{
 		param.put("team_no", team_no);
 		
 		return sqlSession.selectList("chat.memberContainTopic", param);
+	}
+
+	@Override
+	public void chatFileUpload(ChatFileVo chatFileVo, MultipartFile multipartFile) throws IllegalStateException, IOException {
+		int chat_file_no = sqlSession.selectOne("chat.getFileSequence");
+		chatFileVo.setChat_file_no(chat_file_no);
+		File dir = new File("D:/upload/kh2e/chatFile");
+	    dir.mkdirs();
+	    File target = new File(dir, String.valueOf(chat_file_no));
+	    multipartFile.transferTo(target);
+	    sqlSession.insert("chat.fileinsert", chatFileVo);
+		
 	}
 	
 }

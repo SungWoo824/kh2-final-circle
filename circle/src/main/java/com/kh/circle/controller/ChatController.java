@@ -35,6 +35,10 @@ import com.kh.circle.repository.TopicDao;
 import com.kh.circle.repository.VoteCreateDao;
 import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.service.TeamService;
+
+import com.kh.circle.vo.ChatFileVo;
+import com.kh.circle.vo.ChatVo;
+
 import com.kh.circle.vo.TodoListJoinVO;
 import com.kh.circle.vo.TopicRestVO;
 
@@ -88,6 +92,7 @@ public class ChatController {
 		model.addAttribute("topicList", topicList);
 		model.addAttribute("memberChatCount", teamService.memberChatCount(team_no,(int)session.getAttribute("member_no")));
 		model.addAttribute("topicChatList", chatDao.topicChatList(topic_no));
+		log.info("topicChatList= {}",chatDao.topicChatList(topic_no));
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));
@@ -116,11 +121,7 @@ public class ChatController {
 		return "chat/topic_main";
 	}
 	
-//	@GetMapping("/topic_create")
-//	public String topic_create() {
-//		return "chat/topic_create";
-//	}
-	
+
 	@PostMapping("/topic_create")
 	public String topic_create( @ModelAttribute TopicDto topicDto, HttpSession session,@RequestParam int team_no) {
 		//topic_create
@@ -295,14 +296,13 @@ public class ChatController {
 	model.addAttribute("team_no", team_no);
 	model.addAttribute("topic_no", topic_no);
 	int member_no = (int) session.getAttribute("member_no");
-			
-	boolean enter = teamDao.teamMemberCheck(member_no, team_no);
-		if(!enter) { //db에 데이터가 확인되지 않을 경우 / db에 등록됨 
-		    //팀멤버로 추가
-		    teamDao.teamMemberCreate2(member_no, team_no);
-		    
-		    //토픽 멤버추가 : 빌더를 통해서 디티오에 필요 메소드들을 담은 디티오 설정
-		    TopicMemberDto topicMemberDto = TopicMemberDto.builder()
+
+			boolean enter = teamDao.teamMemberCheck(member_no, team_no);
+			if(!enter) { //db에 데이터가 확인되지 않을 경우 / db에 등록됨 
+		         //팀멤버로 추가
+		         teamDao.teamMemberCreate2(member_no, team_no);
+		         //토픽 멤버추가 
+		        TopicMemberDto topicMemberDto = TopicMemberDto.builder()
 		                                 .member_no((int) session.getAttribute("member_no"))
 		                                 .team_no(team_no)
 		                                 .topic_no(topic_no)
@@ -315,11 +315,20 @@ public class ChatController {
 		}else { //db에 데이터가 확인 될 경우 / 회원 리스트 보여줌 
 			  return "redirect:../member/mypage";
 		}
+
 }
 
 	
 	
 	
+
+//
+//		model.addAttribute("team_no", team_no);
+//
+//		return "chat/todo_list_create";
+//}
+
+
 
 	
 		//토픽 정보변경(토픽소유자만)
@@ -336,9 +345,6 @@ public class ChatController {
 																	@RequestParam int member_no,
 																	HttpSession session,
 																	Model model) {
-			System.out.println(member_no);
-			System.out.println(team_no);
-			System.out.println(topic_no);
 			topicDao.topicMasterChange(topic_no,member_no);
 			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
 			model.addAttribute("team_no", team_no);
@@ -391,7 +397,25 @@ public class ChatController {
 			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
 		
-		
+		@PostMapping("fileupload")
+		@ResponseBody
+		public String fileupLoad(@RequestParam MultipartFile file,
+								@ModelAttribute ChatFileVo chatFileVo,
+								HttpSession	session) throws IllegalStateException, IOException {
+			int chat_no = sqlSession.selectOne("chat.getSequence");
+			ChatVo chatVo = ChatVo.builder().chat_no(chat_no).topic_no(chatFileVo.getTopic_no())
+					.member_no(chatFileVo.getMember_no()).team_no(chatFileVo.getTeam_no())
+					.member_no((int)session.getAttribute("member_no")).chat_content(file.getOriginalFilename()).status(4).build();
+			
+			sqlSession.insert("chat.insert", chatVo);
+			chatFileVo.setChat_no(chat_no);
+			chatFileVo.setMember_no((int)session.getAttribute("member_no"));
+			chatFileVo.setChat_file_uploadname(file.getOriginalFilename());
+			chatFileVo.setChat_file_size(file.getSize());
+			chatDao.chatFileUpload(chatFileVo, file);
+			
+			return chatFileVo.getChat_file_uploadname();
+		}
 
 }
 

@@ -169,7 +169,7 @@
 					<div class="modify-fix-div">
 						<div class="mypage-div">
 							<div class="mypage-profile-img-div">
-								<img id="preview" class="preview-img">
+								<img id="preview" src='download?member_no=${member_no}' class="preview-img">
 							</div>
 							<div class="mypage-profile-img-div">
 								<form action="mypagechangeprofile" method="post" class="change-profle-form" enctype="Multipart/form-data">

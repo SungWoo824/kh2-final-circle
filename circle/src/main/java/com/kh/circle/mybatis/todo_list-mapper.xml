@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 topi.topic_name,topi.topic_no
 		from member m inner join team_member t
 			on m.member_no = t.member_no
-				inner join todo_list todo
+				inner join todo_list todo 
 			on t.team_no = todo.team_no
 				inner join topic topi
 			on todo.topic_no = topi.topic_no)
@@ -65,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	from todo_list 
 	where member_no=#{member_no} and team_no=#{team_no} and todo_list_done='진행'
 	</select>
-	
+
 	
 	<!-- 할일 수정하기 -->
 	<update id="editTodo" parameterType="todoListJoinVO">
@@ -87,5 +87,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set todo_list_done='진행'
 		where member_no=#{member_no} and todo_list_no=#{todo_list_no}
 	</update>
+
 
 </mapper>
