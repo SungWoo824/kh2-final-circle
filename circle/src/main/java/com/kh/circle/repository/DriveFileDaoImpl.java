@@ -65,24 +65,34 @@ public class DriveFileDaoImpl implements DriveFileDao{
 
 	//팀 드라이브폴더 목록 가져오기
 	@Override
-	public List<DriveFileDto> getFolderList(int team_no) {
-		return sqlSession.selectList("driveFile.driveFolderList", team_no);
+	public List<DriveFileDto> getFolderList(int team_no, String drive_name) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("drive_name", drive_name);
+		return sqlSession.selectList("driveFile.driveFolderList", param);
 	}
 	
 	@Override
 	public List<DriveFileDto> getFolderName(int team_no) {
 		return sqlSession.selectList("driveFile.driveFolderName", team_no);
 	}
-
+	
+	/////////////////////////////////페이징///////////////////////////////////
 	//드라이브파일 목록 가져오기
 	@Override
-	public List<DriveFileDto> getFileList(int team_no, String drive_name) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("team_no", team_no);
-		param.put("drive_name", drive_name);
-		return sqlSession.selectList("driveFile.driveFileList", param);
+	public List<DriveFileDto> getFileList(BoardVo boardVo) {
+		return sqlSession.selectList("driveFile.driveFileList", boardVo);
 	}
-
+	
+	//드라이브 팀의 폴더 속에 있는 파일 목록 갯수
+	@Override
+	public int driveFileListCount(BoardVo boardVo) {
+		return sqlSession.selectOne("driveFile.driveFileListCount",boardVo);
+	}
+	///////////////////////////////////////////////////////////////////////
+	
+	
+	
 	//드라이브파일 삭제
 	@Override
 	public void fileDelete(int drive_file_no) {
@@ -95,24 +105,32 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		sqlSession.delete("driveFile.driveDelete",driveFileVo);
 	}
 
+	//드라이브명 변경
 	@Override
-	public void fileEdit(int drive_file_no, String drive_file_uploadname) {
+	public void editFolder(int team_no,String before_name, String after_name) {
 		Map<String, Object> param = new HashMap<>();
-		param.put("drive_file_no", drive_file_no);
-		param.put("drive_file_uploadname", drive_file_uploadname);
-		sqlSession.update("driveFile.fileEdit", param);
+		param.put("team_no", team_no);
+		param.put("after_name", after_name);
+		param.put("before_name", before_name);
+		sqlSession.update("driveFile.editFolder", param);
 		
 	}
 
-	//드라이브 파일 검색
-//	@Override
-//   public List<DriveFileDto> driveList(String keyword,int start, int finish) throws Exception {
-//      Map<String, Object> map = new HashMap<>();
-//      map.put("keyword",keyword);
-//      map.put("start",start);
-//      map.put("finish",finish);
-//      return sqlSession.selectList("driveFile.driveList",map);
-//   }
+	//내파일만 보기
+	@Override
+	public List<DriveFileDto> myFileList(int team_no, 
+											int member_no, 
+											String drive_name) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("member_no", member_no);
+		param.put("drive_name", drive_name);
+		return sqlSession.selectList("driveFile.myFileList", param);
+	}
+
+	
+
+
 
 
 

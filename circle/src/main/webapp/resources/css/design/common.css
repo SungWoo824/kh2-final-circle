@@ -694,6 +694,163 @@ background-color:#f8f8f8;
         }
 /*모달 css 종료*/
 
+/*드라이브*/
+.upload-wrap{
+	height:100px;
+	border-bottom: 1px solid #ececec;
+}
+
+.drmenu{
+	position:relative;
+	top: 69px;
+	border-top: 1px solid #ececec;
+}
+.drmenu-wrap{
+	height:70px;
+	background-color:#fff;
+}
+
+.fa-times{
+	position:relative;
+	top:5px;
+	right:5px;	
+}
+
+.drtop{
+	width:100%;
+	text-align:center;	
+	font-size:20px;
+	font-weight:500;
+	padding:20px 160px 20px 20px;
+}
+
+.drback{
+	position:absolute;
+	top:0;
+	left:0;
+	width:70px;
+	height:70px;	
+	
+}
+
+.drback-btn{
+	position:absolute;
+	top:10px;
+	
+}
+
+
+/*파일 리스트*/
+.chat-menu-bar{
+	max-width:1500px;
+}
+
+.flist-wrap{
+	height:100%;
+}
+.folderview,
+.fileview{
+	height:440px;
+	overflow:auto;
+	padding: 30px;
+}
+
+.page-num{
+	width:100%;
+	position:relative;
+}
+
+.upload-box{
+	width:240px;
+	height:240px;
+	border:1px solid #ddd;
+	float:left;
+	border-radius: 6px;
+	margin-right:20px;
+	margin-bottom:20px;
+}
+
+.upload-wrap-box{
+	margin:20px;
+}
+
+.upload-box .img-view{
+	width:100px;
+	height:120px;
+/* 	background-color:#eee; */
+	margin:20px auto;
+	position:relative;
+}
+
+.upload-box .img-view img{
+	width:100px;
+	position:absolute;
+}
+
+.upload-box .text-view{
+	margin:40px 20px 0 20px;
+}
+
+
+
+.upload-box .text-view .checkbox{
+	float:left;
+}
+
+.folder-title-box{
+	width:100%;
+	position:relative;
+}
+
+.folder-btn{
+	marigin-right:0;
+	position:absolute;
+	right:0;
+}
+
+.upload-box .text-view p{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
+
+
+.upload-box .text-view .folder-title{
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+	text-align:center;
+	font-size:18px;
+	font-weight:700;
+}
+
+.fileupload-box{
+	margin-top:10px;
+}
+
+
+.fupload,
+.fdel-btn >a,
+.fdel-btn >form{
+	float:left;
+}
+
+.fdel-btn{
+	float:right;
+}
+.fdel-btn >a{
+	float:left;
+}
+
+.fileview{
+	display: none;
+}
+
+.fileview.current{
+	display: inherit;
+}
+
+/*어드민*/
 .admin-wrap{
 	display:flex;
 }

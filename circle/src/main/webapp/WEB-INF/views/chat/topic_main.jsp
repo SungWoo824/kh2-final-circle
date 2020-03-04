@@ -405,7 +405,7 @@ function searchResult(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&member_no=${sessionScope.member_no}"></a>
+	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -525,12 +525,12 @@ function searchResult(no){
 <!--             <h6 class="collapse-header">Login Screens:</h6> -->
             <c:forEach items="${topicList}" var="topicListDto" varStatus="status" >
 		            <a class="collapse-item" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">
-		                    	${topicListDto.topic_name}
-		                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
-		                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
-		                    		${memberChatCount[status.index].count}
-		                    	</c:if>
-		                    	</span>
+                    	${topicListDto.topic_name}
+                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
+                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
+                    		${memberChatCount[status.index].count}
+                    	</c:if>
+                    	</span>
 		            </a>
             </c:forEach>
             <div class="collapse-divider"></div>
@@ -753,6 +753,7 @@ function searchResult(no){
 										<div class="msg-profile">
 											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
 										</div>
+
 										<div class="msg-con">
 											<span>${chatVo.member_name} </span>
 											<p class="msg">${chatVo.chat_content}</p>
@@ -788,6 +789,7 @@ function searchResult(no){
 											    </p>
 											  </div>
 											<div class="card-header">${chatVo.chat_content}</div>
+
 
 											</div>
 										</div>
