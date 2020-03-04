@@ -45,6 +45,7 @@
 			if(!chat_content) return;//미입력시 중단
 			sendMessage(message, chat_content);
 			$(".user-input").val("");//입력창 초기화
+			
 		});
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
@@ -55,21 +56,52 @@
 				spanin.appendTo(msg_con);
 				cont.appendTo(msg_con);
 				var createduv = $("<div>").addClass("msg-profile");
+				var profileimg = $("<img>").attr("id","member-profile-img");
+				profileimg.attr("src","../member/download?member_no="+message.member_no);
+				profileimg.appendTo(createduv);
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
-				messagecontent.prependTo("#chat-content");				
+				messagecontent.prependTo("#chat-content");	
+				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}else if(message.status==4){
-				var cont = $("<p>").addClass("msg").text(message.chat_content);
-				var spanin = $("<span>").text(message.member_name);
 				var msg_con =$("<div>").addClass("msg-con");
+				var spanin = $("<span>").text(message.member_name);
 				spanin.appendTo(msg_con);
-				cont.appendTo(msg_con);
+				
+				var carddiv = $("<div>").addClass("card border-primary mb-3 admin-card");
+				carddiv.css("width","20rem");
+				carddiv.css("height","15rem");
+				
+				var cardbody = $("<div>").addClass("card-body admin-card-body");
+				
+				var filetype = message.chat_file_type;
+				var filediv = $("<div>");
+				var fileimg = $("<img>");
+				fileimg.attr("id","chat_dummy");
+				if(filetype.startsWith('text')){
+					fileimg.attr("src","../resources/image/textdummy.jpeg");
+				}else if(filetype.startsWith('image')){
+					fileimg.attr("src","./download?chat_no="+message.chat_no);
+				}else{
+					fileimg.attr("src","../resources/image/filedummy.jpeg");
+				}
+				fileimg.appendTo(filediv);
+				filediv.appendTo(cardbody);
+				cardbody.appendTo(carddiv);
+				
+				var cont = $("<div>").addClass("card-header").text(message.chat_content);
+				cont.appendTo(carddiv);
+				carddiv.appendTo(msg_con);
 				var createduv = $("<div>").addClass("msg-profile");
+				var profileimg = $("<img>").attr("id","member-profile-img");
+				profileimg.attr("src","../member/download?member_no="+message.member_no);
+				profileimg.appendTo(createduv);
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
 				messagecontent.prependTo("#chat-content");
+				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}
 		}
 		
@@ -94,10 +126,11 @@
 				var msg = JSON.parse(e.data);
 				console.log(msg);
 				var ptopic_no = ${param.topic_no};
+				var pmember_no = ${sessionScope.member_no};
 				if(ptopic_no==msg.topic_no && (msg.status==2 ||msg.status==4)){
 					appendMessage(msg);
 				}
-				if(ptopic_no!=msg.topic_no){
+				if(ptopic_no!=msg.topic_no&&pmember_no!=msg.member_no){
 					var topic_no = msg.topic_no;
 					var count = $('.'+topic_no).text();
 					count *=1;
@@ -710,13 +743,31 @@ function searchResult(no){
 <!-- 		          </h5> -->
                     
 						<!-- 메세지 결과 창 -->          
-                        <div class="message" style="text-align: left">
-							<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
-								<c:forEach items="${topicChatList}" var="chatVo">
+
+        		<div class="message" style="text-align: left">
+					<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
+						<c:forEach items="${topicChatList}" var="chatVo">
+							<c:choose>
+								<c:when test="${chatVo.chat_status==2}">
 									<div class="msg-wrap">
 										<div class="msg-profile">
 											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
 										</div>
+
+										<div class="msg-con">
+											<span>${chatVo.member_name} </span>
+											<p class="msg">${chatVo.chat_content}</p>
+										</div>
+									</div>
+								</c:when>
+								
+								<c:when test="${chatVo.chat_status==4}">
+
+									<div class="msg-wrap">
+										<div class="msg-profile">
+											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+										</div>
+
 										<div class="msg-con">
 											<span>${chatVo.member_name}</span>
 											<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem;">
@@ -738,12 +789,17 @@ function searchResult(no){
 											    </p>
 											  </div>
 											<div class="card-header">${chatVo.chat_content}</div>
+
+
+											</div>
 										</div>
 									</div>
-								</c:forEach>
+									</c:when>
+								</c:choose>
+							</c:forEach>
 								
-							</div>
 						</div>
+					</div>
 							
 							<!-- 전송 -->
 							<div class="chat-send-content">

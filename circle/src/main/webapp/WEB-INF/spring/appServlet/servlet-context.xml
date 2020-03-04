@@ -47,7 +47,20 @@
 			<beans:property name="maxUploadSize" value="5242880000"></beans:property><!-- 500MB -->
 			<beans:property name="maxUploadSizePerFile" value="100000000"></beans:property><!-- 100MB -->
 		</beans:bean>
-		
+	
+	<beans:bean id="memberAuthenInterceptor" class="com.kh.circle.interceptor.MemberAuthenInterceptor">
+    </beans:bean>
+    <!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/**"/>
+            <exclude-mapping path="/resources/**"/>
+            <exclude-mapping path="/member/signin"/>
+            <exclude-mapping path="/"/>
+            <beans:ref bean="memberAuthenInterceptor"/>
+        </interceptor>
+    </interceptors>
+	
 		
 	
 </beans:beans>

@@ -44,16 +44,21 @@ public class ChatDaoImpl implements ChatDao{
 
 	@Override
 	public void chatFileUpload(ChatFileVo chatFileVo, MultipartFile multipartFile) throws IllegalStateException, IOException {
-		int chat_file_no = sqlSession.selectOne("chat.getFileSequence");
-		chatFileVo.setChat_file_no(chat_file_no);
+		
 		File dir = new File("D:/upload/kh2e/chatFile");
 	    dir.mkdirs();
-	    File target = new File(dir, String.valueOf(chat_file_no));
+	    File target = new File(dir, String.valueOf(chatFileVo.getChat_file_no()));
 	    multipartFile.transferTo(target);
 	    String mimeType = new Tika().detect(target);
 	    chatFileVo.setChat_file_type(mimeType);
 	    sqlSession.insert("chat.fileinsert", chatFileVo);
 		
+	}
+
+	@Override
+	public ChatFileVo sendChatFile(int chat_file_no) {
+		
+		return sqlSession.selectOne("chat.sendChatFile", chat_file_no);
 	}
 	
 }
