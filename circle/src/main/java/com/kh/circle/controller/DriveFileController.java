@@ -6,9 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.ws.rs.DefaultValue;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -27,14 +26,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.DriveFileDto;
-import com.kh.circle.entity.MemberDto;
 import com.kh.circle.repository.DriveFileDao;
 import com.kh.circle.service.DriveFileService;
 import com.kh.circle.service.Pagination;
 import com.kh.circle.vo.BoardVo;
 import com.kh.circle.vo.DriveFileVO;
 
-import oracle.jdbc.proxy.annotation.Post;
 
 
 @Controller
@@ -50,31 +47,26 @@ public class DriveFileController {
 	
 	@GetMapping("/drive")
 	public String drive(
-//						@RequestParam int team_no,
-						//기본값을 null로, defaultValue
-//						@RequestParam(defaultValue = "") String drive_name,
 						HttpSession session,
 						@RequestParam(defaultValue="1") int curPage,
 						@ModelAttribute BoardVo boardVo,
 						Model model) {
 
-		System.out.println("boardVo = "+boardVo);
 		List<DriveFileDto> folderName= driveFileDao.getFolderName(boardVo.getTeam_no());
 		model.addAttribute("driveFolderName", folderName);
 		model.addAttribute("team_no",boardVo.getTeam_no());
 		List<DriveFileDto> folderList= driveFileDao.getFolderList(boardVo.getTeam_no(),boardVo.getDrive_name());
 		model.addAttribute("driveFolderList",folderList);
 		model.addAttribute("member_no",session.getAttribute("member_no"));
-		
+
 		//폴더 생성됐을때만 실행
 		if(folderName != null) {
 			List<DriveFileDto> fileList= driveFileDao.getFileList(boardVo);
 			model.addAttribute("driveFileList", fileList);
 			
 			//페이징
-			int listCount= driveFileDao.driveFileListCount(boardVo.getTeam_no(),boardVo.getDrive_name());
+			int listCount= driveFileDao.driveFileListCount(boardVo);
 			Pagination pagination = new Pagination(listCount,curPage);
-			
 			boardVo.setStartIndex(pagination.getStartIndex()+1);
 			boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
 			List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
@@ -106,8 +98,8 @@ public class DriveFileController {
 	//폴더 생성
 	@PostMapping("/drivecreate")
 	public String newFolder(@ModelAttribute DriveFileDto driveFileDto,
-												@RequestParam(defaultValue = "") String drive_name,
-												HttpSession session, Model model
+							@RequestParam(defaultValue = "") String drive_name,
+							HttpSession session, Model model
 											) {
 		int drive_file_no = driveFileDao.getSequence();
 		model.addAttribute("team_no",driveFileDto.getTeam_no());
@@ -118,6 +110,17 @@ public class DriveFileController {
 		return "redirect:../drive/drive";
 	}
 	
+	//폴더명 변경
+	@PostMapping("/editfolder")
+	public String editfolder(@RequestParam int team_no,
+			@RequestParam String before_name,
+			@RequestParam String after_name,
+			Model model){
+		driveFileDao.editFolder(team_no, before_name, after_name);
+		model.addAttribute("team_no",team_no);
+		model.addAttribute("drive_name",after_name);
+		return "redirect:../drive/drive";
+	}
 
 
 	@Autowired
@@ -137,6 +140,8 @@ public class DriveFileController {
 		
 		return "redirect:../drive/drive";
 	}
+	
+
 
 
 	
@@ -189,21 +194,18 @@ public class DriveFileController {
 		//드라이브 파일삭제
 		@GetMapping("/filedelete")
 		public String fileDelete(@RequestParam int drive_file_no,
-				@RequestParam(defaultValue = "") int team_no,
-				@RequestParam(defaultValue = "") String drive_name,
-				@RequestParam(defaultValue = "") int topic_no,
+				@RequestParam int team_no,
+				@RequestParam String drive_name,
 				Model model) {
 			driveFileDao.fileDelete(drive_file_no);
 			File target = new File("D:/upload/kh2e/drivefile/"+drive_file_no);
 			target.delete();
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("drive_name",drive_name);
-			model.addAttribute("topic_no", topic_no);
-			model.addAttribute("drive_file_no",drive_file_no);
 			return  "redirect:../drive/drive";
 		}
 		
-//		드라이브 파일 일괄 삭제
+//		드라이브 폴더 삭제
 		@GetMapping("/drivedelete")
 		public String driveDelete(@ModelAttribute DriveFileVO driveFileVo, Model model) {
 			

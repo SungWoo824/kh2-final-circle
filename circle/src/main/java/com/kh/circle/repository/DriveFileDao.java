@@ -12,9 +12,8 @@ public interface DriveFileDao {
 
 	int getSequence();
 	
-	int driveFileListCount(int team_no, String drive_name);
+	int driveFileListCount(BoardVo boardVo);
 	List<DriveFileDto> getFileList(BoardVo boardVo);
-//	List<DriveFileDto> getFileList(int team_no, String drive_name);
 	
 	void upload(DriveFileDto driveFileDto);
 	void newFolder(DriveFileDto driveFileDto);
@@ -25,9 +24,7 @@ public interface DriveFileDao {
 	List<DriveFileDto>  getFolderList(int team_no, String drive_name);
 	List<DriveFileDto> getFolderName(int team_no);
 	void driveDelete(DriveFileVO driveFileVo);
-	void fileEdit(int drive_file_no, String drive_file_uploadname);
-	
-//	List<DriveFileDto> driveList(String keyword, int start, int finish) throws Exception;
+	void editFolder(int team_no, String before_name, String after_name);
 	
 	
 }

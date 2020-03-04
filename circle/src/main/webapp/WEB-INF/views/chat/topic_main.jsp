@@ -492,12 +492,12 @@ function searchResult(no){
 <!--             <h6 class="collapse-header">Login Screens:</h6> -->
             <c:forEach items="${topicList}" var="topicListDto" varStatus="status" >
 		            <a class="collapse-item" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">
-		                    	${topicListDto.topic_name}
-		                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
-		                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
-		                    		${memberChatCount[status.index].count}
-		                    	</c:if>
-		                    	</span>
+                    	${topicListDto.topic_name}
+                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
+                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
+                    		${memberChatCount[status.index].count}
+                    	</c:if>
+                    	</span>
 		            </a>
             </c:forEach>
             <div class="collapse-divider"></div>

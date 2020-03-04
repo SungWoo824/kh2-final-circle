@@ -66,24 +66,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from (select rownum rn, A.* from 
 		 (select * from drive_file 
 		 where team_no=#{team_no} 
-		 and drive_name=#{drive_name}
+		 and drive_name=#{drive_name} and drive_folder='1'
 		 order by drive_file_no desc)A 
 		 ) where rn between #{startIndex} and #{countPerPage}
 	</select>
 	
-	<!-- 파일목록 -->
-<!-- 	<select id="driveFileList" resultType="driveFileDto" parameterType="map"> -->
-<!-- 		 select * from drive_file  -->
-<!-- 		 where team_no=#{team_no}  -->
-<!-- 		 and drive_name=#{drive_name} -->
-<!-- 	</select> -->
+
 	
 	<!-- 파일목록 갯수 -->
-	<select id="driveFileListCount" resultType="int" parameterType="map">
+	<select id="driveFileListCount" resultType="int" parameterType="boardVo">
 		select count(*) from drive_file 
 		where team_no=#{team_no} 
 		and drive_name=#{drive_name}
-		order by drive_file_no desc
 	</select>
 	
 	<select  id="driveFolderName" resultType="driveFileDto" parameterType="int">
@@ -94,19 +88,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 드라이브 폴더 목록 -->
 	<select id="driveFolderList" parameterType="map" resultType="driveFileDto">
 			select * from drive_file where team_no= #{team_no} 
-			and drive_name=#{drive_name} and drive_folder='1'
+			and drive_name=#{drive_name} and drive_folder='0'
 	</select>
 	
+	<!-- 폴더명 변경-->
+	<update id="editFolder" parameterType="map">
+		update drive_file 
+		set
+			drive_name=#{after_name}
+		where
+			team_no=#{team_no} and drive_name=#{before_name}
+	</update>
 	
+	<!-- 내파일만 보기 -->
+	<select id="">
+		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
+		and drive_folder='1' and member_no=#{member_no}
+	</select>
+	
+	<!-- 파일삭제 -->
+<!-- 	<delete id="fileDelete" parameterType="int"> -->
+<!-- 			delete from drive_file  -->
+<!-- 				where drive_file_no=#{drive_file_no}	 -->
+<!-- 	</delete> -->
 	
 	<!-- 파일삭제 -->
 	<delete id="fileDelete" parameterType="int">
-			delete from drive_file 
-				where drive_file_no=#{drive_file_no}	
-	</delete>
-	
-	<!-- 파일삭제 -->
-	<delete id="fileDelete2" parameterType="int">
 			delete from drive_file 
 			<foreach collection="list" item="drive_file_no" open="where 1=1">
 				or drive_file_no=#{drive_file_no}	
@@ -124,13 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<!-- 파일이름 검색 목록  -->
-<!-- 	<select id="driveList" resultType="driveFileDto" parameterType="map"> -->
-<!-- 		select * from (select rownum rn, A.* from  -->
-<!-- 		 (select * from drive_file  -->
-<!-- 		 where drive_file_uploadname like '%'||#{value}||'%'  -->
-<!-- 		 order by drive_file_no desc)A ) where rn between #{startIndex} and #{countPerPage} -->
-<!-- 	</select> -->
+
 	
 </mapper>
 
