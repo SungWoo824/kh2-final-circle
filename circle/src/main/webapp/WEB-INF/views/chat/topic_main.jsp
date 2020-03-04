@@ -452,7 +452,7 @@
                         </ul>
                     </div>
                     <!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
-                    <a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }">
+                   <a href ="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }">
                         <button id="golist">목록으로</button>
                     </a>
                     <!-- 목록으로 버튼 if처리해야함 -->
@@ -490,6 +490,7 @@
 
         </div>
     </div>
+
     <!-- 오른쪽 메뉴 바 끝 -->
 
     <!-- 왼쪽 바 시작 -->
