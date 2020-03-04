@@ -2,61 +2,86 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<script>
+//클릭 하면 열고 닫기 : 할일 목록 상세보기 (Detail, Edit , Delete 있는 거 )
+$(function(){
+	$(".modify-fix-div").hide();
+	$(".modify-origin-div").show();
+	
+	$(".modify-origin-div").click(function() {
+        $(this).parent().children(".modify-fix-div").show('3000');
+        $(this).hide('fast');
+	    $(".modify-origin-div").hide();
+    });
+	
+	//취소 버튼 
+	$(".modify-cancel").click(function(){
+		$(this).parent().parent().children(".modify-origin-div").show('3000');
+        $(this).parent().parent().children(".modify-fix-div").hide('fast');
+        $(".modify-origin-div").show();
+	})
+});
+
+
+</script>
+
 <body>
 <!-- 할일 전체 목록 -->
 				<div id="list-content">
 					
-					<p>할일 전체 목록보기	</p> 
-					<c:forEach items="${todoPerAll}" var="todoListJoinVO">
-						
-						<!-- 진행중인 목록만 뽑는다 / 완료버튼 누르면 목록에서 사라짐-->
-						<c:choose>
-							<c:when test="${todoListJoinVO.todo_list_done=='진행'}">
-								<hr> 
-								
-								<form action ="todo_list_detail" method="get">
-								
-								
-								</form>
-								
-<!-- 								할일 목록 누르면 할일상세페이지(todo_list_detail)로 이동 -->
-								<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}&team_no=${todoListJoinVO.team_no}&topic_no=${todoListJoinVO.topic_no}&todo_list_content=${todoListJoinVO.todo_list_content}">
-								          ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}
-								</a>
-									<span></span>
-											
-								<!-- 할일 완료 시키기 -->	
-<!-- 								<form action="todo_done" method="post"> -->
-									<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}">
-									<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
-									<input type="hidden" id="todo_list_no" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
-<!-- 									<button typeid="done">완료</button> -->
-									<input type="submit" id="submit-done" onclick="TodoDone()" value="완">
-<!-- 								</form> -->
-									<span></span>
-								
-								<!--할일 진행중으로 돌리기 -->			
-								<form action="todo_back_done" method="post">
-									<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}">
-									<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}">
-									<input type="hidden" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
-									<button id="done">진행으로 돌리기</button>
-								</form>
-							</c:when>
-						</c:choose>
-							<hr>
-					</c:forEach>
-		  	   </div>
-										
-			   <!-- 할일 추가 된 것 결과 -->									
-			   <div id="todo-create"></div>				
-								
-			   <!--비동기 검색 결과   -->
-			   <div id="todo-list-search"></div>
-							
-			   <!-- 완료된 할일 결과 -->
-			   <div id="list-done"></div>		
+				돌아가기  <span></span> <input type="checkbox" class="todo_list" value="돌아가기">	
+			   <h2> 완료 목록 </h2>
 			   
-			   <!-- 완료 누르면 나오는  -->		
-			   <div id="list-done-result"></div>
+		<c:forEach items="${todoPerAll}" var="todoListJoinVO">
+			<c:choose>
+				<c:when test="${todoListJoinVO.todo_list_done=='완료'}">
+				
+					<!--할일 목록 누르면 할일상세페이지(<div id="show_detail">)로 이동 -->
+						<div class="all-div">
+								<div class="modify-origin-div">
+								
+									<div class="todo-title">
+											<span> ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}"</span>
+										
+											<br>
+											
+											
+
+											<!--할일 진행중으로 돌리기 -->			
+												<input type="submit" onclick="TodoBackDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="진행">
+											
+								<span></span>
+								<!-- 할일 삭제하기 -->
+
+									<input type="button" onclick="TodoDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="삭제">
+
+
+									</div>
+								
+							</div>
+	
+
+
+							<!-- todo_list_detail 부분 -->
+							<div class="modify-fix-div">
+
+									<button class="modify-cancel">닫기 </button>
+								
+									
+
+								
+							</div>
+					</div>
+												
+	
+	
+		
+		</c:when>
+		</c:choose>
+	</c:forEach>
+			   </div>
+			   
+
+     <!-- 투두리스트 종료 -->
 </body>

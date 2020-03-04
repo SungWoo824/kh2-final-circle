@@ -5,7 +5,7 @@
 
 <script>
 // 투두 리스트 검색 결과 비동기
-function TodoSearch(no){
+function TodoSearch(){
 
 	var team_no = ${param.team_no};
 	var member_no = ${member_no};

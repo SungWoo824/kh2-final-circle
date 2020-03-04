@@ -174,9 +174,9 @@ public class TodoListController {
 		public String todo_list_delte(HttpSession session, Model model,
 				@RequestParam int team_no, @RequestParam int topic_no, @RequestParam int todo_list_no) {
 			//메인으로 정보 전송
-//			model.addAttribute("team_no", team_no);
-//			model.addAttribute("topic_no", topic_no);
-//			model.addAttribute("todo_list_no",todo_list_no);
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no", topic_no);
+			model.addAttribute("todo_list_no",todo_list_no);
 //			model.addAttribute("todo_list_content", todo_list_content);
 			int member_no = (int)session.getAttribute("member_no");
 
@@ -217,10 +217,19 @@ public class TodoListController {
 			log.info("topic_no"+topic_no);
 			log.info("todo_list_no"+todo_list_no);
 			
+			
 			//할일 수정하기
 			todoListDao.editTodo(todo_list_content, member_no, todo_list_no);
-//			return "result";
+			
+			//할일 목록 출력
+			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			
+			//할일 개수 출력
+			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
+
+			
 			return "chat/todo_list_edit";
+//			return "redirect:./chat/todo_list_edit?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no+"&todo_list_content="+todo_list_content;	
 		}
 		
 		//할일 완료 시키기
@@ -248,36 +257,9 @@ public class TodoListController {
 			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
 			
 			return "chat/todo_done";
-//			return "redirect:./todo_done";
 		}
 		
-//		@GetMapping("/todo_done")
-//
-//		public String todo_done(HttpSession session, Model model,
-//				@RequestParam int team_no,
-//				 @RequestParam int topic_no,
-//				 @RequestParam int todo_list_no
-//			
-//								) {
-//			//보낼 데이터들
-//			int member_no = (int)session.getAttribute("member_no");
-////			model.addAttribute("team_no", team_no);
-////			model.addAttribute("topic_no", topic_no);	
-////			model.addAttribute("todo_list_no", todo_list_no);
-//			
-//			//완료 메소드 실행
-////			int todo_list_no = todoListDto.getTodo_list_no();
-//			todoListDao.todoDone(member_no, todo_list_no);
-//
-//			
-//			//할일 목록 출력
-//			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
-//			
-//			//할일 전체 개수 출력 
-//			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));		
-//			
-//			return "chat/todo_done";
-//		}
+
 	
 		
 		
@@ -316,8 +298,14 @@ public class TodoListController {
 			//할일 진행중으로 다시 바꾸기 
 			int todo_list_no = todoListDto.getTodo_list_no();
 			todoListDao.todoBackDone(member_no, todo_list_no);
+			
+			//할일 목록 출력
+			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			
+			//할일 전체 개수 출력 
+			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
 
-			return "redirect:./todo_list_main";
+			return "chat/todo_back_done";
 		}	
 
 }
