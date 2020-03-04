@@ -1,13 +1,16 @@
 package com.kh.circle.controller;
 
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -87,7 +90,7 @@ public class ChatController {
 		model.addAttribute("topicList", topicList);
 		model.addAttribute("memberChatCount", teamService.memberChatCount(team_no,(int)session.getAttribute("member_no")));
 		model.addAttribute("topicChatList", chatDao.topicChatList(topic_no));
-		log.info("topicChatList= {}",chatDao.topicChatList(topic_no));
+
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));
@@ -432,7 +435,7 @@ public class ChatController {
 		
 		@PostMapping("fileupload")
 		@ResponseBody
-		public String fileupLoad(@RequestParam MultipartFile file,
+		public int fileupLoad(@RequestParam MultipartFile file,
 								@ModelAttribute ChatFileVo chatFileVo,
 								HttpSession	session) throws IllegalStateException, IOException {
 			int chat_no = sqlSession.selectOne("chat.getSequence");
@@ -441,14 +444,33 @@ public class ChatController {
 					.member_no((int)session.getAttribute("member_no")).chat_content(file.getOriginalFilename()).status(4).build();
 			
 			sqlSession.insert("chat.insert", chatVo);
+
+			int chat_file_no = sqlSession.selectOne("chat.getFileSequence");
+			chatFileVo.setChat_file_no(chat_file_no);
 			chatFileVo.setChat_no(chat_no);
 			chatFileVo.setMember_no((int)session.getAttribute("member_no"));
 			chatFileVo.setChat_file_uploadname(file.getOriginalFilename());
 			chatFileVo.setChat_file_size(file.getSize());
+			
 			chatDao.chatFileUpload(chatFileVo, file);
 			
-			return chatFileVo.getChat_file_uploadname();
+			return chatFileVo.getChat_file_no();
 		}
+		
+		@GetMapping("/download")
+		   public void download(@RequestParam int chat_no,
+		         HttpServletResponse resp) throws IOException {
+		      ChatFileVo chatFileVo = sqlSession.selectOne("chat.chatImagePreview", chat_no);
+		      
+		      File target = new File("D:/upload/kh2e/chatFile",String.valueOf(chatFileVo.getChat_file_no()));
+		      byte[] data = FileUtils.readFileToByteArray(target);
+		      
+		      resp.setHeader("Content-Type", "application/octet=stream; charset=UTF-8");
+		      resp.setHeader("Content-Disposition", "attachment; filename=\""+URLEncoder.encode(chatFileVo.getChat_file_uploadname(), "UTF-8")+"\"");
+		      resp.setHeader("Content-Length", String.valueOf(chatFileVo.getChat_file_size()));
+
+		      resp.getOutputStream().write(data);
+		   }
 
 }
 

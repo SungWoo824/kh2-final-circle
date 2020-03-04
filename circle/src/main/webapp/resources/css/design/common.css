@@ -718,6 +718,10 @@ background-color:#f8f8f8;
   }
 .admin-card-body{
 	margin: auto;
-	padding-top:75px;
+	padding-top:65px;
+}
+#chat_dummy{
+	height: 80px;
+	width: 80px;
 }
   
