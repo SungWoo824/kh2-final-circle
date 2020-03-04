@@ -748,7 +748,8 @@ background-color:#f8f8f8;
 .flist-wrap{
 	height:100%;
 }
-#fileview{
+.folderview,
+.fileview{
 	height:440px;
 	overflow:auto;
 	padding: 30px;
@@ -841,6 +842,13 @@ background-color:#f8f8f8;
 	float:left;
 }
 
+.fileview{
+	display: none;
+}
+
+.fileview.current{
+	display: inherit;
+}
 
 /*어드민*/
 .admin-wrap{

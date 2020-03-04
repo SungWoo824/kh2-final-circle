@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select  id="driveFolderName" resultType="driveFileDto" parameterType="int">
-		select distinct drive_name from drive_file where team_no = #{team_no}
+		select * from drive_file where team_no = #{team_no} and drive_folder='0'
 	</select>
 	
 	
@@ -101,7 +101,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 내파일만 보기 -->
-	<select id="">
+	<select id="myFileList" parameterType="map" resultType="driveFileDto">
 		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
 		and drive_folder='1' and member_no=#{member_no}
 	</select>

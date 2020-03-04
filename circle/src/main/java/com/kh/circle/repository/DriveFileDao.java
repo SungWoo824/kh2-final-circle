@@ -25,6 +25,7 @@ public interface DriveFileDao {
 	List<DriveFileDto> getFolderName(int team_no);
 	void driveDelete(DriveFileVO driveFileVo);
 	void editFolder(int team_no, String before_name, String after_name);
-	
+	List<DriveFileDto> myFileList(int team_no, int member_no, String drive_name);
+
 	
 }

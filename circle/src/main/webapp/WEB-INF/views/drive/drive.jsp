@@ -69,6 +69,23 @@ $(function(){
 		$("#editFolder").modal("show");
 	 });
 });
+
+//내파일 보기 탭
+$(function(){
+	
+	$('.myfile-btn').click(function(e){
+		e.preventDefault();
+		var tab = $(this).attr('data-tab');
+// 		console.log("tab = " + tab);
+		$('.myfile-btn').removeClass('current');
+		$('.fileview').removeClass('current');
+		
+		$(this).addClass('current');
+		$("#"+tab).addClass('current');
+	})
+
+})
+
 </script>
 
 
@@ -176,7 +193,8 @@ $(function(){
 				<div class="upload-wrap-box">
 				
 						<h3>${param.drive_name}</h3>
-						<a href="#" class="editFolderName" data-name="${param.drive_name }">수정</a>
+						<a href="#" class="editFolderName" data-name="${param.drive_name }">수정 / </a>
+						<a href="#">삭제</a>
 						<div class="fileupload-box">
 							 <form class="fupload" action="driveupload" method="post" enctype="multipart/form-data">
 							 	<input type="hidden" name="drive_name" value="${param.drive_name}">
@@ -186,12 +204,18 @@ $(function(){
 								<input id="upload-btn" type="submit" value="업로드">
 							</form>
 							<div class="fdel-btn">
-								<a href="">
+								<a href="#" class="myfile-btn current" data-tab="mytab">
 									내 파일만 보기 /
+								</a>
+								<a href="#" class="myfile-btn" data-tab="alltab">
+									전체파일 보기 /
+								</a>
+								<a href="filedelete?drive_file_no=${param.drive_file_no}&team_no=${param.team_no}&drive_name=${param.drive_name}">
+									선택다운로드/
 								</a>
 								<form class="fdel-form" action="fileDelete" method="post">
 									<input type="hidden" name=>
-									<ahref="filedelete?drive_file_no=${param.drive_file_no}&team_no=${param.team_no}&drive_name=${param.drive_name}">
+									<a href="filedelete?drive_file_no=${param.drive_file_no}&team_no=${param.team_no}&drive_name=${param.drive_name}">
 										선택삭제
 									</a>
 								</form>
@@ -203,43 +227,74 @@ $(function(){
 					<div class="flist-wrap">
 			           	<div class="chat-aside">
 			                   <div class="chat-menu-bar">
-			                   <div id="fileview">
-			                   
-									<c:forEach var="fileList" items="${driveFileList}">
-										<div class="upload-box">
-											<form action="download" method="post">
-													<input type="hidden" name="drive_file_no" value="${fileList.drive_file_no}">
-													<div class="img-view">
-														<c:choose>
-															<c:when test="${fn:startsWith(fileList.drive_file_type,'image')}">
-																<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}">
-															</c:when>
-															<c:otherwise>
-																<img src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg">
-															</c:otherwise>
-														</c:choose>
-													</div>
-													<div class="text-view">
-													    <p>${fileList.drive_file_uploadname }</p>
-													    <div>
-															<a href="download?drive_file_no=${fileList.drive_file_no}">
-															<input type="checkbox" >
-																다운로드
-															</a>
+		
+				                   <div id="alltab" class="fileview current">
+				                   
+										<c:forEach var="fileList" items="${driveFileList}">
+											<div class="upload-box">
+												<form action="download" method="post">
+														<input type="hidden" name="drive_file_no" value="${fileList.drive_file_no}">
+														<div class="img-view">
 															<c:choose>
-																<c:when test="${fileList.member_no eq sessionScope.member_no }">
+																<c:when test="${fn:startsWith(fileList.drive_file_type,'image')}">
+																	<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}">
+																</c:when>
+																<c:otherwise>
+																	<img src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg">
+																</c:otherwise>
+															</c:choose>
+														</div>
+														<div class="text-view">
+														    <p>${fileList.drive_file_uploadname }</p>
+														    <div>
+																<a href="download?drive_file_no=${fileList.drive_file_no}">
+																<input type="checkbox" >
+																	다운로드
+																</a>
+																<c:if test="${fileList.member_no eq sessionScope.member_no }">
 																	/<a href="filedelete?drive_file_no=${fileList.drive_file_no}&team_no=${fileList.team_no}&drive_name=${fileList.drive_name}">삭제</a>
-														    	</c:when>
-														    	<c:otherwise>
-														    	</c:otherwise>
-													    	</c:choose>
-													    </div> 
-													</div>
-											</form>
-										</div>
-									</c:forEach>
-								
-								</div>
+																</c:if>
+														    </div> 
+														</div>
+												</form>
+											</div>
+										</c:forEach>
+									
+									</div>
+									 <div id="mytab" class="fileview">
+				                   
+										<c:forEach var="myfileList" items="${myFileList}">
+											<div class="upload-box">
+												<form action="download" method="post">
+														<input type="hidden" name="drive_file_no" value="${myfileList.drive_file_no}">
+														<div class="img-view">
+															<c:choose>
+																<c:when test="${fn:startsWith(myfileList.drive_file_type,'image')}">
+																	<img src="drive_file_view?drive_file_no=${fileList.drive_file_no}">
+																</c:when>
+																<c:otherwise>
+																	<img src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg">
+																</c:otherwise>
+															</c:choose>
+														</div>
+														<div class="text-view">
+														    <p>${myfileList.drive_file_uploadname }</p>
+														    <div>
+																<a href="download?drive_file_no=${myfileList.drive_file_no}">
+																<input type="checkbox" >
+																	다운로드
+																</a>
+																<c:if test="${myfileList.member_no eq sessionScope.member_no }">
+																	/<a href="filedelete?drive_file_no=${myfileList.drive_file_no}&team_no=${myfileList.team_no}&drive_name=${myfileList.drive_name}">삭제</a>
+																</c:if>
+														    </div> 
+														</div>
+												</form>
+											</div>
+										</c:forEach>
+									
+									</div>
+			            
 			                   
 			                  <!-- 페이징 -->
 								<div>
@@ -282,26 +337,26 @@ $(function(){
 			
 				<article id="file-wrap">
 		
-							<div class="upload-wrap">
-							
-								<div class="upload-wrap-box">
-									<h3>${param.drive_name} </h3>
-									<div class="fileupload-box">
-										 <form action="driveupload" method="post" enctype="multipart/form-data">
-										 	<input type="hidden" name="drive_name" value="${param.drive_name}">
-											<input type="hidden" name="team_no" value="${param.team_no}">
-											<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
-											<input type="file" name ="file" multiple="multiple" >
-											<input id="upload-btn" type="submit" value="업로드">
-										</form>
-									</div>
-								</div>
-								
-							</div>
+						<div class="upload-wrap">
 						
-							<div class="flist-wrap">
-					           	파일이 없습니다.
-					  		</div>
+							<div class="upload-wrap-box">
+								<h3>${param.drive_name} </h3>
+								<div class="fileupload-box">
+									 <form action="driveupload" method="post" enctype="multipart/form-data">
+									 	<input type="hidden" name="drive_name" value="${param.drive_name}">
+										<input type="hidden" name="team_no" value="${param.team_no}">
+										<input type="hidden"  name="member_no"  value="${sessionScope.member_no}">
+										<input type="file" name ="file" multiple="multiple" >
+										<input id="upload-btn" type="submit" value="업로드">
+									</form>
+								</div>
+							</div>
+							
+						</div>
+					
+						<div class="flist-wrap">
+				           	파일이 없습니다.
+				  		</div>
 				</article>	
 					
 			</c:when>
@@ -311,7 +366,7 @@ $(function(){
 					<div class="upload-wrap">
 						서클에 올린 파일은 유효 기간 없이 언제, 어디서나 다시 확인할 수 있습니다.
 					</div>
-					   <div id="fileview">
+					   <div class="folderview">
 							<c:forEach var="drFN" items="${driveFolderName}">
 								<div class="upload-box">
 										<div class="img-view">
@@ -326,8 +381,10 @@ $(function(){
 													<input type="checkbox" >
 											    </div> 
 												<div class="folder-btn">
-													<a href="#" class="editFolderName" data-name="${drFN.drive_name }">수정</a> 
-													<a href="#">삭제</a>
+														<c:if test="${drFN.member_no eq sessionScope.member_no }">
+															<a href="#" class="editFolderName" data-name="${drFN.drive_name }">수정</a> 
+															<a href="#">삭제</a>
+														</c:if>
 												</div>
 										    </div>
 										</div>

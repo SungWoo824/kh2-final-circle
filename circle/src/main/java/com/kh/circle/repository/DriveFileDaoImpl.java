@@ -116,6 +116,18 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		
 	}
 
+	//내파일만 보기
+	@Override
+	public List<DriveFileDto> myFileList(int team_no, 
+											int member_no, 
+											String drive_name) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("member_no", member_no);
+		param.put("drive_name", drive_name);
+		return sqlSession.selectList("driveFile.myFileList", param);
+	}
+
 	
 
 

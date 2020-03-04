@@ -58,6 +58,10 @@ public class DriveFileController {
 		List<DriveFileDto> folderList= driveFileDao.getFolderList(boardVo.getTeam_no(),boardVo.getDrive_name());
 		model.addAttribute("driveFolderList",folderList);
 		model.addAttribute("member_no",session.getAttribute("member_no"));
+		List<DriveFileDto> myFileList = driveFileDao.myFileList(boardVo.getTeam_no(),
+																(int)session.getAttribute("member_no"),
+																boardVo.getDrive_name());
+		model.addAttribute("myFileList",myFileList);
 
 		//폴더 생성됐을때만 실행
 		if(folderName != null) {
@@ -121,6 +125,8 @@ public class DriveFileController {
 		model.addAttribute("drive_name",after_name);
 		return "redirect:../drive/drive";
 	}
+	
+	
 
 
 	@Autowired
@@ -140,9 +146,6 @@ public class DriveFileController {
 		
 		return "redirect:../drive/drive";
 	}
-	
-
-
 
 	
 	//드라이브 이미지 미리보기
