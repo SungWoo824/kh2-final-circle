@@ -11,6 +11,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.circle.repository.ChatDao;
+import com.kh.circle.vo.ChatFileVo;
 import com.kh.circle.vo.ChatVo;
 
 import lombok.extern.slf4j.Slf4j;
@@ -76,6 +77,10 @@ public class TeamServer extends TextWebSocketHandler{
 			
 		} else if(status == file ) {
 			int team_no = data.getTeam_no();
+			ChatFileVo chatFileVo = chatDao.sendChatFile(Integer.parseInt(data.getChat_content()));
+			data.setChat_no(chatFileVo.getChat_no());
+			data.setChat_file_type(chatFileVo.getChat_file_type());
+			data.setChat_content(chatFileVo.getChat_file_uploadname());
 			data.setMember_name((String)session.getAttributes().get("member_name"));
 			data.setMember_no((int)session.getAttributes().get("member_no"));
 			List<Integer> containList = chatDao.memberContainTopic(data.getMember_no(),data.getTeam_no());

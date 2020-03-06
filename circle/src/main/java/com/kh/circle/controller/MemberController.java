@@ -212,7 +212,7 @@ public class MemberController {
 	         HttpServletResponse resp) throws IOException {
 	      MemberProfileDto memberProfileDto = memberDao.getMemberProfile(member_no);
 	      
-	      File target = new File("D:/upload/kh2e/memberProfile",String.valueOf(memberProfileDto.getMember_no()));
+	      File target = new File("D:/upload/kh2e/memberProfile",String.valueOf(memberProfileDto.getMember_profile_no()));
 	      byte[] data = FileUtils.readFileToByteArray(target);
 	      
 	      resp.setHeader("Content-Type", "application/octet=stream; charset=UTF-8");

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <!--bootstrap template-->
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -44,6 +45,7 @@
 			if(!chat_content) return;//미입력시 중단
 			sendMessage(message, chat_content);
 			$(".user-input").val("");//입력창 초기화
+			
 		});
 		//p태그 생성해서 본문에 추가
 		function appendMessage(message){
@@ -54,18 +56,47 @@
 				spanin.appendTo(msg_con);
 				cont.appendTo(msg_con);
 				var createduv = $("<div>").addClass("msg-profile");
+				var profileimg = $("<img>").attr("id","member-profile-img");
+				profileimg.attr("src","../member/download?member_no="+message.member_no);
+				profileimg.appendTo(createduv);
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
-				messagecontent.prependTo("#chat-content");
+				messagecontent.prependTo("#chat-content");	
 				$(".container-fluid").scrollTop($(".container-fluid")[0].scrollHeight);
 			}else if(message.status==4){
-				var cont = $("<p>").addClass("msg").text(message.chat_content);
-				var spanin = $("<span>").text(message.member_name);
 				var msg_con =$("<div>").addClass("msg-con");
+				var spanin = $("<span>").text(message.member_name);
 				spanin.appendTo(msg_con);
-				cont.appendTo(msg_con);
+				
+				var carddiv = $("<div>").addClass("card border-primary mb-3 admin-card");
+				carddiv.css("width","20rem");
+				carddiv.css("height","15rem");
+				
+				var cardbody = $("<div>").addClass("card-body admin-card-body");
+				
+				var filetype = message.chat_file_type;
+				var filediv = $("<div>");
+				var fileimg = $("<img>");
+				fileimg.attr("id","chat_dummy");
+				if(filetype.startsWith('text')){
+					fileimg.attr("src","../resources/image/textdummy.jpeg");
+				}else if(filetype.startsWith('image')){
+					fileimg.attr("src","./download?chat_no="+message.chat_no);
+				}else{
+					fileimg.attr("src","../resources/image/filedummy.jpeg");
+				}
+				fileimg.appendTo(filediv);
+				filediv.appendTo(cardbody);
+				cardbody.appendTo(carddiv);
+				
+				var cont = $("<div>").addClass("card-header").text(message.chat_content);
+				cont.appendTo(carddiv);
+				carddiv.appendTo(msg_con);
 				var createduv = $("<div>").addClass("msg-profile");
+				var profileimg = $("<img>").attr("id","member-profile-img");
+				profileimg.attr("src","../member/download?member_no="+message.member_no);
+				profileimg.appendTo(createduv);
 				var messagecontent = $("<div>").addClass("msg-wrap")
 				createduv.appendTo(messagecontent);
 				msg_con.appendTo(messagecontent);
@@ -95,10 +126,11 @@
 				var msg = JSON.parse(e.data);
 				console.log(msg);
 				var ptopic_no = ${param.topic_no};
+				var pmember_no = ${sessionScope.member_no};
 				if(ptopic_no==msg.topic_no && (msg.status==2 ||msg.status==4)){
 					appendMessage(msg);
 				}
-				if(ptopic_no!=msg.topic_no){
+				if(ptopic_no!=msg.topic_no&&pmember_no!=msg.member_no){
 					var topic_no = msg.topic_no;
 					var count = $('.'+topic_no).text();
 					count *=1;
@@ -373,7 +405,7 @@ function searchResult(no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}&member_no=${sessionScope.member_no}"></a>
+	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -493,12 +525,12 @@ function searchResult(no){
 <!--             <h6 class="collapse-header">Login Screens:</h6> -->
             <c:forEach items="${topicList}" var="topicListDto" varStatus="status" >
 		            <a class="collapse-item" href="${pageContext.request.contextPath}/chat/topic_main?team_no=${param.team_no}&topic_no=${topicListDto.topic_no}">
-		                    	${topicListDto.topic_name}
-		                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
-		                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
-		                    		${memberChatCount[status.index].count}
-		                    	</c:if>
-		                    	</span>
+                    	${topicListDto.topic_name}
+                    	<span class="badge badge-primary badge-pill ${topicListDto.topic_no}">
+                    	<c:if test="${memberChatCount[status.index].count ne 0 && topicListDto.topic_no ne param.topic_no}">
+                    		${memberChatCount[status.index].count}
+                    	</c:if>
+                    	</span>
 		            </a>
             </c:forEach>
             <div class="collapse-divider"></div>
@@ -711,22 +743,63 @@ function searchResult(no){
 <!-- 		          </h5> -->
                     
 						<!-- 메세지 결과 창 -->          
-                        <div class="message" style="text-align: left">
-							<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
-								<c:forEach items="${topicChatList}" var="chatVo">
+
+        		<div class="message" style="text-align: left">
+					<div id="chat-content"  style="display: flex; flex-direction: column-reverse;">
+						<c:forEach items="${topicChatList}" var="chatVo">
+							<c:choose>
+								<c:when test="${chatVo.chat_status==2}">
 									<div class="msg-wrap">
 										<div class="msg-profile">
 											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
 										</div>
-											<div class="msg-con">
-												<span>${chatVo.member_name} </span>
-												<p class="msg">${chatVo.chat_content}</p>
-											</div>
+
+										<div class="msg-con">
+											<span>${chatVo.member_name} </span>
+											<p class="msg">${chatVo.chat_content}</p>
+										</div>
 									</div>
-								</c:forEach>
+								</c:when>
 								
-							</div>
+								<c:when test="${chatVo.chat_status==4}">
+
+									<div class="msg-wrap">
+										<div class="msg-profile">
+											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+										</div>
+
+										<div class="msg-con">
+											<span>${chatVo.member_name}</span>
+											<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem;">
+											  <div class="card-body admin-card-body">
+											  <c:choose>
+											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'text')}">
+											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg"></div>
+											    </c:when>
+											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'image')}">
+											    	<div><img id="chat_dummy" src='${pageContext.request.contextPath}/chat/download?chat_no=${chatVo.chat_no}'></div>
+											    </c:when>
+											    <c:otherwise>
+											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/filedummy.jpeg"></div>
+											    </c:otherwise>
+											    
+											  </c:choose>
+											    <p class="card-text">
+											    	<a href="#"></a>
+											    </p>
+											  </div>
+											<div class="card-header">${chatVo.chat_content}</div>
+
+
+											</div>
+										</div>
+									</div>
+									</c:when>
+								</c:choose>
+							</c:forEach>
+								
 						</div>
+					</div>
 							
 							<!-- 전송 -->
 							<div class="chat-send-content">
