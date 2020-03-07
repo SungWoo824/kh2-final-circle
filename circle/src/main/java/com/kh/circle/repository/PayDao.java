@@ -13,9 +13,7 @@ public interface PayDao {
 	PayDto get(int no);
 	void insertRevoke(PayDto payDto);
 	int getQty1(String partner_user_id);
-	int getQty6(String partner_user_id);
-	int getQty12(String partner_user_id);
-	void insertCount(Object object, String term, int total_count);
-	List<Object> totalCount(String term);
-	int countAll(String status, String item_name);
+	Object getQty6(String partner_user_id);
+	Object getQty12(String partner_user_id);
+	void changeAuth(String partner_user_id, String item_name);
 }

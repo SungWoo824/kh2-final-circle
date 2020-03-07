@@ -120,6 +120,9 @@ $(function(){
 									     	 <li class="nav-item">
 									        	<a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
 									      	</li>
+									      	<li class="nav-item"><a class="nav-link"
+											href="${pageContext.request.contextPath}/plan/list?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">보유중인
+												플랜 보기</a></li>
 									     </ul>
 									     	<form class="form-inline my-2 my-lg-0">
 									      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -127,15 +130,7 @@ $(function(){
 									   		</form>
 									  </div>
 								</nav>
-								
-								<!--멤버관리 : 정보보기 -->
-	                                   <div class="mypage-div">
-<%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
-	                                   <span> 팀 이름 = ${teamDto.team_name}</span>
-	                                   <br>
-	                                   <span> 내 등급 = ${teamMemberDto.member_position},</span>
-	                                   <span>${teamMemberDto.member_auth} </span>
-	                                    </div>
+
 						
 <!-- 팀 멤버 리스트 보기 -->
 <div class="row">
@@ -150,18 +145,16 @@ $(function(){
   </div>
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
-      <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">...
+      <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
       </div>
       		<p> 회원을 선택하여 등급을 변경하세요!  </p>
 			<c:forEach items="${memberList}" var="memberListVO">	
-   				 <input type="checkbox" class="custom-control-input" id="agree" name="agree">
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
 				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
 				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
 				<br>
-				<input type="checkbox" class="custom-control-input" id="agree" name="agree">
    			</c:forEach>
     </div>
     	<form action="gratn_position" method="post">

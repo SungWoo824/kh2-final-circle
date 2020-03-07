@@ -72,38 +72,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 팀소유자가 보유한 플랜 옵션별 개수 출력해주기 -->
 	<select id="planQty1" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1개월권'
+		select sum(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1개월권'
 	</select>
 	
 	<select id="cancelQty1" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1개월권'
+		select sum(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1개월권'
 	</select>
 	
 	<select id="planQty6" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='6개월권'
+		select sum(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='6개월권'
 	</select>
 	
 	<select id="cancelQty6" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='6개월권'
+		select sum(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='6개월권'
 	</select>
 	
 	<select id="planQty12" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1년권'
+		select sum(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1년권'
 	</select>
 	
 	<select id="cancelQty12" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1년권'
+		select sum(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1년권'
 	</select>
 	
-	<insert id="insertCount" parameterType="payCountDto">
-		insert into pay_count values(#{member_email}, #{term}, #{total_count})
-	</insert>
-	
-	<select id="totalCount" parameterType="String" resultType="Integer">
-		select total_count from pay_count where term=#{term}
-	</select>
-	
-	<select id="countAll" parameterType="payDto" resultType="Integer">
-		select sum(quantity) as total_count from pay where status=#{status} and item_name=#{item_name}
-	</select>
+	<update id="changeAuth" parameterType="payDto">
+		update pay set quantity=quantity-1 where partner_user_id=#{partner_user_id} and item_name=#{item_name} and status='완료'
+	</update>
 </mapper>

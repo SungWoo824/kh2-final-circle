@@ -28,11 +28,6 @@ public class PayController {
 	@Autowired
 	private PayService payService;
 	
-	@GetMapping("/planoption")
-	public String plan() {
-		return "pay/planoption";
-	}
-	
 	@GetMapping("/pay_detail")
 	public String pay_detail() {
 		return "pay/pay_detail";
@@ -44,6 +39,7 @@ public class PayController {
 		session.setAttribute("tid", result.getTid());//trade id 를 전달
 		session.setAttribute("ready", vo);//결제 요청정보를 전달
 		model.addAttribute("member_email", session.getAttribute("member_email"));
+		
 		return "redirect:" + result.getNext_redirect_pc_url();
 	}
 	@GetMapping("/success")
