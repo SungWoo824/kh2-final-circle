@@ -5,6 +5,9 @@
 <head>
 
 </head>
+<c:if test="${empty allList }">
+검색결과가 없습니다
+</c:if>
 
 <c:forEach items="${allList }" var="chatSearchDto">
 	<c:out value="${chatSearchDto.member_name }"/><br>
