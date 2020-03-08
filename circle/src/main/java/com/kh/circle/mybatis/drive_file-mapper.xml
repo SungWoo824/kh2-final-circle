@@ -15,7 +15,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			#{member_no},
 			#{team_no},
 			#{drive_name},
-			'null',
+			'Folder',
 			0,
 			'0',
 			null
@@ -80,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and drive_name=#{drive_name}
 	</select>
 	
+	<!-- 전체폴더 -->
 	<select  id="driveFolderName" resultType="driveFileDto" parameterType="int">
 		select * from drive_file where team_no = #{team_no} and drive_folder='0'
 	</select>
@@ -103,34 +104,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 내파일만 보기 -->
 	<select id="myFileList" parameterType="map" resultType="driveFileDto">
 		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
-		and drive_folder='1' and member_no=#{member_no}
+		and drive_folder='1' and member_no=#{member_no} order by drive_file_no desc
+	</select>
+
+	<!-- 내폴더만 보기 -->
+	<select id="myFolderList" parameterType="map" resultType="driveFileDto">
+		select * from drive_file where team_no = #{team_no} and member_no=#{member_no} and drive_folder='0'
 	</select>
 	
-	<!-- 파일삭제 -->
-<!-- 	<delete id="fileDelete" parameterType="int"> -->
-<!-- 			delete from drive_file  -->
-<!-- 				where drive_file_no=#{drive_file_no}	 -->
-<!-- 	</delete> -->
-	
-	<!-- 파일삭제 -->
-	<delete id="fileDelete" parameterType="int">
+	<!-- 파일삭제 다중 -->
+	<delete id="fileListDelete" parameterType="int">
 			delete from drive_file 
-			<foreach collection="list" item="drive_file_no" open="where 1=1">
+			<foreach collection="list" item="drive_file_no" open="where 1!=1">
 				or drive_file_no=#{drive_file_no}	
 			</foreach>
 	</delete>
 	
-	<!-- 드라이브 폴더 삭제 -->
-	<delete id="driveDelete" parameterType="driveFileVo" >
-		delete from drive_file where drive_file_no=#{drive_file_no} and team_no=#{team_no} and drive_name=#{drive_name}
-<!-- 		delete from drive_file where team_no=#{team_no} and drive_name=#{drive_name} -->
-	
+	<!-- 파일삭제 -->
+	<delete id="fileDelete" parameterType="int">
+			delete from drive_file where drive_file_no=#{drive_file_no}	
 	</delete>
+	
+	
+	<!-- 드라이브 폴더 삭제 -->
+	<delete id="driveDelete" parameterType="map">
+		delete from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
+	</delete>
+	
+	<select id="fileList" resultType="int" parameterType="map">
+		select drive_file_no from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
+	</select>
+	
+	
+	<!-- 드라이브파일 용량 -->
 	<select id="fileTotalSize" resultType="int">
 		select sum(drive_file_size) from drive_file
 	</select>
 	
-	
+	<select id="teamFileTotalSize" resultType="int" parameterType="int">
+		select sum(drive_file_size) from drive_file where team_no=#{team_no}
+	</select>
 
 	
 </mapper>

@@ -62,11 +62,14 @@ public class DriveFileController {
 																(int)session.getAttribute("member_no"),
 																boardVo.getDrive_name());
 		model.addAttribute("myFileList",myFileList);
-
+		List<DriveFileDto> myFolderList = driveFileDao.myFolderList(boardVo.getTeam_no(),
+																(int)session.getAttribute("member_no"));
+		model.addAttribute("myFolderList",myFolderList);
+		
+		
+		
 		//폴더 생성됐을때만 실행
 		if(folderName != null) {
-			List<DriveFileDto> fileList= driveFileDao.getFileList(boardVo);
-			model.addAttribute("driveFileList", fileList);
 			
 			//페이징
 			int listCount= driveFileDao.driveFileListCount(boardVo);
@@ -164,7 +167,7 @@ public class DriveFileController {
 				.body(resource);
 	}
 	
-	//다운로드
+	//다운로드 
 	@GetMapping("/download")
 	@ResponseBody
 	public ResponseEntity<ByteArrayResource> download(@RequestParam int drive_file_no) throws IOException{
@@ -194,34 +197,60 @@ public class DriveFileController {
 	}
 		
 	
-		//드라이브 파일삭제
-		@GetMapping("/filedelete")
-		public String fileDelete(@RequestParam int drive_file_no,
-				@RequestParam int team_no,
-				@RequestParam String drive_name,
-				Model model) {
-			driveFileDao.fileDelete(drive_file_no);
-			File target = new File("D:/upload/kh2e/drivefile/"+drive_file_no);
-			target.delete();
+		//드라이브 파일 다중삭제
+		@PostMapping("/filelistdelete")
+		public String fileDelete(@RequestParam List<Integer> drive_file_no,
+								@RequestParam(defaultValue="") int team_no,
+								@RequestParam(defaultValue="") String drive_name,
+								Model model) {
+			driveFileDao.fileListDelete(drive_file_no);
+			
+			for(int i = 0; i < drive_file_no.size(); i++) {
+				File target = new File("D:/upload/kh2e/drivefile/" + drive_file_no.get(i));
+				target.delete();
+			}
+			
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("drive_name",drive_name);
 			return  "redirect:../drive/drive";
 		}
 		
+		//드라이브 파일 삭제
+		@GetMapping("/filedelete")
+		public String fileDelete(@RequestParam int drive_file_no,
+								@RequestParam(defaultValue="") int team_no,
+								@RequestParam(defaultValue="") String drive_name,
+								Model model) {
+			driveFileDao.fileDelete(drive_file_no);
+			
+			File target = new File("D:/upload/kh2e/drivefile/" + drive_file_no);
+			target.delete();
+			
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("drive_name",drive_name);
+			return  "redirect:../drive/drive";
+			
+		
+		}
+		
+		
 //		드라이브 폴더 삭제
 		@GetMapping("/drivedelete")
-		public String driveDelete(@ModelAttribute DriveFileVO driveFileVo, Model model) {
+		public String driveDelete(@RequestParam int team_no,
+								@RequestParam String drive_name, 
+								Model model) {
 			
-//			List<DriveFileDto> fileList = driveFileDao.getFolderList(driveFileVo);
-//			model.addAttribute("fileList", fileList);
-//			for(int i = 0; i < fileList.size(); i++) {
-//				driveFileDao.driveDelete(driveFileVo);
-//				driveFileDao.fileDelete(driveFileVo.getDrive_file_no());
-//				File target = new File("D:/upload/kh2e/drivefile/"+driveFileVo.getDrive_file_no());
-//				target.delete();
-//			}
+			List<Integer> fileList = driveFileDao.fileList(team_no, drive_name);
 			
-			return  "redirect:/drive/drive_folderlist?team_no="+driveFileVo.getTeam_no();
+			for(int i = 0; i < fileList.size(); i++) {
+				File target = new File("D:/upload/kh2e/drivefile/"+fileList.get(i));
+				target.delete();
+			}
+			
+			driveFileDao.driveDelete(team_no, drive_name);
+			
+			model.addAttribute("team_no",team_no);
+			return  "redirect:/drive/drive";
 		}
 		
 		

@@ -40,6 +40,10 @@ public class ManagerDaoImpl implements ManagerDao{
 	public int fileTotalSize() {
 		return sqlSession.selectOne("driveFile.fileTotalSize");
 	}
+	
+	public int teamFileTotalSize(int team_no) {
+		return sqlSession.selectOne("driveFile.teamFileTotalSize",team_no);
+	}
 
 	@Override
 	public int managerCount() {
@@ -72,5 +76,6 @@ public class ManagerDaoImpl implements ManagerDao{
 	public void memberAdminGrant(int member_no) {
 		sqlSession.update("member.adminGrant", member_no);
 	}
+
 	
 }

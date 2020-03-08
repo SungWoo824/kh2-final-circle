@@ -95,15 +95,25 @@ public class DriveFileDaoImpl implements DriveFileDao{
 	
 	//드라이브파일 삭제
 	@Override
-	public void fileDelete(int drive_file_no) {
-		sqlSession.delete("driveFile.fileDelete",drive_file_no);
+	public void fileListDelete(List<Integer> list) {
+		sqlSession.delete("driveFile.fileListDelete",list);
 	}
 	
-	//드라이브 폴더 일괄 삭제
 	@Override
-	public void driveDelete(DriveFileVO driveFileVo) {
-		sqlSession.delete("driveFile.driveDelete",driveFileVo);
+	public void fileDelete(int drive_file_no) {
+		sqlSession.delete("driveFile.fileDelete", drive_file_no);		
 	}
+	
+	//드라이브폴더 삭제
+	@Override
+	public void driveDelete(int team_no,String drive_name) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("drive_name", drive_name);
+		sqlSession.delete("driveFile.driveDelete", param);
+	}
+	
+	
 
 	//드라이브명 변경
 	@Override
@@ -128,6 +138,29 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		return sqlSession.selectList("driveFile.myFileList", param);
 	}
 
+	//내폴더만 보기
+	@Override
+	public List<DriveFileDto> myFolderList(int team_no, int member_no) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("member_no", member_no);
+		return sqlSession.selectList("driveFile.myFolderList", param);
+	}
+
+	@Override
+	public List<Integer> fileList(int team_no, String drive_name) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("team_no", team_no);
+		param.put("drive_name", drive_name);
+		return sqlSession.selectList("driveFile.fileList", param);
+	}
+
+	
+
+
+	
+
+		
 	
 
 

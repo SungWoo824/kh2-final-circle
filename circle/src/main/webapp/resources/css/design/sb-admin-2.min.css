@@ -9,15 +9,6 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
  
- @font-face{
-        font-family:NotoSans-r;
-        src:url("${pageContext.request.contextPath}/resources/font/NotoSansCJKkr-Regular.otf");
-}
-
-@font-face{
-        font-family:NotoSans-b;
-        src:url("${pageContext.request.contextPath}/resources/font/NotoSansCJKkr-Bold.otf");
-}
 :root { -
 	-blue: #4e73df; -
 	-indigo: #6610f2; -
@@ -52,7 +43,6 @@
 }
 
 html {
-	font-family: sans-serif;
 	line-height: 1.15;
 	-webkit-text-size-adjust: 100%;
 	-webkit-tap-highlight-color: transparent
