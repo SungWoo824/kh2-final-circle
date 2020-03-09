@@ -2,6 +2,7 @@ package com.kh.circle.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.repository.DriveFileDao;
+import com.kh.circle.service.CompressionUtil;
 import com.kh.circle.service.DriveFileService;
 import com.kh.circle.service.Pagination;
 import com.kh.circle.vo.BoardVo;
@@ -167,6 +169,19 @@ public class DriveFileController {
 				.body(resource);
 	}
 	
+	
+	//압축 다운로드(다중)
+	@GetMapping("/zipdownload")
+	public String zipDownload(@RequestParam List<Integer> drive_file_no) throws IOException{
+		
+		CompressionUtil util = new CompressionUtil();
+		
+		
+		
+		return 	"";
+		
+	}
+	
 	//다운로드 
 	@GetMapping("/download")
 	@ResponseBody
@@ -196,12 +211,8 @@ public class DriveFileController {
 		
 	}
 		
-		//압축 다운로드(다중)
-		@GetMapping("/zipdownload")
-//		@ResponseBody
-//		public ResponseEntity<ByteArrayResource> zipDownload(@RequestParam List<Integer> drive_file_no) throws IOException{
-//		
-//		}
+		
+		
 		
 	
 		//드라이브 파일 다중삭제
