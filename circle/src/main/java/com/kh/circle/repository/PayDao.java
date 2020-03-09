@@ -16,4 +16,6 @@ public interface PayDao {
 	Object getQty6(String partner_user_id);
 	Object getQty12(String partner_user_id);
 	void changeAuth(String partner_user_id, String item_name);
+	void checkUsed();
+	String checkStatus(String aid);
 }

@@ -58,8 +58,6 @@
 							<li class="login-btn"><a
 								href="${pageContext.request.contextPath}/member/signin">로그인</a></li>
 						</c:otherwise>
-
-
 					</c:choose>
 				</ul>
 			</div>

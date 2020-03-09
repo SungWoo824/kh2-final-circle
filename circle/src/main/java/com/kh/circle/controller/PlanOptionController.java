@@ -92,6 +92,7 @@ TeamDao teamDao;
 					.term(term.get(i))
 					.build();
 			teamDao.changeAuth(teamMemberDto);	
+			payDao.checkUsed();
 		}
 		return "redirect:./change_auth?team_no="+team_no+"&team_name="+team_name+"&team_domain="+team_domain;
 	}

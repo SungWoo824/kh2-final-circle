@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.circle.repository.PayDao;
+import com.kh.circle.repository.TeamDao;
 import com.kh.circle.service.PayService;
 import com.kh.circle.vo.CirclePayReadyReturnVO;
 import com.kh.circle.vo.CirclePaySuccessReadyVO;
@@ -47,8 +48,6 @@ public class PayController {
 		String tid = (String) session.getAttribute("tid");
 		PayReadyVO vo = (PayReadyVO)session.getAttribute("ready");
 		
-		
-		
 		CirclePaySuccessReadyVO data = CirclePaySuccessReadyVO.builder()
 															.cid("TC0ONETIME")
 															.tid(tid)
@@ -70,17 +69,26 @@ public class PayController {
 	@Autowired
 	private PayDao payDao;
 	
+	@Autowired
+	private TeamDao teamDao;
+	
 	@GetMapping("/list")
-	public String list(Model model) {
+	public String list(Model model, HttpSession session,@RequestParam(value="aid", defaultValue = "0") String aid, @RequestParam String team_name, @RequestParam int team_no, @RequestParam String team_domain) {
 		model.addAttribute("list", payDao.getList());
+		model.addAttribute("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
+		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
+		model.addAttribute("status", payDao.checkStatus(aid));
 		return "pay/list";
 	}
 	
 	@GetMapping("/revoke")
-	public String revoke(@RequestParam int no) throws URISyntaxException {
+	public String revoke(@RequestParam String team_name,
+								@RequestParam int team_no,
+								@RequestParam String team_domain,
+								@RequestParam int no, Model model) throws URISyntaxException {
 		
 		PayRevokeReturnVO vo = payService.revoke(no);
-		
-		return "redirect:list";
+		String aid = vo.getAid();
+		return "redirect:../plan/list?team_no="+team_no+"&team_name="+team_name+"&team_domain="+team_domain+"&aid="+aid;
 	}
 }

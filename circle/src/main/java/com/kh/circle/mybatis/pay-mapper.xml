@@ -96,6 +96,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<update id="changeAuth" parameterType="payDto">
-		update pay set quantity=quantity-1 where partner_user_id=#{partner_user_id} and item_name=#{item_name} and status='완료'
+		<choose>
+			<when test="quantity>0">
+			update pay set quantity=quantity-1 where partner_user_id=#{partner_user_id} and item_name=#{item_name} and status='완료'
+			</when>
+			<otherwise>
+				update pay set quantity=0 where partner_user_id=#{partner_user_id} and item_name=#{item_name} and status='완료'
+			</otherwise>
+		</choose>
 	</update>
+	
+	<update id="checkUsed">
+		update pay set countall=1
+	</update>
+	
+	<select id="checkStatus" parameterType="String" resultType="String">
+		select status from pay where aid=#{aid} and status='취소' 
+	</select>
 </mapper>

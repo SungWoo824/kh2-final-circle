@@ -53,8 +53,11 @@ public class PayDaoImpl implements PayDao{
 			return total;
 		}else if(complete!=null & cancel!=null){
 			int total=(int)complete-(int)cancel;
-	
-			return total;
+			if(total>=0) {
+				return total;
+			}else {
+				return 0;
+			}
 		}else if(complete!=null & cancel==null){
 			int total=(int)complete;
 			return total;
@@ -74,8 +77,11 @@ public class PayDaoImpl implements PayDao{
 			return total;
 		}else if(complete!=null & cancel!=null){
 			int total=(int)complete-(int)cancel;
-			
-			return total;
+			if(total>=0) {
+				return total;
+			}else {
+				return 0;
+			}
 		}else if(complete!=null & cancel==null){
 			int total=(int)complete;
 			return total;
@@ -96,8 +102,11 @@ public class PayDaoImpl implements PayDao{
 			return total;
 		}else if(complete!=null & cancel!=null){
 			int total=(int)complete-(int)cancel;
-	
-			return total;
+			if(total>=0) {
+				return total;
+			}else {
+				return 0;
+			}
 		}else if(complete!=null & cancel==null){
 			int total=(int)complete;
 			return total;
@@ -115,6 +124,16 @@ public class PayDaoImpl implements PayDao{
 				.build();
 
 		sqlSession.update("pay.changeAuth", payDto);
+	}
+
+	@Override
+	public void checkUsed() {
+		sqlSession.update("pay.checkUsed");
+	}
+
+	@Override
+	public String checkStatus(String aid) {
+		return sqlSession.selectOne("pay.checkStatus", aid);
 	}
 
 	
