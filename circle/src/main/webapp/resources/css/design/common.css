@@ -753,7 +753,7 @@ background-color:#f8f8f8;
 .myfolderview,
 .folderview,
 .fileview{
-	height:440px;
+	height:600px;
 	overflow:auto;
 	padding: 30px;
 }
@@ -884,7 +884,7 @@ background-color:#f8f8f8;
 
 .fupload .fileName {
 	display:inline-block;
-	width:220px;
+	width:400px;
 	height:32px;
 	padding-left:10px;
 	margin-right:5px;

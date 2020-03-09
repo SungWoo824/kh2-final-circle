@@ -155,15 +155,6 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		return sqlSession.selectList("driveFile.fileList", param);
 	}
 
-	
-
-
-	
-
-		
-	
-
-
 
 
 

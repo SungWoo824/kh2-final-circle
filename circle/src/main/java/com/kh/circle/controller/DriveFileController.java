@@ -196,6 +196,13 @@ public class DriveFileController {
 		
 	}
 		
+		//압축 다운로드(다중)
+		@GetMapping("/zipdownload")
+//		@ResponseBody
+//		public ResponseEntity<ByteArrayResource> zipDownload(@RequestParam List<Integer> drive_file_no) throws IOException{
+//		
+//		}
+		
 	
 		//드라이브 파일 다중삭제
 		@PostMapping("/filelistdelete")
@@ -203,12 +210,13 @@ public class DriveFileController {
 								@RequestParam(defaultValue="") int team_no,
 								@RequestParam(defaultValue="") String drive_name,
 								Model model) {
-			driveFileDao.fileListDelete(drive_file_no);
 			
 			for(int i = 0; i < drive_file_no.size(); i++) {
 				File target = new File("D:/upload/kh2e/drivefile/" + drive_file_no.get(i));
 				target.delete();
 			}
+			
+			driveFileDao.fileListDelete(drive_file_no);
 			
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("drive_name",drive_name);
@@ -221,10 +229,11 @@ public class DriveFileController {
 								@RequestParam(defaultValue="") int team_no,
 								@RequestParam(defaultValue="") String drive_name,
 								Model model) {
-			driveFileDao.fileDelete(drive_file_no);
 			
 			File target = new File("D:/upload/kh2e/drivefile/" + drive_file_no);
 			target.delete();
+
+			driveFileDao.fileDelete(drive_file_no);
 			
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("drive_name",drive_name);

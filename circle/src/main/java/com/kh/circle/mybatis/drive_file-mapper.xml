@@ -61,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from drive_file where drive_file_no=#{drive_file_no}
 	</select>
 	
+	
 	<!-- 파일목록 페이징 합쳤을때 -->
 	<select id="driveFileList" resultType="driveFileDto" parameterType="boardVo">
 		select * from (select rownum rn, A.* from 
@@ -79,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where team_no=#{team_no} 
 		and drive_name=#{drive_name}
 	</select>
+	
 	
 	<!-- 전체폴더 -->
 	<select  id="driveFolderName" resultType="driveFileDto" parameterType="int">
@@ -107,10 +109,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		and drive_folder='1' and member_no=#{member_no} order by drive_file_no desc
 	</select>
 
+
 	<!-- 내폴더만 보기 -->
 	<select id="myFolderList" parameterType="map" resultType="driveFileDto">
 		select * from drive_file where team_no = #{team_no} and member_no=#{member_no} and drive_folder='0'
 	</select>
+	
 	
 	<!-- 파일삭제 다중 -->
 	<delete id="fileListDelete" parameterType="int">
@@ -119,6 +123,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				or drive_file_no=#{drive_file_no}	
 			</foreach>
 	</delete>
+	
 	
 	<!-- 파일삭제 -->
 	<delete id="fileDelete" parameterType="int">
@@ -131,6 +136,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
 	</delete>
 	
+	
 	<select id="fileList" resultType="int" parameterType="map">
 		select drive_file_no from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
 	</select>
@@ -141,9 +147,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select sum(drive_file_size) from drive_file
 	</select>
 	
+	
 	<select id="teamFileTotalSize" resultType="int" parameterType="int">
 		select sum(drive_file_size) from drive_file where team_no=#{team_no}
 	</select>
+
 
 	
 </mapper>

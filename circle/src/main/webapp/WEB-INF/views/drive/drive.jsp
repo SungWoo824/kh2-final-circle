@@ -164,7 +164,7 @@ $(function(){
 
 	//파일업로드
 	$(function(){
-		var uploadFile = $('.fileBox .uploadBtn');
+		var uploadFile = $('.fileupload-box .uploadBtn');
 		uploadFile.on('change', function(){
 			if(window.FileReader){
 				var filename = $(this)[0].files[0].name;
@@ -188,6 +188,8 @@ $(function(){
 	})
 
 
+	//다중다운로드
+	
 	
 });
 
@@ -356,12 +358,12 @@ $(function(){
 															<input class="fcheck-btn" type="checkbox" name="drive_file_no" value="${fileList.drive_file_no }">
 												    	</div>
 												    	<div class="down-delete">
-															<a href="download?drive_file_no=${fileList.drive_file_no}" style="margin-right:8px; text-decoration:none;">
+															<a href="download?drive_file_no=${fileList.drive_file_no}" style="text-decoration:none;">
 																<i style="color:#bbb" class="fa fa-m fa-download"></i>
 															</a>
 															<c:if test="${fileList.member_no eq sessionScope.member_no }">
 																<a href="filedelete?drive_file_no=${fileList.drive_file_no}&team_no=${fileList.team_no}&drive_name=${fileList.drive_name}" 
-																		class="fdel-one">
+																		class="fdel-one" style="margin-left:8px;">
 																	<i style="color:#bbb" class="fa fa-m fa-trash-alt"></i>		
 																</a>
 															</c:if>
@@ -505,7 +507,7 @@ $(function(){
 					<div class="upload-wrap-title">
 						<div class="exp-drive">
 							<p>* 멤버들과 공유한 파일을 언제 어디서든 확인가능합니다.</p>
-							<p>* 준회원은 잔디 드라이브 사용 및 드라이브 내 파일 열람이 불가합니다.</p>
+							<p>* 준회원은 잔디 드라이브 업로드이용이 제한됩니다.</p>
 						</div>
 					</div>
 					<div class="fileupload-box">
