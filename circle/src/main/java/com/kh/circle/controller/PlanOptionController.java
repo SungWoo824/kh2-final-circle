@@ -32,9 +32,21 @@ TeamDao teamDao;
 		model.addAttribute("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
 		model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 		
-		model.addAttribute("oneMonth", payDao.getQty1((String) session.getAttribute("member_email")));
-		model.addAttribute("sixMonth", payDao.getQty6((String) session.getAttribute("member_email")));
-		model.addAttribute("oneYear", payDao.getQty12((String) session.getAttribute("member_email")));
+		String user_id=(String) session.getAttribute("member_email");
+		int one_month=payDao.getQty1((String) session.getAttribute("member_email"));
+		int six_month=(int) payDao.getQty6((String) session.getAttribute("member_email"));
+		int one_year=(int) payDao.getQty12((String) session.getAttribute("member_email"));
+		
+		
+		if(payDao.getCountList((String) session.getAttribute("member_email")).size()>0) {
+			payDao.updatePayCount(one_month, six_month, one_year, user_id);
+		}else {
+			payDao.insertPayCount(one_month,six_month,one_year,user_id);
+		};
+		model.addAttribute("oneMonth", payDao.oneMonth(user_id));
+		model.addAttribute("sixMonth", payDao.sixMonth(user_id));
+		model.addAttribute("oneYear", payDao.oneYear(user_id));
+		
 		return "plan/list";
 	}
 	
@@ -76,11 +88,11 @@ TeamDao teamDao;
 		
 		for(int i=0; i<term.size(); i++) {
 			if(term.get(i).equals("1개월권")) {
-				payDao.changeAuth((String) session.getAttribute("member_email"), term.get(i));
+				payDao.changeAuth1((String) session.getAttribute("member_email"));
 			}else if(term.get(i).equals("6개월권")) {
-				payDao.changeAuth((String) session.getAttribute("member_email"), term.get(i));
+				payDao.changeAuth6((String) session.getAttribute("member_email"));
 			}else {
-				payDao.changeAuth((String) session.getAttribute("member_email"), term.get(i));
+				payDao.changeAuth12((String) session.getAttribute("member_email"));
 			}
 		}
 		
@@ -92,7 +104,6 @@ TeamDao teamDao;
 					.term(term.get(i))
 					.build();
 			teamDao.changeAuth(teamMemberDto);	
-			payDao.checkUsed();
 		}
 		return "redirect:./change_auth?team_no="+team_no+"&team_name="+team_name+"&team_domain="+team_domain;
 	}

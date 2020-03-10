@@ -26,7 +26,7 @@
 	src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>
 <script>
 	$(function(){
-		if($('#cancel').val()==1){
+		if($('#cancel').val()=='y'){
 			alert("한 번 이상 사용된 플랜 옵션이므로 취소가 불가합니다.");
 		}
 	});
@@ -126,7 +126,7 @@
     <div class="tab-content" id="v-pills-tabContent">
       		<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
 							<c:forEach var="pay" items="${list }">
-								<c:if test="${pay.status eq '준비'}">
+							<c:if test="${pay.status eq '준비' or '취소완료'}">
 									<ul>
 										<li>
 											플랜 옵션: ${pay.item_name }
@@ -137,15 +137,19 @@
 										<li>
 											총 결제 금액: ${pay.total_amount }
 										</li>
+										<c:if test="${pay.status eq '준비' }">
+										<li>
+											<button type="button" id="cancel" onclick="location.href='revoke?no=${pay.no }&team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${param.team_domain}'">취소</button>
+										</li>										
+										</c:if>
+										<c:if test="${pay.status eq '취소완료' }">
+										<li>
+											<button type="button" disabled="disabled">취소완료</button>
+										</li>										
+										</c:if>
 									</ul>
-								</c:if>
+									</c:if>
 							</c:forEach>	
-										<c:choose>
-										<c:when test="${status eq '취소'}">취소됨</c:when>
-										<c:otherwise>
-											<button type="button" id="cancel" value="${status}" onclick="location.href='revoke?no=${pay.no }&team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${param.team_domain}'">취소</button>										
-										</c:otherwise>
-										</c:choose>
 							</div>
 					    </div>
 					  	</div>

@@ -57,6 +57,7 @@ public class PayServiceImpl implements PayService{
 				.port(8080)
 				.path("/pay/")
 				.toUriString();
+
 		body.add("approval_url", baseUrl + "success");
 		body.add("fail_url", baseUrl + "fail");
 		body.add("cancel_url", baseUrl + "cancel");

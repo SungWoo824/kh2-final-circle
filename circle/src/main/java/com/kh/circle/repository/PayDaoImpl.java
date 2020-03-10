@@ -26,8 +26,8 @@ public class PayDaoImpl implements PayDao{
 	}
 
 	@Override
-	public List<PayDto> getList() {
-		return sqlSession.selectList("pay.list");
+	public List<PayDto> list(String member_email) {
+		return sqlSession.selectList("pay.list", member_email);
 	}
 
 	@Override
@@ -117,24 +117,78 @@ public class PayDaoImpl implements PayDao{
 	}
 
 	@Override
-	public void changeAuth(String partner_user_id, String item_name) {
-		PayDto payDto = PayDto.builder()
-				.partner_user_id(partner_user_id)
-				.item_name(item_name)
+	public List<PayCountDto> getCountList(String user_id) {
+		return sqlSession.selectList("pay.getCountList", user_id);
+	}
+
+	@Override
+	public void insertPayCount(int one_month, int six_month, int one_year, String user_id) {
+		PayCountDto payCountDto = PayCountDto.builder()
+				.one_month(one_month)
+				.six_month(six_month)
+				.one_year(one_year)
+				.user_id(user_id)
 				.build();
-
-		sqlSession.update("pay.changeAuth", payDto);
+		
+		sqlSession.insert("pay.insertPayCount", payCountDto);
 	}
 
 	@Override
-	public void checkUsed() {
-		sqlSession.update("pay.checkUsed");
+	public void updatePayCount(int one_month, int six_month, int one_year, String user_id) {
+		PayCountDto payCountDto = PayCountDto.builder()
+				.one_month(one_month)
+				.six_month(six_month)
+				.one_year(one_year)
+				.user_id(user_id)
+				.build();
+		sqlSession.update("pay.updatePayCount", payCountDto);
 	}
 
 	@Override
-	public String checkStatus(String aid) {
-		return sqlSession.selectOne("pay.checkStatus", aid);
+	public void changeAuth1(String user_id) {
+		sqlSession.update("pay.changeAuth1", user_id);
 	}
 
-	
+	@Override
+	public void changeAuth6(String user_id) {
+		sqlSession.update("pay.changeAuth6", user_id);
+	}
+
+	@Override
+	public void changeAuth12(String user_id) {
+		sqlSession.update("pay.changeAuth12", user_id);
+	}
+
+	@Override
+	public int oneMonth(String user_id) {
+		if(sqlSession.selectOne("pay.oneMonth", user_id)==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.oneMonth", user_id);			
+		}
+	}
+
+	@Override
+	public int sixMonth(String user_id) {
+		if(sqlSession.selectOne("pay.sixMonth", user_id)==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.sixMonth", user_id);			
+		}
+	}
+
+	@Override
+	public int oneYear(String user_id) {
+		if(sqlSession.selectOne("pay.oneYear", user_id)==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.oneYear", user_id);			
+		}
+	}
+
+	@Override
+	public void changeStatus(int no) {
+		sqlSession.update("pay.changeStatus", no);
+	}
+
 }
