@@ -1,10 +1,12 @@
 package com.kh.circle.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.repository.DriveFileDao;
 import com.kh.circle.service.CompressionUtil;
+//import com.kh.circle.service.CompressionUtil;
 import com.kh.circle.service.DriveFileService;
 import com.kh.circle.service.Pagination;
 import com.kh.circle.vo.BoardVo;
@@ -78,6 +81,13 @@ public class DriveFileController {
 			Pagination pagination = new Pagination(listCount,curPage);
 			boardVo.setStartIndex(pagination.getStartIndex()+1);
 			boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
+
+			
+			int myListCount= driveFileDao.driveMyFileListCount(boardVo);
+			Pagination myFilePagination = new Pagination(myListCount,curPage);
+			boardVo.setStartIndex(myFilePagination .getStartIndex()+1);
+			boardVo.setCountPerPage(myFilePagination.getPageSize()+pagination.getStartIndex());
+			
 			List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
 			
 			model.addAttribute("listCount",listCount);
@@ -168,19 +178,52 @@ public class DriveFileController {
 						makeDispositionString(driveFileDto.getDrive_file_uploadname()))
 				.body(resource);
 	}
+
 	
+	@Autowired
+	private CompressionUtil util;
 	
 	//압축 다운로드(다중)
 	@GetMapping("/zipdownload")
-	public String zipDownload(@RequestParam List<Integer> drive_file_no) throws IOException{
+	public ResponseEntity<ByteArrayResource> zipDownload(@RequestParam List<Integer> drive_file_no) throws IOException{
 		
-		CompressionUtil util = new CompressionUtil();
+		//DB확인
+		List<DriveFileDto> driveFileDto = driveFileDao.getNo(drive_file_no);
+		System.out.println(driveFileDto);
+		//DB에있는 업로드 이름으로 바꾸기
 		
 		
+		//File load
+		File dest = new File("D:/upload/kh2e/drivefile/temp.zip");	//파일 압축명
+		FileOutputStream out = new FileOutputStream(dest);
 		
-		return 	"";
+		List<File> list = new ArrayList<>();
+		File dir = new File("D:/upload/kh2e/drivefile");//압축파일 임시저장소
+
+		for(int i = 0; i<drive_file_no.size(); i++) {
+			list.add(new File(dir, String.valueOf(drive_file_no.get(i))));
+		}
+		
+//		System.out.println(drive_file_no);
+//		System.out.println(list);
+		
+		//압축
+		util.zip(list, out);
+		
+//		dest를 불러와서 전송
+		byte[] data = FileUtils.readFileToByteArray(dest);
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		//다운로드
+		return 	ResponseEntity.ok()
+						.contentType(MediaType.APPLICATION_OCTET_STREAM)
+						.contentLength(data.length)
+						.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+						.header(HttpHeaders.CONTENT_DISPOSITION, makeDispositionString("test.zip"))
+						.body(resource);
 		
 	}
+	
 	
 	//다운로드 
 	@GetMapping("/download")
@@ -210,9 +253,6 @@ public class DriveFileController {
 			return buffer.toString();
 		
 	}
-		
-		
-		
 		
 	
 		//드라이브 파일 다중삭제

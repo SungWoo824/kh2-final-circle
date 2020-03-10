@@ -753,14 +753,22 @@ background-color:#f8f8f8;
 .myfolderview,
 .folderview,
 .fileview{
-	height:600px;
+	height:700px;
 	overflow:auto;
 	padding: 30px;
+}
+
+#ATab{
+	overflow:hidden;
 }
 
 .page-num{
 	width:100%;
 	position:relative;
+}
+
+.dfpaging{
+	margin-top:60px;
 }
 
 .upload-box{

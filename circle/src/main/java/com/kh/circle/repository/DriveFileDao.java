@@ -14,10 +14,13 @@ public interface DriveFileDao {
 	
 	int driveFileListCount(BoardVo boardVo);
 	List<DriveFileDto> getFileList(BoardVo boardVo);
+	int driveMyFileListCount(BoardVo boardVo);
 	
 	void upload(DriveFileDto driveFileDto);
 	void newFolder(DriveFileDto driveFileDto);
 	DriveFileDto getNum(int drive_file_no);
+	List<DriveFileDto> getNo(List<Integer> drive_file_no);
+	
 	byte[] getUploadNo(int drive_file_no) throws IOException;
 	void driveDelete(int team_no,String drive_name);
 	void fileDelete(int drive_file_no);

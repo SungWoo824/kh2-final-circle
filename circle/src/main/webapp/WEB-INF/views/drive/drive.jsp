@@ -336,8 +336,10 @@ $(function(){
 					<div class="flist-wrap">
 			           	<div class="chat-aside">
 			                   <div class="chat-menu-bar">
-		
+			                   
+									<!-- AllTab -->
 				                   <div id="alltab" class="fileview current">
+									<div id="ATab">
 				                   		<form action="filelistdelete" method="post" class="file-list-form">
 										<c:forEach var="fileList" items="${driveFileList}">
 											<div class="upload-box">
@@ -375,9 +377,45 @@ $(function(){
 											<input type="hidden" name="team_no" value="${param.team_no }">
 											<input type="hidden" name="drive_name" value="${param.drive_name }">
 										</form>
+										</div>
+										
+										<!-- 페이징 -->
+										<div>
+											<ul class="pagination dfpaging" style="justify-content: center;">
+							                    <c:if test="${pagination.curPage ne 1}">
+							                    	<li class="page-item disabled">
+							                        	<a class="page-link" href="#" onClick="fn_paging('${pagination.prevPage }')">&laquo;</a> 
+							                        </li>
+							                    </c:if>
+							                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+							                        <c:choose>
+							                            <c:when test="${pageNum eq  pagination.curPage}">
+							                            	<li class="page-item active">
+														      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
+														    </li>
+							                            </c:when>
+							                            <c:otherwise>
+								                            <li class="page-item">
+														      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&drive_name=${param.drive_name }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+														    </li>
+							                                
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:forEach>
+							                    <c:if test="${pagination.curPage ne pagination.pageCount && pagination.pageCount > 0}">
+							                    	<li class="page-item">
+							                        	<a href="#" class="page-link" onClick="fn_paging('${pagination.nextPage }')">&raquo;</a> 
+							                    	</li>
+							                    </c:if> 
+							                </ul>
+							              </div>
+							              
 									</div>
+									
+									
+									<!-- MyTab -->
 									 <div id="mytab" class="fileview">
-				                   
+										<div id="MTab">
 										<c:forEach var="myfileList" items="${myFileList}">
 											<div class="upload-box">
 												<form action="download" method="post">
@@ -414,41 +452,39 @@ $(function(){
 												</form>
 											</div>
 										</c:forEach>
-									
 									</div>
-			            
-			                   
-			                  <!-- 페이징 -->
-								<div>
-									<ul class="pagination" style="justify-content: center;">
-					                    <c:if test="${pagination.curPage ne 1}">
-					                    	<li class="page-item disabled">
-					                        	<a class="page-link" href="#" onClick="fn_paging('${pagination.prevPage }')">&laquo;</a> 
-					                        </li>
-					                    </c:if>
-					                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
-					                        <c:choose>
-					                            <c:when test="${pageNum eq  pagination.curPage}">
-					                            	<li class="page-item active">
-												      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
-												    </li>
-					                            </c:when>
-					                            <c:otherwise>
-						                            <li class="page-item">
-												      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&drive_name=${param.drive_name }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
-												    </li>
-					                                
-					                            </c:otherwise>
-					                        </c:choose>
-					                    </c:forEach>
-					                    <c:if test="${pagination.curPage ne pagination.pageCount && pagination.pageCount > 0}">
-					                    	<li class="page-item">
-					                        	<a href="#" class="page-link" onClick="fn_paging('${pagination.nextPage }')">&raquo;</a> 
-					                    	</li>
-					                    </c:if> 
-					                </ul>
-					              </div>
-	
+									
+									<!-- 페이징 -->
+										<div>
+											<ul class="pagination" style="justify-content: center;">
+							                    <c:if test="${pagination.curPage ne 1}">
+							                    	<li class="page-item disabled">
+							                        	<a class="page-link" href="#" onClick="fn_paging('${pagination.prevPage }')">&laquo;</a> 
+							                        </li>
+							                    </c:if>
+							                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+							                        <c:choose>
+							                            <c:when test="${pageNum eq  pagination.curPage}">
+							                            	<li class="page-item active">
+														      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
+														    </li>
+							                            </c:when>
+							                            <c:otherwise>
+								                            <li class="page-item">
+														      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&drive_name=${param.drive_name }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+														    </li>
+							                                
+							                            </c:otherwise>
+							                        </c:choose>
+							                    </c:forEach>
+							                    <c:if test="${pagination.curPage ne pagination.pageCount && pagination.pageCount > 0}">
+							                    	<li class="page-item">
+							                        	<a href="#" class="page-link" onClick="fn_paging('${pagination.nextPage }')">&raquo;</a> 
+							                    	</li>
+							                    </c:if> 
+							                </ul>
+							              </div>
+									</div>
 					      </div>
 					    </div>
 					  </div>

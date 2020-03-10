@@ -57,8 +57,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 	<!-- 파일다운로드 -->
-	<select id="getFileNo" resultType="driveFileDto" parameterType="int" >
-		select * from drive_file where drive_file_no=#{drive_file_no}
+		<select id="getFileNo" resultType="driveFileDto" parameterType="int" >
+			select * from drive_file where drive_file_no=#{drive_file_no}
+	</select>
+	
+	<select id="getFileListNo" resultType="driveFileDto" parameterType="int" >
+			select * from drive_file
+			where drive_file_no in
+				<foreach collection="list" item="drive_file_no" index="index" separator="," open="(" close=")">
+					#{drive_file_no}
+				</foreach>
 	</select>
 	
 	
@@ -74,11 +82,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 
 	
-	<!-- 파일목록 갯수 -->
+	<!-- 팀파일목록 갯수 -->
 	<select id="driveFileListCount" resultType="int" parameterType="boardVo">
 		select count(*) from drive_file 
 		where team_no=#{team_no} 
 		and drive_name=#{drive_name}
+	</select>
+	
+	<!-- 내파일목록 갯수 -->
+	<select id="driveMyFileListCount" resultType="int" parameterType="boardVo">
+		select count(*) from drive_file 
+		where team_no=#{team_no} 
+		and drive_name=#{drive_name}
+		and drive_folder='1' and member_no=#{member_no} 
+		order by drive_file_no desc
 	</select>
 	
 	
