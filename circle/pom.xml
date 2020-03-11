@@ -185,6 +185,14 @@
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.4</version>
 		</dependency>
+		
+		<!-- 파일 압축 다운로드 -->
+		<dependency> 
+			<groupId>org.apache.commons</groupId> 
+			<artifactId>commons-compress</artifactId> 
+			<version>1.20</version> 
+		</dependency>
+
 
 		<!-- DBCP를 위한 의존성 -->
 		<dependency>

@@ -102,7 +102,7 @@ public String owner_manager_member(@RequestParam String team_name,
 	//소유자인지 아닌지 확인
 	model.addAttribute("position", teamDao.checkPosition((int) session.getAttribute("member_no"), team_no));
 	//소유자가 보유한 플랜 옵션 출력
-//	System.out.println(session.getAttribute("member_email"));
+
 	model.addAttribute("oneMonth", payDao.totalCount("1개월권").get(payDao.totalCount("1개월권").size()-1));
 	model.addAttribute("sixMonth", payDao.totalCount("6개월권").get(payDao.totalCount("6개월권").size()-1));
 	model.addAttribute("oneYear", payDao.totalCount("1년권").get(payDao.totalCount("1년권").size()-1));
@@ -138,7 +138,6 @@ public String grantAuth(@RequestParam List<Integer> changeAuth,
 			payDao.insertCount(session.getAttribute("member_email"), "1년권", payDao.getQty12((String) session.getAttribute("member_email"))-1);
 		};
 		teamDao.changeAuth(teamMemberDto);	
-		System.out.println(teamMemberDto.toString());
 	}
 	
 	return "redirect:./owner_manager_member?team_no="+team_no+"&team_name="+team_name+"&team_domain="+team_domain;
