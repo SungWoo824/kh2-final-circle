@@ -187,4 +187,12 @@ public class TeamDaoImpl implements TeamDao {
 		return sqlSession.selectOne("team.selectPosition", teamMemberDto);
 	}
 
+	@Override
+	public List<MemberListVO> minorPosition(int team_no) {
+		return sqlSession.selectList("team.minor", team_no);
+	}
+
+	
+	
+
 }

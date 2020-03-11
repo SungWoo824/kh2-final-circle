@@ -24,13 +24,6 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>
-<script>
-	$(function(){
-		if($('#cancel').val()=='y'){
-			alert("한 번 이상 사용된 플랜 옵션이므로 취소가 불가합니다.");
-		}
-	});
-</script>
 <body>
 
 	<!-- 상단 헤더 -->
@@ -116,40 +109,26 @@
 						<div class="row">
   <div class="col-3">
     <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/plan/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">보유중인 플랜</a>
+      <a class="nav-link active" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/plan/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">보유중인 플랜</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/plan/change_auth?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">권한부여</a>	
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/pay/pay_detail?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">플랜 추가 구매하기</a>
-       <a class="nav-link active" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/pay/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">구매 내역</a>	
+       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/pay/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">구매 내역</a>	
     </div>
   </div>
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
-      		<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-							<c:forEach var="pay" items="${list }">
-							<c:if test="${pay.status eq '준비' or '취소완료'}">
-									<ul>
-										<li>
-											플랜 옵션: ${pay.item_name }
-										</li>
-										<li>
-											구매 개수: ${pay.quantity }
-										</li>
-										<li>
-											총 결제 금액: ${pay.total_amount }
-										</li>
-										<c:if test="${pay.status eq '준비' }">
-										<li>
-											<button type="button" id="cancel" onclick="location.href='revoke?no=${pay.no }&team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${param.team_domain}'">취소</button>
-										</li>										
-										</c:if>
-										<c:if test="${pay.status eq '취소완료' }">
-										<li>
-											<button type="button" disabled="disabled">취소완료</button>
-										</li>										
-										</c:if>
-									</ul>
-									</c:if>
-							</c:forEach>	
+      		<div class="tab-pane active" id="home" role="tabpanel"
+							aria-labelledby="home-tab">
+							보유중인 플랜 옵션<br>
+							<ul>
+								<li>1개월권: <c:out value="${oneMonth }" />개
+								</li>
+								<li>6개월권: <c:out value="${sixMonth }" />개
+								</li>
+								<li>1년권: <c:out value="${oneYear }" />개
+								</li>
+							</ul>
+							
 							</div>
 					    </div>
 					  	</div>

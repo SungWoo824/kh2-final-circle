@@ -49,21 +49,7 @@ $(function(){
         $(this).parent().parent().children(".modify-fix-div").hide('fast');
 	})
 });
-// 준회원한테 회원권 적용할 때 사용되는 쿼리
-// $(function(){
-// 	$("#assist").change(function() {
 
-//         //input 태그가 name=changeAuth인 놈들 중에서 반복하겠다.
-// 		$("input[name=changeAuth]").each(function() {
-//             if($(this).prop("checked")){
-//                 $("<input>").attr("type", "hidden").attr("name", "member_no").val($(this).val()).insertAfter($(this));
-//             }
-//             else{
-//                 $(this).next("input").remove();
-//             }
-// 		});
-// 	});
-// });
 </script>
 <body>
  	 <!-- 상단 헤더 -->
@@ -122,6 +108,9 @@ $(function(){
 									     	 <li class="nav-item">
 									        	<a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
 									      	</li>
+									      	<li class="nav-item">
+									      		<a class="nav-link" href="${pageContext.request.contextPath}/plan/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">보유중인 플랜 보기</a>
+											</li>
 									     </ul>
 									     	<form class="form-inline my-2 my-lg-0">
 									      		<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -145,29 +134,15 @@ $(function(){
       <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_regular?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-profile" aria-selected="false">정회원</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_associate?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">준회원</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_owner?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">소유자</a>
-      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/grant_position?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">권한부여</a>	
     </div>
   </div>
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-      보유중인 플랜 옵션<br>
-      <ul>
-      	<li>1개월권: <c:out value="${oneMonth }"/>개</li>
-      	<li>6개월권: <c:out value="${sixMonth }"/>개</li>
-      	<li>1년권: <c:out value="${oneYear }"/>개</li>
-      </ul>
       		<p>준회원 목록</p>
       	<c:if test="${not empty position }">
-      		<form action="./owner_manager_member" method="post">
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '준회원'}">
-		      <select name="term">
-		      <option value="1개월권">1개월권</option>
-		      <option value="6개월권">6개월권</option>
-		      <option value="1년권">1년권</option>
-		      </select>
-		      <input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
 		      	<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
 				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
 				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
@@ -176,11 +151,6 @@ $(function(){
 				<br>
    			</c:if>
    			</c:forEach>
-   			<input type="hidden" name="team_no" value="${param.team_no }">
-   			<input type="hidden" name="team_name" value="${param.team_name }">
-   			<input type="hidden" name="team_domain" value="${param.team_domain }">
-				<input type="submit" value="확인">
-   			</form>
 		</c:if>
 		<c:if test="${empty position }">
 			<c:forEach items="${memberList}" var="memberListVO">	

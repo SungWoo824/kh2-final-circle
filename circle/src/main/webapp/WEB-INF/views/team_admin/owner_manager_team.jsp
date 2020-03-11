@@ -224,6 +224,13 @@ $(function(){
 								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
 								      </li>
 
+								      <li class="nav-item">
+								      	<a class="nav-link" href="${pageContext.request.contextPath}/plan/list?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">보유중인 플랜 보기</a>
+								      </li>
+								<!--       <li class="nav-item"> -->
+								<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
+								<!--       </li> -->
+
 								    </ul>
 								  </div>
 
@@ -240,9 +247,7 @@ $(function(){
 	                                    <article class="modify-article">
 	                               		     <div>
 	                               		     
-						<div class="modify-item-name">
-														<a href="../pay/planoption">보유중인 플랜 보기</a>
-													</div>
+						
 	                               		     <!-- 팀 정보보기  -->
 
 												<div class="modify-items">
