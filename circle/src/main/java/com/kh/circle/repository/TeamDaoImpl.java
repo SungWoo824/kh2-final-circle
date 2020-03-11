@@ -15,6 +15,7 @@ import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.MemberListVO;
+import com.kh.circle.vo.TeamMainVO;
 
 @Repository
 public class TeamDaoImpl implements TeamDao {
@@ -34,6 +35,11 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public List<TeamDto> teamList(int member_no) {	
 		return sqlSession.selectList("team.teamlist",member_no);
+	}
+	@Override
+	public List<TeamMainVO> teamMainList(int member_no) {
+		
+		return sqlSession.selectList("team.teamMainList", member_no);
 	}
 
 
@@ -163,6 +169,7 @@ public class TeamDaoImpl implements TeamDao {
 		TeamMemberDto teamMemberDto = sqlSession.selectOne("team.teamMemberCheck", param);
 		return teamMemberDto != null; 
 }
+
 
 	@Override
 	public void changeAuth(TeamMemberDto teamMemberDto) {	
