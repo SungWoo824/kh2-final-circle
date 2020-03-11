@@ -65,8 +65,6 @@
                                     <div class="main-btn">
                                         <div class="main-btn-bg">
                                             <a href="member/signup">무료 체험 시작</a><br><br>
-												<h5>member_email = ${member_email }</h5>
-												<h5>member_grade = ${member_grade }</h5>
                                         </div>
                                     </div>
                                 </div>

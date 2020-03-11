@@ -98,7 +98,6 @@ public class VoteController {
 	public String result(@RequestParam("vote_create_no") int vote_create_no, HttpSession session, Model model, @RequestParam("member_no") int member_no, @RequestParam("team_no") int team_no, @RequestParam("topic_no") int topic_no) {
 //		voteCreateDao.compare(member_no);
 //		model.addAttribute("compare", voteCreateDao.compare(member_no));
-//		System.out.println(voteCreateDao.compare(member_no));
 		model.addAttribute("no", vote_create_no);
 		model.addAttribute("voteDetail", voteCreateDao.getVoteDetail(vote_create_no));
 		model.addAttribute("voteCategoryDetail", voteCreateDao.getVoteCategoryDetail(vote_create_no));

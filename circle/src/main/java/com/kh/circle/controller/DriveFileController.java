@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
-import javax.ws.rs.DefaultValue;
+
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -135,7 +135,6 @@ public class DriveFileController {
 	@ResponseBody
 	public String drive_namecheck(@ModelAttribute DriveFileVO driveFileVo) {
 		int count = sqlSession.selectOne("driveFile.nameCheck",driveFileVo);
-//		System.out.println(driveFileVo.getTeam_no());
 		if(count>0) return "Y";
 		else return "N";
 	}

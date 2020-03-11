@@ -45,6 +45,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      inner join team on tm.team_no=team.team_no order by team.team_no
 	</select>
 	
+	<!-- 팀+팀멤버 같이 보기 마이페이지에서 소유자 논소유자 구분을 위해 필요 -->
+	<select id="teamMainList" resultType="teamMainVO" parameterType="int">
+	select * from
+		(select t.team_no, t.team_name, t.team_domain, t.team_payment,
+		tm.member_no, tm.member_position
+	from team t inner join team_member tm
+		on t.team_no = tm.team_no)
+	where member_no = #{member_no}
+	</select>
+	
 	<!-- 지정된 팀에 참여중인 모든 멤버 리스트 보기 -->
 	<select id="memberList" resultType="memberListVO" parameterType="int">
 <!-- 	select member.member_name,tm.member_position from (select member_no,member_position from team_member where team_no=#{team_no})tm  -->
@@ -168,13 +178,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where team_no = #{team_no}
 	</update>
 	
-	<!-- 등급 양도 -->
-	<update id="grantPosition" parameterType="map">
-	update team_member 
-	set member_position = ${member_position} 
-	where member_no=#{member_no} and team_no=#{team_no} 
-	</update>
-	
 	<!-- 회원 권환 변경 -->
 	<update id="changeAuth" parameterType="teamMemberDto">
 	update team_member 
@@ -206,5 +209,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 where ${type} like '%'||#{value}||'%' 
 		</if>
 		order by team_no desc
+	</select>
+	
+	<!-- 지정된 팀에서 준회원만 뽑을때 -->
+	<select id="minor" resultType="memberListVO" parameterType="int">
+		select member.member_no,member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='준회원')tm 
+			inner join member on member.member_no = tm.member_no
 	</select>
 </mapper>

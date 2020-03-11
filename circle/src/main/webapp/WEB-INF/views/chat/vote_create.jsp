@@ -36,8 +36,23 @@
         $(".switchp").change(function(){
             console.log($(this).prop("checked"));
         }); 
+        
+	$('input[name=vote_create_date]').change(function(){
+        function getToday(){
+        	var date = new Date();
+        	return date.getFullYear()+"-"+("0"+(date.getMonth()+1)).slice(-2)+"-"+("0"+date.getDate()).slice(-2);
+        };
+		var today=getToday();
+        var now = Date.now();
+        var selected = Date.parse($('input[name=vote_create_date]').val());
+        
+        if(now>selected) {           
+            alert("현재 시간 보다 이전의 시간은 선택할 수 없습니다.");
+            $('input[name=vote_create_date]').val(today);
+        }
     });
-	
+ 
+});
 </script>   
 </head>
 
@@ -54,12 +69,6 @@
 <div class="ins"></div>
 <input type="button" value="+보기 추가" class="option"><br>
 <br><br>
-<!-- <h3> -->
-<!-- 익명투표</h3> -->
-<!-- <label class="switch"> -->
-<!-- <input type="checkbox"  class="switcha" name="vote_create_anonymous" value="y"> -->
-<!-- <span class="slider round"></span> -->
-<!-- </label>			 -->
 <h3>
 복수선택</h3>	
 <label class="switch">

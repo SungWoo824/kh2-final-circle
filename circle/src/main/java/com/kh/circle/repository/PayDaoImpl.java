@@ -26,8 +26,8 @@ public class PayDaoImpl implements PayDao{
 	}
 
 	@Override
-	public List<PayDto> getList() {
-		return sqlSession.selectList("pay.list");
+	public List<PayDto> list(String member_email) {
+		return sqlSession.selectList("pay.list", member_email);
 	}
 
 	@Override
@@ -41,58 +41,154 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.insert("pay.revoke", payDto);
 	}
 
+	
 	@Override
 	public int getQty1(String partner_user_id) {
-		int complete = sqlSession.selectOne("pay.planQty1", partner_user_id);
-		int cancel = sqlSession.selectOne("pay.cancelQty1", partner_user_id);
+		Object complete = sqlSession.selectOne("pay.planQty1", partner_user_id);
+		Object cancel = sqlSession.selectOne("pay.cancelQty1", partner_user_id);
 		
-		int total = complete-cancel;
-		return total;
+		if(complete==null & cancel==null) {
+			int total=0;
+	
+			return total;
+		}else if(complete!=null & cancel!=null){
+			int total=(int)complete-(int)cancel;
+			if(total>=0) {
+				return total;
+			}else {
+				return 0;
+			}
+		}else if(complete!=null & cancel==null){
+			int total=(int)complete;
+			return total;
+		}else {
+			int total=0;
+			return total;
+		}
 	}
 
 	@Override
-	public int getQty6(String partner_user_id) {
-		int complete = sqlSession.selectOne("pay.planQty6", partner_user_id);
-		int cancel = sqlSession.selectOne("pay.cancelQty6", partner_user_id);
-		
-		int total = complete-cancel;
-		return total;
+	public Object getQty6(String partner_user_id) {
+		Object complete = sqlSession.selectOne("pay.planQty6", partner_user_id);
+		Object cancel = sqlSession.selectOne("pay.cancelQty6", partner_user_id);
+		if(complete==null & cancel==null) {
+			int total=0;
+	
+			return total;
+		}else if(complete!=null & cancel!=null){
+			int total=(int)complete-(int)cancel;
+			if(total>=0) {
+				return total;
+			}else {
+				return 0;
+			}
+		}else if(complete!=null & cancel==null){
+			int total=(int)complete;
+			return total;
+		}else {
+			int total=0;
+			return total;
+		}
+	}
+
+
+	@Override
+	public Object getQty12(String partner_user_id) {
+		Object complete = sqlSession.selectOne("pay.planQty12", partner_user_id);
+		Object cancel = sqlSession.selectOne("pay.cancelQty12", partner_user_id);
+		if(complete==null & cancel==null) {
+			int total=0;
+	
+			return total;
+		}else if(complete!=null & cancel!=null){
+			int total=(int)complete-(int)cancel;
+			if(total>=0) {
+				return total;
+			}else {
+				return 0;
+			}
+		}else if(complete!=null & cancel==null){
+			int total=(int)complete;
+			return total;
+		}else {
+			int total=0;
+			return total;
+		}
 	}
 
 	@Override
-	public int getQty12(String partner_user_id) {
-		int complete = sqlSession.selectOne("pay.planQty12", partner_user_id);
-		int cancel = sqlSession.selectOne("pay.cancelQty12", partner_user_id);
-		
-		int total = complete-cancel;
-		return total;
+	public List<PayCountDto> getCountList(String user_id) {
+		return sqlSession.selectList("pay.getCountList", user_id);
 	}
 
 	@Override
-	public void insertCount(Object member_email, String term, int total_count) {
-		
+	public void insertPayCount(int one_month, int six_month, int one_year, String user_id) {
 		PayCountDto payCountDto = PayCountDto.builder()
-				.member_email((String) member_email)
-				.term(term)
-				.total_count(total_count)
+				.one_month(one_month)
+				.six_month(six_month)
+				.one_year(one_year)
+				.user_id(user_id)
 				.build();
 		
-		sqlSession.insert("pay.insertCount", payCountDto);
-		
+		sqlSession.insert("pay.insertPayCount", payCountDto);
 	}
 
 	@Override
-	public List<Object> totalCount(String term) {
-		
-		return sqlSession.selectList("pay.totalCount", term);
+	public void updatePayCount(int one_month, int six_month, int one_year, String user_id) {
+		PayCountDto payCountDto = PayCountDto.builder()
+				.one_month(one_month)
+				.six_month(six_month)
+				.one_year(one_year)
+				.user_id(user_id)
+				.build();
+		sqlSession.update("pay.updatePayCount", payCountDto);
 	}
 
 	@Override
-	public int countAll(String status, String item_name) {
-		PayDto payDto = PayDto.builder()
-				.status(status)
-				.item_name(item_name)
-				.build();
-		return sqlSession.selectOne("pay.countAll", payDto);
+	public void changeAuth1(String user_id) {
+		sqlSession.update("pay.changeAuth1", user_id);
 	}
+
+	@Override
+	public void changeAuth6(String user_id) {
+		sqlSession.update("pay.changeAuth6", user_id);
+	}
+
+	@Override
+	public void changeAuth12(String user_id) {
+		sqlSession.update("pay.changeAuth12", user_id);
+	}
+
+	@Override
+	public int oneMonth(String user_id) {
+		if(sqlSession.selectOne("pay.oneMonth", user_id)==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.oneMonth", user_id);			
+		}
+	}
+
+	@Override
+	public int sixMonth(String user_id) {
+		if(sqlSession.selectOne("pay.sixMonth", user_id)==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.sixMonth", user_id);			
+		}
+	}
+
+	@Override
+	public int oneYear(String user_id) {
+		if(sqlSession.selectOne("pay.oneYear", user_id)==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.oneYear", user_id);			
+		}
+	}
+
+	@Override
+	public void changeStatus(int no) {
+		sqlSession.update("pay.changeStatus", no);
+	}
+
 }

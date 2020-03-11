@@ -43,8 +43,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		)
 	</insert>
 	
-	<select id="list" resultType="payDto">
-		select*from pay order by no asc
+	<select id="list" resultType="payDto" parameterType="String">
+		select*from pay where partner_user_id=#{member_email} and status='취소완료' or status='준비'
 	</select>
 	
 	<select id="get" resultType="payDto" parameterType="Integer">
@@ -72,38 +72,66 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 팀소유자가 보유한 플랜 옵션별 개수 출력해주기 -->
 	<select id="planQty1" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1개월권'
+		select sum(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1개월권'
 	</select>
 	
 	<select id="cancelQty1" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1개월권'
+		select sum(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1개월권'
 	</select>
 	
 	<select id="planQty6" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='6개월권'
+		select sum(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='6개월권'
 	</select>
 	
 	<select id="cancelQty6" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='6개월권'
+		select sum(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='6개월권'
 	</select>
 	
 	<select id="planQty12" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1년권'
+		select sum(quantity) as count_qty from pay where status='완료' and partner_user_id=#{partner_user_id} and item_name='1년권'
 	</select>
 	
 	<select id="cancelQty12" parameterType="String" resultType="Integer">
-		select count(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1년권'
+		select sum(quantity) as count_qty from pay where status='취소' and partner_user_id=#{partner_user_id} and item_name='1년권'
 	</select>
 	
-	<insert id="insertCount" parameterType="payCountDto">
-		insert into pay_count values(#{member_email}, #{term}, #{total_count})
+	<update id="changeAuth1" parameterType="String">
+		update pay_count set one_month=one_month-1 where user_id=#{user_id}
+	</update>
+	
+	<update id="changeAuth6" parameterType="String">
+		update pay_count set six_month=six_month-1 where user_id=#{user_id}
+	</update>
+	
+	<update id="changeAuth12" parameterType="String">
+		update pay_count set one_year=one_year-1 where user_id=#{user_id}
+	</update>
+	
+	<select id="getCountList" parameterType="String" resultType="payCountDto">
+		select*from pay_count where user_id=#{user_id}
+	</select>
+	
+	<insert id="insertPayCount" parameterType="payCountDto">
+		insert into pay_count values(#{one_month},#{six_month},#{one_year},#{user_id})
 	</insert>
 	
-	<select id="totalCount" parameterType="String" resultType="Integer">
-		select total_count from pay_count where term=#{term}
+	<update id="updatePayCount" parameterType="payCountDto">
+		update pay_count set one_month=#{one_month}, six_month=#{six_month}, one_year=#{one_year} where user_id=#{user_id}
+	</update>
+	
+	<select id="oneMonth" parameterType="String" resultType="Integer">
+		select one_month from pay_count where user_id=#{user_id}
 	</select>
 	
-	<select id="countAll" parameterType="payDto" resultType="Integer">
-		select sum(quantity) as total_count from pay where status=#{status} and item_name=#{item_name}
+	<select id="sixMonth" parameterType="String" resultType="Integer">
+		select six_month from pay_count where user_id=#{user_id}
 	</select>
+	
+	<select id="oneYear" parameterType="String" resultType="Integer">
+		select one_year from pay_count where user_id=#{user_id}
+	</select>
+	
+	<update id="changeStatus" parameterType="Integer">
+		update pay set status='취소완료' where no=#{no}
+	</update>
 </mapper>

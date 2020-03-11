@@ -66,19 +66,19 @@
                                         
                                         <div class="form-group signin-form-group">
 									      <label for="exampleInputEmail1"></label>
-									      <input type="email" class="form-control" id="exampleInputEmail1" name="member_email" aria-describedby="emailHelp" placeholder="Enter email">
+									      <input type="email" class="form-control" id="exampleInputEmail1" name="member_email" aria-describedby="emailHelp" placeholder="Enter email" required>
 									    </div>
 									    <div class="form-group signin-form-group">
 									      <label for="exampleInputPassword1"></label>
-									      <input type="password" class="form-control" id="exampleInputPassword1" name="member_pw" placeholder="Password">
+									      <input type="password" class="form-control" id="exampleInputPassword1" name="member_pw" placeholder="Password" required>
 									    </div>
                                         <div class="form-group signin-form-group">
 									      <label for="exampleInputEmail1"></label>
-									      <input type="text" class="form-control" id="exampleInputEmail1" name="member_name" aria-describedby="emailHelp" placeholder="Enter name">
+									      <input type="text" class="form-control" id="exampleInputEmail1" name="member_name" aria-describedby="emailHelp" placeholder="Enter name" required>
 									    </div>
 									    <div class="form-group signin-form-group">
 									      <label for="exampleInputEmail1"></label>
-									      <input type="file" class="form-control" id="exampleInputEmail1" name="file" accept="image/*">
+									      <input type="file" class="form-control" id="exampleInputEmail1" name="file" accept="image/*" required>
 									    </div>
                                     </div>
                                     <div>
