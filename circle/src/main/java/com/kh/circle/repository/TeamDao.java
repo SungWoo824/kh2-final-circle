@@ -7,11 +7,13 @@ import com.kh.circle.entity.TeamDto;
 import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.MemberListVO;
+import com.kh.circle.vo.TeamMainVO;
 
 public interface TeamDao {
 	int getSequence();
 	void teamCreate(TeamDto teamDto);
 	List<TeamDto> teamList(int member_no);
+	List<TeamMainVO> teamMainList(int member_no);
 	List<MemberListVO> memberList(int team_no);
 	List<MemberListVO> memberListRegular(int team_no);
 	List<MemberListVO> memberListAssociate(int team_no);

@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
+import com.kh.circle.entity.TeamDto;
 import com.kh.circle.repository.MemberDao;
 import com.kh.circle.repository.TeamDao;
 import com.kh.circle.service.EmailService;
@@ -150,8 +151,11 @@ public class MemberController {
 	@GetMapping("mypage")
 	public ModelAndView mypage(ModelAndView mav,
 							HttpSession session) {
+
 		mav.addObject("memberDto", memberDao.info((String)session.getAttribute("member_email")));
-		mav.addObject("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
+//		mav.addObject("teamlist", teamDao.teamList((int)session.getAttribute("member_no")));
+		//관리버튼 따로 관리하려면 포지션 컬럼 필요해서 VO따로 만들어서 기능 다시 추가했습니다! 관리자 버튼 따로 나옵니다.
+		mav.addObject("teamMainList", teamDao.teamMainList((int)session.getAttribute("member_no")));
 		mav.setViewName("member/mypage");
 		
 		return mav;
