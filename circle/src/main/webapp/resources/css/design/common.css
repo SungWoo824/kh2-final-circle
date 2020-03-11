@@ -753,13 +753,17 @@ background-color:#f8f8f8;
 .myfolderview,
 .folderview,
 .fileview{
-	height:700px;
+	height:800px;
 	overflow:auto;
 	padding: 30px;
 }
 
+#myFTab,
+#allFTab,
+#MTab,
 #ATab{
 	overflow:hidden;
+	height:550px;
 }
 
 .page-num{

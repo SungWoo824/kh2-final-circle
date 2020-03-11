@@ -16,6 +16,8 @@ public interface DriveFileDao {
 	List<DriveFileDto> getFileList(BoardVo boardVo);
 	List<DriveFileDto> getMyFileList(BoardVo boardVo);
 	int driveMyFileListCount(BoardVo boardVo);
+	int driveFolderCount(BoardVo boardVo);
+	int myDriveFolderCount(BoardVo boardVo);
 	
 	void upload(DriveFileDto driveFileDto);
 	void newFolder(DriveFileDto driveFileDto);

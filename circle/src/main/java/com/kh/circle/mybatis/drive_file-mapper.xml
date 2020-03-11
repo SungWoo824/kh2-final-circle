@@ -110,6 +110,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
+	<!-- 폴더 갯수 -->
+	<select id="driveFolderCount"  resultType="int" parameterType="boardVo">
+		select count(*) from drive_file where team_no=#{team_no} and drive_folder='0'
+	</select>
+	
+	<!-- 내파일목록 갯수 -->
+	<select id="myDriveFolderCount"  resultType="int" parameterType="boardVo">
+		select count(*) from drive_file 
+		where team_no = #{team_no} 
+		and member_no=#{member_no} 
+		and drive_folder='0'
+	</select>
+	
+	
 	<!-- 전체폴더 -->
 	<select  id="driveFolderName" resultType="driveFileDto" parameterType="int">
 		select * from drive_file where team_no = #{team_no} and drive_folder='0'

@@ -404,8 +404,6 @@ $(function(){
 										</div>
 										
 										<!-- 페이징 -->
-										
-										
 										<div>
 											<ul class="pagination dfpaging" style="justify-content: center;">
 							                    <c:if test="${pagination.curPage ne 1}">
@@ -481,7 +479,7 @@ $(function(){
 									
 									<!-- 페이징 -->
 										<div>
-											<ul class="pagination" style="justify-content: center;">
+											<ul class="pagination dfpaging" style="justify-content: center;">
 							                    <c:if test="${myFilePagination.curPage ne 1}">
 							                    	<li class="page-item disabled">
 							                        	<a class="page-link" href="#" onClick="fn_paging('${myFilePagination.prevPage }')">&laquo;</a> 
@@ -578,7 +576,9 @@ $(function(){
 						</div>
 					</div>
 				</div>
+				
 					   <div id="allFolderTab" class="folderview curr">
+						<div id="allFTab">
 							<c:forEach var="drFN" items="${driveFolderName}">
 								<div class="upload-box">
 										<div class="img-view">
@@ -608,8 +608,40 @@ $(function(){
 										</div>
 								</div>
 							</c:forEach>
-						</div>
+							</div>
+						<!-- 페이징 -->
+						<div>
+							<ul class="pagination dfpaging" style="justify-content: center;">
+			                    <c:if test="${folderPagination.curPage ne 1}">
+			                    	<li class="page-item disabled">
+			                        	<a class="page-link" href="#" onClick="fn_paging('${folderPagination.prevPage }')">&laquo;</a> 
+			                        </li>
+			                    </c:if>
+			                    <c:forEach var="pageNum" begin="${folderPagination.startPage }" end="${folderPagination.endPage }">
+			                        <c:choose>
+			                            <c:when test="${pageNum eq  folderPagination.curPage}">
+			                            	<li class="page-item active">
+										      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
+										    </li>
+			                            </c:when>
+			                            <c:otherwise>
+				                            <li class="page-item">
+										      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+										    </li>
+			                            </c:otherwise>
+			                        </c:choose>
+			                    </c:forEach>
+			                    <c:if test="${folderPagination.curPage ne folderPagination.pageCount && folderPagination.pageCount > 0}">
+			                    	<li class="page-item">
+			                        	<a href="#" class="page-link" onClick="fn_paging('${folderPagination.nextPage }')">&raquo;</a> 
+			                    	</li>
+			                    </c:if> 
+			                </ul>
+			              </div>
+			              </div>
+			              
 						<div id="myFolderTab" class="folderview">
+						<div id="myFTab">
 							<c:forEach var="myF" items="${myFolderList}">
 								<div class="upload-box">
 										<div class="img-view">
@@ -627,7 +659,7 @@ $(function(){
 																<i style="color:#bbb" class="fa fa-m fa-cog"></i>
 															</a>
 															<c:if test="${myF.member_no eq sessionScope.member_no }">
-																<a href="drivedelete?team_no=${param.team_no}&drive_name=${drFN.drive_name}" 
+																<a href="drivedelete?team_no=${param.team_no}&drive_name=${myF.drive_name}" 
 																		 class="folder-delete-btn">
 																	<i style="color:#bbb" class="fa fa-m fa-trash-alt"></i>		
 																</a>
@@ -640,7 +672,36 @@ $(function(){
 								</div>
 							</c:forEach>
 						</div>
-						
+						<!-- 페이징 -->
+						<div>
+							<ul class="pagination dfpaging" style="justify-content: center;">
+			                    <c:if test="${myFolderPagination.curPage ne 1}">
+			                    	<li class="page-item disabled">
+			                        	<a class="page-link" href="#" onClick="fn_paging('${myFolderPagination.prevPage }')">&laquo;</a> 
+			                        </li>
+			                    </c:if>
+			                    <c:forEach var="pageNum" begin="${myFolderPagination.startPage }" end="${myFolderPagination.endPage }">
+			                        <c:choose>
+			                            <c:when test="${pageNum eq  myFolderPagination.curPage}">
+			                            	<li class="page-item active">
+										      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
+										    </li>
+			                            </c:when>
+			                            <c:otherwise>
+				                            <li class="page-item">
+										      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+										    </li>
+			                            </c:otherwise>
+			                        </c:choose>
+			                    </c:forEach>
+			                    <c:if test="${myFolderPagination.curPage ne myFolderPagination.pageCount && myFolderPagination.pageCount > 0}">
+			                    	<li class="page-item">
+			                        	<a href="#" class="page-link" onClick="fn_paging('${myFolderPagination.nextPage }')">&raquo;</a> 
+			                    	</li>
+			                    </c:if> 
+			                </ul>
+			              </div>
+						</div>
 				</article>
 			</c:when>
 				<c:otherwise>

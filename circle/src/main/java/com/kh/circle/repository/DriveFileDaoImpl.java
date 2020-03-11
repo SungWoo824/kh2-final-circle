@@ -104,6 +104,19 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		return sqlSession.selectOne("driveFile.driveMyFileListCount",boardVo);
 	}
 	
+	//드라이브 전체 폴더 갯수
+	@Override
+	public int driveFolderCount(BoardVo boardVo) {
+		return sqlSession.selectOne("driveFile.driveFolderCount", boardVo);
+	}
+	
+	//내 폴더 갯수
+	@Override
+	public int myDriveFolderCount(BoardVo boardVo) {
+		return sqlSession.selectOne("driveFile.myDriveFolderCount",boardVo);
+	}
+
+	
 	///////////////////////////////////////////////////////////////////////
 	
 	
@@ -158,6 +171,9 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		param.put("drive_name", drive_name);
 		return sqlSession.selectList("driveFile.fileList", param);
 	}
+
+
+
 
 
 

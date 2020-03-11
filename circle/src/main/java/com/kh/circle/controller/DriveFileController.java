@@ -84,11 +84,22 @@ public class DriveFileController {
 
 			
 			//내파일리스트 페이징
-			
 			int myListCount= driveFileDao.driveMyFileListCount(boardVo);
 			Pagination myFilePagination = new Pagination(myListCount,curPage);
 			boardVo.setStartIndex(myFilePagination .getStartIndex()+1);
 			boardVo.setCountPerPage(myFilePagination.getPageSize()+myFilePagination.getStartIndex());
+			
+			//전체 폴더 페이징
+			int folderCount= driveFileDao.driveFolderCount(boardVo);
+			Pagination folderPagination = new Pagination(folderCount,curPage);
+			boardVo.setStartIndex(folderPagination .getStartIndex()+1);
+			boardVo.setCountPerPage(folderPagination.getPageSize() + folderPagination.getStartIndex());
+			
+			//내 폴더 페이징
+			int myFolderCount=driveFileDao.myDriveFolderCount(boardVo);
+			Pagination myFolderPagination = new Pagination(myFolderCount,curPage);
+			boardVo.setStartIndex(myFolderPagination .getStartIndex()+1);
+			boardVo.setCountPerPage(myFolderPagination.getPageSize() + myFolderPagination.getStartIndex());
 			
 			List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
 			List<DriveFileDto> myFileList = driveFileDao.getMyFileList(boardVo);
@@ -100,6 +111,13 @@ public class DriveFileController {
 			model.addAttribute("myFileList",myFileList);
 			model.addAttribute("myListCount",myListCount);
 			model.addAttribute("myFilePagination",myFilePagination);
+			
+			model.addAttribute("folderCount", folderCount);
+			model.addAttribute("folderPagination", folderPagination);
+			
+			model.addAttribute("myFolderCount", myFolderCount);
+			model.addAttribute("myFolderPagination", myFolderPagination);
+			
 //			log.info("회원번호 =  {}", boardVo.getMember_no());
 //			log.info("listCount = {}", listCount);
 //			log.info("myListCount = {}", myListCount);
