@@ -443,7 +443,6 @@ function searchResult(no){
 	            			<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>   
-	<!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
 							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
 	        				<!-- 목록으로 버튼 if처리해야함 -->
 				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
@@ -458,8 +457,8 @@ function searchResult(no){
 						            		<c:out value="${voteList.vote_create_no}"/>번 투표
 						            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
 						            	</c:if>
-					            		</li>
-					            		<br>
+					         		</li>
+					           		<br>
 					            	</c:forEach>   	
 				            	</ul>
 				            </div>

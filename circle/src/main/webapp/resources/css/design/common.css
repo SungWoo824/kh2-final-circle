@@ -986,6 +986,11 @@ background-color:#f8f8f8;
  	background:#5ea5fe;
  	color:white;
   }
+.admin-cardy{
+ 	-webkit-transition: .2s ease-out;
+ 	text-align: center;
+ }
+ 
 .admin-card-body{
 	margin: auto;
 	padding-top:65px;
