@@ -104,39 +104,6 @@ public String owner_manager_member(@RequestParam String team_name,
 	
 	return "team_admin/owner_manager_member";
 }
-//@PostMapping("/owner_manager_member")
-//public String grantAuth(@RequestParam List<Integer> changeAuth,
-//								@RequestParam List<String> term,
-//								@RequestParam String team_name,
-//								 @RequestParam int team_no,
-//							    @RequestParam String team_domain, HttpSession session, Model model) {
-//			
-//	//1개월
-//	payDao.insertCount(session.getAttribute("member_email"), "1개월권", (int) payDao.getQty1((String) session.getAttribute("member_email")));
-//	//6개월
-//	payDao.insertCount(session.getAttribute("member_email"), "6개월권", (int) payDao.getQty6((String) session.getAttribute("member_email")));
-//	//1년
-//	payDao.insertCount(session.getAttribute("member_email"), "1년권", (int) payDao.getQty12((String) session.getAttribute("member_email")));
-//	for(int i=0; i<changeAuth.size(); i++) {
-//		TeamMemberDto teamMemberDto = TeamMemberDto.builder()
-//				.member_no(changeAuth.get(i))
-//				.team_no(team_no)
-//				.member_auth("정회원")
-//				.term(term.get(i))
-//				.build();	
-//		if(teamMemberDto.getTerm().equals("1개월권")) {
-//			payDao.insertCount(session.getAttribute("member_email"), "1개월권", payDao.getQty1((String) session.getAttribute("member_email"))-1);
-//		}else if(teamMemberDto.getTerm().equals("6개월권")) {
-//			payDao.insertCount(session.getAttribute("member_email"), "6개월권", payDao.getQty6((String) session.getAttribute("member_email"))-1);
-//		}else{
-//			payDao.insertCount(session.getAttribute("member_email"), "1년권", payDao.getQty12((String) session.getAttribute("member_email"))-1);
-//		};
-//		teamDao.changeAuth(teamMemberDto);	
-//		System.out.println(teamMemberDto.toString());
-//	}
-//	
-//	return "redirect:./owner_manager_member?team_no="+team_no+"&team_name="+team_name+"&team_domain="+team_domain;
-//}
 
 //소유자 : 관리 / 멤버 설정 / 정회원 리스트 페이지
 @GetMapping("/member_list_regular")

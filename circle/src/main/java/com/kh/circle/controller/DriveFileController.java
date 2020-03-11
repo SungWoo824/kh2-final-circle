@@ -1,9 +1,12 @@
 package com.kh.circle.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -27,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.repository.DriveFileDao;
+import com.kh.circle.service.CompressionUtil;
+//import com.kh.circle.service.CompressionUtil;
 import com.kh.circle.service.DriveFileService;
 import com.kh.circle.service.Pagination;
 import com.kh.circle.vo.BoardVo;
@@ -62,17 +67,27 @@ public class DriveFileController {
 																(int)session.getAttribute("member_no"),
 																boardVo.getDrive_name());
 		model.addAttribute("myFileList",myFileList);
-
+		List<DriveFileDto> myFolderList = driveFileDao.myFolderList(boardVo.getTeam_no(),
+																(int)session.getAttribute("member_no"));
+		model.addAttribute("myFolderList",myFolderList);
+		
+		
+		
 		//폴더 생성됐을때만 실행
 		if(folderName != null) {
-			List<DriveFileDto> fileList= driveFileDao.getFileList(boardVo);
-			model.addAttribute("driveFileList", fileList);
 			
 			//페이징
 			int listCount= driveFileDao.driveFileListCount(boardVo);
 			Pagination pagination = new Pagination(listCount,curPage);
 			boardVo.setStartIndex(pagination.getStartIndex()+1);
 			boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
+
+			
+			int myListCount= driveFileDao.driveMyFileListCount(boardVo);
+			Pagination myFilePagination = new Pagination(myListCount,curPage);
+			boardVo.setStartIndex(myFilePagination .getStartIndex()+1);
+			boardVo.setCountPerPage(myFilePagination.getPageSize()+pagination.getStartIndex());
+			
 			List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
 			
 			model.addAttribute("listCount",listCount);
@@ -92,7 +107,6 @@ public class DriveFileController {
 	@ResponseBody
 	public String drive_namecheck(@ModelAttribute DriveFileVO driveFileVo) {
 		int count = sqlSession.selectOne("driveFile.nameCheck",driveFileVo);
-//		System.out.println(driveFileVo.getTeam_no());
 		if(count>0) return "Y";
 		else return "N";
 	}
@@ -163,8 +177,54 @@ public class DriveFileController {
 						makeDispositionString(driveFileDto.getDrive_file_uploadname()))
 				.body(resource);
 	}
+
 	
-	//다운로드
+	@Autowired
+	private CompressionUtil util;
+	
+	//압축 다운로드(다중)
+	@GetMapping("/zipdownload")
+	public ResponseEntity<ByteArrayResource> zipDownload(@RequestParam List<Integer> drive_file_no) throws IOException{
+		
+		//DB확인
+		List<DriveFileDto> driveFileDto = driveFileDao.getNo(drive_file_no);
+		System.out.println(driveFileDto);
+		//DB에있는 업로드 이름으로 바꾸기
+		
+		
+		//File load
+		File dest = new File("D:/upload/kh2e/drivefile/temp.zip");	//파일 압축명
+		FileOutputStream out = new FileOutputStream(dest);
+		
+		List<File> list = new ArrayList<>();
+		File dir = new File("D:/upload/kh2e/drivefile");//압축파일 임시저장소
+
+		for(int i = 0; i<drive_file_no.size(); i++) {
+			list.add(new File(dir, String.valueOf(drive_file_no.get(i))));
+		}
+		
+//		System.out.println(drive_file_no);
+//		System.out.println(list);
+		
+		//압축
+		util.zip(list, out);
+		
+//		dest를 불러와서 전송
+		byte[] data = FileUtils.readFileToByteArray(dest);
+		ByteArrayResource resource = new ByteArrayResource(data);
+		
+		//다운로드
+		return 	ResponseEntity.ok()
+						.contentType(MediaType.APPLICATION_OCTET_STREAM)
+						.contentLength(data.length)
+						.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+						.header(HttpHeaders.CONTENT_DISPOSITION, makeDispositionString("test.zip"))
+						.body(resource);
+		
+	}
+	
+	
+	//다운로드 
 	@GetMapping("/download")
 	@ResponseBody
 	public ResponseEntity<ByteArrayResource> download(@RequestParam int drive_file_no) throws IOException{
@@ -194,34 +254,62 @@ public class DriveFileController {
 	}
 		
 	
-		//드라이브 파일삭제
-		@GetMapping("/filedelete")
-		public String fileDelete(@RequestParam int drive_file_no,
-				@RequestParam int team_no,
-				@RequestParam String drive_name,
-				Model model) {
-			driveFileDao.fileDelete(drive_file_no);
-			File target = new File("D:/upload/kh2e/drivefile/"+drive_file_no);
-			target.delete();
+		//드라이브 파일 다중삭제
+		@PostMapping("/filelistdelete")
+		public String fileDelete(@RequestParam List<Integer> drive_file_no,
+								@RequestParam(defaultValue="") int team_no,
+								@RequestParam(defaultValue="") String drive_name,
+								Model model) {
+			
+			for(int i = 0; i < drive_file_no.size(); i++) {
+				File target = new File("D:/upload/kh2e/drivefile/" + drive_file_no.get(i));
+				target.delete();
+			}
+			
+			driveFileDao.fileListDelete(drive_file_no);
+			
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("drive_name",drive_name);
 			return  "redirect:../drive/drive";
 		}
 		
+		//드라이브 파일 삭제
+		@GetMapping("/filedelete")
+		public String fileDelete(@RequestParam int drive_file_no,
+								@RequestParam(defaultValue="") int team_no,
+								@RequestParam(defaultValue="") String drive_name,
+								Model model) {
+			
+			File target = new File("D:/upload/kh2e/drivefile/" + drive_file_no);
+			target.delete();
+
+			driveFileDao.fileDelete(drive_file_no);
+			
+			model.addAttribute("team_no",team_no);
+			model.addAttribute("drive_name",drive_name);
+			return  "redirect:../drive/drive";
+			
+		
+		}
+		
+		
 //		드라이브 폴더 삭제
 		@GetMapping("/drivedelete")
-		public String driveDelete(@ModelAttribute DriveFileVO driveFileVo, Model model) {
+		public String driveDelete(@RequestParam int team_no,
+								@RequestParam String drive_name, 
+								Model model) {
 			
-//			List<DriveFileDto> fileList = driveFileDao.getFolderList(driveFileVo);
-//			model.addAttribute("fileList", fileList);
-//			for(int i = 0; i < fileList.size(); i++) {
-//				driveFileDao.driveDelete(driveFileVo);
-//				driveFileDao.fileDelete(driveFileVo.getDrive_file_no());
-//				File target = new File("D:/upload/kh2e/drivefile/"+driveFileVo.getDrive_file_no());
-//				target.delete();
-//			}
+			List<Integer> fileList = driveFileDao.fileList(team_no, drive_name);
 			
-			return  "redirect:/drive/drive_folderlist?team_no="+driveFileVo.getTeam_no();
+			for(int i = 0; i < fileList.size(); i++) {
+				File target = new File("D:/upload/kh2e/drivefile/"+fileList.get(i));
+				target.delete();
+			}
+			
+			driveFileDao.driveDelete(team_no, drive_name);
+			
+			model.addAttribute("team_no",team_no);
+			return  "redirect:/drive/drive";
 		}
 		
 		
