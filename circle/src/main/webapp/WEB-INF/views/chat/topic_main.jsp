@@ -406,26 +406,6 @@ $(function(){
 	});
 });
 
-
-//할일 클릭 하면 열고 닫기 : 할일완료 목록 보기 )
-// $(function(){
-// 	$("#list-done-result").hide();
-// // 	$("#list-content").show();
-	
-// 	$(".todo_done_result").click(function() {
-//         $("#list-done-result").show();
-// //         $(this).hide('fast');
-// 	    $("#todo_list_all").hide();
-//     });
-	
-// 	//돌아가기 
-// 	$(".todo_list").click(function(){
-// 		$("#todo_list_all").show('3000');
-// 		$("#list-done-result").hide();
-// // 		$("#list-content").show();
-// 	})
-// });
-
 $(function(){
 	
 	$("#list-done-result").hide();
@@ -764,24 +744,23 @@ function TodoDelete(team_no,topic_no,todo_list_no){
             			</ul>
             		</div>   
 					<!-- 투표기능 -->
-							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
-	        				<!-- 목록으로 버튼 if처리해야함 -->
-				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
 				            <div id="bodyContents">
-				           		<h3>진행중인 투표 목록</h3>
-	        					<!-- 화면 동적 전환(투표 상세 페이지) -->
-				            	<ul>
-					            	<c:forEach var="voteList" items="${voteList }" >
-					            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
-					            		<li>
-			        					<c:if test="${param.team_no == no}">
-						            		<c:out value="${voteList.vote_create_no}"/>번 투표
-						            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
-						            	</c:if>
-					         		</li>
-					           		<br>
-					            	</c:forEach>   	
-				            	</ul>
+				            	<h5 class="p-3 mb-2 bg-primary text-white" style="text-align:center;" >진행중인 투표 목록
+							    </h5>
+				            	<div style="overflow-y: scroll;">
+				            	<c:forEach var="voteList" items="${voteList }" >
+				            	<ul class="list-group">
+				            		<c:if test="${param.team_no eq voteList.vote_create_team_no}">
+								  <li class="list-group-item d-flex justify-content-between align-items-center">
+								  <button type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })" class="btn btn-primary btn-lg btn-block">${voteList.vote_create_title}</button>
+								  </li>
+								   </c:if>
+								</ul>
+								</c:forEach>
+								 </div>
+								<div style="margin-top: 10px" align="center">
+									<button type="button" class="btn btn-outline-primary" onclick="location.href='./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }'">투표 생성</button>								    
+								</div>
 				            </div>
 				    </div>
         			<!-- 투표 기능 종료 -->

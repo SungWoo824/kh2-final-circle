@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
     <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/toggle.css">
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/image/logofavi.png">
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -56,9 +57,28 @@
 </script>   
 </head>
 
+<div align="center">
+ 
 <form action="vote_create" method="post">
-<!-- 세션 찍어주는 표현식 -->
-<h3>${member_no}</h3>
+  <a class="list-group-item list-group-item-action">투표 제목: <input type="text" name="vote_create_title" placeholder="제목을 입력하세요" required style="border: none;"></a><br>
+  <a class="list-group-item list-group-item-action">투표 설명(옵션)	: <input type="text" name="vote_create_detail" placeholder="설명을 입력하세요" required style="border: none;"></a><br>
+  <a class="list-group-item list-group-item-action">보기 목록<br>
+  <div style="width:100%; height:130px; overflow:auto">
+  	<input type='text' name='category[0].vote_category_content' placeholder='보기를 입력하세요' required style="border: none;"><br><br>
+	<input type='text' name='category[1].vote_category_content' placeholder='보기를 입력하세요' required style="border: none;"><br><br>
+	<div class="ins"></div>
+	</div>
+	<input type="button" value="+보기 추가" class="option"><br>
+	<br><br>
+</a><br>
+  <a class="list-group-item list-group-item-action">Dapibus ac facilisis in</a><br>
+  <a class="list-group-item list-group-item-action">Dapibus ac facilisis in</a><br>
+  <a class="list-group-item list-group-item-action">Dapibus ac facilisis in</a><br>
+  <a class="list-group-item list-group-item-action">Dapibus ac facilisis in</a><br>
+  <a class="list-group-item list-group-item-action">Dapibus ac facilisis in</a><br>
+</form>
+	</div>
+
 <h3>투표 제목			<input type="text" name="vote_create_title" placeholder="제목을 입력하세요" required></h3><br><br>
 <h3>투표 설명(옵션)			<input type="text" name="vote_create_detail" placeholder="설명을 입력하세요"></h3><br><br>
 <h3>보기 목록</h3><br>
@@ -66,7 +86,6 @@
 <!-- <input type="text" name="vote_create_option2" placeholder="보기를 입력하세요" required><br><br> -->
 <input type='text' name='category[0].vote_category_content' placeholder='보기를 입력하세요' required><br><br>
 <input type='text' name='category[1].vote_category_content' placeholder='보기를 입력하세요' required><br><br>
-<div class="ins"></div>
 <input type="button" value="+보기 추가" class="option"><br>
 <br><br>
 <h3>
@@ -122,6 +141,6 @@
 		<input type="hidden" name="topic_no" value="${param.topic_no }">
 		
 		<input type="submit" value="만들기">
-</form>
+
 <a href="topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button>취소</button></a>
 </html>

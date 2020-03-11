@@ -67,7 +67,7 @@ function rs(){
 </script>
 <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
 <!-- </nav> -->
-	<div align="center" style="margin-top: 4%; margin-bottom: 80px">
+	<div align="center" style="margin-top: 4%; margin-bottom: 80px; background-color: #2FA4E7;">
 		<span style ="display:block;width:100%;height:50px;font-size:30px">플랜 옵션</span>
 	</div>
 <div style="background-color: #e9ecef">

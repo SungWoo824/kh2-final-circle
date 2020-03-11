@@ -99,7 +99,7 @@ public class ChatController {
 		//투표기능관련 코드
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));
-
+		model.addAttribute("team_no", team_no);
 		//멤버 리스트 
 		model.addAttribute("memberList",teamDao.memberList(team_no));
 		
