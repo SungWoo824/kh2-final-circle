@@ -92,7 +92,6 @@ public class DriveFileController {
 	@ResponseBody
 	public String drive_namecheck(@ModelAttribute DriveFileVO driveFileVo) {
 		int count = sqlSession.selectOne("driveFile.nameCheck",driveFileVo);
-//		System.out.println(driveFileVo.getTeam_no());
 		if(count>0) return "Y";
 		else return "N";
 	}

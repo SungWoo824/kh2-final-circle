@@ -78,7 +78,7 @@ public class VoteCreateDaoImpl implements VoteCreateDao{
 																	.vote_create_no(vote_create_no)
 																	.member_no(member_no)
 																	.build();
-//		System.out.println(sqlSession.selectList("vote.compare", voteCompareDto).size());
+
 		if(sqlSession.selectList("vote.compare", voteCompareDto).size() != 0) {
 			return "y";
 		}else {

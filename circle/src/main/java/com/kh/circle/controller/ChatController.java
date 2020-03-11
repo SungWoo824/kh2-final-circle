@@ -147,11 +147,9 @@ public class ChatController {
 	@GetMapping("/topic_namecheck")
 	@ResponseBody
 	public String topic_name_check(@ModelAttribute TopicRestVO topicRestVo) {
-//		System.out.println(topicRestVo.getTeam_no());
-//		int count = 1;
+
 		int count = sqlSession.selectOne("topic.nameCheck",topicRestVo);
-		System.out.println(count);
-		System.out.println(topicRestVo);
+
 		if(count>0) return "Y";
 		else return "N";
 		
@@ -295,10 +293,12 @@ public class ChatController {
 		                                 .team_no(team_no)
 		                                 .topic_no(topic_no)
 		                                 .build();
+		        
+			    
 		    //담은 디티오에 반환 
-		    topicDao.mailInviteTopic(topicMemberDto);
-		    System.out.println(topicMemberDto.toString());
+		        topicDao.mailInviteTopic(topicMemberDto);
 		    
+
 		      return "redirect:../chat/topic_main";
 		}else { //db에 데이터가 확인 될 경우 / 회원 리스트 보여줌 
 			  return "redirect:../member/mypage";
