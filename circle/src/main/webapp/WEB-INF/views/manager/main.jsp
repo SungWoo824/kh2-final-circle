@@ -17,14 +17,19 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
    <link href="${pageContext.request.contextPath}/resources/css/design/common.css" rel="stylesheet" type="text/css">
 <script>
-
-
-function getfileSize(x) {
-	  var s = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'];
-	  var e = Math.floor(Math.log(x) / Math.log(1024));
-	  return (x / Math.pow(1024, e)).toFixed(2) + " " + s[e];
-	};
-
+	$(function(){
+		function getfileSize(x) {
+			  var s = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'];
+			  var e = Math.floor(Math.log(x) / Math.log(1024));
+			  return (x / Math.pow(1024, e)).toFixed(2) + " " + s[e];
+		};
+		
+		var size = ${fileTotalSize};
+		
+		var sizeForm = getfileSize(size);
+		var file_box = $('.manager-file-size');
+		$(file_box).text(sizeForm);	
+	});
 </script>
 </head>
 
@@ -386,7 +391,7 @@ function getfileSize(x) {
                                      style="width: 20rem; height: 15rem; margin:auto;">
                                     <div class="card-header">파일용량</div>
                                     <div class="card-body admin-card-body">
-                                        <h4 class="card-title">${fileTotalSize}</h4>
+                                        <h4 class="card-title manager-file-size"></h4>
                                         <p class="card-text">
                                             <a href="#"></a>
                                         </p>
