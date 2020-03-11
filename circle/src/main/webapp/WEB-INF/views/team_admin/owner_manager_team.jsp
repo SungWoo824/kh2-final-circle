@@ -159,6 +159,8 @@ $(function(){
 </script>
 
 <body>
+
+
  	 <!-- 상단 헤더 --> -->
 	 <div class="circle-header">
 
@@ -195,7 +197,7 @@ $(function(){
         </div>
         
         
-       
+
         <!-- 소유자 :팀 관리 설정-->
         <div class="mypage-main">
              <div class="main-bg">
@@ -357,8 +359,7 @@ $(function(){
 			</div>
 		</div>
 </div>	                                  
-	                                     
-	                                        
+ </div>	                                                                           
 	                                        
 
 

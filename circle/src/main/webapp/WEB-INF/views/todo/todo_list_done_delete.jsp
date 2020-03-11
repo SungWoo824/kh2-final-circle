@@ -3,17 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-
-
-
-
-
+<!-- 이 페이지의 스크립트는 함부러 건들면 안됨 -->
 <!-- 투두 리스트 관련 스크립트 -->
 <script>
 // 검색 결과창 숨기기 
 $(function(){
 	$("#todo_search_result").hide();
+	$("#list-done-result").show();
 });
 
 //할일 추가 하기 열고 닫기 
@@ -81,10 +77,8 @@ $(function(){
 // });
 
 $(function(){
-	
-	$("#list-done-result").hide();
-	$("input[name=todo_done_result]").change(function(){
-		
+	$("#list-done-result").show();
+	$("input[name=todo_done_result]").change(function(){	
 		if($(this).prop("checked")){
 			$("#list-done-result").show();
 // 			 $(this).hide('fast');
@@ -93,14 +87,45 @@ $(function(){
 		else{
 	 		$("#todo_list_all").show('3000');
 	 		$("#list-done-result").hide();
-// 			$("#todo_main_list").show();
-			
+// 			$("#todo_main_list").show();	
 		}
-		
 	});
-		
-	
 });
+
+//완료 목록 삭제하기 
+function TodoDoneDelete(team_no,topic_no,todo_list_no){
+// 	var member_no = ${member_no};
+// 	var todo_list_no = $("#todo_list_no_delete"+todo_list_no).val();  //인풋에 있는 벨류를 가져올게 
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
+
+// 	var url=$('#form_todo_delete').attr('action');
+// 		var deleteData=$('#form_todo_delete').serialize();
+
+		var  ajaxOption = {
+			url : "${pageContext.request.contextPath}/todo/todo_list_done_delete?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no,
+			type : "post",
+			dataType : "html",
+			cache : false
+	};
+		$.ajax(ajaxOption).done(function(data){
+// 			$('#list-content').html(data);
+			
+			if($(this).prop("checked")){
+				$('#list-content').html(data);
+				$("#list-done-result").show();
+//	 			 $(this).hide('fast');
+//	 		 	    $("#todo_main_list").hide();
+			}
+			else{
+		 		$("#todo_list_all").show('3000');
+		 		$("#list-done-result").hide();
+//	 			$("#todo_main_list").show();	
+			}
+		});
+
+}
+
 
 //진행중인 할일 보기 
 $(function(){
@@ -360,12 +385,12 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
 
 </script>
+<body>
 
-<title>할일 추가하기 페이지</title>
+
 <!--투두리스트 시작 -->
 
 	<div style="overflow-y: scroll;">
-
 
    	<!-- 할일 전체 목록 : 시 -->
 	<div id="list-content">
@@ -441,7 +466,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 					
 					<!--완료 목록 보기 체크박스 : 시작  -->
 						<span> 완료된 할 일 보기</span> 
-						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
+						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기" checked>
 					<!--완료 목록 보기 체크박스 : 종료  -->		
 				<hr>
 		</div>		
@@ -570,8 +595,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 															<!--할일 진행중으로 돌리기 -->			
 															<input type="submit"  onclick="TodoBackDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="진행">
 															
-															<!-- 할일 삭제하기 -->
-															<input type="button" onclick="TodoDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="삭제">
+															<!--  완료 목록 삭제하기 -->
+															<input type="button" onclick="TodoDoneDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="삭제">
 													</div>
 												</div>
 				\
@@ -593,7 +618,5 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 		</div>
 
 <!-- 투두리스트 종료 -->
-
-		  	   
 </body>
 </html>

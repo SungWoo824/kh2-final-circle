@@ -218,9 +218,9 @@ function EditTodo(team_no,todo_list_no,topic_no){
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
-//				$('#list-content').html(data);
-				$('#todo-edit').html(data);
-				$('#list-content').hide();
+				$('#list-content').html(data);
+// 				$('#todo-edit').html(data);
+// 				$('#list-content').hide();
 //				$(".todo-title").hide();
 				$(this).parent().children(".modify-fix-div").show();
 			});
@@ -312,7 +312,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
 	<div id="todo_list_all">
 			<div id="todo_list_btn_all"> 
-				<p> 할일  메인 페이지에 있음 </p> 
+				<p> 할일 디테일 페이지에 있음 </p> 
 				<!--투두 리스트 메인가기 -->
 		        <input type="button" onclick="HomeTodo(${param.team_no},${param.topic_no},${todoListJoinVO.member_no})" value="처음으로">
 		        
@@ -333,6 +333,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 							 <input type="text" id="todo_list_content_create" name="todo_list_content" placeholder="할일을 추가하세요" required>
 							 <input type="button" onclick="TodoCreate()" value="추가">
 						</form>
+						
 						 <br>
 				
 
@@ -353,47 +354,51 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				<p>${countTodo} 개의 할일</p>
 	        	</div>
 					
-					<p>할 일  메인 페이지 입니다 </p>
+					<p>할일 디테일 페이지에 있음 </p>
 					<p>할일 전체 목록보기	</p> 
 
-					<c:forEach items="${todoPerAll}" var="todoListJoinVO">
+<%-- 					<c:forEach items="${todoPerAll}" var="todoListJoinVO"> --%>
 						
-						<!-- 진행중인 목록만 뽑는다 / 완료버튼 누르면 목록에서 사라짐-->
-						<c:choose>
-							<c:when test="${todoListJoinVO.todo_list_done=='진행'}">
-								<hr> 
+<!-- 						진행중인 목록만 뽑는다 / 완료버튼 누르면 목록에서 사라짐 -->
+<%-- 						<c:choose> --%>
+<%-- 							<c:when test="${todoListJoinVO.todo_list_done=='진행'}"> --%>
+<!-- 								<hr>  -->
 
-						<!--할일 목록 누르면 할일상세페이지(<div id="show_detail">)로 이동 -->
-						<div class="all-div">
-								<div class="modify-origin-div">
+<!-- 						할일 목록 누르면 할일상세페이지(<div id="show_detail">)로 이동 -->
+<!-- 						<div class="all-div"> -->
+<!-- 								<div class="modify-origin-div"> -->
 								
-									<div class="todo-title">
-											<span> ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}"</span>
+<!-- 									<div class="todo-title"> -->
+<%-- 											<span> ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}"</span> --%>
 											
 											
-											<button type="button" class="btn btn-primary" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_content})">수정</button>
+<%-- 											<button type="button" class="btn btn-primary" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_content})">수정</button> --%>
 											
 										
-											<br>
-											<!-- 할일 완료 시키기 -->	
-<%-- 												<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}"> --%>
-<%-- 												<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}"> --%>
-<%-- 												<input type="hidden" id="todo_list_no_done" name="todo_list_no" value="${todoListJoinVO.todo_list_no}"> --%>
-												<input type="checkbox" onclick="TodoDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="완료">
-												<span>완료하기</span>
+<!-- 											<br> -->
+<!-- 											할일 완료 시키기	 -->
+<%-- <%-- 												<input type="hidden" name="team_no" value="${todoListJoinVO.team_no}"> --%> --%>
+<%-- <%-- 												<input type="hidden" name="topic_no" value="${todoListJoinVO.topic_no}"> --%> --%>
+<%-- <%-- 												<input type="hidden" id="todo_list_no_done" name="todo_list_no" value="${todoListJoinVO.todo_list_no}"> --%> --%>
+<%-- 												<input type="checkbox" onclick="TodoDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="완료"> --%>
+<!-- 												<span>완료하기</span> -->
 												
 											
 											
-									</div>
+<!-- 									</div> -->
 								
-							</div>
+<!-- 							</div> -->
 	
 
 
 							<!-- todo_list_detail 부분 -->
-							<div class="modify-fix-div">
+<!-- 							<div class="modify-fix-div"> -->
 								<!-- 할일 수정  -->
 								<p>할일 수정하기 메인 페이</p>
+								
+										<textarea type="text" id="todo_list_content_edit${todoListJoinVO.todo_list_no}" name="todo_list_content">${todoListJoinVO.todo_list_content}</textarea>
+										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정">
+								
 								
 								<!-- 할일 삭제하기 -->
 								<br>
@@ -403,12 +408,12 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 					</div>
 
 
-							</c:when>
-						</c:choose>
-					</c:forEach>
+<%-- 							</c:when> --%>
+<%-- 						</c:choose> --%>
+<%-- 					</c:forEach> --%>
 							<hr>
 		  	   </div>
-		 </div>
+<!-- 		 </div> -->
 		  	   
 		  	   
 					   <!-- 할일 수정 결과 -->

@@ -41,6 +41,7 @@ function TodoSearch(){
 					<p>검색 결과 </p>
 			   <div id="todo-list-search"></div>
 			   
+			   
 
 <!-- 완료 목록보기   -->		
 <div id="list-done-result">
@@ -48,6 +49,11 @@ function TodoSearch(){
 	<c:forEach items="${todoPerAll}" var="todoListJoinVO">
 			<c:choose>
 				<c:when test="${todoListJoinVO.todo_list_done=='완료'}">
+			   
+			   	<!-- 개수 나오는 곳 출력 -->
+	        	<div id="count_done">
+					<p>${countDone} 개의 완료가 있습니다</p>
+	        	</div>
 												
 		<hr>	
 		<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}">

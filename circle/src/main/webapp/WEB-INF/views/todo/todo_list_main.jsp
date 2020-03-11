@@ -6,52 +6,124 @@
 <html>
 <head>
 
+<!-- 투두 리스트 관련 스크립트 -->
 <script>
-
-//검색 결과창 숨기기 
+// 검색 결과창 숨기기 
 $(function(){
 	$("#todo_search_result").hide();
 });
 
+//할일 추가 하기 열고 닫기 
+$(function(){
+	
+	$("#todo_create_btn").show();
+	$("#todo_create_show").hide();
+	
+		$("#todo_create_btn").click(function() {
+			$("#todo_create_show").show();
+			$("#todo_create_btn").hide();
+	});
+		$("#todo_create_btn").blur(function() {
+			$("#todo_create_btn").show();
+			$("#todo_create_show").hide();
+		});	
+		
+
+		$("#create_cancle").click(function(){
+// 			$(this).parent().parent().children("#todo_create_btn").show('3000');
+// 	        $(this).parent().parent().children("#todo_create_show").hide('fast');
+	        $("#todo_create_btn").show();
+			$("#todo_create_show").hide();
+		});
+});
+
 
 //클릭 하면 열고 닫기 : 할일 목록 상세보기 (Detail, Edit , Delete 있는 거 )
-$(function(){
-	$(".modify-fix-div").hide();
-	$(".modify-origin-div").show();
+
+// $(function(){
+// 	$(".modify-fix-div").hide();
+// 	$(".modify-origin-div").show();
 	
-	$(".modify-origin-div").click(function() {
-        $(this).parent().children(".modify-fix-div").show('3000');
-        $(this).hide('fast');
-	    $(".modify-origin-div").hide();
-    });
+// 	$(".modify-origin-div").click(function() {
+//       $(this).parent().children(".modify-fix-div").show('3000');
+//       $(this).hide('fast');
+// 	    $(".modify-origin-div").hide();
+//   });
 	
-	//취소 버튼 
-	$(".modify-cancel").click(function(){
-		$(this).parent().parent().children(".modify-origin-div").show('3000');
-        $(this).parent().parent().children(".modify-fix-div").hide('fast');
-        $(".modify-origin-div").show();
-	})
-});
+// 	//취소 버튼 
+// 	$(".modify-cancel").click(function(){
+// 		$(this).parent().parent().children(".modify-origin-div").show('3000');
+//       $(this).parent().parent().children(".modify-fix-div").hide('fast');
+//       $(".modify-origin-div").show();
+// 	})
+// });
 
 //할일 클릭 하면 열고 닫기 : 할일완료 목록 보기 )
+// $(function(){
+// 	$("#list-done-result").hide();
+// // 	$("#list-content").show();
+	
+// 	$(".todo_done_result").click(function() {
+//         $("#list-done-result").show();
+// //         $(this).hide('fast');
+// 	    $("#todo_list_all").hide();
+//     });
+	
+// 	//돌아가기 
+// 	$(".todo_list").click(function(){
+// 		$("#todo_list_all").show('3000');
+// 		$("#list-done-result").hide();
+// // 		$("#list-content").show();
+// 	})
+// });
+
 $(function(){
+	
 	$("#list-done-result").hide();
-// 	$("#list-content").show();
+	$("input[name=todo_done_result]").change(function(){
+		
+		if($(this).prop("checked")){
+			$("#list-done-result").show();
+// 			 $(this).hide('fast');
+// 		 	    $("#todo_main_list").hide();
+		}
+		else{
+	 		$("#todo_list_all").show('3000');
+	 		$("#list-done-result").hide();
+// 			$("#todo_main_list").show();
+			
+		}
+		
+	});
+		
 	
-	$(".todo_done_result").click(function() {
-        $("#list-done-result").show();
-//         $(this).hide('fast');
-	    $("#todo_list_all").hide();
-    });
-	
-	//돌아가기 
-	$(".todo_list").click(function(){
-		$("#todo_list_all").show('3000');
-		$("#list-done-result").hide();
-// 		$("#list-content").show();
-	})
 });
 
+//진행중인 할일 보기 
+$(function(){
+	
+// 	$("#todo_main_list").hide();
+	$("input[name=before_todo_done]").change(function(){
+		
+		if($(this).prop("checked")){
+		 	    $("#todo_main_list").show();
+// 			$("#list-done-result").hide();
+// 			 $(this).hide('fast');
+		}
+		else{
+// 	 		$("#todo_list_all").hide('3000');
+// 	 		$("#list-done-result").show();
+			$("#todo_main_list").hide();
+			
+		}
+		
+	});
+		
+	
+});
+	
+	
+	
 //투두리스트 메인으로 이동 
 function HomeTodo(team_no,topic_no,member_no){
 
@@ -87,7 +159,7 @@ function TodoDone(team_no,topic_no,todo_list_no){
 	};
 		$.ajax(ajaxOption).done(function(data){
 // 				$('#count-todo').hide();
-								$('#list-content').html(data);
+				$('#list-content').html(data);
 // 				$('#list-content').hide();
 // 				$('#list-done').html(data);
 			});
@@ -104,7 +176,7 @@ function TodoBackDone(team_no,topic_no,todo_list_no){
 // 	var todo_list_no = $("#todo_list_no_done").val();
 	
 	var  ajaxOption = {
-			url : "./todo_back_done?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no,
+			url : "${pageContext.request.contextPath}/todo/todo_back_done?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no,
 			type : "post",
 			dataType : "html",
 			cache : false
@@ -180,7 +252,7 @@ function TodoSearch(){
 function TodoDetail(team_no,todo_list_no,topic_no,todo_list_content){
 
 		var  ajaxOption = {
-			url : "./todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no+"&todo_list_content="+todo_list_content,
+			url : "${pageContext.request.contextPath}/todo/todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no+"&todo_list_content="+todo_list_content,
 			type : "get",
 			dataType : "html",
 			cache : false
@@ -208,16 +280,16 @@ function EditTodo(team_no,todo_list_no,topic_no){
 
 
 		var  ajaxOption = {
-			url : "./todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
+			url :"${pageContext.request.contextPath}/todo/todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
 			type : "post",
 			dataType : "html",
 			data : {todo_list_content:todo_list_content},
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
-// 				$('#list-content').html(data);
-				$('#todo-edit').html(data);
-				$('#list-content').hide();
+				$('#list-content').html(data);
+// 				$('#todo-edit').html(data);
+// 				$('#list-content').hide();
 // 				$(".todo-title").hide();
 				$(this).parent().children(".modify-fix-div").show();
 			});
@@ -284,51 +356,65 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 }
 
 
-
-
-
-//  $('#form_todo_edit').click(function(){    
-// 			var url=$('#form_todo_edit').attr('action');
-// 	  		var editData=$('#form_todo_edit').serialize();
-// 			jQuery.ajax({
-// 				type:'POST',
-// 		    	url:url,
-// 		    	dataType:'html',
-// 		    	data:editData,
-// 		    	async :true,
-// 		    	error:onError,
-// 		    	success: function onSuccessss(editData){
-// 		    		$('#todo-edit').html(editData);
-// 		    	}
-// 			});		
-// 		});
-
-
 </script>
+
 </head>
 <body>
-
 <!--투두리스트 시작 -->
 
-   	<!-- 할일 전체 목록 -->
-	<div id="list-content">
-	   <div class="slide-close"> 
+<div style="overflow-y: scroll;">
 
+
+   	<!-- 할일 전체 목록 : 시 -->
+	<div id="list-content">
+		
+	   <!--  엑스버튼 / 할 일 제목 , 카운트 개수 : 시작  -->
+	   <div class="slide-close"> 
 	       <ul>
 		       <li class="slide-close-btn">
-		       <a class="fa fa-times" style="color: white" alt="닫기"> </a> 
+		      		 <a class="fa fa-times" style="color: white" alt="닫기"> </a> 
 		       </li>
 	       </ul>
-		      <p class="p-3 mb-2 bg-primary text-white" style="text-align:center;"> 할 일  
+	       	  
+	       	  <!-- 할 일 제목 , 카운트 개수  -->
+		      <p class="p-3 mb-2 bg-primary text-white" style="text-align:center; height: 70px" > 할 일 / 현재위치 : 토픽 메인 페이지 
 		      	<span class="badge badge-light">${countTodo} </span> 
 		      </p>
-	   </div>   
-   
+	   </div>
+	   <!--  엑스버튼 / 할 일 제목 , 카운트 개수 : 종료  -->   
+		      
+   	
    <br>
+   
 
+	
 	<div id="todo_list_all">
 			<div id="todo_list_btn_all"> 
-				<p> 할일  메인 페이지에 있음 </p> 
+			
+			   <!-- 할일 추가하기 버튼 -->
+			   <br>
+			   <div id="todo_create_btn" style="text-align:center;">
+			   <i class="fa fa-fw fa-plus"></i>
+			   <span>할 일 추가하기 </span>
+			   </div>
+			   
+			   <div id="todo_create_show">
+			   <form action="todo_list_create" method="post" id="form_todo_create">
+					<input type="hidden" id="todo_list_no_create" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
+					<input type="hidden" name="team_no" value="${param.team_no}">
+					<input type="hidden" name="topic_no" value="${param.topic_no}">
+					<input type="text" id="todo_list_content_create" name="todo_list_content" placeholder="할일을 추가하세요">
+					<input type="button" onclick="TodoCreate()" value="추가">
+			   </form>
+<!-- 			   				<div class="modify-fix-div"> -->
+					<button class="create_cancle">닫기 </button>
+<!-- 							</div> -->
+
+			   </div>
+			   
+			   <hr>
+			   
+				
 				<!--투두 리스트 메인가기 -->
 		        <input type="button" onclick="HomeTodo(${param.team_no},${param.topic_no},${todoListJoinVO.member_no})" value="처음으로">
 		        
@@ -341,14 +427,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 					<input type="submit" id="submit-search" onclick="TodoSearch()" value="검색">
 						<br><br>
 								
-						<!-- 할일 추가하기 버튼 -->
-						<form action="todo_list_create" method="post" id="form_todo_create">
-							 <input type="hidden" id="todo_list_no_create" name="todo_list_no" value="${todoListJoinVO.todo_list_no}">
-							 <input type="hidden" name="team_no" value="${param.team_no}">
-							 <input type="hidden" name="topic_no" value="${param.topic_no}">
-							 <input type="text" id="todo_list_content_create" name="todo_list_content" placeholder="할일을 추가하세요" required>
-							 <input type="button" onclick="TodoCreate()" value="추가">
-						</form>
+
 						 <br>
 				
 
@@ -362,14 +441,39 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			   <div id="list-done"></div>	
 	        	
 			   	<br><br>
-					완료된 할일 보기 <span></span> <input type="checkbox" class="todo_done_result" value="완료된 할일 보기">		
+					<!--진행  목록 보기 체크박스 : 시작  -->
+						진행중인 할일 보기 <span></span> <input type="checkbox" class="before_todo_done" name="before_todo_done" value="진행중인 할일 보기" checked>
+					<!--진행  목록 보기 체크박스 : 종료  -->	 
+			   		
+			   		<!--완료 목록 보기 체크박스 : 시작  -->
+						완료된 할일 보기 <span></span> <input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
+					<!--완료 목록 보기 체크박스 : 종료  -->		
+					
+					
+					
 				
 				<!-- 개수 나오는 곳 출력 -->
 	        	<div id="count_todo">
-				<p>${countTodo} 개의 할일</p>
+					<p>${countTodo} 개의 할일</p>
 	        	</div>
+	        	
+	        	<!-- 검색 결과 보기 : 시작  --> 
+			   	<div id="todo_search_result">
+			   	<hr>
+					<h2>검색결과</h2>
+						<c:forEach items="${searchTodo}" var="todoListJoinVO">
+							<hr>	
+							<a href="${pageContext.request.contextPath}/todo/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}">
+							${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}
+							</a>
+						</c:forEach>
+					<hr>
+			   	</div>
+			   	<!-- 검색 결과 보기 :끝  --> 
 					
-					<p>할 일  메인 페이지 입니다 </p>
+			<!-- 할일 메인 리스트 : 시작  -->
+			<div id="todo_main_list">
+					<p>투두 메인 페이지 입니다 </p>
 					<p>할일 전체 목록보기	</p> 
 
 					<c:forEach items="${todoPerAll}" var="todoListJoinVO">
@@ -387,6 +491,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 											<span> ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}"</span>
 											
 											
+											<input type="button" class="btn btn-primary" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_content})" value="수정">
 											
 										
 											<br>
@@ -401,21 +506,22 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 											
 									</div>
 								
-											<button type="button" class="btn btn-primary" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_content})">수정</button>
 							</div>
 	
 
 
 							<!-- todo_list_detail 부분 -->
-							<div class="modify-fix-div">
-								<!-- 할일 수정  -->
-								<p>할일 수정하기 메인 페이</p>
+<!-- 							<div class="modify-fix-div"> -->
+<!-- 								할일 수정  -->
+<!-- 								<p>할일 수정하기 메인 페이</p> -->
+<%-- 										<textarea type="text" id="todo_list_content_edit${todoListJoinVO.todo_list_no}" name="todo_list_content">${todoListJoinVO.todo_list_content}</textarea> --%>
+<%-- 										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정"> --%>
 								
-								<!-- 할일 삭제하기 -->
-								<br>
-									<input type="button" onclick="TodoDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="삭제">
-									<button class="modify-cancel">닫기 </button>
-							</div>
+<!-- 								할일 삭제하기 -->
+<!-- 								<br> -->
+<%-- 									<input type="button" onclick="TodoDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="삭제"> --%>
+<!-- 									<button class="modify-cancel">닫기 </button> -->
+<!-- 							</div> -->
 					</div>
 
 
@@ -425,7 +531,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 							<hr>
 		  	   </div>
 		 </div>
-		  	   
+	</div> 	   
+	<!-- 할일 메인 리스트 :  끝  --> 	  	   
 		  	   
 					   <!-- 할일 수정 결과 -->
 					   <div id="todo-edit"></div>
@@ -481,8 +588,11 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				</div>
 				<!-- 완료 목록 보기 : 끝  -->
 							   
-</div>
+</div> 
+		</div>
+
 <!-- 투두리스트 종료 -->
+
 
 
 

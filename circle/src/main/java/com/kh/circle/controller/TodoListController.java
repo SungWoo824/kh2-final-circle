@@ -37,6 +37,9 @@ public class TodoListController {
 			model.addAttribute("team_no", team_no);
 			model.addAttribute("topic_no", topic_no);
 			int member_no = (int)session.getAttribute("member_no");		
+			
+			//todo_list_content 받아오기 
+//			String todo_list_content = todoListJoinVO.getTodo_list_content();
 				
 			//할일 목록 출력
 			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
@@ -44,7 +47,11 @@ public class TodoListController {
 			//할일 전체 개수 출력 
 			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
 			
+			//완료 개수 출력
+			model.addAttribute("countDone", todoListDao.countDone(team_no, member_no));
 			
+//			//검색 개수 출력
+//			model.addAttribute("countSearch", todoListDao.countSearch(team_no, member_no, todo_list_content));
 			
 
 			return "todo/todo_list_main";
@@ -159,6 +166,39 @@ public class TodoListController {
 			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
 			
 			return "todo/todo_list_delete";
+		}
+		
+		//투두리스트 완료 목록에서 삭제 
+		@PostMapping("/todo_list_done_delete")
+		public String todo_list_done_delete (HttpSession session, Model model,
+										@RequestParam int team_no, 
+										@RequestParam int topic_no, 
+										@RequestParam int todo_list_no) {
+			//메인으로 정보 전송
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no", topic_no);
+			model.addAttribute("todo_list_no",todo_list_no);
+
+			int member_no = (int)session.getAttribute("member_no");
+
+			
+			//할일 삭제하기 
+			TodoListDto todoListDto = TodoListDto.builder()
+					.member_no(member_no)
+					.todo_list_no(todo_list_no)
+					.build();
+			todoListDao.deleteTodo(todoListDto);
+			
+			//할일 전체 개수 출력 
+			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
+			
+			//완료 개수 출력
+			model.addAttribute("countDone", todoListDao.countDone(team_no, member_no));
+			
+			//리스트 보내기
+			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			
+			return "todo/todo_list_done_delete";
 		}
 		
 		//할일 수정(list_detail-> 에서 옴)
