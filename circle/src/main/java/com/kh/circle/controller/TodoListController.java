@@ -108,7 +108,7 @@ public class TodoListController {
 			
 			model.addAttribute("searchTodo", todoListDao.searchTodo(team_no, member_no, todo_list_content));
 					
-			return "chat/todo_list_detail";
+			return "todo/todo_list_detail";
 		}
 
 		
@@ -191,7 +191,7 @@ public class TodoListController {
 			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
 
 			
-			return "chat/todo_list_edit";
+			return "todo/todo_list_edit";
 		}
 		
 		//할일 완료 시키기
@@ -241,7 +241,7 @@ public class TodoListController {
 			
 			model.addAttribute("searchTodo", todoListDao.searchTodo(team_no, member_no, todo_list_content));
 					
-			return "chat/todo_done_result";
+			return "todo/todo_done_result";
 		}
 				
 		
@@ -267,7 +267,7 @@ public class TodoListController {
 			//할일 전체 개수 출력 
 			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
 
-			return "chat/todo_back_done";
+			return "todo/todo_back_done";
 		}	
 
 }
