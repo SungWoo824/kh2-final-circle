@@ -87,6 +87,32 @@ $(function(){
 		}
 	});
 	
+	//선택 다운로드
+	$("#choice-download").click(function(){
+		
+		var dcheck = $(".file-list-form").find("input[type=checkbox]:checked");
+		console.log(dcheck);
+		if(!dcheck.length){
+			alert("파일 다운로드를 위해 1개 이상 선택해주세요")
+		}
+		else{
+			var form = $("<form>").attr("action", "zipdownload").attr("method", "post");
+			
+			//dcheck만큼 반복해서 추가
+				for(var i=0; i < dcheck.length; i++){
+							var test = $(dcheck[i]).val();
+							console.log(test);
+							var input = $("<input>").attr("type", "hidden").attr("name", "drive_file_no").val(test);
+							form.append(input);
+				}
+
+				$("body").append(form);
+				form.submit();
+				form.remove();
+		}
+	});
+	
+
 	$(".fdel-one").click(function (){
 		return confirm("파일을 삭제하시겠습니까?");
 
@@ -188,7 +214,6 @@ $(function(){
 	})
 
 
-	//다중다운로드
 	
 	
 });
@@ -285,7 +310,6 @@ $(function(){
                       <div>드라이브</div>
             </div>
 			<div class="chat-menu-center">
-			
 
 
              </div> 
@@ -325,7 +349,7 @@ $(function(){
 						<div class="fdel-btn">
 							<button class="file-all-choice-btn btn btn-light" id="noCheckAll">전체선택</button>
 							<button class="file-all-Release-btn btn btn-light" id="noReleaseAll">전체해제</button>
-							<button class="file-choice-download-btn btn btn-secondary">선택다운로드</button>
+							<button class="file-choice-download-btn btn btn-secondary" id="choice-download">선택다운로드</button>
 							<button class="file-choice-delete-btn btn btn-secondary">선택삭제</button>
 							<button class="myfile-btn allfile btn btn-primary" data-tab="alltab">모든 파일보기</button>
 							<button class="myfile-btn current btn btn-primary" data-tab="mytab">내 파일보기</button>
@@ -380,6 +404,8 @@ $(function(){
 										</div>
 										
 										<!-- 페이징 -->
+										
+										
 										<div>
 											<ul class="pagination dfpaging" style="justify-content: center;">
 							                    <c:if test="${pagination.curPage ne 1}">
@@ -398,7 +424,6 @@ $(function(){
 								                            <li class="page-item">
 														      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&drive_name=${param.drive_name }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
 														    </li>
-							                                
 							                            </c:otherwise>
 							                        </c:choose>
 							                    </c:forEach>
@@ -457,29 +482,28 @@ $(function(){
 									<!-- 페이징 -->
 										<div>
 											<ul class="pagination" style="justify-content: center;">
-							                    <c:if test="${pagination.curPage ne 1}">
+							                    <c:if test="${myFilePagination.curPage ne 1}">
 							                    	<li class="page-item disabled">
-							                        	<a class="page-link" href="#" onClick="fn_paging('${pagination.prevPage }')">&laquo;</a> 
+							                        	<a class="page-link" href="#" onClick="fn_paging('${myFilePagination.prevPage }')">&laquo;</a> 
 							                        </li>
 							                    </c:if>
-							                    <c:forEach var="pageNum" begin="${pagination.startPage }" end="${pagination.endPage }">
+							                    <c:forEach var="pageNum" begin="${myFilePagination.startPage }" end="${myFilePagination.endPage }">
 							                        <c:choose>
-							                            <c:when test="${pageNum eq  pagination.curPage}">
+							                            <c:when test="${pageNum eq  myFilePagination.curPage}">
 							                            	<li class="page-item active">
 														      <span style="font-weight: bold;"><a class="page-link" href="#" onClick="fn_paging('${pageNum }')">${pageNum }</a></span>
 														    </li>
 							                            </c:when>
 							                            <c:otherwise>
 								                            <li class="page-item">
-														      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&drive_name=${param.drive_name }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
+														      <a href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no }&member_no=${sessionScope.member_no }&drive_name=${param.drive_name }&curPage=${pageNum}" class="page-link" onClick="fn_paging('${pageNum }')">${pageNum }</a> 
 														    </li>
-							                                
 							                            </c:otherwise>
 							                        </c:choose>
 							                    </c:forEach>
-							                    <c:if test="${pagination.curPage ne pagination.pageCount && pagination.pageCount > 0}">
+							                    <c:if test="${myFilePagination.curPage ne myFilePagination.pageCount && myFilePagination.pageCount > 0}">
 							                    	<li class="page-item">
-							                        	<a href="#" class="page-link" onClick="fn_paging('${pagination.nextPage }')">&raquo;</a> 
+							                        	<a href="#" class="page-link" onClick="fn_paging('${myFilePagination.nextPage }')">&raquo;</a> 
 							                    	</li>
 							                    </c:if> 
 							                </ul>
