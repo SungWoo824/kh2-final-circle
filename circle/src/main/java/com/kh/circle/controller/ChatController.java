@@ -38,14 +38,17 @@ import com.kh.circle.repository.TopicDao;
 import com.kh.circle.repository.VoteCreateDao;
 import com.kh.circle.service.TeamEmailService;
 import com.kh.circle.service.TeamService;
+
 import com.kh.circle.vo.ChatFileVo;
 import com.kh.circle.vo.ChatVo;
+
 import com.kh.circle.vo.TodoListJoinVO;
 import com.kh.circle.vo.TopicRestVO;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+
 @Controller
 @RequestMapping("/chat")
 public class ChatController {
@@ -84,6 +87,8 @@ public class ChatController {
 	@GetMapping("/topic_main")
 	public String topic_main(@RequestParam int team_no,
 							@RequestParam int topic_no,
+							@ModelAttribute TodoListDto todoListDto,
+							@ModelAttribute TodoListJoinVO todoListJoinVO,
 							Model model, HttpSession session) {
 		List<TopicDto> topicList = teamService.teamTopicList(team_no,(int)session.getAttribute("member_no"));
 		model.addAttribute("topicDto", topicDao.topicChange(topic_no));
@@ -105,6 +110,16 @@ public class ChatController {
 		//토픽 초대리스트
 		List<TopicMemberDto> inviteTopicList = topicDao.inviteTopicList(team_no,topic_no);
 		model.addAttribute("inviteTopicList", inviteTopicList);
+		
+		//투두리스트 관련
+		int member_no = (int)session.getAttribute("member_no");	
+			//할일 목록 출력
+			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			
+			//할일 개수 출력
+			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
+			
+			
 		
 		return "chat/topic_main";
 	}
@@ -306,68 +321,18 @@ public class ChatController {
 
 }
 
-	//투두 리스트 
-	@GetMapping("/todo_list_create")
-	public String todo_list_create(@RequestParam int team_no, 
-								   @RequestParam int topic_no,
-								   @ModelAttribute TodoListJoinVO todoListJoinVO,
-								   Model model, HttpSession session) {
-		int member_no =(int)session.getAttribute("member_no");
+	
+	
+	
 
-		model.addAttribute("team_no", team_no);
-
-		return "chat/todo_list_create";
-}
-	//투두 리스트 할일 등록 
-	@PostMapping("/todo_list_create")
-	public String todo_list_create(@RequestParam int team_no, 
-								   @RequestParam int topic_no,
-								   @ModelAttribute TodoListDto todoListDto,
-								   @ModelAttribute TodoListJoinVO todoListJoinVO,
-								   HttpSession session , Model model) {
-		
-		model.addAttribute("team_no", team_no);
-		//todo_list_content 받아오기 
-		String todo_list_content = todoListDto.getTodo_list_content();
-		
-		//투두 리스트 겟 시퀀스 생성
-		int todo_list_no =todoListDao.getSequence();
-		
-		//멤버 세션 받아오기
-		int member_no = (int) session.getAttribute("member_no");
-
-		//할일 추가하기 
-		todoListDto = TodoListDto.builder()
-					.todo_list_no(todo_list_no)
-					.topic_no(topic_no)
-					.member_no((int) session.getAttribute("member_no"))
-					.team_no(team_no)
-					.todo_list_content(todo_list_content)
-					.build();
-
-		//할일 추가하면 DB에 등록
-		todoListDao.todoListCreate(todoListDto);
-		
-//		//할일 목록 출력
-//		todoListJoinVO = TodoListJoinVO.builder()
-//										.member_no(member_no)
-//										 .team_no(team_no)
-//										.build(); 
-//		todoListDao.todoPerAll(member_no, team_no);
-		//할일 목록 출력
-		model.addAttribute("team_no", team_no);
-//		int member_no = (int)session.getAttribute("member_no");
-		model.addAttribute("todoPerAll", todoListDao.todoPerAll(member_no, team_no));
+//
+//		model.addAttribute("team_no", team_no);
+//
 //		return "chat/todo_list_create";
-		 
-		
-		return "redirect:../chat/todo_list_create?team_no="+team_no+"&topic_no="+topic_no;
-}
-	@GetMapping("/todo_list_per")
-	public String todo_list_per(@RequestParam int team_no, 
-								HttpSession sesison, Model model) {
-		return "chat/todo_list_per";
-	}
+//}
+
+
+
 	
 		//토픽 정보변경(토픽소유자만)
 		@PostMapping("/edittopic")
@@ -405,6 +370,7 @@ public class ChatController {
 		}
 		
 		
+
 		//토픽 초대(같은 토픽에 참여하고있지 않은 팀 리스트)
 		@PostMapping("/invitetopic")
 		public String topicInvite(@RequestParam List<Integer> member_no, 
@@ -418,6 +384,7 @@ public class ChatController {
 			return "redirect:/chat/topic_main";
 			
 		}
+
 		
 		
 		//토픽 삭제

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -53,25 +54,48 @@ $(function(){
 	        			<div id="bodyContents" class="menu33-slide">   
 	        			
 							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
-	        				<!-- 목록으로 버튼 if처리해야함 -->
+	        				
 				            <h3>투두 리스트</h3>
-
+				            
+				            <!-- 할일 검색하기 -->
+				            <form action="todo_list_search" method="post">
+				            	<input type="hidden" name="team_no" value="${param.team_no}">
+				            	<input type="text" name="todo_list_content" placeholder="할일의 제목을  검색하세요">
+				            	<input type="submit" value="검색">
+				            
+				            </form>
+							<br>
 							<!-- 할일 추가하기 버튼 -->
 							<form action="todo_list_create" method="post">
 								<input type="hidden" name="team_no" value="${param.team_no}">
 								<input type="hidden" name="topic_no" value="${param.topic_no}">
-								<input type="text" name="todo_list_content" required>
+								<input type="text" name="todo_list_content" placeholder="할일을 추가하세요" required>
 								<input type="submit" value="추가">
-						
-								<!-- 추가된 것 목록 리스트 -->
-								<div>
-								<p>할일 목록보기	</p>
-								<c:forEach items="${todoPerAll}" var="todoListJoinVO">
-									<c:out value="${todoListJoinVO.todo_list_content}">${todoListJoinVO.todo_list_content}</c:out>
-									<c:out value="${todoListJoinVO.topic_name}">${todoListJoinVO.topic_name}</c:out>
-								</c:forEach>						
-								</div>
 							</form>
+							
+								<!-- 할일 전체 목록 -->
+								<p>할일 전체 목록보기	</p>
+								<c:forEach items="${todoPerAll}" var="todoListJoinVO">
+								<hr> 
+									<!-- 할일 목록 누르면 할일상세페이지(todo_list_detail)로 이동 -->
+									<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}">
+									${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name}
+									</a>
+								<hr>
+								</c:forEach>						
+								
+								<!-- 검색 결과 보기 -->
+								<h2>검색결과</h2>
+									<c:forEach items="${searchTodo}" var="todoListJoinVO">
+										<hr>	
+										<a href="${pageContext.request.contextPath}/chat/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}">
+											${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name}
+										</a>
+									</c:forEach>	
+							
+
+								
+								</div>
 							
 							
 	        
