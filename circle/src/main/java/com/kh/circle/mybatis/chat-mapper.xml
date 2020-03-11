@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into chat_list values(#{chat_no},#{topic_no},#{member_no},#{team_no},#{chat_content},sysdate,#{status})
 	</insert>
 	<select id="topicChatList" parameterType="int" resultType="chatVo">
-		select cl.* , member.member_name from (select * from chat_list  where topic_no = #{topic_no} and (chat_status = 2 or CHAT_STATUS=4))cl inner join member on member.member_no=cl.member_no order by cl.chat_no desc
+		select cl.* , member.member_name,chat_file.chat_file_type from (select * from chat_list  where topic_no = #{topic_no} and (chat_status = 2 or CHAT_STATUS=4))cl inner join member on member.member_no=cl.member_no left outer join chat_file on chat_file.chat_no = cl.chat_no order by cl.chat_no desc
 	</select>
 	<select id="memberContainTopic" parameterType="Map" resultType="int">
 		select topic_no from topic_member where member_no=#{member_no} and team_no = #{team_no}
@@ -18,9 +18,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select chat_no_seq.nextval from dual
 	</select>
 	<insert id="fileinsert" parameterType="chatFileVo">
-		insert into chat_file values(#{chat_file_no},#{chat_no},#{topic_no},#{member_no},#{team_no},#{chat_file_uploadname},#{chat_file_size},sysdate)
+		insert into chat_file values(#{chat_file_no},#{chat_no},#{topic_no},#{member_no},#{team_no},#{chat_file_uploadname},#{chat_file_size},sysdate,#{chat_file_type})
 	</insert>
 	<select id="getFileSequence" resultType="int">
 		select chat_file_no_seq.nextval from dual
+	</select>
+	<select id="chatImagePreview" parameterType="int" resultType="chatFileVo">
+		select * from chat_file where chat_no = #{chat_no}
+	</select>
+	<select id="sendChatFile" parameterType="int" resultType="chatFileVo">
+		select * from chat_file where chat_file_no = #{chat_file_no}
 	</select>
 </mapper>
