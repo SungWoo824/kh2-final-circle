@@ -5,6 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <!--bootstrap template-->
+	<link rel="icon" href="${pageContext.request.contextPath}/resources/image/logofavi.png">
+
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	
@@ -224,7 +226,7 @@ $(function(){
 	//입력을 마치면(blur) 비동기통신으로 아이디 유무를 검사
 	$("#check-btn").attr("disabled",true);
 	
-	$("input[name=topic_name]").blur(function(){
+	$("input[name=topic_name]").on('input',function(){
 		
 		
 		var topic_name = $(this).val();
