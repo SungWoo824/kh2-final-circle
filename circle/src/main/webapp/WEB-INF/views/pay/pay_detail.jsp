@@ -94,6 +94,9 @@ function rs(){
 <input type="hidden" name="vat_amount" value="500">
 <input type="hidden" name="tax_free_amount" value="0">
 <input type="hidden" name="item_name" value="1개월권">
+<input type="hidden" name="team_no" value="${param.team_no }">
+<input type="hidden" name="team_name" value="${param.team_name }">
+<input type="hidden" name="team_domain" value="${param.team_domain }">
 <br>
 <input type="submit" value="선택">
 <br>
@@ -114,6 +117,9 @@ function rs(){
 <input type="hidden" name="vat_amount" value="500">
 <input type="hidden" name="tax_free_amount" value="0">
 <input type="hidden" name="item_name" value="6개월권">
+<input type="hidden" name="team_no" value="${param.team_no }">
+<input type="hidden" name="team_name" value="${param.team_name }">
+<input type="hidden" name="team_domain" value="${param.team_domain }">
 <br>
 <input type="submit" value="선택">
 <br>
@@ -135,6 +141,9 @@ function rs(){
 <input type="hidden" name="vat_amount" value="500">
 <input type="hidden" name="tax_free_amount" value="0">
 <input type="hidden" name="item_name" value="1년권">
+<input type="hidden" name="team_no" value="${param.team_no }">
+<input type="hidden" name="team_name" value="${param.team_name }">
+<input type="hidden" name="team_domain" value="${param.team_domain }">
 <br>
 <input type="submit" value="선택">
 <br>

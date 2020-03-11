@@ -87,6 +87,9 @@ public class TeamServer extends TextWebSocketHandler{
 			teamList.get(team_no).broadcast(session, data, containList);
 		
 		} else if(status == vote) {
+			int team_no = data.getTeam_no();
+			data.setMember_name((String) session.getAttributes().get("member_name"));
+			data.setMember_no((int)session.getAttributes().get("member_no"));
 			
 		}
 	}

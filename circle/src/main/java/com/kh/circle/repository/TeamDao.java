@@ -29,4 +29,5 @@ public interface TeamDao {
 	boolean teamMemberCheck(int member_no, int team_no);
 	void changeAuth(TeamMemberDto teamMemberDto);
 	String checkPosition(int member_no, int team_no);
+	List<MemberListVO> minorPosition(int team_no);
 }
