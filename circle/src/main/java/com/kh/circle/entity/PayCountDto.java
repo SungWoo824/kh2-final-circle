@@ -7,6 +7,6 @@ import lombok.Data;
 
 @Data @Builder @AllArgsConstructor @NoArgsConstructor
 public class PayCountDto {
-	String member_email, term;
-	int total_count;
+	int one_month, six_month, one_year;
+	String user_id;
 }

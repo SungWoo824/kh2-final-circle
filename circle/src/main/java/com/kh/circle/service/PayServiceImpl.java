@@ -57,6 +57,7 @@ public class PayServiceImpl implements PayService{
 				.port(8080)
 				.path("/pay/")
 				.toUriString();
+
 		body.add("approval_url", baseUrl + "success");
 		body.add("fail_url", baseUrl + "fail");
 		body.add("cancel_url", baseUrl + "cancel");
@@ -83,7 +84,6 @@ public class PayServiceImpl implements PayService{
 				.aid("")
 				.term(vo.getTerm())
 				.price(vo.getPrice())
-				.countAll(payDao.countAll("준비", vo.getItem_name()))
 			.build();
 		payDao.insertReady(payDto);
 		return returnVO;

@@ -168,13 +168,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	where team_no = #{team_no}
 	</update>
 	
-	<!-- 등급 양도 -->
-	<update id="grantPosition" parameterType="map">
-	update team_member 
-	set member_position = ${member_position} 
-	where member_no=#{member_no} and team_no=#{team_no} 
-	</update>
-	
 	<!-- 회원 권환 변경 -->
 	<update id="changeAuth" parameterType="teamMemberDto">
 	update team_member 
@@ -206,5 +199,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			 where ${type} like '%'||#{value}||'%' 
 		</if>
 		order by team_no desc
+	</select>
+	
+	<!-- 지정된 팀에서 준회원만 뽑을때 -->
+	<select id="minor" resultType="memberListVO" parameterType="int">
+		select member.member_no,member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='준회원')tm 
+			inner join member on member.member_no = tm.member_no
 	</select>
 </mapper>

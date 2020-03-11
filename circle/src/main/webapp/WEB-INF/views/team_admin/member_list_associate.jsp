@@ -118,10 +118,9 @@ $(function(){
 								      <li class="nav-item">
 								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
 								      </li>
-								      
-								<!--       <li class="nav-item"> -->
-								<!--         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
-								<!--       </li> -->
+								 	  <li class="nav-item"><a class="nav-link"
+											href="${pageContext.request.contextPath}/plan/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">보유중인
+												플랜 보기</a></li>
 								    </ul>
 								    <form class="form-inline my-2 my-lg-0">
 								      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
