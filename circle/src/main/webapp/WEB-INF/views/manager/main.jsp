@@ -104,9 +104,7 @@ function getfileSize(x) {
         </a>
         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-<!--             <h6 class="collapse-header">Login Screens:</h6> -->
-            <a class="collapse-item" href="#">채팅1</a>
-            <a class="collapse-item" href="#">채팅2</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/manager/profit?type=&value=">전체 결제  내역</a>
             <div class="collapse-divider"></div>
           </div>
         </div>
@@ -361,7 +359,7 @@ function getfileSize(x) {
 						<div class="card border-primary mb-3 admin-card" style="width: 20rem; height: 15rem; margin:auto;">
 						  <div class="card-header">이번달 매출</div>
 						  <div class="card-body admin-card-body">
-						    <h4 class="card-title">Primary card title</h4>
+						    <h4 class="card-title">${profit }원</h4>
 						    <p class="card-text">
 						    	<a href="#"></a>
 						    </p>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.circle.entity.MemberDto;
+import com.kh.circle.entity.PayDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.vo.BoardVo;
 
@@ -76,6 +77,19 @@ public class ManagerDaoImpl implements ManagerDao{
 	public void memberAdminGrant(int member_no) {
 		sqlSession.update("member.adminGrant", member_no);
 	}
-
 	
+	@Override
+	public int profit() {
+		return sqlSession.selectOne("pay.profit");
+	}
+	
+	@Override
+	public List<PayDto> profitList() {
+		return sqlSession.selectList("pay.profitList");
+	}
+	
+	@Override
+	public int profitListCount(BoardVo boardVo) {
+		return sqlSession.selectOne("pay.profitListCount", boardVo);
+	}
 }

@@ -139,4 +139,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update pay set countall=1 where partner_user_id=#{partner_user_id} and item_name=#{item_name}
 	</update>
 	
+	<select id="profit" resultType="Integer">
+		select sum(total_amount) from pay where <![CDATA[approved_time>sysdate-31]]>
+	</select>
+	
+	<select id="profitList" resultType="payDto">
+		select*from pay where status='완료' or status='취소완료'
+	</select>
+	
+	<select id="profitListCount" resultType="int" parameterType="boardVo">
+		select count(*) from pay
+		<if test="!type.equals('')">
+			 where ${type} like '%'||#{value}||'%' 
+		</if>
+		order by no desc
+	</select>
 </mapper>

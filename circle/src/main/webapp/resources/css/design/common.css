@@ -997,7 +997,10 @@ background-color:#f8f8f8;
  	-webkit-transition: .2s ease-out;
  	text-align: center;
  }
- 
+.admin-cardy-body{
+	margin: auto;
+	padding-top:unset;
+}
 .admin-card-body{
 	margin: auto;
 	padding-top:65px;

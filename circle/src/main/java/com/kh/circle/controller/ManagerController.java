@@ -34,6 +34,7 @@ public class ManagerController {
 		model.addAttribute("teamCount", managerDao.teamCount());
 //		model.addAttribute("fileTotalSize",managerDao.fileTotalSize());
 		model.addAttribute("managerCount", managerDao.managerCount());
+		model.addAttribute("profit",managerDao.profit());
 		return "manager/main";
 	}
 	
@@ -57,10 +58,22 @@ public class ManagerController {
 		return "manager/member";
 	}
 	
-	@GetMapping("/payment")
-	public String payment() {
+	@GetMapping("/profit")
+	public String payment(Model model,
+			HttpSession session,
+			@RequestParam(defaultValue="1") int curPage,
+			@ModelAttribute BoardVo boardVo) {
 		
-		return "manager/payment";
+		int listCount = managerDao.profitListCount(boardVo);
+		Pagination pagination = new Pagination(listCount, curPage);
+		
+		boardVo.setStartIndex(pagination.getStartIndex()+1);
+		boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
+		
+		model.addAttribute("profitList",managerDao.profitList());
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("pagination", pagination);
+		return "manager/profit";
 	}
 	
 	@GetMapping("/team")
