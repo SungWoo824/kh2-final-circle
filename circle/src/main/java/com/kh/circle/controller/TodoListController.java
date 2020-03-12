@@ -39,7 +39,7 @@ public class TodoListController {
 			int member_no = (int)session.getAttribute("member_no");		
 			
 			//todo_list_content 받아오기 
-//			String todo_list_content = todoListJoinVO.getTodo_list_content();
+			String todo_list_content = todoListJoinVO.getTodo_list_content();
 				
 			//할일 목록 출력
 			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
@@ -50,9 +50,7 @@ public class TodoListController {
 			//완료 개수 출력
 			model.addAttribute("countDone", todoListDao.countDone(team_no, member_no));
 			
-//			//검색 개수 출력
-//			model.addAttribute("countSearch", todoListDao.countSearch(team_no, member_no, todo_list_content));
-			
+
 
 			return "todo/todo_list_main";
 	}
@@ -123,17 +121,28 @@ public class TodoListController {
 		//검색 결과 비동기로 받기 
 		@PostMapping("/todo_list_search_result")
 		public String todo_list_search(@RequestParam int team_no,
-									   @RequestParam int member_no,
+									   @RequestParam int topic_no,
 									   @RequestParam String todo_list_content,
-									   Model model) {
+									   Model model, HttpSession session) {
+			
+
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no", topic_no);
+			int member_no = (int)session.getAttribute("member_no");		
+			
+				
+			//할일 목록 출력
+			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
 			
 			//할일 전체 개수 출력 
 			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
 			
-			model.addAttribute("searchTodo", todoListDao.searchTodo(team_no, member_no, todo_list_content));
-
-			//할일 목록 출력
-			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
+			//완료 개수 출력
+			model.addAttribute("countDone", todoListDao.countDone(team_no, member_no));
+			
+//			//검색 개수 출력
+//			model.addAttribute("countSearch", todoListDao.countSearch(team_no, member_no, todo_list_content));
+			
 			return "todo/todo_list_search_result";
 		}
 			

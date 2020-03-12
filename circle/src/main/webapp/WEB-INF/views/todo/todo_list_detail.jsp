@@ -9,52 +9,142 @@
 <head>
 <meta charset="UTF-8">
 <title>할일 상세보기 페이지</title>
-<script>
 
-//검색 결과창 숨기기 
+<!-- 투두 리스트 관련 스크립트 -->
+<script>
+// 검색 결과창 숨기기 
 $(function(){
 	$("#todo_search_result").hide();
 });
 
+//할일 추가 하기 열고 닫기 
+$(function(){
+	
+	$("#todo_create_btn").show();
+	$("#todo_create_show").hide();
+	
+		$("#todo_create_btn").click(function() {
+			$("#todo_create_show").show('3000');
+			$("#todo_create_btn").hide('fast');
+	});
+		$("#todo_create_btn").blur(function() {
+			$("#todo_create_btn").show();
+			$("#todo_create_show").hide();
+		});	
+		
+
+		$("#create_cancle").click(function(){
+// 			$(this).parent().parent().children("#todo_create_btn").show('3000');
+// 	        $(this).parent().parent().children("#todo_create_show").hide('fast');
+	        $("#todo_create_btn").show('3000');
+			$("#todo_create_show").hide('fast');
+		});
+});
+
 
 //클릭 하면 열고 닫기 : 할일 목록 상세보기 (Detail, Edit , Delete 있는 거 )
-$(function(){
-	$(".modify-fix-div").hide();
-	$(".modify-origin-div").show();
+
+// $(function(){
+// 	$(".modify-fix-div").hide();
+// 	$(".modify-origin-div").show();
 	
-	$(".modify-origin-div").click(function() {
-      $(this).parent().children(".modify-fix-div").show('3000');
-      $(this).hide('fast');
-	    $(".modify-origin-div").hide();
-  });
+// 	$(".modify-origin-div").click(function() {
+//       $(this).parent().children(".modify-fix-div").show('3000');
+//       $(this).hide('fast');
+// 	    $(".modify-origin-div").hide();
+//   });
 	
-	//취소 버튼 
-	$(".modify-cancel").click(function(){
-		$(this).parent().parent().children(".modify-origin-div").show('3000');
-      $(this).parent().parent().children(".modify-fix-div").hide('fast');
-      $(".modify-origin-div").show();
-	})
-});
+// 	//취소 버튼 
+// 	$(".modify-cancel").click(function(){
+// 		$(this).parent().parent().children(".modify-origin-div").show('3000');
+//       $(this).parent().parent().children(".modify-fix-div").hide('fast');
+//       $(".modify-origin-div").show();
+// 	})
+// });
 
 //할일 클릭 하면 열고 닫기 : 할일완료 목록 보기 )
+// $(function(){
+// 	$("#list-done-result").hide();
+// // 	$("#list-content").show();
+	
+// 	$(".todo_done_result").click(function() {
+//         $("#list-done-result").show();
+// //         $(this).hide('fast');
+// 	    $("#todo_list_all").hide();
+//     });
+	
+// 	//돌아가기 
+// 	$(".todo_list").click(function(){
+// 		$("#todo_list_all").show('3000');
+// 		$("#list-done-result").hide();
+// // 		$("#list-content").show();
+// 	})
+// });
+
 $(function(){
 	$("#list-done-result").hide();
-//	$("#list-content").show();
-	
-	$(".todo_done_result").click(function() {
-      $("#list-done-result").show();
-//       $(this).hide('fast');
-	    $("#todo_list_all").hide();
-  });
-	
-	//돌아가기 
-	$(".todo_list").click(function(){
-		$("#todo_list_all").show('3000');
-		$("#list-done-result").hide();
-//		$("#list-content").show();
-	})
+	$("input[name=todo_done_result]").change(function(){	
+		if($(this).prop("checked")){
+			$("#list-done-result").show();
+// 			 $(this).hide('fast');
+// 		 	    $("#todo_main_list").hide();
+		}
+		else{
+	 		$("#todo_list_all").show('3000');
+	 		$("#list-done-result").hide();
+// 			$("#todo_main_list").show();	
+		}
+	});
 });
 
+//완료 목록 삭제하기 
+function TodoDoneDelete(team_no,topic_no,todo_list_no){
+// 	var member_no = ${member_no};
+// 	var todo_list_no = $("#todo_list_no_delete"+todo_list_no).val();  //인풋에 있는 벨류를 가져올게 
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
+
+// 	var url=$('#form_todo_delete').attr('action');
+// 		var deleteData=$('#form_todo_delete').serialize();
+
+		var  ajaxOption = {
+			url : "${pageContext.request.contextPath}/todo/todo_list_done_delete?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no,
+			type : "post",
+			dataType : "html",
+			cache : false
+	};
+		$.ajax(ajaxOption).done(function(data){
+			$('#list-content').html(data);
+
+			});
+}
+
+
+//진행중인 할일 보기 
+$(function(){
+	
+// 	$("#todo_main_list").hide();
+	$("input[name=before_todo_done]").change(function(){
+		
+		if($(this).prop("checked")){
+		 	    $("#todo_main_list").show();
+// 			$("#list-done-result").hide();
+// 			 $(this).hide('fast');
+		}
+		else{
+// 	 		$("#todo_list_all").hide('3000');
+// 	 		$("#list-done-result").show();
+			$("#todo_main_list").hide();
+			
+		}
+		
+	});
+		
+	
+});
+	
+	
+	
 //투두리스트 메인으로 이동 
 function HomeTodo(team_no,topic_no,member_no){
 
@@ -67,7 +157,7 @@ function HomeTodo(team_no,topic_no,member_no){
 	$.ajax(ajaxOption).done(function(data){
 
 //				$('#todo-edit').html(data);
-//			$('#todo_list_all').html(data);
+// 			$('#todo_list_all').html(data);
 			$('#list-content').html(data);
 			
 		});
@@ -77,10 +167,10 @@ function HomeTodo(team_no,topic_no,member_no){
 //할일 완료 버튼 누르기 
 function TodoDone(team_no,topic_no,todo_list_no){
 	
-//	var team_no = ${param.team_no};
-//	var topic_no = ${param.topic_no}
-//	var member_no = ${member_no};
-//	var todo_list_no = $("#todo_list_no_done").val();
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no}
+// 	var member_no = ${member_no};
+// 	var todo_list_no = $("#todo_list_no_done").val();
 	
 	var  ajaxOption = {
 			url : "${pageContext.request.contextPath}/todo/todo_done?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no,
@@ -89,10 +179,10 @@ function TodoDone(team_no,topic_no,todo_list_no){
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
-//				$('#count-todo').hide();
-								$('#list-content').html(data);
-//				$('#list-content').hide();
-//				$('#list-done').html(data);
+// 				$('#count-todo').hide();
+				$('#list-content').html(data);
+// 				$('#list-content').hide();
+// 				$('#list-done').html(data);
 			});
 	
 }
@@ -101,10 +191,10 @@ function TodoDone(team_no,topic_no,todo_list_no){
 //할일 진행 버튼 누르기 
 function TodoBackDone(team_no,topic_no,todo_list_no){
 	
-//	var team_no = ${param.team_no};
-//	var topic_no = ${param.topic_no}
-//	var member_no = ${member_no};
-//	var todo_list_no = $("#todo_list_no_done").val();
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no}
+// 	var member_no = ${member_no};
+// 	var todo_list_no = $("#todo_list_no_done").val();
 	
 	var  ajaxOption = {
 			url : "${pageContext.request.contextPath}/todo/todo_back_done?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no,
@@ -113,10 +203,10 @@ function TodoBackDone(team_no,topic_no,todo_list_no){
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
-//				$('#count-todo').hide();
+// 				$('#count-todo').hide();
 								$('#list-done-result').html(data);
 				$('#list-content').hide();
-//				$('#list-done').html(data);
+// 				$('#list-done').html(data);
 			});
 	
 }
@@ -136,11 +226,11 @@ function TodoSearch(){
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
-//				$('#todo-list-search').html(data);
-//				$('#list-content').hide();
+// 				$('#todo-list-search').html(data);
+// 				$('#list-content').hide();
 				$('#list-content').html(data);
 				$('#todo_main_list').hide();
-//				$('#todo_list_btn_all').hide();
+// 				$('#todo_list_btn_all').hide();
 			});
 		
 }
@@ -148,33 +238,33 @@ function TodoSearch(){
 
 
 //할일 완료 목록 불러오
-//function todoDoneList(){
-//	var member_no = ${member_no};
-//	var todo_list_no = $("#todo_list_no").val();  //인풋에 있는 벨류를 가져올게 
-//	var team_no = ${param.team_no};
-//	var topic_no = ${param.topic_no};
-//	var todo_list_content = $("#todo_list_content").val();
+// function todoDoneList(){
+// 	var member_no = ${member_no};
+// 	var todo_list_no = $("#todo_list_no").val();  //인풋에 있는 벨류를 가져올게 
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
+// 	var todo_list_content = $("#todo_list_content").val();
 
 
-//		var  ajaxOption = {
-//			url : "./todo_done_result",
-//			type : "GET",
-//			dataType : "html",
-//			data : {team_no:team_no, member_no:member_no,topic_no:topic_no, todo_list_no:todo_list_no,todo_list_content:todo_list_content},
-//			cache : false
-//	};
-//		$.ajax(ajaxOption).done(function(data){
+// 		var  ajaxOption = {
+// 			url : "./todo_done_result",
+// 			type : "GET",
+// 			dataType : "html",
+// 			data : {team_no:team_no, member_no:member_no,topic_no:topic_no, todo_list_no:todo_list_no,todo_list_content:todo_list_content},
+// 			cache : false
+// 	};
+// 		$.ajax(ajaxOption).done(function(data){
 
 			
-//// 			if($("input[name=todo_done_list]").prop('checked', true)) {
-//// 				$('#list-done-result').html(data);
+// // 			if($("input[name=todo_done_list]").prop('checked', true)) {
+// // 				$('#list-done-result').html(data);
 
 
-//				$('#list-done-result').html(data);
-//				$('#list-content').hide();
-//				$('#todo-list-search').hide();
-//			});
-//}
+// 				$('#list-done-result').html(data);
+// 				$('#list-content').hide();
+// 				$('#todo-list-search').hide();
+// 			});
+// }
 
 
 
@@ -190,7 +280,7 @@ function TodoDetail(team_no,todo_list_no,topic_no,todo_list_content){
 	};
 		$.ajax(ajaxOption).done(function(data){
 
-//				$('#todo-edit').html(data);
+// 				$('#todo-edit').html(data);
 				$('#list-content').html(data);
 				
 			});
@@ -202,16 +292,16 @@ function EditTodo(team_no,todo_list_no,topic_no){
 	console.log("11111team_no"+team_no);
 	console.log("t22222odo_list_content"+todo_list_content);
 	console.log("t333333topic_no"+topic_no);
-//	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
-//	var team_no = ${param.team_no};
-//	var topic_no = ${param.topic_no};
+// 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
 	var todo_list_content = $("#todo_list_content_edit"+todo_list_no).val(); 
 
 	
 
 
 		var  ajaxOption = {
-			url : "${pageContext.request.contextPath}/todo/todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
+			url :"${pageContext.request.contextPath}/todo/todo_list_edit?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
 			type : "post",
 			dataType : "html",
 			data : {todo_list_content:todo_list_content},
@@ -221,7 +311,7 @@ function EditTodo(team_no,todo_list_no,topic_no){
 				$('#list-content').html(data);
 // 				$('#todo-edit').html(data);
 // 				$('#list-content').hide();
-//				$(".todo-title").hide();
+// 				$(".todo-title").hide();
 				$(this).parent().children(".modify-fix-div").show();
 			});
 }
@@ -286,8 +376,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			});
 }
 
-</script>  
 
+</script>
 
 </head>
 <body>
@@ -355,7 +445,6 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	        	</div>
 					
 					<p>할일 디테일 페이지에 있음 </p>
-					<p>할일 전체 목록보기	</p> 
 
 <%-- 					<c:forEach items="${todoPerAll}" var="todoListJoinVO"> --%>
 						
@@ -470,7 +559,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				</div>
 				<!-- 완료 목록 보기 : 끝  -->
 							   
-</div>
+
 <!-- 투두리스트 종료 -->			
 </body>
 </html>

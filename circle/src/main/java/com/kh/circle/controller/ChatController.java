@@ -113,7 +113,6 @@ public class ChatController {
 		
 		//투두리스트 관련
 		int member_no = (int)session.getAttribute("member_no");	
-
 			//할일 목록 출력
 			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));
 			
@@ -123,7 +122,7 @@ public class ChatController {
 			//완료 개수 출력
 			model.addAttribute("countDone", todoListDao.countDone(team_no, member_no));
 			
-			//검색 개수 출력
+
 
 
 			
