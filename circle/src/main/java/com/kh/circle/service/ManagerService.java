@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ManagerService {
-	public static String sizeCalculation(long size) {
+	public String sizeCalculation(long size) {
 	    String CalcuSize = null;
 	    int i = 0;
 
@@ -40,3 +40,4 @@ public class ManagerService {
 	}
 
 }
+

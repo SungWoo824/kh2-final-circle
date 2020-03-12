@@ -1,8 +1,6 @@
 package com.kh.circle.repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +81,10 @@ public class ManagerDaoImpl implements ManagerDao{
 	@Override
 	public List<Integer> teamMemCount() {
 		return sqlSession.selectList("team.teamMemCount");
+	}
+	public int currentUserCount() {
+		
+		return 0;
 	}
 
 	

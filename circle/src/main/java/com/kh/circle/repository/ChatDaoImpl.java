@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.ChatFileVo;
 import com.kh.circle.vo.ChatVo;
 
@@ -60,5 +62,26 @@ public class ChatDaoImpl implements ChatDao{
 		
 		return sqlSession.selectOne("chat.sendChatFile", chat_file_no);
 	}
+
+	@Override
+	public ChatFileVo chatFileDownload(int chat_file_no) {
+		return sqlSession.selectOne("chat.filedownload", chat_file_no);
+	}
 	
+	@Override
+	public byte[] getUploadNo(int chat_file_no) throws IOException {
+		File dir = new File("D:/upload/kh2e/chatFile");
+		File file = new File(dir, String.valueOf(chat_file_no));
+		byte[] data = FileUtils.readFileToByteArray(file);
+		return data;
+	}
+
+	@Override
+	public boolean isContainChatMember(int member_no, int topic_no) {
+		TopicMemberDto topicMemberDto = new TopicMemberDto();
+		topicMemberDto.setMember_no(member_no);
+		topicMemberDto.setTopic_no(topic_no);
+		int isContain = sqlSession.selectOne("topic.isContainChatMember", topicMemberDto);
+		return isContain>0;
+	}
 }

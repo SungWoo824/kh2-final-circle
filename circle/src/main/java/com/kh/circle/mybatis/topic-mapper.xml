@@ -133,6 +133,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          insert into topic_member values(#{topic_no},#{member_no},#{team_no},'')
    	</insert>
    	
-   	
+   	<select id="isContainChatMember" parameterType="topicMemberDto" resultType="int">
+   		select count(*) from topic_member where member_no = #{member_no} and topic_no = #{topic_no}
+   	</select>
 	
 </mapper>

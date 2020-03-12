@@ -80,7 +80,6 @@ public class ManagerController {
 		boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
 
 		List<TeamDto> teamList = managerDao.teamList(boardVo);
-		
 		List<DriveFileDto> teamFileTotalSize = managerDao.teamFileTotalSize();
 //		System.out.println(teamFileTotalSize);
 		

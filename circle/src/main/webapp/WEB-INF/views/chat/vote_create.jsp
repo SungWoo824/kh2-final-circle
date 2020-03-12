@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/layoutstyle.css">
     <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/design/toggle.css">
+    <link rel="icon" href="${pageContext.request.contextPath}/resources/image/logofavi.png">
     
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
@@ -56,28 +57,30 @@
 </script>   
 </head>
 
+<div align="center">
+ 
 <form action="vote_create" method="post">
-<!-- 세션 찍어주는 표현식 -->
-<h3>${member_no}</h3>
-<h3>투표 제목			<input type="text" name="vote_create_title" placeholder="제목을 입력하세요" required></h3><br><br>
-<h3>투표 설명(옵션)			<input type="text" name="vote_create_detail" placeholder="설명을 입력하세요"></h3><br><br>
-<h3>보기 목록</h3><br>
-<!-- <input type="text" name="vote_create_option1" placeholder="보기를 입력하세요" required><br><br> -->
-<!-- <input type="text" name="vote_create_option2" placeholder="보기를 입력하세요" required><br><br> -->
-<input type='text' name='category[0].vote_category_content' placeholder='보기를 입력하세요' required><br><br>
-<input type='text' name='category[1].vote_category_content' placeholder='보기를 입력하세요' required><br><br>
-<div class="ins"></div>
-<input type="button" value="+보기 추가" class="option"><br>
-<br><br>
-<h3>
-복수선택</h3>	
-<label class="switch">
+	<br><br>
+  <a style="font-weight: bold; margin-top: 100px; font-size: 25px">투표 만들기</a><br><br>
+  <a class="list-group-item list-group-item-action" style="margin-top: 1%;">투표 제목: <input type="text" name="vote_create_title" placeholder="제목을 입력하세요" required style="border: none;"></a><br>
+  <a class="list-group-item list-group-item-action">투표 설명(옵션)	: <input type="text" name="vote_create_detail" placeholder="설명을 입력하세요" required style="border: none;"></a><br>
+  <a class="list-group-item list-group-item-action">보기 목록<br>
+  <div style="width:100%; height:130px; overflow:auto">
+  	<input type='text' name='category[0].vote_category_content' placeholder='보기를 입력하세요' required style="border: none;"><br><br>
+	<input type='text' name='category[1].vote_category_content' placeholder='보기를 입력하세요' required style="border: none;"><br><br>
+	<div class="ins"></div>
+	</div>
+	<input type="button" value="+보기 추가" class="option"><br>
+	<br><br>
+</a><br>
+<a class="list-group-item list-group-item-action">
+복수 선택 여부  <label class="switch">
 <input type="checkbox"  class="switchp" name="vote_create_plural" value="y">
 <span class="slider round"></span>
 </label>
-<br><br>
-
-<h3>마감 시각			
+</a><br>
+  <a class="list-group-item list-group-item-action">
+  마감 시각			
 <input type="date" name="vote_create_date" required>	
 <select name="vote_create_time">
 <option value="00:00">12:00 AM</option>
@@ -104,24 +107,25 @@
 <option value="21:00">09:00 PM</option>
 <option value="22:00">10:00 PM</option>
 <option value="23:00">11:00 PM</option>
-</select> </h3>
+</select>
+  </a><br>
+<a class="list-group-item list-group-item-action">
 <span>
 공유 대화방			
-
-   <select name="vote_create_topic" >
+<select name="vote_create_topic" >
       <c:forEach var="topicList" items="${topicList}">
          <option value="<c:out value='${topicList }'/>"><c:out value="${topicList}"/></option>
       </c:forEach>
-   </select>
-
+</select>
 </span>
-<br><br>
-		
-		<input type="hidden" name="vote_create_status" id="create" value="y">
-		<input type="hidden" name="team_no" value="${param.team_no }">
-		<input type="hidden" name="topic_no" value="${param.topic_no }">
-		
-		<input type="submit" value="만들기">
+</a><br>
+<a class="list-group-item list-group-item-action">
+  	<input type="hidden" name="vote_create_status" id="create" value="y">
+	<input type="hidden" name="team_no" value="${param.team_no }">
+	<input type="hidden" name="topic_no" value="${param.topic_no }">
+	<input type="submit" value="만들기">
+  	<button onclick="location.href='topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }'">취소</button>
+</a>
 </form>
-<a href="topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button>취소</button></a>
+	</div>
 </html>

@@ -520,6 +520,13 @@ span{
     height: 70px;
     border-radius: 50px;
 }
+
+#vote-creater-img{
+	width: 40px;
+    height: 40px;
+    border-radius: 50px;
+}
+
 .member-mypage-img{
    margin: auto;
    margin-left:2rem;
@@ -1066,6 +1073,11 @@ background-color:#f8f8f8;
     background:#5ea5fe;
     color:white;
   }
+.admin-cardy{
+ 	-webkit-transition: .2s ease-out;
+ 	text-align: center;
+ }
+ 
 .admin-card-body{
    margin: auto;
    padding-top:65px;
@@ -1073,5 +1085,9 @@ background-color:#f8f8f8;
 #chat_dummy{
    height: 80px;
    width: 80px;
+}
+.findpw-submit{
+	height: 2.5rem;
+	margin:1rem
 }
   
