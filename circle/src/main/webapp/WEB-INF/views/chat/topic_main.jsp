@@ -82,6 +82,7 @@
 				
 				var filetype = message.chat_file_type;
 				var filediv = $("<div>");
+				var filedownload = $("<a>").attr("href","filedownload?chat_file_no="+message.chat_no);
 				var fileimg = $("<img>");
 				fileimg.attr("id","chat_dummy");
 				if(filetype.startsWith('text')){
@@ -91,7 +92,8 @@
 				}else{
 					fileimg.attr("src","../resources/image/filedummy.jpeg");
 				}
-				fileimg.appendTo(filediv);
+				fileimg.appendTo(filedownload);
+				filedownload.appendTo(filediv);
 				filediv.appendTo(cardbody);
 				cardbody.appendTo(carddiv);
 				
@@ -1017,7 +1019,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}">
+        <a class="nav-link" href="${pageContext.request.contextPath}/member/mypage">
           <i class="fas fa-fw fa-home"></i>
           <span>서클 메인</span></a>
       </li>
@@ -1272,7 +1274,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 								<c:when test="${chatVo.chat_status==2}">
 									<div class="msg-wrap">
 										<div class="msg-profile">
-											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${chatVo.member_no}'>
 										</div>
 
 										<div class="msg-con">
@@ -1286,7 +1288,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
 									<div class="msg-wrap">
 										<div class="msg-profile">
-											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${member_no}'>
+											<img id="member-profile-img" src='${pageContext.request.contextPath}/member/download?member_no=${chatVo.member_no}'>
 										</div>
 
 										<div class="msg-con">
@@ -1295,13 +1297,25 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 											  <div class="card-body admin-card-body">
 											  <c:choose>
 											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'text')}">
-											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg"></div>
+											    	<div>
+											    		<a href="filedownload?chat_file_no=${chatVo.chat_no}">
+											    		<img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/textdummy.jpeg">
+											    		</a>
+											    	</div>
 											    </c:when>
 											    <c:when test="${fn:startsWith(chatVo.chat_file_type,'image')}">
-											    	<div><img id="chat_dummy" src='${pageContext.request.contextPath}/chat/download?chat_no=${chatVo.chat_no}'></div>
+											    	<div>
+												    	<a href="filedownload?chat_file_no=${chatVo.chat_no}">
+												    	<img id="chat_dummy" src='${pageContext.request.contextPath}/chat/download?chat_no=${chatVo.chat_no}'>
+												    	</a>
+											    	</div>
 											    </c:when>
 											    <c:otherwise>
-											    	<div><img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/filedummy.jpeg"></div>
+											    	<div>
+												    	<a href="filedownload?chat_file_no=${chatVo.chat_no}">
+												    	<img id="chat_dummy" src="${pageContext.request.contextPath}/resources/image/filedummy.jpeg">
+												    	</a>
+											    	</div>
 											    </c:otherwise>
 											    
 											  </c:choose>
@@ -1623,5 +1637,4 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 </div>
 </div>
 </body>
-
 </html>

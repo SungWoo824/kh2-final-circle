@@ -16,8 +16,8 @@
 		$(".email-form").submit(function(e){
 			e.preventDefault();
 			
-			$(this).find("input[type=submit]").prop("disabled", true);
-			$(this).find("input[type=submit]").val("인증번호 발송중...");
+			$(this).find("#sendEmailbutton").prop("disabled", true);
+			$(this).find("#sendEmailbutton").val("인증번호 발송중...");
 			
 			var url = $(this).attr("action"); 
 			var method = $(this).attr("method");
@@ -87,26 +87,48 @@
                         </ul>
                         <ul class="gnb-menu">
                             <li class="login-btn"><a href="member/signin">로그인</a></li>
-<!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
                         </ul>
                     </div>
                 </div>        
         </div>
-        <div class="signup-article">
-			<h3>비밀번호 찾기</h3>
-			<form class="email-form" action="send" method="get">
-				<input type="email" class="email-form-email" name="email" placeholder="이메일 입력">
-				<input type="submit" value="인증번호 보내기">
-			</form>
-		
-			<hr>
-			<form class="validate-form" action="validate" method="get">
-				<input type="text" name="cert" placeholder="인증번호 입력">
-				<input type="submit" value="인증하기">
-			</form>
-			<form class="success-form" action="changepw" method="get">
-				<input type="submit" value="변경 페이지로 이동">
-			</form>
+        <div class="circle-main-content">
+        	<div class="main-bg">
+                    
+                        <div id="fullpage">
+                            <div class="section">
+                                <div class="main-title">
+                                
+                                    <div>
+                                        <span>비밀번호 찾기</span>
+                                        
+                                        <div class="form-group signin-form-group">
+	                                        <form class="email-form" action="send" method="get">
+												<input type="email" id="exampleInputEmail1" class="email-form-email form-control" aria-describedby="emailHelp" name="email" placeholder="이메일 입력">
+												<button type="submit" id="sendEmailbutton" class="btn btn-primary findpw-submit">인증번호 보내기</button>
+											</form>									      
+									    </div>
+									    <div class="signup-article form-group signin-form-group">
+											<form class="validate-form" action="validate" method="get">
+												<input type="text" id="exampleInputPassword1" class="form-control" name="cert" placeholder="인증번호 입력">
+												<input type="submit" class="btn btn-primary findpw-submit" value="인증하기">
+											</form>
+											<form class="success-form" action="changepw" method="get">
+												<input type="submit" class="btn btn-primary findpw-submit" value="변경 페이지로 이동">
+											</form>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section">
+                               
+                            </div>
+                            <div class="section">
+                                
+                            </div>
+                        </div>
+                  
+                </div>
+        
 		</div>
 </body>
 </html>

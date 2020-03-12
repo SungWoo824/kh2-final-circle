@@ -58,8 +58,24 @@
             <exclude-mapping path="/member/signup"/>
             <exclude-mapping path="/resources/**"/>
             <exclude-mapping path="/member/signin"/>
+            <exclude-mapping path="/member/findpw"/>
+            <exclude-mapping path="/member/changepw"/>
+            <exclude-mapping path="/member/send"/>
+            <exclude-mapping path="/member/validate"/>
             <exclude-mapping path="/"/>
+            <exclude-mapping path="/chat/invite_expired"/>
+            <exclude-mapping path="/chat/invite_signin"/>
+            <exclude-mapping path="/chat/invite_signup"/>
+            <exclude-mapping path="/chat/invite_success"/>
             <beans:ref bean="memberAuthenInterceptor"/>
+        </interceptor>
+        <interceptor>
+        	<mapping path="/chat/topic_main"/>
+        	<beans:ref bean="chatInterceptor"/>
+        </interceptor>
+        <interceptor>
+        	<mapping path="/drive/**"/>
+        	<beans:ref bean="driveInterceptor"/>
         </interceptor>
     </interceptors>
 	
