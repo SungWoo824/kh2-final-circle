@@ -48,13 +48,6 @@ public class VoteController {
 		return "chat/vote_detail";
 	}
 	
-//	@GetMapping("/vote_list")
-//	public String list(Model model, HttpSession session) {
-//		model.addAttribute("voteList", voteCreateDao.getVoteList());	
-//		model.addAttribute("member_no", session.getAttribute("member_no"));
-//		return "chat/topic_main";
-//	}
-	
 	@GetMapping("/vote_create")
 	public String create(Model model, HttpSession session, @RequestParam("topic_no") int topic_no) {
 		model.addAttribute("topicList", voteCreateDao.getTopicList((int) session.getAttribute("member_no")));

@@ -101,7 +101,7 @@ function TodoDoneDelete(team_no,topic_no,todo_list_no){
 
 // 	var url=$('#form_todo_delete').attr('action');
 // 		var deleteData=$('#form_todo_delete').serialize();
-
+	
 		var  ajaxOption = {
 			url : "${pageContext.request.contextPath}/todo/todo_list_done_delete?team_no="+team_no+"&topic_no="+topic_no+"&todo_list_no="+todo_list_no,
 			type : "post",
@@ -109,21 +109,9 @@ function TodoDoneDelete(team_no,topic_no,todo_list_no){
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
-// 			$('#list-content').html(data);
-			
-			if($(this).prop("checked")){
-				$('#list-content').html(data);
-				$("#list-done-result").show();
-//	 			 $(this).hide('fast');
-//	 		 	    $("#todo_main_list").hide();
-			}
-			else{
-		 		$("#todo_list_all").show('3000');
-		 		$("#list-done-result").hide();
-//	 			$("#todo_main_list").show();	
-			}
-		});
+			$('#list-content').html(data);
 
+			});
 }
 
 
@@ -390,9 +378,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
 <!--투두리스트 시작 -->
 
-	<div style="overflow-y: scroll;">
 
-   	<!-- 할일 전체 목록 : 시 -->
+  	<!-- 할일 전체 목록 : 시 -->
 	<div id="list-content">
 		
 	   <!--  엑스버튼 / 할 일 제목 , 카운트 개수 : 시작  -->
@@ -406,7 +393,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	       	  
 	       	  <!-- 할 일 제목 , 카운트 개수  -->
 	       	  <div class="p-3 mb-2 bg-primary text-white" style="text-align:center; height: 70px" >
-		      <p> 할 일 / 현재위치 : 토픽 메인 페이지  	<span class="badge badge-light">${countTodo} </span>       </p>
+		      <p> 할 일 / 현재위치 : 완료 삭제 페이지  	<span class="badge badge-light">${countTodo} </span>       </p>
 <!-- 	       		투두 리스트 메인목록보기 :시작 -->
 			
 						<span style="cursor:pointer; color: white;">할 일 메인 목록 보기
@@ -466,7 +453,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 					
 					<!--완료 목록 보기 체크박스 : 시작  -->
 						<span> 완료된 할 일 보기</span> 
-						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기" checked>
+						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
 					<!--완료 목록 보기 체크박스 : 종료  -->		
 				<hr>
 		</div>		
@@ -478,11 +465,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			   <!-- 완료 버튼 누르면 목록에서 사라지기  -->
 			   <div id="list-done"></div>	
 
-				
-				<!-- 진행중인 할일 개수 나오는 곳 출력 -->
-	        	<div id="count_todo">
-					<p>${countTodo} 개의 할 일이 있습니다</p>
-	        	</div>
+			
 
 	        	
 	        	<!-- 검색 결과 보기 : 시작  --> 
@@ -504,6 +487,12 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 					
 			<!-- 할일 메인 리스트 : 시작  -->
 			<div id="todo_main_list">
+			
+				<!-- 진행중인 할일 개수 나오는 곳 출력 -->
+	        	<div id="count_todo" style="text-align: center;">
+					<h3 style="color: grey"> 진행 중인 할 일 목록 </h3>
+					<p>${countTodo} 개의 할 일이 있습니다</p>
+	        	</div>
 
 					<c:forEach items="${todoPerAll}" var="todoListJoinVO">
 						
@@ -516,39 +505,31 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 						<div class="all-div">
 								<div class="modify-origin-div">
 								
-									<div class="todo-title">
-											<span> ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}"</span>
-											<input type="checkbox" class="fa fa-fw fa-pen" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_content})">
+									<div class="todo-title" style=" margin-left:10px;">
+											<span>[ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ]</span>
+											
+											
+												<input type="checkbox" class="fa fa-fw fa-pen" style="float:right; margin-right:10px;" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_content})">
+<!-- 												<span style="float:right; margin-right:10px;">수정하기</span> -->
+						
 						<!--할일 목록 누르면 할일상세페이지(<div id="show_detail">)로 이동 : 종료 -->					
 				   
 											<br>
 											<!-- 할일 완료 시키기 : 시작 -->	
-												<input type="checkbox"  class="fa fa-fw fa-heart fill" onclick="TodoDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="완료">
-												<span>완료하기</span>
+												<input type="checkbox"  class="fa fa-fw fa-heart fill" style="float:right; margin-right:10px;" onclick="TodoDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="완료">
+													<span style="float:right; margin-right:10px;">완료하기</span>
 											<!-- 할일 완료 시키기 : 종료-->		
-											
+											<br>
 									</div>
 			
 							   </div>
 
-							<!-- todo_list_detail 부분 -->
-<!-- 							<div class="modify-fix-div"> -->
-<!-- 								할일 수정  -->
-<!-- 								<p>할일 수정하기 메인 페이</p> -->
-<%-- 										<textarea type="text" id="todo_list_content_edit${todoListJoinVO.todo_list_no}" name="todo_list_content">${todoListJoinVO.todo_list_content}</textarea> --%>
-<%-- 										<input type="button" onclick="EditTodo(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정"> --%>
-								
-<!-- 								할일 삭제하기 -->
-<!-- 								<br> -->
-<%-- 									<input type="button" onclick="TodoDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="삭제"> --%>
-<!-- 									<button class="modify-cancel">닫기 </button> -->
-<!-- 							</div> -->
 					</div>
-					<!--할일 목록 누르면 할일상세페이지(<div id="show_detail">)로 이동 : 종료 -->	
 
 							</c:when>
 						</c:choose>
 					</c:forEach>
+					
 							<hr>
 		  	   </div>
 		 </div>
@@ -569,17 +550,14 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			   
 			   <!-- 완료 목록 보기 :시작  -->		
 			   <div id="list-done-result">
-			   
-			   		 <!-- 돌아가기 버튼 -->
-			   		 <span> 돌아가기 </span> <input type="checkbox" class="todo_list" value="돌아가기">	
-			    		 <br>
-			    		 <h2>완료된 할일</h2>
-			    		 
-			    <!-- 개수 나오는 곳 출력 -->
-	        	<div id="count_done">
-					<p>${countDone} 개의 완료가 있습니다</p>
-	        	</div>
-			   
+			    <br>
+
+				    <!-- 개수 나오는 곳 출력 -->
+		        	<div id="count_done" style="text-align: center;">
+		        		<h3 style="color: grey"> 완료된 할 일 목록 </h3>
+						<p>${countDone} 개의 완료가 있습니다</p>
+		        	</div>
+			   	<hr>
 						<c:forEach items="${todoPerAll}" var="todoListJoinVO">
 							<c:choose>
 								<c:when test="${todoListJoinVO.todo_list_done=='완료'}">
@@ -587,24 +565,22 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 									<!--할일 목록 누르면 할일상세페이지(<div id="show_detail">)로 이동 -->
 										<div class="all-div">
 												<div class="modify-origin-div">
-													<div class="todo-title">
-															<span> ${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}"</span>
+													<div class="todo-title" style=" margin-left:10px;">
+															<span> [ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ] </span>
 														
-															<br>
-				
-															<!--할일 진행중으로 돌리기 -->			
-															<input type="submit"  onclick="TodoBackDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="진행">
 															
-															<!--  완료 목록 삭제하기 -->
-															<input type="button" onclick="TodoDoneDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="삭제">
+				
+															<div style="float:right; margin-right:10px;">
+																<!--할일 진행중으로 돌리기 -->			
+	<%-- 															<input type="submit"  onclick="TodoBackDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="진행"> --%>
+																
+																<!--  완료 목록 삭제하기 -->
+																<input type="checkbox" class="fa fa-fw fa-trash fill" onclick="TodoDoneDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})">
+															</div>
+				<hr>
 													</div>
 												</div>
-				\
-				
-											<!-- todo_list_detail 부분 -->
-											<div class="modify-fix-div">
-													<button class="modify-cancel">닫기 </button>
-											</div>
+			
 									</div>
 																
 						
@@ -614,8 +590,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				</div>
 				<!-- 완료 목록 보기 : 끝  -->
 							   
-</div> 
-		</div>
+			</div> 
 
 <!-- 투두리스트 종료 -->
 </body>

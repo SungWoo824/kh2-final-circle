@@ -397,6 +397,7 @@ $(function(){
 
 //클릭 하면 열고 닫기 : 할일 목록 상세보기 (Detail, Edit , Delete 있는 거 )
 
+<<<<<<< HEAD
 // $(function(){
 // 	$(".modify-fix-div").hide();
 // 	$(".modify-origin-div").show();
@@ -434,6 +435,8 @@ $(function(){
 // 	})
 // });
 
+=======
+>>>>>>> refs/remotes/origin/master
 $(function(){
 	$("#list-done-result").hide();
 	$("input[name=todo_done_result]").change(function(){	
@@ -588,40 +591,6 @@ var topic_no = ${param.topic_no};
 			});
 		
 }
-
-
-
-//할일 완료 목록 불러오
-// function todoDoneList(){
-// 	var member_no = ${member_no};
-// 	var todo_list_no = $("#todo_list_no").val();  //인풋에 있는 벨류를 가져올게 
-// 	var team_no = ${param.team_no};
-// 	var topic_no = ${param.topic_no};
-// 	var todo_list_content = $("#todo_list_content").val();
-
-
-// 		var  ajaxOption = {
-// 			url : "./todo_done_result",
-// 			type : "GET",
-// 			dataType : "html",
-// 			data : {team_no:team_no, member_no:member_no,topic_no:topic_no, todo_list_no:todo_list_no,todo_list_content:todo_list_content},
-// 			cache : false
-// 	};
-// 		$.ajax(ajaxOption).done(function(data){
-
-			
-// // 			if($("input[name=todo_done_list]").prop('checked', true)) {
-// // 				$('#list-done-result').html(data);
-
-
-// 				$('#list-done-result').html(data);
-// 				$('#list-content').hide();
-// 				$('#todo-list-search').hide();
-// 			});
-// }
-
-
-
 
 //수정하기 상세페이지 이동 TodoDetail
 function TodoDetail(team_no,todo_list_no,topic_no,todo_list_content){
@@ -791,7 +760,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	            </li>
 	        </ul>
 	    </div>
-        <!-- 투표 기능 시작 -->
+        <!-- 검색 기능 -->
            <div id="gnb-detail-slide">
             	<div class="slide search-slide">
             		<div class="slide-close">
@@ -799,22 +768,29 @@ function TodoDelete(team_no,topic_no,todo_list_no){
             				<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>
-            			<div id="searchResult">
-	            			채팅 내용 검색<br><br>
-	            			<select name="topic_name" id="topicSelection">
+	            			<h5 class="p-3 mb-2 bg-primary text-white" style="text-align:center;" >채팅 내용 검색</h5>
+	            			<br><br>
+	            			<div align="center">
+	            			<select name="topic_name" id="topicSelection" style="margin:auto; font-family: inherit; border-radius: 20px; width: auto;">
 	            				<option value="all">전체 토픽</option>
 	            			<c:forEach items="${topicList }" var="topicList">
 	            				<option value="${topicList.topic_name }">${topicList.topic_name }</option>
 	            			</c:forEach>
 	            			</select>
-	            			<select name="term" id="termSelection">
+	            			<select name="term" id="termSelection" style="margin:auto; font-family: inherit; border-radius: 20px">
 	            				<option value="0">전체기간</option>
 	            				<option value="7">1주일</option>
 	            				<option value="30">1개월</option>
 	            				<option value="90">3개월</option>
 	            			</select><br><br>
-	            				<input type="text" name="keyword" id="searchkey" required>
-	            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
+	            			</div>
+	            			<div class="form-group">
+	            				<input type="text" class="form-control" name="keyword" id="searchkey" required>
+							</div>
+							<div align="center">
+								<button type="button" class="btn btn-outline-primary" onclick="searchResult(${param.team_no})">검색</button>
+            				<div id="searchResult" style="margin-top: 50px ">
+							</div>
 	            		</div>
             	</div>
             	<div class="slide vote-slide">
@@ -823,26 +799,24 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	            			<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>   
-
-	<!-- 			       		<button id="movelist" onclick="MoveList()">목록으로..</button> -->
-							<a href="./topic_main?team_no=${param.team_no }&topic_no=${param.topic_no }"><button id="golist" >목록으로</button></a>
-	        				<!-- 목록으로 버튼 if처리해야함 -->
-				            <a href="./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }">+투표 만들기</a><br><br>
+					<!-- 투표기능 -->
 				            <div id="bodyContents">
-				           		<h3>진행중인 투표 목록</h3>
-	        					<!-- 화면 동적 전환(투표 상세 페이지) -->
-				            	<ul>
-					            	<c:forEach var="voteList" items="${voteList }" >
-					            		<fmt:formatNumber type="number" var="no">${voteList.vote_create_team_no}</fmt:formatNumber>
-					            		<li>
-			        					<c:if test="${param.team_no == no}">
-						            		<c:out value="${voteList.vote_create_no}"/>번 투표
-						            		<input type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })">     		
-						            	</c:if>
-					            		</li>
-					            		<br>
-					            	</c:forEach>   	
-				            	</ul>
+				            	<h5 class="p-3 mb-2 bg-primary text-white" style="text-align:center;" >진행중인 투표 목록
+							    </h5>
+				            	<div style="width:100%; height:500px; overflow:auto">
+				            	<c:forEach var="voteList" items="${voteList }" >
+				            	<ul class="list-group">
+				            		<c:if test="${param.team_no eq voteList.vote_create_team_no}">
+								  <li class="list-group-item d-flex justify-content-between align-items-center">
+								  <button type="button" name="${voteList.vote_create_no }" value="${voteList.vote_create_title}" onclick="MovePage(${voteList.vote_create_no })" class="btn btn-primary btn-lg btn-block">${voteList.vote_create_title}</button>
+								  </li>
+								   </c:if>
+								</ul>
+								</c:forEach>
+								 </div>
+								<div style="margin-top: 50px" align="center">
+									<button type="button" class="btn btn-outline-primary" onclick="location.href='./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }'">투표 생성</button>								    
+								</div>
 				            </div>
 				    </div>
         			<!-- 투표 기능 종료 -->
