@@ -719,22 +719,29 @@ function TodoDelete(team_no,topic_no,todo_list_no){
             				<li class="slide-close-btn"><a class="fa fa-times" alt="닫기"></a></li>
             			</ul>
             		</div>
-            			<div id="searchResult">
-	            			채팅 내용 검색<br><br>
-	            			<select name="topic_name" id="topicSelection">
+	            			<h5 class="p-3 mb-2 bg-primary text-white" style="text-align:center;" >채팅 내용 검색</h5>
+	            			<br><br>
+	            			<div align="center">
+	            			<select name="topic_name" id="topicSelection" style="margin:auto; font-family: inherit; border-radius: 20px; width: auto;">
 	            				<option value="all">전체 토픽</option>
 	            			<c:forEach items="${topicList }" var="topicList">
 	            				<option value="${topicList.topic_name }">${topicList.topic_name }</option>
 	            			</c:forEach>
 	            			</select>
-	            			<select name="term" id="termSelection">
+	            			<select name="term" id="termSelection" style="margin:auto; font-family: inherit; border-radius: 20px">
 	            				<option value="0">전체기간</option>
 	            				<option value="7">1주일</option>
 	            				<option value="30">1개월</option>
 	            				<option value="90">3개월</option>
 	            			</select><br><br>
-	            				<input type="text" name="keyword" id="searchkey" required>
-	            				<input type="button" value="검색" onclick="searchResult(${param.team_no})">
+	            			</div>
+	            			<div class="form-group">
+	            				<input type="text" class="form-control" name="keyword" id="searchkey" required>
+							</div>
+							<div align="center">
+								<button type="button" class="btn btn-outline-primary" onclick="searchResult(${param.team_no})">검색</button>
+            				<div id="searchResult" style="margin-top: 50px ">
+							</div>
 	            		</div>
             	</div>
             	<div class="slide vote-slide">
@@ -747,7 +754,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				            <div id="bodyContents">
 				            	<h5 class="p-3 mb-2 bg-primary text-white" style="text-align:center;" >진행중인 투표 목록
 							    </h5>
-				            	<div style="overflow-y: scroll;">
+				            	<div style="width:100%; height:500px; overflow:auto">
 				            	<c:forEach var="voteList" items="${voteList }" >
 				            	<ul class="list-group">
 				            		<c:if test="${param.team_no eq voteList.vote_create_team_no}">
@@ -758,7 +765,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 								</ul>
 								</c:forEach>
 								 </div>
-								<div style="margin-top: 10px" align="center">
+								<div style="margin-top: 50px" align="center">
 									<button type="button" class="btn btn-outline-primary" onclick="location.href='./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }'">투표 생성</button>								    
 								</div>
 				            </div>
