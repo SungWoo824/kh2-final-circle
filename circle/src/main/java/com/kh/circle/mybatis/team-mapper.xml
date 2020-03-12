@@ -218,5 +218,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			inner join member on member.member_no = tm.member_no
 	</select>
 	
+
+	<!-- 관리자-팀 회원수 -->
+	<select id="teamMemCount" resultType="int">
+			select count(member_no) from team_member group by team_no
+	</select>
 	
 </mapper>

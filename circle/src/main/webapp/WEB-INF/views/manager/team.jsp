@@ -14,40 +14,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
    <link href="${pageContext.request.contextPath}/resources/css/design/common.css" rel="stylesheet" type="text/css">
-<script>
-
-$(function(){
-	
-	function getfileSize(x) {
-		  var s = ['bytes', 'kB', 'MB', 'GB', 'TB', 'PB'];
-		  var e = Math.floor(Math.log(x) / Math.log(1024));
-		  return (x / Math.pow(1024, e)).toFixed(2) + " " + s[e];
-	};
-	
-	var list=${driveFileDto};
-	console.log(list);
-	
-// 	var list = new Array(); 
-	
-// 	<c:foreach items="${teamFileTotalSize}" var="size">
-// 		list.push("${size.drive_file_size}");
-// 	</c:foreach>
-	
-// 	console.log(list);
-
-
-	
-// 	for(var i=0;i<list.length;i++){ 
-// 		var size = ${driveFileDto[i].drive_file_size};
-// 		var sizeForm = getfileSize(size);
-// 		var file_box = $('.teamSize');
-// 		$(file_box).text(sizeForm);	
-// 	}
-	
-	
-});
-
-</script>
 
 
 </head>
@@ -235,8 +201,8 @@ $(function(){
 								<td>${teamDto.team_no}</td>
 								<td>${teamDto.team_name}</td>
 								<td>${teamDto.team_domain}</td>
-								<td></td>
-								<td style="text-align:right; padding-right:40px;" class="teamSize"></td>
+								<td>${teamMemCount[status.index]}</td>
+								<td style="text-align:right; padding-right:40px;">${teamFileSizeList[status.index] }</td>
 							</tr>
 						</c:forEach>
 						

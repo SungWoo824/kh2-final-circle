@@ -80,5 +80,10 @@ public class ManagerDaoImpl implements ManagerDao{
 		return sqlSession.selectList("driveFile.teamFileTotalSize");
 	}
 
+	@Override
+	public List<Integer> teamMemCount() {
+		return sqlSession.selectList("team.teamMemCount");
+	}
+
 	
 }

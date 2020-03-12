@@ -1087,7 +1087,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
       <!-- Heading -->
       <div class="sidebar-heading">
-		    <a class="nav-link" data-toggle="modal" data-target="#newTopicCreate">
+		    <a class="nav-link topic-new" data-toggle="modal" data-target="#newTopicCreate">
 			     <i style="color:#2196f3" class="fa fa-fw fa-plus topm"></i> 
 			     <span style="color:#666">토픽 생성하기</span>
 		     </a>

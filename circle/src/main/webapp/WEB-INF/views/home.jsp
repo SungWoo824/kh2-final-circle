@@ -13,9 +13,8 @@
  <link  rel = "stylesheet"  type ="text/css"  href =" ${pageContext.request.contextPath}/resources/css/design/common.css" />
     
 </head>
-<body>
-
-	 <div class="circle-header">
+<body class="home-body">
+    <div class="circle-header">
 
                 <div class="header-wrap">
                     <div class="header-logo">
@@ -25,23 +24,24 @@
                     </div>
                     <div class="header-gnb">
                         <ul class="gnb-menu">
-                            <li><a href="#">제품소개</a></li>
-                            <li><a href="#">요금안내</a></li>
+                         	<li><a href="#test1" data-menuanchor="test1">무료체험하기</a></li>
+                            <li><a href="#test2" data-menuanchor="test2">CIRCLE소개</a></li>
+                            <li><a href="#test3" data-menuanchor="test3">요금안내</a></li>
                             <c:choose>
-		                        <c:when test="${not empty member_email}">
-							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
-							    </c:when>
-                        	</c:choose>
+                              <c:when test="${not empty member_email}">
+                             <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
+                         </c:when>
+                           </c:choose>
                         </ul>
                         <ul class="gnb-menu">
                         
                         <c:choose>
-	                        <c:when test="${not empty member_email}">
-						        <li class="logout-btn"><a href="${pageContext.request.contextPath}/member/signout">로그아웃</a></li>
-						    </c:when>
-							<c:otherwise>
-								<li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>	
-							</c:otherwise>    
+                           <c:when test="${not empty member_email}">
+                          <li class="logout-btn"><a href="${pageContext.request.contextPath}/member/signout">로그아웃</a></li>
+                      </c:when>
+                     <c:otherwise>
+                        <li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>   
+                     </c:otherwise>    
                         </c:choose>
                             
                         
@@ -54,7 +54,9 @@
                 <div class="main-bg">
                     
                         <div id="fullpage">
-                            <div class="section">
+                            <div class="section" data-anchor="test1">
+                        <img class="home-img" src="${pageContext.request.contextPath}/resources/image/bg.png">
+                        <img class="home-img2" src="${pageContext.request.contextPath}/resources/image/bg2.png">   
                                 <div class="main-title">
                                     <div>
                                         <span>효과적인 팀워크, 가벼워진 업무</span>
@@ -65,38 +67,59 @@
                                     <div class="main-btn">
                                         <div class="main-btn-bg">
                                             <a href="member/signup">무료 체험 시작</a><br><br>
+                                    <h5>member_email = ${member_email }</h5>
+                                    <h5>member_grade = ${member_grade }</h5>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="section">
+                            <div class="section" data-anchor="test2">
+                            <div class="about-title">
+                               <span>ABOUT CIRCLE</span>
+                               <p>우리는 팀 커뮤니케이션을 위한 새롭고 혁신적인 방법을 제공하고자 합니다.<br>
+                        그룹중심의 메신저 기반으로 빠른 소통과 간편한 프로젝트 관리가 가능해집니다.<br>
+                        써클(circle)을 통해 함께 일하는 것이 어떻게 달라질 수 있는지 경험해 보세요.</p>
+                            </div>
+                             <img class="home-img3" src="${pageContext.request.contextPath}/resources/image/bg5.png">
                                
                             </div>
-                            <div class="section">
-                                
+                            <div class="section" data-anchor="test3">
+                                <div class="pay-title">
+                               <span>요금 안내</span>
+                               <p>써클을 함께 사용할 멤버는 몇 명인가요?</p>
+                            	</div>
+                            	<div class="pay-">
+                            		<div >
+	                            		<span>1개월권</span>
+	                            		<p>개당</p>
+	                            		<p>5000</p>
+	                            		<p>￦</p>
+                            		</div>
+                            	</div>
                             </div>
                         </div>
                   
                 </div>
         </div>
-		
+      
 <!-- 메인 패럴렉스 -->
 <script>
         new fullpage('#fullpage', {
-			sectionsColor: ['#f9f9f9', '#2684fe','#f9f9f9'],
-			navigation: true,
-			});
-		
-			$(document).ready(function() {
-				$('#fullpage').fullpage({
-					//options here
-					autoScrolling:true,
-					scrollHorizontally: true
-				});
-	
-				//methods
-				$.fn.fullpage.setAllowScrolling(false);
-			});
+        	navigation:true,
+        	anchors:['test1', 'test2', 'test3'],
+         sectionsColor: ['#f9fafc', '#f9f9f9','#ffffff'],
+         });
+      
+         $(document).ready(function() {
+            $('#fullpage').fullpage({
+               //options here
+               autoScrolling:true,
+               scrollHorizontally: true
+            });
+   
+            //methods
+            $.fn.fullpage.setAllowScrolling(false);
+         });
     </script>
 </body>
 </html>

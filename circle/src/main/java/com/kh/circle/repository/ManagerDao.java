@@ -14,6 +14,7 @@ public interface ManagerDao {
 	int teamCount();
 	int fileTotalSize();
 	List<DriveFileDto> teamFileTotalSize();
+	List<Integer> teamMemCount();
 	int managerCount();
 	int paySum();
 	List<TeamDto> teamList(BoardVo boardVo);
