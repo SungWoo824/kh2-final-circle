@@ -134,4 +134,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="changeStatus" parameterType="Integer">
 		update pay set status='취소완료' where no=#{no}
 	</update>
+	
+	<update id="updateUsed" parameterType="payDto">
+		update pay set countall=1 where partner_user_id=#{partner_user_id} and item_name=#{item_name}
+	</update>
+	
 </mapper>
