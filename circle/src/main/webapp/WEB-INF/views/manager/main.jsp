@@ -352,37 +352,27 @@
 
                             <article class="admin-wrap" style="padding-top: 5rem;">
 
-                                <div class="card border-primary mb-3 admin-card"
-                                     style="width: 20rem; height: 15rem; margin:auto;">
-                                    <div class="card-header">접속자</div>
-                                    <div class="card-body admin-card-body">
-                                        <h4 class="card-title">Primary card title</h4>
-                                        <p class="card-text">
-                                            <a href="#"></a>
-                                        </p>
-                                    </div>
-                                </div>
-
+                                
                                 <div class="card border-primary mb-3 admin-card"
                                      style="width: 20rem; height: 15rem;  margin:auto;">
                                     <div class="card-header">총회원</div>
-                                    <div class="card-body admin-card-body">
-                                        <h4 class="card-title">${memberCount} 명</h4>
-                                        <p class="card-text">
-                                            <a href="#"></a>
-                                        </p>
-                                    </div>
+                                    	<a href="member?type=&value=">
+	                                    <div class="card-body admin-card-body">
+                                        	<h4 class="card-title">${memberCount} 명</h4>
+                                    	</div>
+                                        </a>
                                 </div>
+                                
 
+								
                                 <div class="card border-primary mb-3 admin-card"
                                      style="width: 20rem; height: 15rem; margin:auto;">
                                     <div class="card-header">등록팀수</div>
-                                    <div class="card-body admin-card-body">
-                                        <h4 class="card-title">${teamCount} 팀</h4>
-                                        <p class="card-text">
-                                            <a href="#"></a>
-                                        </p>
-                                    </div>
+                                    <a href="team?type=&value=">
+                                    	<div class="card-body admin-card-body">
+                                        	<h4 class="card-title">${teamCount} 팀</h4>
+                                    	</div>
+                                    </a>
                                 </div>
                             </article>
                             <article class="admin-wrap" style="padding-top: 9rem;">
@@ -390,34 +380,31 @@
                                 <div class="card border-primary mb-3 admin-card"
                                      style="width: 20rem; height: 15rem; margin:auto;">
                                     <div class="card-header">파일용량</div>
-                                    <div class="card-body admin-card-body">
-                                        <h4 class="card-title manager-file-size"></h4>
-                                        <p class="card-text">
-                                            <a href="#"></a>
-                                        </p>
-                                    </div>
+                                    <a href="team?type=&value=">
+                                    	<div class="card-body admin-card-body">
+                                        	<h4 class="card-title manager-file-size"></h4>
+                                    	</div>
+                                    </a>
                                 </div>
 
                                 <div class="card border-primary mb-3 admin-card"
                                      style="width: 20rem; height: 15rem; margin:auto;">
                                     <div class="card-header">이번달 매출</div>
-                                    <div class="card-body admin-card-body">
-                                        <h4 class="card-title">Primary card title</h4>
-                                        <p class="card-text">
-                                            <a href="#"></a>
-                                        </p>
-                                    </div>
+                                    <a href="#">
+                                    	<div class="card-body admin-card-body">
+                                        	<h4 class="card-title">Primary card title</h4>
+                                    	</div>
+                                    </a>
                                 </div>
 
                                 <div class="card border-primary mb-3 admin-card"
                                      style="width: 20rem; height: 15rem; margin:auto;">
                                     <div class="card-header">등록 관리자 수</div>
-                                    <div class="card-body admin-card-body">
-                                        <h4 class="card-title">${managerCount} 명</h4>
-                                        <p class="card-text">
-                                            <a href="#"></a>
-                                        </p>
-                                    </div>
+                                    <a href="admin?type=&value=">
+                                    	<div class="card-body admin-card-body">
+                                        	<h4 class="card-title">${managerCount} 명</h4>
+                                    	</div>
+                                    </a>
                                 </div>
                             </article>
 

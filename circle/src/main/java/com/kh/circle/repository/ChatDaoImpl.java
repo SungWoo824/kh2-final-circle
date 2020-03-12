@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,17 @@ public class ChatDaoImpl implements ChatDao{
 		
 		return sqlSession.selectOne("chat.sendChatFile", chat_file_no);
 	}
+
+	@Override
+	public ChatFileVo chatFileDownload(int chat_file_no) {
+		return sqlSession.selectOne("chat.filedownload", chat_file_no);
+	}
 	
+	@Override
+	public byte[] getUploadNo(int chat_file_no) throws IOException {
+		File dir = new File("D:/upload/kh2e/chatFile");
+		File file = new File(dir, String.valueOf(chat_file_no));
+		byte[] data = FileUtils.readFileToByteArray(file);
+		return data;
+	}
 }

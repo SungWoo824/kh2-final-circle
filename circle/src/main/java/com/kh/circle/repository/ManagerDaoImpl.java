@@ -77,5 +77,11 @@ public class ManagerDaoImpl implements ManagerDao{
 		sqlSession.update("member.adminGrant", member_no);
 	}
 
+	@Override
+	public int currentUserCount() {
+		
+		return 0;
+	}
+
 	
 }
