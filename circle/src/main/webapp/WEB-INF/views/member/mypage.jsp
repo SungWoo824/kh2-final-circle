@@ -40,7 +40,7 @@ $(function(){
                 <div class="header-wrap">
                     <div class="header-logo">
                         <div class="mainlogo">
-                            <a href="${pageContext.request.contextPath}"><img src=" ${pageContext.request.contextPath}/resources/image/logol.png"></a>
+                            <a href="${pageContext.request.contextPath}/member/mypage"><img src=" ${pageContext.request.contextPath}/resources/image/logol.png"></a>
                         </div>
                     </div>
                     <div class="header-gnb">
@@ -77,7 +77,7 @@ $(function(){
                                 	<div class="mypage-main-content">
 	                                    <div class="mypage-div">
 	                                    	<div class="member-mypage-img">
-	                                    		<img id="member-profile-img" src='download?member_no=${member_no}'>
+			                                    	<img id="member-profile-img" src='download?member_no=${member_no}'>
 	                                    	</div>
 	                                    	<div class="mypage-name-div">
 		                                        <span>${memberDto.member_name}</span>

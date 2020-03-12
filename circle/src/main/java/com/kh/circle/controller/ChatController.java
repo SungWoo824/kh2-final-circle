@@ -3,6 +3,7 @@ package com.kh.circle.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.entity.TeamMemberDto;
@@ -365,11 +371,11 @@ public class ChatController {
 		//토픽멤버 나가기(토픽소유자 제외)
 		@GetMapping("/outtopic")
 		public String outTopic(@RequestParam int topic_no, 
-												@RequestParam int team_no,
-												@RequestParam int member_no,
+												@RequestParam(defaultValue="") int team_no,
+												HttpSession session,
 												Model model) {
-			topicDao.outTopic(topic_no,member_no);
-			model.addAttribute("team_no",team_no);
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
+			model.addAttribute("team_no", team_no);
 			model.addAttribute("topic_no",topic_no);
 			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
@@ -396,12 +402,13 @@ public class ChatController {
 		@GetMapping("/deletetopic")
 		public String deletetopic(@RequestParam int topic_no,
 													@RequestParam int team_no, 
-													@RequestParam int member_no,
+													HttpSession session,
 													Model model) {
 			topicDao.deleteTopic(topic_no,team_no);
-			topicDao.outTopic(topic_no, member_no);
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("topic_no",topic_no);
+			model.addAttribute("member_no",session.getAttribute("member_no"));
 			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
 		
@@ -443,6 +450,33 @@ public class ChatController {
 
 		      resp.getOutputStream().write(data);
 		   }
+		
+		@GetMapping("filedownload")
+		@ResponseBody
+		public ResponseEntity<ByteArrayResource> download(@RequestParam int chat_file_no) throws IOException{
+			ChatFileVo chatFileVo = chatDao.chatFileDownload(chat_file_no);
+			byte[] data = chatDao.getUploadNo(chatFileVo.getChat_file_no());
+			ByteArrayResource resource = new ByteArrayResource(data);
+			return ResponseEntity.ok()
+					.contentType(MediaType.APPLICATION_OCTET_STREAM)
+					.contentLength(chatFileVo.getChat_file_size())
+					.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+					.header(HttpHeaders.CONTENT_DISPOSITION, 
+							makeDispositionString(chatFileVo.getChat_file_uploadname()))
+					.body(resource);
+		}
+		
+		private String makeDispositionString(String fileUploadName) throws UnsupportedEncodingException {
+			StringBuffer buffer= new StringBuffer();
+			buffer.append("attachment;");
+			buffer.append("filename=");
+			buffer.append("\"");
+			buffer.append(URLEncoder.encode(fileUploadName,"UTF-8"));
+			buffer.append("\"");
+			
+			return buffer.toString();
+		
+	}
 
 }
 

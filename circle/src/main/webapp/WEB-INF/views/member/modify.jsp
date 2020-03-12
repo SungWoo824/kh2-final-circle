@@ -127,7 +127,7 @@
                 <div class="header-wrap">
                     <div class="header-logo">
                         <div class="mainlogo">
-                            <a href="${pageContext.request.contextPath}"><img src=" ${pageContext.request.contextPath}/resources/image/logol.png"></a>
+                            <a href="${pageContext.request.contextPath}/member/mypage"><img src=" ${pageContext.request.contextPath}/resources/image/logol.png"></a>
                         </div>
                     </div>
                     <div class="header-gnb">
