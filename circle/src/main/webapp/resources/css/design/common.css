@@ -238,7 +238,7 @@ span{
 .slide{
 	display:none;
 	width:400px;
-	height:100%;
+	height:84.3%;
   	background-color:#fff;
   	border-left:1px solid #ececec;
 }
@@ -448,6 +448,13 @@ span{
     height: 70px;
     border-radius: 50px;
 }
+
+#vote-creater-img{
+	width: 40px;
+    height: 40px;
+    border-radius: 50px;
+}
+
 .member-mypage-img{
 	margin: auto;
 	margin-left:2rem;
@@ -986,6 +993,11 @@ background-color:#f8f8f8;
  	background:#5ea5fe;
  	color:white;
   }
+.admin-cardy{
+ 	-webkit-transition: .2s ease-out;
+ 	text-align: center;
+ }
+ 
 .admin-card-body{
 	margin: auto;
 	padding-top:65px;

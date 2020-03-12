@@ -26,14 +26,7 @@ ChatSearchDao chatSearchDao;
 						@RequestParam int team_no,
 						@RequestParam int term,
 						HttpSession session, Model model) {
-//		if(topic_name.equals("all")) {
-//			model.addAttribute("allList", chatSearchDao.searchAll(team_no, keyword));
-//			log.info("alllist={}", chatSearchDao.searchAll(team_no, keyword));
-//		}else if(!topic_name.equals("all")) {
-//			model.addAttribute("allList", chatSearchDao.searchByTopic(team_no, topic_name, keyword));
-//			log.info("topic={}", chatSearchDao.searchByTopic(team_no, topic_name, keyword));
-//		}
-		
+
 		switch(term) {
 		case 0: 
 			if(topic_name.equals("all")) {
