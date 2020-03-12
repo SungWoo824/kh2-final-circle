@@ -62,7 +62,7 @@
                                 	<div class="mypage-main-content">
 	                                    <div class="mypage-div">
 	                                    	<div class="member-mypage-img">
-	                                    		<img id="member-profile-img" src='download?member_no=${member_no}'>
+			                                    	<img id="member-profile-img" src='download?member_no=${member_no}'>
 	                                    	</div>
 	                                    	<div class="mypage-name-div">
 		                                        <span>${memberDto.member_name}</span>

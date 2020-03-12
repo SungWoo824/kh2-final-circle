@@ -185,8 +185,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<select id="teamFileTotalSize" resultType="int" parameterType="int">
-		select sum(drive_file_size) from drive_file where team_no=#{team_no}
+	<select id="teamFileTotalSize" resultType="driveFileDto" >
+		select team.TEAM_NO,DF.drive_file_size 
+		from TEAM left outer join 
+			(select TEAM_NO,sum(DRIVE_FILE_SIZE) as drive_file_size 
+		from DRIVE_FILE group by TEAM_NO)DF 
+			on team.TEAM_NO=DF.TEAM_NO order by team.TEAM_NO desc
 	</select>
 
 

@@ -224,7 +224,7 @@
 </script>
 <!-- 토픽 생성 이름 중복검사 -->
 <script>
-
+$(function(){
 	//입력을 마치면(blur) 비동기통신으로 아이디 유무를 검사
 	$("#check-btn").attr("disabled",true);
 	
@@ -254,11 +254,21 @@
 			}
 		});			
 	});
+	
+	
+	//토픽삭제
+	$("#topic-delete-btn").click(function(){
+			return confirm("토픽을 삭제하면 대화내용이 사라집니다.\n정말 삭제하시겠습니까?");
+	});
+	
+	//토픽 나가기
+	$(".topic-out-btn").click(function(){
+			return confirm("토픽을 나가시겠습니까?");
+	});
 
-// });
 
 
-
+});
 
 </script>
 <!-- 팀 관련 스크립트 -->
@@ -705,6 +715,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 }
 
 
+
 </script>
 
 </head>
@@ -729,16 +740,16 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	                    <span>팀 전환 하기</span>
 	                 </div>
                 </a>
-		        <a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/team_admin/team_manager_team" >
-	               <c:set var="team" value="${memberList.get(0)}"></c:set>
-	               <c:choose>
+               <c:set var="team" value="${memberList.get(0)}"></c:set>
+               <c:choose>
 						<c:when test="${team.member_position eq '소유자' }">
+			        		<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${param.team_no }&team_name=${param.team_name }&team_domain=${param.team_domain}" >
 			                  <div>
 			                 	<span>관리자 메뉴</span>
 			                  </div>
+		      				</a>
 		                </c:when>
 	                </c:choose>
-		      	</a>
               </div>
 	            </li>
 	        </ul>
@@ -761,7 +772,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 <!-- 	                <a class="fa fa-plug"></a> -->
 <!-- 	            </li> -->
 	            <li class="gnb-btn hdd">
-	                <a class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}"></a>
+	                <a style="text-decoration:none;" class="fa fa-hdd" href="${pageContext.request.contextPath}/drive/drive?team_no=${param.team_no}"></a>
 	            </li>
 	        </ul>
 	    </div>
@@ -871,7 +882,6 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 		        <input type="button" onclick="HomeTodo(${param.team_no},${param.topic_no},${todoListJoinVO.member_no})" value="처음으로">
 		        
 		        <br>     
-				
 					   		
 					      
 					<!-- 할일 검색하기 비동기 -->
@@ -880,7 +890,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 						<br><br>
 								
 
-						 <br>
+				<br>
 				
 
 			</div>		
@@ -1052,12 +1062,13 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
     <!-- Sidebar - Brand -->
     <div class="sidebar-brand d-flex align-items-center justify-content-center" >
-    <div class="logowrap">
+    <div class="logowrap" OnClick="location.href ='${pageContext.request.contextPath}'" style="cursor:pointer;">
 	    <div class="sidebar-brand-icon logo-back">
 	            <img style="width:44px" src="${pageContext.request.contextPath}/resources/image/logo.png" alt="logo" />
 	    </div>
-    <div class="sidebar-brand-text">
-    </div>
+		<div class="sidebar-brand-text" style="top: 1.5rem; position: absolute; font-size:20px; top:18px; left:86px; color:#fff;">
+		    	Circle
+		</div>
     </div>
     </div>
 
@@ -1065,19 +1076,19 @@ function TodoDelete(team_no,topic_no,todo_list_no){
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
-      <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}">
-          <i class="fas fa-fw fa-home"></i>
-          <span>서클 메인</span></a>
-      </li>
+<!--       <li class="nav-item"> -->
+<%--         <a class="nav-link" href="${pageContext.request.contextPath}"> --%>
+<!--           <i class="fas fa-fw fa-home"></i> -->
+<!--           <span>서클 메인</span></a> -->
+<!--       </li> -->
 
       <!-- Divider -->
-      <hr class="sidebar-divider">
+<!--       <hr class="sidebar-divider"> -->
 
       <!-- Heading -->
       <div class="sidebar-heading">
 		    <a class="nav-link" data-toggle="modal" data-target="#newTopicCreate">
-			     <i style="color:#2196f3" class="fa fa-fw fa-plus"></i> 
+			     <i style="color:#2196f3" class="fa fa-fw fa-plus topm"></i> 
 			     <span style="color:#666">토픽 생성하기</span>
 		     </a>
       </div>
@@ -1109,29 +1120,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
       </li>
       <!-- 토픽 목록 끝 -->
       
-      <hr class="sidebar-divider">
       <!-- Heading -->
- 	<div class="sidebar-heading">
-		    <a class="nav-link" href="#">
-			     <i style="color:#2196f3" class="fa fa-fw fa-plus"></i> 
-			     <span style="color:#666">채팅 시작하기</span>
-		     </a>
-      </div>
- 	<hr class="sidebar-divider">
-      <!-- 채팅목록 시작 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-comments"></i>
-          <span>채팅</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="#">채팅1</a>
-            <a class="collapse-item" href="#">채팅2</a>
-          </div>
-        </div>
-      </li>
-	<!-- 채팅목록 끝 -->
     </ul>
     
 
@@ -1223,7 +1212,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 <%--               <c:forEach var="tmList" items="${topicMemberList}"> --%>
 				<c:set var="tmList" value="${topicMemberList.get(0)}"></c:set>
 	              <c:choose>
-	              		<c:when test="${tmList.topic_member_position eq '토픽소유자' }">
+	              		<c:when test="${tmList.topic_member_position == '토픽소유자' }">
 			                 <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
 				                  <div>
 				                    <div class="text-truncate">토픽 멤버 보기</div>
@@ -1240,17 +1229,26 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			                  </div>
 			                </a>
 			                <c:if test="${topicList.size() > 1}">
-				                <a class="dropdown-item d-flex align-items-center" href="deletetopic?topic_no=${param.topic_no }&team_no=${param.team_no}">
+				                <a class="dropdown-item d-flex align-items-center" id="topic-delete-btn" href="deletetopic?topic_no=${param.topic_no }&team_no=${param.team_no}">
 				                  <div>
 				                    <div class="text-truncate">토픽 삭제하기</div>
 				                  </div>
 				                </a>
+			                <c:if test="${topicMemberList.size() > 1 }">
+				                <a class="dropdown-item d-flex align-items-center topic-out-btn" data-toggle="modal" data-target="#topicMasterChange">
+				                  <div>
+				                    <div class="text-truncate">토픽 나가기</div>
+				                  </div>
+				                </a>
 			                </c:if>
-			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#topicMasterChange">
-			                  <div>
-			                    <div class="text-truncate">토픽 나가기</div>
-			                  </div>
-			                </a>
+			                <c:if test="${topicMemberList.size() < 2 }">
+				                 <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
+				                  <div>
+				                    <div class="text-truncate">토픽 나가기</div>
+				                  </div>
+				                </a>
+			                </c:if>
+			                </c:if>
 	              		</c:when>
 	              		<c:otherwise>
 			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
@@ -1263,7 +1261,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			                    <div class="text-truncate">토픽 초대하기</div>
 			                  </div>
 			                </a>
-			                <a class="dropdown-item d-flex align-items-center" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
+			                <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
 			                  <div>
 			                    <div class="text-truncate">토픽 나가기</div>
 			                  </div>

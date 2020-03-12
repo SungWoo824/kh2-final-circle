@@ -3,22 +3,22 @@
 
 @font-face{
         font-family:NotoSans-r;
-        src:url("${pageContext.request.contextPath}/resources/font/NotoSansCJKkr-Regular.otf");
+        src:url("resources/font/NotoSansCJKkr-Regular.otf");
 }
 
 @font-face{
         font-family:NotoSans-b;
-        src:url("${pageContext.request.contextPath}/resources/font/NotoSansCJKkr-Bold.otf");
+        src:url("resources/font/NotoSansCJKkr-Bold.otf");
 }
 
      
 * {
    box-sizing: border-box;
-   font-family: NotoSans-r;
    font-color: #222;
 }
 
 body{
+	 font-family: NotoSans-r,NotoSans-b;
     margin: 0;
     font-size: 14px;
     overflow-y:hidden;
@@ -44,6 +44,10 @@ ul, li{
 a{
    text-decoration: none;
    color:#222;
+}
+
+a:hover{
+   text-decoration: none;
 }
 
 span{
@@ -373,12 +377,27 @@ span{
     vertical-align: middle;
 }
 
+.logout-btn{
+	width: 100px;
+    height: 36px;
+    background-color: #222;
+    border-radius: 25px;
+    text-align: center;
+    vertical-align: middle;
+}
+
 .login-btn > a{
     font-family: NotoSans-b;
     color: #fff;
     font-size: 16px;
     line-height: 36px;
 }
+
+.logout-btn> a{
+    line-height: 36px;
+     color: #fff;
+}
+
 
 .signin .signin-text{
 	width: 20rem;
@@ -722,6 +741,10 @@ background-color:#f8f8f8;
 	font-size:20px;
 	font-weight:500;
 	padding:20px 160px 20px 20px;
+}
+
+.topm{
+	margin-top:18px;
 }
 
 .drback{

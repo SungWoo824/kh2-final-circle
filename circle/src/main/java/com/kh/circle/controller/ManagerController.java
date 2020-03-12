@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.repository.ManagerDao;
@@ -32,7 +33,7 @@ public class ManagerController {
 	public String main(Model model) {
 		model.addAttribute("memberCount", managerDao.memberCount());
 		model.addAttribute("teamCount", managerDao.teamCount());
-//		model.addAttribute("fileTotalSize",managerDao.fileTotalSize());
+		model.addAttribute("fileTotalSize",managerDao.fileTotalSize());
 		model.addAttribute("managerCount", managerDao.managerCount());
 		return "manager/main";
 	}
@@ -53,7 +54,6 @@ public class ManagerController {
 		model.addAttribute("listCount", listCount);
 		model.addAttribute("memberList", memberList);
 		model.addAttribute("pagination", pagination);
-	
 		return "manager/member";
 	}
 	
@@ -75,12 +75,16 @@ public class ManagerController {
 		boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
 
 		List<TeamDto> teamList = managerDao.teamList(boardVo);
+		List<DriveFileDto> teamFileTotalSize = managerDao.teamFileTotalSize();
+		System.out.println(teamFileTotalSize);
+		
 		
 		model.addAttribute("listCount", listCount);
 		model.addAttribute("pagination", pagination);
 		model.addAttribute("teamList", teamList);
-		model.addAttribute("teamFileTotalSize",managerDao.teamFileTotalSize(boardVo.getTeam_no()));
-
+		model.addAttribute("teamFileTotalSize",teamFileTotalSize);
+		
+		
 		return "manager/team";
 	}
 	@GetMapping("/admin")

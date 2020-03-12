@@ -217,4 +217,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='준회원')tm 
 			inner join member on member.member_no = tm.member_no
 	</select>
+	
+	
 </mapper>

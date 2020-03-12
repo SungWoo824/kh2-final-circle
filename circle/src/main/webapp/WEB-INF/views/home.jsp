@@ -84,6 +84,7 @@
 <script>
         new fullpage('#fullpage', {
 			sectionsColor: ['#f9f9f9', '#2684fe','#f9f9f9'],
+			navigation: true,
 			});
 		
 			$(document).ready(function() {

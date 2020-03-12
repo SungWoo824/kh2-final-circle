@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.vo.BoardVo;
@@ -41,9 +42,6 @@ public class ManagerDaoImpl implements ManagerDao{
 		return sqlSession.selectOne("driveFile.fileTotalSize");
 	}
 	
-	public int teamFileTotalSize(int team_no) {
-		return sqlSession.selectOne("driveFile.teamFileTotalSize",team_no);
-	}
 
 	@Override
 	public int managerCount() {
@@ -75,6 +73,11 @@ public class ManagerDaoImpl implements ManagerDao{
 	@Override
 	public void memberAdminGrant(int member_no) {
 		sqlSession.update("member.adminGrant", member_no);
+	}
+
+	@Override
+	public List<DriveFileDto> teamFileTotalSize() {
+		return sqlSession.selectList("driveFile.teamFileTotalSize");
 	}
 
 	

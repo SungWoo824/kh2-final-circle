@@ -360,11 +360,11 @@ public class ChatController {
 		//토픽멤버 나가기(토픽소유자 제외)
 		@GetMapping("/outtopic")
 		public String outTopic(@RequestParam int topic_no, 
-												@RequestParam int team_no,
-												@RequestParam int member_no,
+												@RequestParam(defaultValue="") int team_no,
+												HttpSession session,
 												Model model) {
-			topicDao.outTopic(topic_no,member_no);
-			model.addAttribute("team_no",team_no);
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
+			model.addAttribute("team_no", team_no);
 			model.addAttribute("topic_no",topic_no);
 			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
@@ -391,12 +391,13 @@ public class ChatController {
 		@GetMapping("/deletetopic")
 		public String deletetopic(@RequestParam int topic_no,
 													@RequestParam int team_no, 
-													@RequestParam int member_no,
+													HttpSession session,
 													Model model) {
 			topicDao.deleteTopic(topic_no,team_no);
-			topicDao.outTopic(topic_no, member_no);
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
 			model.addAttribute("team_no",team_no);
 			model.addAttribute("topic_no",topic_no);
+			model.addAttribute("member_no",session.getAttribute("member_no"));
 			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
 		
