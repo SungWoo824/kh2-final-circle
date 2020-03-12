@@ -101,8 +101,8 @@ $(function(){
                            <div class="mypage-main-content">
                            
 								<!-- 상단 네비바 -->
-								<nav class="navbar navbar-expand-lg navbar-light bg-light">
-									  <a class="navbar-brand" href="#">멤버관리</a>
+								<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+									  <a class="navbar-brand" href="#" style="color:white">멤버관리</a>
 									  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 									    <span class="navbar-toggler-icon"></span>
 									  </button>
@@ -114,7 +114,7 @@ $(function(){
 									    	 </li>
 									    	 
 									     	 <li class="nav-item active">
-									    		    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
+									    		    <a class="nav-link" style="color:white" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
 									     	 </li>
 									     	 
 									     	 <li class="nav-item">

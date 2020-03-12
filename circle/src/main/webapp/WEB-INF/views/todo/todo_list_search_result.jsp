@@ -416,7 +416,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	       	  
 	       	  <!-- 할 일 제목 , 카운트 개수  -->
 	       	  <div class="p-3 mb-2 bg-primary text-white" style="text-align:center; height: 70px" >
-		      <p> 할 일 / 현재위치 : 검색 완료 페이지  	<span class="badge badge-light">${countTodo} </span>       </p>
+		      <p> 할 일	<span class="badge badge-light">${countTodo} </span>       </p>
 <!-- 	       		투두 리스트 메인목록보기 :시작 -->
 			
 						<span style="cursor:pointer; color: white;">할 일 메인 목록 보기
@@ -468,7 +468,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				<br>
 				<br>
 				<br>
-						
+					<div style="text-align: center">	
 					<!--진행  목록 보기 체크박스 : 시작  -->
 						 <span>진행중인 할일 보기</span>
 						 <input type="checkbox" class="before_todo_done" name="before_todo_done" value="진행중인 할일 보기" checked>
@@ -477,7 +477,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 					<!--완료 목록 보기 체크박스 : 시작  -->
 						<span> 완료된 할 일 보기</span> 
 						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
-					<!--완료 목록 보기 체크박스 : 종료  -->		
+					<!--완료 목록 보기 체크박스 : 종료  -->
+					</div>		
 				<hr>
 		</div>		
 

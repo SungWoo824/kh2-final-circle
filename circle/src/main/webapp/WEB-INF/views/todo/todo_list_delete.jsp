@@ -307,6 +307,8 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 }
 
 
+
+
 //할일 수정하기
 function EditTodo(team_no,todo_list_no,topic_no){
 	console.log("11111team_no"+team_no);
@@ -532,7 +534,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 											
 											
 											
-												<input type="hidden" id="todo_list_content_detail${todoListJoinVO.todo_list_no}" name="todo_list_content" value="${todo_list_content}">
+												<input type="hidden" id="topic_name_detail${todoListJoinVO.topic_no}" name="topic_name" value="${todoListJoinVO.topic_name}">
+												<input type="hidden" id="todo_list_content_detail${todoListJoinVO.todo_list_no}" name="todo_list_content" value="${todoListJoinVO.todo_list_content}">
 												<input type="checkbox" class="fa fa-fw fa-pen" style="float:right; margin-right:10px;" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정하기">
 												<span style="float:right; margin-right:10px;">수정하기</span>
 						

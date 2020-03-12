@@ -32,7 +32,7 @@ $(function(){
     });
 	
 	//취소 버튼
-	$(".modify-cancel").click(function(){
+	$("button[name=modify-cancel]").click(function(){
 		$(this).parent().parent().children(".modify-origin-div").show('3000');
 
         $(this).parent().parent().children(".modify-fix-div").hide('fast');
@@ -73,13 +73,24 @@ $(function(){
 	})
 });
 
+$(function(){
+    $(window).scroll(function(){
+        console.log("scroll event");
+        console.log($(this).scrollTop());
 
+        if($(this).scroll > $(document).innerHeight()*0.9){
+            console.log("더 불러오세요");
+        }
+    });
+}); 
 
 
 
 </script>
 
-<body>
+<body style="height: 5000px;">
+
+  <div style="width:100%; height:100%; overflow:auto;">    
 <!-- 헤더 -->
 <div class="circle-header">
 
@@ -121,8 +132,8 @@ $(function(){
                 <div class="section">
                       <div class="mypage-main-content">
                       <!-- 상단 네비바 -->
-								<nav class="navbar navbar-expand-lg navbar-light bg-light">
-								  <a class="navbar-brand" href="#">팀관리</a>
+								<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+								  <a class="navbar-brand" href="#" style="color:white">팀관리</a>
 								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 								    <span class="navbar-toggler-icon"></span>
 								  </button>
@@ -130,9 +141,12 @@ $(function(){
 								  <div class="collapse navbar-collapse" id="navbarNav">
 								    <ul class="navbar-nav">
 								      <li class="nav-item active">
-								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/member_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
+								        <a class="nav-link" style="color:white" href="${pageContext.request.contextPath}/team_admin/member_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
 								      </li>
 								    </ul>
+								    <div class="mypage-team-div" style="text-align: right">
+											<button id="param_submit_btn" class="btn btn-outline-primary" type="submit">이동하기</button>
+										</div>
 
 								</nav>	 
                       
@@ -142,12 +156,11 @@ $(function(){
 		                        <form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 									<input type="hidden" name="team_no" class="team_no_value" value="${param.team_no}">
 																
-										<div class="mypage-team-div">
-											<button id="param_submit_btn" type="submit">이동하기</button>
-										</div>
+										
 								</form>                
 	                       </div>
 	                       
+	                      
   						   <!-- 정보보기 시작 -->    
 						   <article class="modify-article">
 						   		<div>
@@ -169,7 +182,7 @@ $(function(){
 	                                                   		<hr><br>
 	                                                   	이메일 : ${memberDto.member_email}
 	                                                   		<hr><br>
-	                                                    <button class="modify-cancel">닫기 </button>
+	                                                    <button name="modify-cancel" class="btn btn-secondary" >닫기 </button>
 	                                    			</div>
 	                                    </div>
 	                                 </div>	
@@ -190,14 +203,15 @@ $(function(){
 									<h5>비밀번호</h5>
 								    <input type="hidden" name="member_no" value="${memberDto.member_no}">
 									<input type="hidden" name="team_no" value="${param.team_no}">
-									<input type="password" id="modify-delete-pw" name="member_pw" placeholder="비밀번호">
+									<input type="password" id="modify-delete-pw" class="form-control" name="member_pw" placeholder="비밀번호">
 										<div class="modify-alert">
 											${teamDto.team_name}팀에서 탈퇴합니다<br>
 											정말로 팀 탈퇴를 원하신다면 계정 비밀번호를 입력해주세요.
 										</div>
 								</form>
-											<button id="modify-delete-submit">틸탈퇴</button>
-											<button class="modify-cancel">취소</button>
+											<button id="modify-delete-submit" class="btn btn-primary">틸탈퇴</button>
+											
+											<button name="modify-cancel" class="btn btn-secondary">취소</button>
 							</div>
 						</div>
 				</div>
@@ -208,5 +222,6 @@ $(function(){
 	</div>
 	</div>
 	</div>
+</div>	
 </body>
 </html>

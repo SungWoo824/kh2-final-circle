@@ -265,19 +265,43 @@ function TodoSearch(){
 
 
 //수정하기 상세페이지 이동 TodoDetail
-function TodoDetail(team_no,todo_list_no,topic_no,todo_list_content){
+// function TodoDetail(team_no,todo_list_no,topic_no,todo_list_content){
+
+// 		var  ajaxOption = {
+// 			url : "${pageContext.request.contextPath}/todo/todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no+"&todo_list_content="+todo_list_content,
+// 			type : "get",
+// 			dataType : "html",
+// 			cache : false
+// 	};
+// 		$.ajax(ajaxOption).done(function(data){
+
+// // 				$('#todo-edit').html(data);
+// 				$('#list-content').html(data);
+				
+// 			});
+// }
+
+//디테일 2번째 방법  : 현재는 이걸로 사용 중 
+function TodoDetail(team_no,todo_list_no,topic_no){
+// 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
+	var todo_list_content = $("#todo_list_content_detail"+todo_list_no).val(); 
+	var topic_name = $("#topic_name_detail"+topic_no).val();
 
 		var  ajaxOption = {
-			url : "${pageContext.request.contextPath}/todo/todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no+"&todo_list_content="+todo_list_content,
+			url :"${pageContext.request.contextPath}/todo/todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
 			type : "get",
 			dataType : "html",
+			data : {todo_list_content:todo_list_content,topic_name:topic_name},
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
-
-// 				$('#todo-edit').html(data);
 				$('#list-content').html(data);
-				
+// 				$('#todo-edit').html(data);
+// 				$('#list-content').hide();
+// 				$(".todo-title").hide();
+				$(this).parent().children(".modify-fix-div").show();
 			});
 }
 
@@ -455,6 +479,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 						<span> 완료된 할 일 보기</span> 
 						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
 					<!--완료 목록 보기 체크박스 : 종료  -->		
+					
+
 				<hr>
 		</div>		
 
@@ -506,19 +532,28 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 								<div class="modify-origin-div">
 								
 									<div class="todo-title" style=" margin-left:10px;">
-											<span>[ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ]</span>
+											<span>할 일 제목:[ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ]</span>
 											
 											
-												<input type="checkbox" class="fa fa-fw fa-pen" style="float:right; margin-right:10px;" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_content})">
-<!-- 												<span style="float:right; margin-right:10px;">수정하기</span> -->
+												<input type="hidden" id="topic_name_detail${todoListJoinVO.topic_no}" name="topic_name" value="${todoListJoinVO.topic_name}">
+												<input type="hidden" id="todo_list_content_detail${todoListJoinVO.todo_list_no}" name="todo_list_content" value="${todoListJoinVO.todo_list_content}">
+												<input type="checkbox" class="fa fa-fw fa-pen" style="float:right; margin-right:10px;" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정하기">
+												<span style="float:right; margin-right:10px;">수정하기</span> 
 						
 						<!--할일 목록 누르면 할일상세페이지(<div id="show_detail">)로 이동 : 종료 -->					
 				   
 											<br>
+											<span> 토픽 방 이름 : [ ${todoListJoinVO.topic_name} ]</span>
+											
 											<!-- 할일 완료 시키기 : 시작 -->	
 												<input type="checkbox"  class="fa fa-fw fa-heart fill" style="float:right; margin-right:10px;" onclick="TodoDone(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="완료">
 													<span style="float:right; margin-right:10px;">완료하기</span>
 											<!-- 할일 완료 시키기 : 종료-->		
+											
+					<!-- 진행중인 할일 삭제 하기 : 시작  -->
+						<input type="checkbox"  class="fa fa-fw fa-trash fill" style="float:right; margin-right:10px;" onclick="TodoDelete(${todoListJoinVO.team_no},${todoListJoinVO.topic_no},${todoListJoinVO.todo_list_no})" value="완료">
+						<span style="float:right; margin-right:10px;">삭제하기</span>
+					<!-- 진행중인 할일 삭제 하기 : 종료  -->
 											<br>
 									</div>
 			

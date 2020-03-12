@@ -108,13 +108,12 @@ public class TodoListController {
 		@GetMapping("/todo_list_detail")
 		public String todo_list_detail(@RequestParam int team_no,
 									   @RequestParam int topic_no,
-									   @RequestParam String todo_list_content,
 									   @ModelAttribute TodoListJoinVO todoListJOinVO,
 									   @ModelAttribute TodoListDto todoListDto,
 										Model model, HttpSession session) {
 			
 			int todo_list_no = todoListJOinVO.getTodo_list_no();
-//			String todo_list_content = todoListDto.getTodo_list_content();
+			String todo_list_content = todoListDto.getTodo_list_content();
 			int member_no = (int)session.getAttribute("member_no");
 			
 			model.addAttribute("todoPerAll", todoListDao.todoPerAll(team_no,member_no));

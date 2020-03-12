@@ -50,8 +50,21 @@ $(function(){
 	})
 });
 
+//스크롤
+$(function(){
+    $(window).scroll(function(){
+        console.log("scroll event");
+        console.log($(this).scrollTop());
+
+        if($(this).scroll > $(document).innerHeight()*0.9){
+            console.log("더 불러오세요");
+        }
+    });
+});  
 </script>
-<body>
+<body style="height: 5000px">
+
+<div style="width:100%; height:90%; overflow:auto">
  	 <!-- 상단 헤더 -->
 	 <div class="circle-header">
                 <div class="header-wrap">
@@ -92,8 +105,8 @@ $(function(){
                            <div class="mypage-main-content">
                            
 								<!-- 상단 네비바 -->
-								<nav class="navbar navbar-expand-lg navbar-light bg-light">
-									  <a class="navbar-brand" href="#">멤버관리</a>
+								<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+									  <a class="navbar-brand" href="#" style="color:white">멤버관리</a>
 									  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 									    <span class="navbar-toggler-icon"></span>
 									  </button>
@@ -103,7 +116,7 @@ $(function(){
 									       		 <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리</a>
 									    	 </li> 
 									     	 <li class="nav-item active">
-									    		    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
+									    		    <a class="nav-link" style="color:white" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
 									     	 </li>
 									     	 <li class="nav-item">
 									        	<a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>

@@ -14,12 +14,27 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>   
 <script>
 
+$(function(){
+    $(window).scroll(function(){
+        console.log("scroll event");
+        console.log($(this).scrollTop());
 
+        if($(this).scroll > $(document).innerHeight()*0.9){
+            console.log("더 불러오세요");
+        }
+    });
+});  
 </script> 
+
+    <style>
+        body{
+            height:50000px;
+            background-color: #F6F6F6;
+        }
+    </style>
 </head>
 <body>
-
-	
+  <div style="width:100%; height:100%; overflow:auto;">     
 	 <div class="circle-header">
 
                 <div class="header-wrap">
@@ -54,9 +69,9 @@
                     </div>
                 </div>        
         </div>
+                      
         <div class="mypage-main">
                 <div class="main-bg">
-                    
                         <div id="fullpage">
                             <div class="section">
                                 	<div class="mypage-main-content">
@@ -73,12 +88,20 @@
 	                                        </div>
 	                                        
 	                                    </div>
-	                                   
+	                                   		<hr>
+	                                   		<p> 팀 리스트</p>
 			                                    <c:forEach items="${teamMainList}" var="teamMainVO">
 			                                    	<div>
-	                                    				<div class="mypage-div">	
+	                                    				<div class="mypage-div" style="background-color:white; border:20px solid #F6F6F6; padding:10px;">	
 	                                    					<div class="mypage-name-div">
-																<h4>team_name = ${teamMainVO.team_name} team_domain = ${teamMainVO.team_domain}</h4>
+	                                    						<!-- 팀 이름  -->
+																<h4 style="font-weight: bold;">${teamMainVO.team_name} </h4>
+																	<br>
+																<h6>
+																<!-- 이메일,멤버포지션  -->
+																	<span>  ${memberDto.member_email}  </span>
+																	<span class="badge badge-primary">${teamMainVO.member_position}</span>
+																</h6>
 															</div>
 															
 															<c:choose>
@@ -90,7 +113,7 @@
 																		<input type="hidden" name="team_name" class="team_name_value" value="${teamMainVO.team_name}">
 																		<input type="hidden" name="team_domain" class="team_domain_value" value="${teamMainVO.team_domain}">
 																		<div class="mypage-team-div">
-																			<button type="submit">설정</button>
+																			<button type="submit" class="btn btn-outline-secondary" >설정</button>
 																		
 																		</div>
 																	</form>
@@ -105,7 +128,7 @@
 																		<input type="hidden" name="team_name" class="team_name_value" value="${teamMainVO.team_name}">
 																		<input type="hidden" name="team_domain" class="team_domain_value" value="${teamMainVO.team_domain}">
 																		<div class="mypage-team-div">
-																			<button type="submit">소유자 설정</button>
+																			<button type="submit" class="btn btn-outline-secondary">소유자 설정</button>
 																		</div>
 																	</form>
 																</c:otherwise>
@@ -113,45 +136,36 @@
 																</c:choose>	
 
 
-															
-															
-<!-- 															팀관리 : 소유자만 보이는 버튼 -->
-<%-- 															<form class="setting_submit" action="${pageContext.request.contextPath}/team_admin/owner_manager_team" method="get"> --%>
-<%-- 																<input type="hidden" name="team_no" class="team_no_value" value="${teamDto.team_no}"> --%>
-<%-- 																<input type="hidden" name="team_name" class="team_name_value" value="${teamDto.team_name}"> --%>
-<%-- 																<input type="hidden" name="team_domain" class="team_domain_value" value="${teamDto.team_domain}"> --%>
-<!-- 																<div class="mypage-team-div"> -->
-<!-- 																	<button type="submit">소유자관리</button> -->
-<!-- 																</div> -->
-																
-<!-- 															</form> -->
-																
-
 															<form class="param_submit" action="${pageContext.request.contextPath}/chat/topic" method="get">
 																<input type="hidden" name="team_no" class="team_no_value" value="${teamMainVO.team_no}">
 																<input type="hidden" name="topic_no" class="topic_no_value" value="">
 																<div class="mypage-team-div">
-																	<button id="param_submit_btn" type="submit">이동하기</button>
+																	<button id="param_submit_btn" type="submit" class="btn btn-outline-primary btn-lg">이동하기</button>
 																</div>
 															</form>
 															
 														</div>
 	                                    			</div>
 												</c:forEach>
+												<hr>
+												
 												<div class="mypage-team-create">
 													<form action="${pageContext.request.contextPath}/team/create">
-														<button class="mypage-team-create-submit" type="submit">팀생성</button>
+														<button class="btn btn-primary btn-lg btn-block" type="submit">팀생성</button>
 													</form>
 												</div>
 									</div>
                             </div>
                             
                         </div>
-                  
+                
+                 
                 </div>
+                
         </div>
+
 	
 	<br><br>
-	
+</div>
 </body>
 </html>

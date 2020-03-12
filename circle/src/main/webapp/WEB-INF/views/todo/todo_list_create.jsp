@@ -275,13 +275,13 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 // 	var team_no = ${param.team_no};
 // 	var topic_no = ${param.topic_no};
 	var todo_list_content = $("#todo_list_content_detail"+todo_list_no).val(); 
-
+	var topic_name = $("#topic_name_detail"+topic_no).val();
 
 		var  ajaxOption = {
 			url :"${pageContext.request.contextPath}/todo/todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
 			type : "get",
 			dataType : "html",
-			data : {todo_list_content:todo_list_content},
+			data : {todo_list_content:todo_list_content,topic_name:topic_name},
 			cache : false
 	};
 		$.ajax(ajaxOption).done(function(data){
@@ -405,7 +405,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	       	  
 	       	  <!-- 할 일 제목 , 카운트 개수  -->
 	       	  <div class="p-3 mb-2 bg-primary text-white" style="text-align:center; height: 70px" >
-		      <p> 할 일 / 현재위치 : 할 일 추가 페이지  	<span class="badge badge-light">${countTodo} </span>       </p>
+		      <p> 할 일  <span class="badge badge-light">${countTodo} </span>       </p>
 <!-- 	       		투두 리스트 메인목록보기 :시작 -->
 			
 						<span style="cursor:pointer; color: white;">할 일 메인 목록 보기
@@ -457,7 +457,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				<br>
 				<br>
 				<br>
-						
+					
+					<div style="text-align: center">
 					<!--진행  목록 보기 체크박스 : 시작  -->
 						 <span>진행중인 할일 보기</span>
 						 <input type="checkbox" class="before_todo_done" name="before_todo_done" value="진행중인 할일 보기" checked>
@@ -467,6 +468,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 						<span> 완료된 할 일 보기</span> 
 						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
 					<!--완료 목록 보기 체크박스 : 종료  -->		
+					</div>	
 				<hr>
 		</div>		
 
@@ -520,7 +522,8 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 									<div class="todo-title" style=" margin-left:10px;">
 											<span>할 일 제목 : [ ${todoListJoinVO.todo_list_content} ]</span>
 										
-												<input type="hidden" id="todo_list_content_detail${todoListJoinVO.todo_list_no}" name="todo_list_content" value="${todo_list_content}">
+												<input type="hidden" id="topic_name_detail${todoListJoinVO.topic_no}" name="topic_name" value="${todoListJoinVO.topic_name}">
+												<input type="hidden" id="todo_list_content_detail${todoListJoinVO.todo_list_no}" name="todo_list_content" value="${todoListJoinVO.todo_list_content}">
 												<input type="checkbox" class="fa fa-fw fa-pen" style="float:right; margin-right:10px;" onclick="TodoDetail(${todoListJoinVO.team_no},${todoListJoinVO.todo_list_no},${todoListJoinVO.topic_no})" value="수정하기">
 												<span style="float:right; margin-right:10px;">수정하기</span>
 						
