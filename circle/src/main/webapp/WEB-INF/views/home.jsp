@@ -90,10 +90,75 @@
                             	</div>
                             	<div class="pay-">
                             		<div >
-	                            		<span>1개월권</span>
-	                            		<p>개당</p>
-	                            		<p>5000</p>
-	                            		<p>￦</p>
+	     <div align="center" style="margin-top: 4%; margin-bottom: 60px;">
+
+	</div>
+			
+			<br>
+			<div style="margin: 0 auto; width: 1200px;" >
+          	<article class="admin-wrap" style="padding-top: 5rem; width: 1200px;" >
+                    
+						<div class="card border-primary mb-3 admin-cardy">
+						  <div class="card-header">1개월권<br>개당:5000\</div>
+						  <div class="card-body admin-cardy-body">
+						    <form action="pay_detail" method="post">
+						    	<h5 class="card-title">
+						    		<br>혜택<br>
+								  	할 일 생성 개수 100개<br>->무제한<br>
+									무제한 업로드 및 다운로드<br><br>
+									토픽 생성 가능<br><br>
+									투표 생성 가능<br><br>
+								
+								<br><br>	
+								<button type="button" class="btn btn-primary btn-lg" >지금 문의 하기 </button>
+							
+							
+								<br>
+								</h5>
+							</form>
+						  </div>
+						</div>
+						                    
+						<div class="card border-primary mb-3 admin-cardy">
+						  <div class="card-header">6개월권<br>개당:27000\</div>
+						  <div class="card-body admin-cardy-body">
+						    <form action="pay_detail" method="post">
+						    	<h5 class="card-title">
+						    		<br>혜택<br>
+								  	할 일 생성 개수 100개 -> 무제한<br>
+									무제한 업로드 및 다운로드<br><br>
+									토픽 생성 가능<br><br>
+									투표 생성 가능<br><br>
+							
+							<br><br>
+							<button type="button" class="btn btn-primary btn-lg">지금 문의 하기 </button>
+								<br>
+								</h5>
+							</form>
+						  </div>
+						</div>
+						                    
+						<div class="card border-primary mb-3 admin-cardy">
+						  <div class="card-header">1년권<br>개당:48000\</div>
+						  <div class="card-body admin-cardy-body">
+						    <form action="pay_detail" method="post">
+						    	<h5 class="card-title">
+						    		<br>혜택<br>
+								  	할 일 생성 개수 100개 -> 무제한<br>
+									무제한 업로드 및 다운로드<br><br>
+									토픽 생성 가능<br><br>
+									투표 생성 가능<br><br>
+							
+								<br><br>	
+								<button type="button" class="btn btn-primary btn-lg">지금 문의 하기 </button>
+								<br>
+								</h5>
+							</form>
+						  </div>
+						</div>	
+			</article>	
+			</div>
+	                            		
                             		</div>
                             	</div>
                             </div>
