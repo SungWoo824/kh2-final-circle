@@ -225,9 +225,7 @@
 </script>
 <!-- 토픽 생성 이름 중복검사 -->
 <script>
-
 $(function(){
-
 	//입력을 마치면(blur) 비동기통신으로 아이디 유무를 검사
 	$("#check-btn").attr("disabled",true);
 	
@@ -257,7 +255,6 @@ $(function(){
 			}
 		});			
 	});
-
 	
 	
 	//토픽삭제
@@ -269,12 +266,7 @@ $(function(){
 	$(".topic-out-btn").click(function(){
 			return confirm("토픽을 나가시겠습니까?");
 	});
-
-
-
 });
-
-
 </script>
 <!-- 팀 관련 스크립트 -->
 <script>
@@ -304,10 +296,9 @@ $(function(){
       				alert("발송완료되었습니다");
       			//입력창 초기화
                     $(".form-control").val("");
-                    $(this).find('#invite-send').prop("disabled",false);
-                    $(this).find('#invite-send').val("초대하기");
-      				$('.modal fade').hide();
-                  	
+      				$('#inviteTeam').hide();
+                  	('#invite-send').prop("disabled",false)
+                    .val("초대하기");
                   	//추후에 전송 완료되었습니다라는 메시지와 이메일을 확인해달라는 모달팝업창 띄우기
               }
           });
@@ -370,7 +361,6 @@ function searchResult(no){
 	});
 }
 </script>
-
 <!-- 투두 리스트 관련 스크립트 -->
 <script>
 // 검색 결과창 숨기기 
@@ -648,9 +638,36 @@ var topic_no = ${param.topic_no};
 // 			});
 // }
 
+//디테일 2번째 방법  : 현재는 이걸로 사용 중 
+function TodoDetail(team_no,todo_list_no,topic_no){
+// 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
+// 	var team_no = ${param.team_no};
+// 	var topic_no = ${param.topic_no};
+	var todo_list_content = $("#todo_list_content_detail"+todo_list_no).val(); 
+	var topic_name = $("#topic_name_detail"+topic_no).val();
+
+		var  ajaxOption = {
+			url :"${pageContext.request.contextPath}/todo/todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
+			type : "get",
+			dataType : "html",
+			data : {todo_list_content:todo_list_content,topic_name:topic_name},
+			cache : false
+	};
+		$.ajax(ajaxOption).done(function(data){
+				$('#list-content').html(data);
+// 				$('#todo-edit').html(data);
+// 				$('#list-content').hide();
+// 				$(".todo-title").hide();
+				$(this).parent().children(".modify-fix-div").show();
+			});
+}
+
 
 //할일 수정하기
 function EditTodo(team_no,todo_list_no,topic_no){
+	console.log("11111team_no"+team_no);
+	console.log("t22222odo_list_content"+todo_list_content);
+	console.log("t333333topic_no"+topic_no);
 // 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
 // 	var team_no = ${param.team_no};
 // 	var topic_no = ${param.topic_no};
@@ -702,7 +719,7 @@ function TodoCreate(){
 
 				$('#list-content').html(data);
 				$('#todo_list_content_create').val("");
-				$('#list-content').show('3000');
+// 				$('#list-content').hide();
 // 				$('#todo-list-search').hide();
 
 		
@@ -728,67 +745,16 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 		$.ajax(ajaxOption).done(function(data){
 
 			$('#list-content').html(data);
-		});
-}
-
-//디테일 2번째 방법  : 현재는 이걸로 사용 중 
-function TodoDetail(team_no,todo_list_no,topic_no){
-// 	var todo_list_no = $("#todo_list_no_edit").val();  //인풋에 있는 벨류를 가져올게 
-// 	var team_no = ${param.team_no};
-// 	var topic_no = ${param.topic_no};
-	var todo_list_content = $("#todo_list_content_detail"+todo_list_no).val(); 
-	var topic_name = $("#topic_name_detail"+topic_no).val();
-
-
-		var  ajaxOption = {
-			url :"${pageContext.request.contextPath}/todo/todo_list_detail?team_no="+team_no+"&todo_list_no="+todo_list_no+"&topic_no="+topic_no,
-			type : "get",
-			dataType : "html",
-			data : {todo_list_content:todo_list_content,topic_name:topic_name},
-			cache : false
-	};
-		$.ajax(ajaxOption).done(function(data){
-				$('#list-content').html(data);
-// 				$('#todo-edit').html(data);
+// 				$('#todo-delete').html(data);
 // 				$('#list-content').hide();
-// 				$(".todo-title").hide();
-				$(this).parent().children(".modify-fix-div").show();
+// 				$('#list-done-result').html(data);
+// 				$('#todo-list-search').hide();
 			});
 }
 
-//디테일 3번째 방법 
-// function TodoDetail(){
-// // 	var member_no = ${member_no};
-// // 	var todo_list_no = $("#todo_list_no_create").val();  //인풋에 있는 벨류를 가져올게 
-// // 	var team_no = ${param.team_no};
-// // 	var topic_no = ${param.topic_no};
-// // 	var todo_list_content = $("#todo_list_content_create").val();
-
-// // 	var url=$('#form_todo_create').attr('action');
-// 		var detailData=$('#form_todo_detail').serialize();
-
-// 		var  ajaxOption = {
-// 			url : "${pageContext.request.contextPath}/todo/todo_list_detail",
-// 			type : "GET",
-// 			dataType : "html",
-// // 			contentType:"application/json",
-// 			data :detailData,
-// 			cache : false
-// 	};
-// 		$.ajax(ajaxOption).done(function(data){
-
-
-// 				$('#list-content').html(data);
-// // 				$('#todo_list_content_create').val("");
-// // 				$('#list-content').hide();
-// // 				$('#todo-list-search').hide();
-
-// 						$(this).parent().children(".modify-fix-div").show();
-// 			});
-// }
-
 
 </script>
+
 
 </head>
 
@@ -927,7 +893,7 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 	       	  
 	       	  <!-- 할 일 제목 , 카운트 개수  -->
 	       	  <div class="p-3 mb-2 bg-primary text-white" style="text-align:center; height: 70px" >
-		      <p> 할 일  	<span class="badge badge-light">${countTodo} </span>       </p>
+		      <p> 할 일 / 현재위치 : 할 일 메인 페이지  	<span class="badge badge-light">${countTodo} </span>       </p>
 <!-- 	       		투두 리스트 메인목록보기 :시작 -->
 			
 						<span style="cursor:pointer; color: white;">할 일 메인 목록 보기
@@ -971,21 +937,14 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 			   </div>
 				<hr>
 				
-
-				<!--투두 리스트 메인가기 -->
-		        <input type="button" onclick="HomeTodo(${param.team_no},${param.topic_no},${todoListJoinVO.member_no})" value="처음으로">
-		        
-		        <br>     
-					   		
-
+	
 					<!-- 할일 검색하기 비동기 -->
 					<input type="text" class="form-control mx-sm-5 mb-2" id="todo_list_content" name="todo_list_content" placeholder="검색" style="width:200; float:left; margin-right:10px;">
 					<input type="submit" class="btn btn-primary" id="submit-search" onclick="TodoSearch()" value="검색" style="float:left; margin-right:10px;" >
 				<br>
 				<br>
 				<br>
-					
-					<div style="text-align: center">
+						
 					<!--진행  목록 보기 체크박스 : 시작  -->
 						 <span>진행중인 할일 보기</span>
 						 <input type="checkbox" class="before_todo_done" name="before_todo_done" value="진행중인 할일 보기" checked>
@@ -995,16 +954,10 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 						<span> 완료된 할 일 보기</span> 
 						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
 					<!--완료 목록 보기 체크박스 : 종료  -->		
-					</div>	
 				<hr>
 		</div>		
 
-
-				<br>
-				
-
-			</div>		
-
+			   <!-- 완료 목록 보기 누르면 이부분 없어 져야 함   -->
 			   <div id="todo_list_all"> 
 				
 	        	
@@ -1019,9 +972,14 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 		        	
 					<h2>검색결과</h2>
 						<c:forEach items="${searchTodo}" var="todoListJoinVO">
-
+<!-- 				   	검색 나오는 곳 출력 -->
+<!-- 		        	<div id="count_search"> -->
+<%-- 						<p>${countSearch} 개의 할 일이 있습니다</p> --%>
+<!-- 		        	</div> -->
 							<hr>	
-
+							<a href="${pageContext.request.contextPath}/todo/todo_list_detail?todo_list_no=${todoListJoinVO.todo_list_no}">
+							${todoListJoinVO.todo_list_content} ${todoListJoinVO.topic_name} / ${todoListJoinVO.todo_list_done}
+							</a>
 						</c:forEach>
 			   	</div>
 			   	<!-- 검색 결과 보기 :끝  --> 
@@ -1140,8 +1098,9 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 				<!-- 완료 목록 보기 : 끝  -->
 							   
 			</div> 
-			</div>
-	</div>		
+</div>
+</div>
+
 <!-- 투두리스트 종료 -->
         	</div>
 			        
@@ -1534,8 +1493,6 @@ function TodoDetail(team_no,todo_list_no,topic_no){
 					<div class="dropdown-item"> 
 						<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
 						<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-						<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
-						
 						<br>
 					</div>
 				</c:forEach>
