@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.ChatFileVo;
 import com.kh.circle.vo.ChatVo;
 
@@ -73,5 +74,14 @@ public class ChatDaoImpl implements ChatDao{
 		File file = new File(dir, String.valueOf(chat_file_no));
 		byte[] data = FileUtils.readFileToByteArray(file);
 		return data;
+	}
+
+	@Override
+	public boolean isContainChatMember(int member_no, int topic_no) {
+		TopicMemberDto topicMemberDto = new TopicMemberDto();
+		topicMemberDto.setMember_no(member_no);
+		topicMemberDto.setTopic_no(topic_no);
+		int isContain = sqlSession.selectOne("topic.isContainChatMember", topicMemberDto);
+		return isContain>0;
 	}
 }

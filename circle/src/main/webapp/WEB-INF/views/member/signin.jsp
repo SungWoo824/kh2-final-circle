@@ -31,7 +31,7 @@
                             
                         </ul>
                         <ul class="gnb-menu">
-                            <li class="login-btn"><a href=" ${pageContext.request.contextPath}/member/signin">로그인</a></li>
+                            <li class="login-btn"><a href="${pageContext.request.contextPath}/member/signin">로그인</a></li>
 <!--                             <li class="logout-btn><a href="member/signout">로그아웃</a></li> -->
                         </ul>
                     </div>
@@ -60,13 +60,17 @@
                                     </div>
                                     <div>
                                         <div>
-                   
 											<button type="submit" class="btn btn-primary signin-submit">로그인</button>
-										
-                                           
                                         </div>
                                     </div>
                                     </form>
+                                    <div>
+                                    	<div>
+                                    		<a href="${pageContext.request.contextPath}/member/findpw">
+                                    		<button class="btn signin-submit">비밀번호 찾기</button>
+                                    		</a>
+                                    	</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="section">

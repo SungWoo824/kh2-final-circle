@@ -1068,7 +1068,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}">
+        <a class="nav-link" href="${pageContext.request.contextPath}/member/mypage">
           <i class="fas fa-fw fa-home"></i>
           <span>서클 메인</span></a>
       </li>

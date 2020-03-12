@@ -80,8 +80,6 @@ public class ManagerController {
 			model.addAttribute("pagination", pagination);
 			model.addAttribute("teamList", teamList);
 //			model.addAttribute("teamFileTotalSize",managerDao.teamFileTotalSize(boardVo.getTeam_no()));
-			
-		
 
 		return "manager/team";
 	}

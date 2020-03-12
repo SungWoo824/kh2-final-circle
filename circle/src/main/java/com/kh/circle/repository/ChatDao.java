@@ -16,4 +16,5 @@ public interface ChatDao {
 	ChatFileVo sendChatFile(int chat_file_no);
 	ChatFileVo chatFileDownload(int chat_file_no);
 	byte[] getUploadNo(int chat_file_no) throws IOException;
+	boolean isContainChatMember(int member_no, int topic_no);
 }
