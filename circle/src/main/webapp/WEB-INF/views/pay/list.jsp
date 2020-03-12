@@ -26,10 +26,28 @@
 	src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>
 <script>
 	$(function(){
-		if($('#cancel').val()=='y'){
+		if($('#cancel').val()=='1'){
 			alert("한 번 이상 사용된 플랜 옵션이므로 취소가 불가합니다.");
 		}
 	});
+	function MovePage(){
+		var no = $('no').val();
+		var item = $('item').val();
+		var  ajaxOption = {
+				url:"revoke?no="+no+"&team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${param.team_domain}",
+				type:"POST",
+				dataType:"html",
+				cache:false,
+				data:{
+						item_name:item,
+						no:no
+						}
+				};
+		
+		$.ajax(ajaxOption).done(function(data){
+			$('#bodyContents').html(data);
+		});
+	}
 </script>
 <body>
 
@@ -65,8 +83,6 @@
 							<li class="login-btn"><a
 								href="${pageContext.request.contextPath}/member/signin">로그인</a></li>
 						</c:otherwise>
-
-
 					</c:choose>
 				</ul>
 			</div>
@@ -127,6 +143,7 @@
       		<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
 							<c:forEach var="pay" items="${list }">
 							<c:if test="${pay.status eq '준비' or '취소완료'}">
+							<!-- 만약 pay.no를 준 dao 결과값이 1이라면 onclick 이벤트를 걸어서 alert창을 띄워라 -->
 									<ul>
 										<li>
 											플랜 옵션: ${pay.item_name }
@@ -139,6 +156,8 @@
 										</li>
 										<c:if test="${pay.status eq '준비' }">
 										<li>
+											<input class="no" type="hidden" value="${pay.no }">
+											<input class="item" type="hidden" value="${pay.item_name }">
 											<button type="button" id="cancel" onclick="location.href='revoke?no=${pay.no }&team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${param.team_domain}'">취소</button>
 										</li>										
 										</c:if>

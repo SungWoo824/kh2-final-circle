@@ -191,4 +191,23 @@ public class PayDaoImpl implements PayDao{
 		sqlSession.update("pay.changeStatus", no);
 	}
 
+	@Override
+	public void upadteUsed(String partner_user_id, String item_name) {
+		PayDto payDto = PayDto.builder()
+				.partner_user_id(partner_user_id)
+				.item_name(item_name)
+				.build();
+		sqlSession.update("pay.updateUsed", payDto);
+		
+	}
+
+	@Override
+	public String checkUsed(String partner_user_id, String item_name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+
 }
