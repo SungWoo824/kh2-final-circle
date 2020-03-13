@@ -336,6 +336,8 @@ $(function(){
 							<i style="color:#bbb" class="fa fa-lg fa-trash-alt"></i>
 						</a>
 					</div>
+					<c:forEach items="${memberList}" var="memberListVO">	
+		      		<c:if test="${memberListVO.member_auth eq '정회원'}">
 					<div class="fileupload-box">
 						 <form class="fupload" action="driveupload" method="post" enctype="multipart/form-data">
 						 	<input type="hidden" name="drive_name" value="${param.drive_name}">
@@ -355,6 +357,8 @@ $(function(){
 							<button class="myfile-btn current btn btn-primary" data-tab="mytab">내 파일보기</button>
 						</div>
 					</div>
+					</c:if>
+					</c:forEach>
 				</div>
 			</div>
 					<div class="flist-wrap">
