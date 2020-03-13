@@ -223,7 +223,7 @@ public String grant_position(@RequestParam int team_no,
 	teamDao.grantOwner(member_no, team_no);
 	
 	//준회원 정회원 변경 
-//	teamDao.changeAuth(teamMemberDto);
+	teamDao.changeAuth(teamMemberDto);
 	
 	
 	return "redirect:./grant_position";		

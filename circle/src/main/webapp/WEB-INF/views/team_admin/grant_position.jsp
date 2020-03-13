@@ -160,28 +160,45 @@ $(function(){
       </div>
       <br>
       		<h3> 회원을 선택하여 등급을 변경하세요!  </h3>
-      		<br><hr>
+      			<br><br>
+    			<p>이미 소유자로 지정된 경우는, 소유자 지정 버튼이 보이지 않습니다.</p>
+      				<br><hr>
 
-    		<form action="grant_position" method="post">
-    		<!-- 기본 회원 정보 리스트  -->
-    			<c:forEach  items="${memberList}" var="memberListVO" > 
-    					<input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
-    					<input type="hidden" name="team_no" value="${param.team_no}">
-    					<input type="hidden" name="team_name" value="${param.team_name}">
-    					<input type="hidden" name="team_domain" value="${param.team_domain}">
-    					<br>
-    						<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-							<span class="badge badge-primary">${memberListVO.member_position}</span>
-							<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
-							<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
-							<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
-
-						<input type="submit" class="btn btn-outline-primary" value="소유자로 지정">
-
-						<br>    			
-    			</c:forEach>
-    		</form>
-    		
+			    		<form action="grant_position" method="post">
+			    		<!-- 기본 회원 정보 리스트  -->
+			    			<c:forEach  items="${memberList}" var="memberListVO" > 
+			    					<br>
+			    						<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+										<span class="badge badge-primary">${memberListVO.member_position}</span>
+										<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
+										<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
+										<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
+										<br>
+										
+									<select>
+										<option value="${memberListVO.member_auth}">정회원</option>
+										<option value="${memberListVO.member_auth}">준회원</option>
+										<option >선택안함</option>
+									</select>
+									   <input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
+									<input type="button" value="확인"	>
+										
+								<!-- 소유자가 아닐 경우만, 소유자로 지정할 수 있는 버튼 보임 -->		
+								<div style="float:right; margin-right:10px;">
+								<c:if test="${memberListVO.member_position==null}">
+			    					<input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
+			    					<input type="hidden" name="team_no" value="${param.team_no}">
+			    					<input type="hidden" name="team_name" value="${param.team_name}">
+			    					<input type="hidden" name="team_domain" value="${param.team_domain}">
+									<input type="submit" class="btn btn-outline-primary" value="소유자로 지정">
+									<br>    			
+								</c:if>
+								</div>
+								<br><hr>
+			
+			    			</c:forEach>
+			    		</form>
+			    		
     		
     	
 

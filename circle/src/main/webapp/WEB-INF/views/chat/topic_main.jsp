@@ -1073,7 +1073,9 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 										<div class="all-div">
 												<div class="modify-origin-div">
 													<div class="todo-title" style=" margin-left:10px;">
-															<span> [ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ] </span>
+																<span>할 일 제목 : [ ${todoListJoinVO.todo_list_content} ]</span>
+																<br>
+																<span>토픽 방 이름 : [ ${todoListJoinVO.topic_name} ] </span>
 														
 															
 				

@@ -477,20 +477,12 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 					
 					<!--완료 목록 보기 체크박스 : 시작  -->
 						<span> 완료된 할 일 보기</span> 
-						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기">
+						<input type="checkbox" class="todo_done_result" name="todo_done_result" value="완료된 할일 보기" >
 					<!--완료 목록 보기 체크박스 : 종료  -->		
 					
 
 				<hr>
 		</div>		
-
-			   <!-- 완료 목록 보기 누르면 이부분 없어 져야 함   -->
-			   <div id="todo_list_all"> 
-				
-	        	
-			   <!-- 완료 버튼 누르면 목록에서 사라지기  -->
-			   <div id="list-done"></div>	
-
 			
 
 	        	
@@ -570,18 +562,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 		 </div>
 	</div> 	   
 	<!-- 할일 메인 리스트 :  끝  --> 	  	   
-		  	   
-					   <!-- 할일 수정 결과 -->
-					   <div id="todo-edit"></div>
-				  	   
-					   <!--비동기 검색 결과   -->
-					   <div id="todo-list-search"></div>
-												
-					   <!-- 할일 추가 된 것 결과 -->									
-					   <div id="todo-create"></div>				
-					   
-					   <!--할일 삭제 결과 -->					
-					   <div id="todo-delete"></div>			
+
 			   
 			   <!-- 완료 목록 보기 :시작  -->		
 			   <div id="list-done-result">
@@ -601,7 +582,9 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 										<div class="all-div">
 												<div class="modify-origin-div">
 													<div class="todo-title" style=" margin-left:10px;">
-															<span> [ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ] </span>
+														<span>할 일 제목 : [ ${todoListJoinVO.todo_list_content} ]</span>
+														<br>
+														<span>토픽 방 이름 : [ ${todoListJoinVO.topic_name} ] </span>
 														
 															
 				

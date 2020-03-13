@@ -414,7 +414,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	       	  
 	       	  <!-- 할 일 제목 , 카운트 개수  -->
 	       	  <div class="p-3 mb-2 bg-primary text-white" style="text-align:center; height: 70px" >
-		      <p> 할 일 / 현재위치 : 완료 성공 페이지  	<span class="badge badge-light">${countTodo} </span>       </p>
+		      <p> 할 일 	<span class="badge badge-light">${countTodo} </span>       </p>
 <!-- 	       		투두 리스트 메인목록보기 :시작 -->
 			
 						<span style="cursor:pointer; color: white;">할 일 메인 목록 보기
@@ -563,19 +563,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 		 </div>
 	</div> 	   
 	<!-- 할일 메인 리스트 :  끝  --> 	  	   
-		  	   
-					   <!-- 할일 수정 결과 -->
-					   <div id="todo-edit"></div>
-				  	   
-					   <!--비동기 검색 결과   -->
-					   <div id="todo-list-search"></div>
-												
-					   <!-- 할일 추가 된 것 결과 -->									
-					   <div id="todo-create"></div>				
-					   
-					   <!--할일 삭제 결과 -->					
-					   <div id="todo-delete"></div>			
-			   
+
 			   <!-- 완료 목록 보기 :시작  -->		
 			   <div id="list-done-result">
 			    <br>
@@ -594,7 +582,9 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 										<div class="all-div">
 												<div class="modify-origin-div">
 													<div class="todo-title" style=" margin-left:10px;">
-															<span> [ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ] </span>
+														<span>할 일 제목 : [ ${todoListJoinVO.todo_list_content} ]</span>
+														<br>
+														<span>토픽 방 이름 : [ ${todoListJoinVO.topic_name} ] </span>
 														
 															
 				
