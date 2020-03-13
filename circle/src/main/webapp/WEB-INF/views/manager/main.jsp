@@ -446,7 +446,7 @@
         </div>
     </div>
 </div>
-
+<!-- pull -->
 <!-- Bootstrap core JavaScript-->
 <script src="${pageContext.request.contextPath}/resources/js/design/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/design/bootstrap.bundle.min.js"></script>
