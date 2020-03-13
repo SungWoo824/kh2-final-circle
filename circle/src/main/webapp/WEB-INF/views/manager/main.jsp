@@ -71,76 +71,6 @@
       <!-- Divider -->
       <hr class="sidebar-divider">
 
-
-<!-- <<<<<<< HEAD -->
-
-<!--         토픽 목록 시작 -->
-<!--         <li class="nav-item active"> -->
-<!--             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" -->
-<!--                aria-controls="collapsePages"> -->
-<!--                 <i class="fas fa-fw fa-folder"></i> -->
-<!--                 <span>회원 관리</span> -->
-<!--             </a> -->
-<!--             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar"> -->
-<!--                 <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--                                 <h6 class="collapse-header">Login Screens:</h6> -->
-<!--                     <a class="collapse-item" -->
-<%--                        href="${pageContext.request.contextPath}/manager/member?type=&value=">회원목록</a> --%>
-<!--                     <a class="collapse-item" href="#">채팅2</a> -->
-<!--                     <div class="collapse-divider"></div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </li> -->
-
-<!--         <li class="nav-item active"> -->
-<!--             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" -->
-<!--                aria-controls="collapseOne"> -->
-<!--                 <i class="fas fa-fw fa-folder"></i> -->
-<!--                 <span>팀 관리</span> -->
-<!--             </a> -->
-<!--             <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionSidebar"> -->
-<!--                 <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--                                 <h6 class="collapse-header">Login Screens:</h6> -->
-<%--                     <a class="collapse-item" href="${pageContext.request.contextPath}/manager/team?type=&value=">팀목록</a> --%>
-<!--                     <a class="collapse-item" href="#">채팅2</a> -->
-<!--                     <div class="collapse-divider"></div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </li> -->
-
-<!--         <li class="nav-item active"> -->
-<!--             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" -->
-<!--                aria-controls="collapseThree"> -->
-<!--                 <i class="fas fa-fw fa-folder"></i> -->
-<!--                 <span>매출 관리</span> -->
-<!--             </a> -->
-<!--             <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar"> -->
-<!--                 <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--                                 <h6 class="collapse-header">Login Screens:</h6> -->
-<!--                     <a class="collapse-item" href="#">채팅1</a> -->
-<!--                     <a class="collapse-item" href="#">채팅2</a> -->
-<!--                     <div class="collapse-divider"></div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </li> -->
-
-<!--         <li class="nav-item active"> -->
-<!--             <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" -->
-<!--                aria-controls="collapseTwo"> -->
-<!--                 <i class="fas fa-fw fa-folder"></i> -->
-<!--                 <span>관리자 관리</span> -->
-<!--             </a> -->
-<!--             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar"> -->
-<!--                 <div class="bg-white py-2 collapse-inner rounded"> -->
-<!--                                 <h6 class="collapse-header">Login Screens:</h6> -->
-<%--                     <a class="collapse-item" href="${pageContext.request.contextPath}/manager/admin?type=&value=">회원 --%>
-<!--                         목록</a> -->
-<!--                     <a class="collapse-item" href="#">채팅2</a> -->
-<!--                     <div class="collapse-divider"></div> -->
-<!--                 </div> -->
-<!--             </div> -->
-<!--         </li> -->
-<!-- ======= -->
       <!-- 토픽 목록 시작-->
       <li class="nav-item active">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
@@ -199,8 +129,6 @@
           </div>
         </div>
       </li>
-
-
     </ul>
 
 
@@ -482,7 +410,6 @@
             </div>
             <!-- End of Page Wrapper -->
 
-
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -578,11 +505,10 @@
 						  </div>
 						</div>	
 			</article>
-
         </div>
     </div>
 </div>
-
+<!-- pull -->
 <!-- Bootstrap core JavaScript-->
 <script src="${pageContext.request.contextPath}/resources/js/design/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/design/bootstrap.bundle.min.js"></script>

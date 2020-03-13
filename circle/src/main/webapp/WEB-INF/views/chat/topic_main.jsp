@@ -868,9 +868,13 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 								</ul>
 								</c:forEach>
 								 </div>
+<%-- 								<c:forEach items="${memberList }" var="memberListDto"> --%>
+<%-- 								<c:if test="${memberListDto.member_auth eq '정회원'} "> --%>
 								<div style="margin-top: 50px" align="center">
 									<button type="button" class="btn btn-outline-primary" onclick="location.href='./vote_create?team_no=${param.team_no }&topic_no=${param.topic_no }'">투표 생성</button>								    
 								</div>
+<%-- 								</c:if> --%>
+<%-- 								</c:forEach> --%>
 				            </div>
 				    </div>
         			<!-- 투표 기능 종료 -->
