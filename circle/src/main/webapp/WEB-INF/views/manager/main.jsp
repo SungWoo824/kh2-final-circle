@@ -379,9 +379,9 @@
                                 <div class="card border-primary mb-3 admin-card"
                                      style="width: 20rem; height: 15rem; margin:auto;">
                                     <div class="card-header">이번달 매출</div>
-                                    <a href="#">
+                                    <a href="${pageContext.request.contextPath}/manager/profit?type=&value=">
                                     	<div class="card-body admin-card-body">
-                                        	<h4 class="card-title">Primary card title</h4>
+                                        	<h4 class="card-title">${profit }원</h4>
                                     	</div>
                                     </a>
                                 </div>
