@@ -52,12 +52,23 @@ $(function(){
 	
 
 });
+//스크롤
+$(function(){
+    $(window).scroll(function(){
+        console.log("scroll event");
+        console.log($(this).scrollTop());
 
+        if($(this).scroll > $(document).innerHeight()*0.9){
+            console.log("더 불러오세요");
+        }
+    });
+}); 
 
 
 </script>
 
-<body>
+<body style="height: 5000px;  background-color: #F6F6F6;">
+<div style="width:100%; height:90%; overflow:auto">
  	 <!-- 상단 헤더 --> -->
 	 <div class="circle-header">
 
@@ -143,31 +154,40 @@ $(function(){
       <a class="nav-link active" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/grant_position?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">권한부여</a>	
     </div>
   </div>
-  <div class="col-9">
+  <div class="col-9" style="background-color: white; border:30px solid #F6F6F6; padding:10px;">
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
       </div>
       <br>
-      		<p> 회원을 선택하여 등급을 변경하세요!  </p>
-			<c:forEach items="${memberList}" var="memberListVO">	
-   				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
-				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
-				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
-				<br>
-   			</c:forEach>
-    </div>
-    	<form action="gratn_position" method="post">
-		    <input type="text">
-		    <select class="region">
-		        <option>소유자</option>
-		        <option>정회원</option>
-		        <option>준회원</option>
-		    </select>
-    		<button type="submit" class="grantS">등급 변경</button>
+      		<h3> 회원을 선택하여 등급을 변경하세요!  </h3>
+      		<br><hr>
+
+    		<form action="grant_position" method="post">
+    		<!-- 기본 회원 정보 리스트  -->
+    			<c:forEach  items="${memberList}" var="memberListVO" > 
+    					<input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
+    					<input type="hidden" name="team_no" value="${param.team_no}">
+    					<input type="hidden" name="team_name" value="${param.team_name}">
+    					<input type="hidden" name="team_domain" value="${param.team_domain}">
+    					<br>
+    						<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+							<span class="badge badge-primary">${memberListVO.member_position}</span>
+							<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
+							<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
+							<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
+
+						<input type="submit" class="btn btn-outline-primary" value="소유자로 지정">
+
+						<br>    			
+    			</c:forEach>
+    		</form>
     		
-    	</form>
+    		
+    	
+
+
+		      
+
   </div>
 </div>	 
 
@@ -178,7 +198,7 @@ $(function(){
 			</div>
 		</div>
 </div>	                              
-
+</div>
 
 </body>
 </html>

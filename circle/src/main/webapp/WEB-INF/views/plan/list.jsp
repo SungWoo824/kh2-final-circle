@@ -24,7 +24,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>
-<body>
+<body style="background-color:#F6F6F6; ">
 
 	<!-- 상단 헤더 -->
 	-->
@@ -115,18 +115,31 @@
        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/pay/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">구매 내역</a>	
     </div>
   </div>
-  <div class="col-9">
-    <div class="tab-content" id="v-pills-tabContent">
-      		<div class="tab-pane active" id="home" role="tabpanel"
-							aria-labelledby="home-tab">
-							보유중인 플랜 옵션<br>
+  <div class="col-9" style="background-color: white; border:30px solid #F6F6F6; padding:10px;" >
+    <div class="tab-content" id="v-pills-tabContent"  >
+      		<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab" style="background-color: white">
+							<br>
+							<h2>보유중인 플랜 옵션</h2>
+							<br>
+							<hr>
+							
 							<ul>
-								<li>1개월권: <c:out value="${oneMonth }" />개
-								</li>
-								<li>6개월권: <c:out value="${sixMonth }" />개
-								</li>
-								<li>1년권: <c:out value="${oneYear }" />개
-								</li>
+							
+								<h4>
+									<li>1개월권: <c:out value="${oneMonth }" />개
+									</li>
+								</h4>
+										<br><hr>
+								<h4>	
+									<li>6개월권: <c:out value="${sixMonth }" />개
+									</li>
+								</h4>	
+										<br><hr>
+								<h4>	
+									<li>1년권: <c:out value="${oneYear }" />개
+									</li>
+								</h4>
+								<br>	
 							</ul>
 							
 							</div>
