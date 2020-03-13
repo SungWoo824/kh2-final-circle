@@ -85,6 +85,13 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		return sqlSession.selectList("driveFile.driveFileList", boardVo);
 	}
 	
+	//내파일만 보기
+		@Override
+		public List<DriveFileDto> getMyFileList(BoardVo boardVo) {
+			return sqlSession.selectList("driveFile.myFileList", boardVo);
+		}
+
+	
 	//드라이브 팀폴더 속에 있는 파일 목록 갯수
 	@Override
 	public int driveFileListCount(BoardVo boardVo) {
@@ -96,6 +103,19 @@ public class DriveFileDaoImpl implements DriveFileDao{
 	public int driveMyFileListCount(BoardVo boardVo) {
 		return sqlSession.selectOne("driveFile.driveMyFileListCount",boardVo);
 	}
+	
+	//드라이브 전체 폴더 갯수
+	@Override
+	public int driveFolderCount(BoardVo boardVo) {
+		return sqlSession.selectOne("driveFile.driveFolderCount", boardVo);
+	}
+	
+	//내 폴더 갯수
+	@Override
+	public int myDriveFolderCount(BoardVo boardVo) {
+		return sqlSession.selectOne("driveFile.myDriveFolderCount",boardVo);
+	}
+
 	
 	///////////////////////////////////////////////////////////////////////
 	
@@ -134,18 +154,7 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		
 	}
 
-	//내파일만 보기
-	@Override
-	public List<DriveFileDto> myFileList(int team_no, 
-											int member_no, 
-											String drive_name) {
-		Map<String, Object> param = new HashMap<>();
-		param.put("team_no", team_no);
-		param.put("member_no", member_no);
-		param.put("drive_name", drive_name);
-		return sqlSession.selectList("driveFile.myFileList", param);
-	}
-
+	
 	//내폴더만 보기
 	@Override
 	public List<DriveFileDto> myFolderList(int team_no, int member_no) {
@@ -163,10 +172,7 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		return sqlSession.selectList("driveFile.fileList", param);
 	}
 
-	@Override
-	public List<DriveFileDto> getNo(List<Integer> drive_file_no) {
-		return sqlSession.selectOne("driveFile.getFileListNo",drive_file_no);
-	}
+
 
 
 

@@ -46,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(select*from
 		(select m.member_name , m.member_email , m.member_no,
 		        t.team_no , t.member_position ,
-		        todo.todo_list_content, todo.todo_list_no,
+		        todo.todo_list_content, todo.todo_list_no, todo.todo_list_done,
 		 topi.topic_name,topi.topic_no
 		from member m inner join team_member t
 			on m.member_no = t.member_no
@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			on t.team_no = todo.team_no
 				inner join topic topi
 			on todo.topic_no = topi.topic_no)
-		where team_no=#{team_no} and member_no=#{member_no}
+		where team_no=#{team_no} and member_no=#{member_no} and todo_list_done='진행'
 		order by todo_list_content)
 		WHERE todo_list_content LIKE '%'||#{todo_list_content}||'%'
 	</select>
@@ -64,6 +64,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	select count(*) 
 	from todo_list 
 	where member_no=#{member_no} and team_no=#{team_no} and todo_list_done='진행'
+	</select>
+	
+	<!-- 완료 전체 개수 카운트 -->
+	<select id="countDone" resultType="int" parameterType="todoListJoinVO">
+	select count(*) 
+	from todo_list 
+	where member_no=#{member_no} and team_no=#{team_no} and todo_list_done='완료'
+	</select>
+	
+	<!-- 검색 전체 개수 카운트 -->
+	<select id="countSearch" resultType="int" parameterType="todoListJoinVO">
+		select count(*) from
+			(select*from
+			(select m.member_name , m.member_email , m.member_no,
+			        t.team_no , t.member_position ,
+			        todo.todo_list_content, todo.todo_list_no, todo.todo_list_done,
+			 topi.topic_name,topi.topic_no
+			from member m inner join team_member t
+				on m.member_no = t.member_no
+					inner join todo_list todo
+				on t.team_no = todo.team_no
+					inner join topic topi
+				on todo.topic_no = topi.topic_no)
+			where team_no=#{team_no} and member_no=#{member_no} and todo_list_done='진행'
+			order by todo_list_content)
+			WHERE todo_list_content LIKE '%'||#{todo_list_content}||'%'
 	</select>
 
 	

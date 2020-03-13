@@ -84,9 +84,6 @@ p {
 }
 
 abbr[data-original-title], abbr[title] {
-	text-decoration: underline;
-	-webkit-text-decoration: underline dotted;
-	text-decoration: underline dotted;
 	cursor: help;
 	border-bottom: 0;
 	-webkit-text-decoration-skip-ink: none;
@@ -144,16 +141,6 @@ sup {
 	top: -.5em
 }
 
-a {
-	color: #4e73df;
-	text-decoration: none;
-	background-color: transparent
-}
-
-a:hover {
-	color: #224abe;
-	text-decoration: underline
-}
 
 a:not ([href] ):not ([tabindex] ){
 	color: inherit;
@@ -2784,11 +2771,9 @@ a.btn.disabled, fieldset:disabled a.btn {
 
 .btn-link:hover {
 	color: #224abe;
-	text-decoration: underline
 }
 
 .btn-link.focus, .btn-link:focus {
-	text-decoration: underline;
 	box-shadow: none
 }
 
@@ -4546,11 +4531,9 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {
-	text-decoration: underline
 }
 
 .breadcrumb-item+.breadcrumb-item:hover::before {
-	text-decoration: none
 }
 
 .breadcrumb-item.active {
@@ -9115,7 +9098,6 @@ a.text-dark:focus, a.text-dark:hover {
 		box-shadow: none !important
 	}
 	a:not (.btn ){
-		text-decoration: underline
 	}
 	abbr[title]::after {
 		content: " (" attr(title) ")"

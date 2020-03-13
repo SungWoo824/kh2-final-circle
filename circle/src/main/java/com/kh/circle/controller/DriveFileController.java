@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.drew.metadata.StringValue;
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.repository.DriveFileDao;
 import com.kh.circle.service.CompressionUtil;
@@ -37,8 +38,10 @@ import com.kh.circle.service.Pagination;
 import com.kh.circle.vo.BoardVo;
 import com.kh.circle.vo.DriveFileVO;
 
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @Controller
 @RequestMapping("/drive")
 public class DriveFileController {
@@ -56,17 +59,14 @@ public class DriveFileController {
 						@RequestParam(defaultValue="1") int curPage,
 						@ModelAttribute BoardVo boardVo,
 						Model model) {
-
+		boardVo.setMember_no((int)session.getAttribute("member_no"));
 		List<DriveFileDto> folderName= driveFileDao.getFolderName(boardVo.getTeam_no());
 		model.addAttribute("driveFolderName", folderName);
 		model.addAttribute("team_no",boardVo.getTeam_no());
 		List<DriveFileDto> folderList= driveFileDao.getFolderList(boardVo.getTeam_no(),boardVo.getDrive_name());
 		model.addAttribute("driveFolderList",folderList);
 		model.addAttribute("member_no",session.getAttribute("member_no"));
-		List<DriveFileDto> myFileList = driveFileDao.myFileList(boardVo.getTeam_no(),
-																(int)session.getAttribute("member_no"),
-																boardVo.getDrive_name());
-		model.addAttribute("myFileList",myFileList);
+		
 		List<DriveFileDto> myFolderList = driveFileDao.myFolderList(boardVo.getTeam_no(),
 																(int)session.getAttribute("member_no"));
 		model.addAttribute("myFolderList",myFolderList);
@@ -76,25 +76,53 @@ public class DriveFileController {
 		//폴더 생성됐을때만 실행
 		if(folderName != null) {
 			
-			//페이징
+			//파일리스트 전체페이징
 			int listCount= driveFileDao.driveFileListCount(boardVo);
 			Pagination pagination = new Pagination(listCount,curPage);
 			boardVo.setStartIndex(pagination.getStartIndex()+1);
 			boardVo.setCountPerPage(pagination.getPageSize()+pagination.getStartIndex());
 
 			
+			//내파일리스트 페이징
 			int myListCount= driveFileDao.driveMyFileListCount(boardVo);
 			Pagination myFilePagination = new Pagination(myListCount,curPage);
 			boardVo.setStartIndex(myFilePagination .getStartIndex()+1);
-			boardVo.setCountPerPage(myFilePagination.getPageSize()+pagination.getStartIndex());
+			boardVo.setCountPerPage(myFilePagination.getPageSize()+myFilePagination.getStartIndex());
+			
+			//전체 폴더 페이징
+			int folderCount= driveFileDao.driveFolderCount(boardVo);
+			Pagination folderPagination = new Pagination(folderCount,curPage);
+			boardVo.setStartIndex(folderPagination .getStartIndex()+1);
+			boardVo.setCountPerPage(folderPagination.getPageSize() + folderPagination.getStartIndex());
+			
+			//내 폴더 페이징
+			int myFolderCount=driveFileDao.myDriveFolderCount(boardVo);
+			Pagination myFolderPagination = new Pagination(myFolderCount,curPage);
+			boardVo.setStartIndex(myFolderPagination .getStartIndex()+1);
+			boardVo.setCountPerPage(myFolderPagination.getPageSize() + myFolderPagination.getStartIndex());
 			
 			List<DriveFileDto> driveFileList = driveFileDao.getFileList(boardVo);
+			List<DriveFileDto> myFileList = driveFileDao.getMyFileList(boardVo);
 			
-			model.addAttribute("listCount",listCount);
 			model.addAttribute("driveFileList",driveFileList);
+			model.addAttribute("listCount",listCount);
 			model.addAttribute("pagination",pagination);
+			
+			model.addAttribute("myFileList",myFileList);
+			model.addAttribute("myListCount",myListCount);
+			model.addAttribute("myFilePagination",myFilePagination);
+			
+			model.addAttribute("folderCount", folderCount);
+			model.addAttribute("folderPagination", folderPagination);
+			
+			model.addAttribute("myFolderCount", myFolderCount);
+			model.addAttribute("myFolderPagination", myFolderPagination);
+			
+//			log.info("회원번호 =  {}", boardVo.getMember_no());
+//			log.info("listCount = {}", listCount);
+//			log.info("myListCount = {}", myListCount);
+//			log.info("{}",myFileList);
 		}
-		
 		
 		
 		return "drive/drive";
@@ -183,14 +211,8 @@ public class DriveFileController {
 	private CompressionUtil util;
 	
 	//압축 다운로드(다중)
-	@GetMapping("/zipdownload")
+	@PostMapping("/zipdownload")
 	public ResponseEntity<ByteArrayResource> zipDownload(@RequestParam List<Integer> drive_file_no) throws IOException{
-		
-		//DB확인
-		List<DriveFileDto> driveFileDto = driveFileDao.getNo(drive_file_no);
-		System.out.println(driveFileDto);
-		//DB에있는 업로드 이름으로 바꾸기
-		
 		
 		//File load
 		File dest = new File("D:/upload/kh2e/drivefile/temp.zip");	//파일 압축명
@@ -198,16 +220,28 @@ public class DriveFileController {
 		
 		List<File> list = new ArrayList<>();
 		File dir = new File("D:/upload/kh2e/drivefile");//압축파일 임시저장소
-
+		
 		for(int i = 0; i<drive_file_no.size(); i++) {
-			list.add(new File(dir, String.valueOf(drive_file_no.get(i))));
+			DriveFileDto driveFileDto = driveFileDao.getNum(drive_file_no.get(i));
+			File f = new File(dir, String.valueOf(drive_file_no.get(i)));
+			File copy = new File(dir, driveFileDto.getDrive_file_uploadname());
+			FileUtils.copyFile(f, copy);//f를 copy로 복사해라
+			list.add(copy);
 		}
 		
-//		System.out.println(drive_file_no);
-//		System.out.println(list);
 		
 		//압축
 		util.zip(list, out);
+		System.out.println("리스트"+list);
+		
+		//압축하기 전 복사한 파일을 삭제(list)
+		for(int i=0; i<list.size(); i++) {
+//			list.remove(String.valueOf(list));
+			DriveFileDto driveFileDto = driveFileDao.getNum(drive_file_no.get(i));
+			File copy = new File(dir, driveFileDto.getDrive_file_uploadname());
+			copy.delete();
+		}
+		
 		
 //		dest를 불러와서 전송
 		byte[] data = FileUtils.readFileToByteArray(dest);
