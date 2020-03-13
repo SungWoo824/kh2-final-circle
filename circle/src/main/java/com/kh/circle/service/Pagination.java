@@ -36,13 +36,18 @@ public class Pagination {
 	        /** DB 질의를 위한 startIndex 설정 **/
 	        setStartIndex(curPage);
 	    }
-	 
+	
+
+	
 	    public void setPageCount(int listCount) {
 	        this.pageCount = (int) Math.ceil(listCount*1.0/pageSize);
 	    }
 	    public void setRangeCount(int pageCount) {
 	        this.rangeCount = (int) Math.ceil(pageCount*1.0/rangeSize);
 	    }
+	    
+	    
+	    
 	    public void rangeSetting(int curPage){
 	        
 	        setCurRange(curPage);        
@@ -62,4 +67,6 @@ public class Pagination {
 	    public void setStartIndex(int curPage) {
 	        this.startIndex = (curPage-1) * pageSize;
 	    }
+	    
+	    
 }

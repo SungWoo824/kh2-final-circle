@@ -89,10 +89,13 @@ TeamDao teamDao;
 		for(int i=0; i<term.size(); i++) {
 			if(term.get(i).equals("1개월권")) {
 				payDao.changeAuth1((String) session.getAttribute("member_email"));
+				payDao.upadteUsed((String) session.getAttribute("member_email"), term.get(i));
 			}else if(term.get(i).equals("6개월권")) {
 				payDao.changeAuth6((String) session.getAttribute("member_email"));
+				payDao.upadteUsed((String) session.getAttribute("member_email"), term.get(i));
 			}else {
 				payDao.changeAuth12((String) session.getAttribute("member_email"));
+				payDao.upadteUsed((String) session.getAttribute("member_email"), term.get(i));
 			}
 		}
 		

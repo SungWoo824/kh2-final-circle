@@ -26,4 +26,7 @@ public interface PayDao {
 	int sixMonth(String user_id);
 	int oneYear(String user_id);
 	void changeStatus(int no);
+	void upadteUsed(String partner_user_id, String item_name);
+	String checkUsed(String partner_user_id, String item_name);
+	
 }

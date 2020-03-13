@@ -107,7 +107,7 @@ $(function(){
     });
 	
 	//취소 버튼 
-	$(".modify-cancel").click(function(){
+	$("button[name=modify-cancel]").click(function(){
 		$(this).parent().parent().children(".modify-origin-div").show('3000');
         $(this).parent().parent().children(".modify-fix-div").hide('fast');
 	})
@@ -155,10 +155,24 @@ $(function(){
 	$(".navbar").show();
 
 });
+
+//스크롤
+$(function(){
+    $(window).scroll(function(){
+        console.log("scroll event");
+        console.log($(this).scrollTop());
+
+        if($(this).scroll > $(document).innerHeight()*0.9){
+            console.log("더 불러오세요");
+        }
+    });
+}); 
 	
 </script>
 
-<body>
+<body style="height: 5000px">
+<div style="width:100%; height:90%; overflow:auto">
+
  	 <!-- 상단 헤더 --> -->
 	 <div class="circle-header">
 
@@ -195,7 +209,7 @@ $(function(){
         </div>
         
         
-       
+
         <!-- 소유자 :팀 관리 설정-->
         <div class="mypage-main">
              <div class="main-bg">
@@ -205,8 +219,8 @@ $(function(){
                            <div class="mypage-main-content">
                           
 								<!-- 상단 네비바 -->
-								<nav class="navbar navbar-expand-lg navbar-light bg-light">
-								  <a class="navbar-brand" href="#">팀관리</a>
+								<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+								  <a class="navbar-brand" href="#" style="color:white">팀관리</a>
 								  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 								    <span class="navbar-toggler-icon"></span>
 								  </button>
@@ -214,7 +228,7 @@ $(function(){
 								  <div class="collapse navbar-collapse" id="navbarNav">
 								    <ul class="navbar-nav">
 								      <li class="nav-item active">
-								        <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${param.team_no}&team_name=${teamDto.team_name}&team_domain=${param.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
+								        <a class="nav-link" style="color:white" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${param.team_no}&team_name=${teamDto.team_name}&team_domain=${param.team_domain}">팀관리 <span class="sr-only">(current)</span></a>
 								      </li>
 								      <li class="nav-item">
 								    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">멤버관리</a>
@@ -268,7 +282,7 @@ $(function(){
 	                                                   				  	<hr><br>
 	                                                   				    이메일 : ${memberDto.member_email}
 	                                                   				    <hr><br>
-	                                                    			<button class="modify-cancel">닫기 </button>
+	                                                    			<button name="modify-cancel" class="btn btn-secondary" >닫기 </button>
 	                                    						</div>
 	                                    				</div>
 	                                    	    </div>	
@@ -290,9 +304,9 @@ $(function(){
                                                   						 <input type="hidden" name="team_domain" value="${param.team_domain}">
                                                       					 <input type="text" name="team_name" value="${teamDto.team_name}">
 	                                                     				 <span name="team_nameN" id="team_nameS" class="team_nameS"></span>
-                                                     					 <button type="submit" name="submitC" class="submitC" id="submitC">수정하기</button>
+                                                     					 <button type="submit" name="submitC" class="btn btn-primary" id="submitC">수정하기</button>
                                                     				 </form>
-                                                    					 <button class="modify-cancel">취소</button>
+                                                    					 <button name="modify-cancel" class="btn btn-secondary" >취소</button>
 	                                    						</div>
 	                                    				</div>
 	                                    	    </div>	
@@ -313,9 +327,9 @@ $(function(){
 							                                                     <input type="hidden" name="team_name" value="${param.team_name}">
 							                                                     <input type="text" name="team_domain" value="${teamDto.team_domain}">
 							                                                     <span name="team_domainN" id="team_domainS" class="team_domainS"></span>
-							                                                     <button type="submit" name="submitD" class="submitD" id="submitD">수정하기</button>
+							                                                     <button type="submit" name="submitD" class="btn btn-primary" id="submitD">수정하기</button>
 							                                                </form>
-																			 	 <button class="modify-cancel">취소</button>
+																			 	 <button name="modify-cancel" class="btn btn-secondary" >취소</button>
 	                                    							 </div>
 	                                    				</div>
 	                                    		</div>
@@ -343,8 +357,8 @@ $(function(){
 															 				</div>
 																	</form>
 											
-					                                    				<button id="modify-delete-submit">팀 삭제하기</button>
-																		<button class="modify-cancel">취소</button>
+					                                    				<button id="modify-delete-submit" class="btn btn-primary">팀 삭제하기</button>
+																		<button name="modify-cancel" class="btn btn-secondary">취소</button>
 																</div>
 														</div>
 												</div>
@@ -357,9 +371,7 @@ $(function(){
 			</div>
 		</div>
 </div>	                                  
-	                                     
-	                                        
-	                                        
+                              
 
 
 

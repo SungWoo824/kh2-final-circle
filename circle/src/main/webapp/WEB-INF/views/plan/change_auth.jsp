@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>권한부여</title>
 </head>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -72,15 +72,15 @@
 					<div class="mypage-main-content">
 
 						<!-- 상단 네비바 -->
-						<nav class="navbar navbar-expand-lg navbar-light bg-light">
-							<a class="navbar-brand" href="#">팀관리</a>
+						<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+							<a class="navbar-brand" href="#" style="color:white">팀관리</a>
 							<button class="navbar-toggler" type="button"
 								data-toggle="collapse" data-target="#navbarNav"
 								aria-controls="navbarNav" aria-expanded="false"
 								aria-label="Toggle navigation">
 								<span class="navbar-toggler-icon"></span>
 							</button>
-							<c:forEach items="${teamlist}" var="teamDto">
+<%-- 							<c:forEach items="${teamlist}" var="teamDto"> --%>
 								<div class="collapse navbar-collapse" id="navbarNav">
 									<ul class="navbar-nav">
 										<li class="nav-item"><a class="nav-link"
@@ -94,7 +94,7 @@
 										<li class="nav-item"><a class="nav-link"
 											href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
 										</li>
-										<li class="nav-item active"><a class="nav-link"
+										<li class="nav-item active"><a class="nav-link" style="color:white"
 											href="${pageContext.request.contextPath}/plan/list?team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${teamDto.team_domain}">보유중인
 												플랜 보기</a></li>
 										<!--       <li class="nav-item"> -->
@@ -102,7 +102,7 @@
 										<!--       </li> -->
 									</ul>
 								</div>
-							</c:forEach>
+<%-- 							</c:forEach> --%>
 						</nav>
 						<div class="row">
   <div class="col-3">

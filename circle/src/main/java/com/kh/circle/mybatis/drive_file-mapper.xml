@@ -80,6 +80,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 ) where rn between #{startIndex} and #{countPerPage}
 	</select>
 	
+	<!-- 내파일만 보기 -->
+	<select id="myFileList" parameterType="boardVo" resultType="driveFileDto">
+		select * from(select rownum rn, A.* from 
+		(select * from drive_file  
+		where member_no=#{member_no} 
+		and team_no=#{team_no} 
+		and drive_name=#{drive_name}
+		and drive_folder='1' 
+		order by drive_file_no desc)A 
+		 ) where rn between #{startIndex} and #{countPerPage}
+	</select>
 
 	
 	<!-- 팀파일목록 갯수 -->
@@ -94,8 +105,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from drive_file 
 		where team_no=#{team_no} 
 		and drive_name=#{drive_name}
-		and drive_folder='1' and member_no=#{member_no} 
-		order by drive_file_no desc
+		and drive_folder='1' 
+		and member_no=#{member_no}
+	</select>
+	
+	
+	<!-- 폴더 갯수 -->
+	<select id="driveFolderCount"  resultType="int" parameterType="boardVo">
+		select count(*) from drive_file where team_no=#{team_no} and drive_folder='0'
+	</select>
+	
+	<!-- 내파일목록 갯수 -->
+	<select id="myDriveFolderCount"  resultType="int" parameterType="boardVo">
+		select count(*) from drive_file 
+		where team_no = #{team_no} 
+		and member_no=#{member_no} 
+		and drive_folder='0'
 	</select>
 	
 	
@@ -120,11 +145,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			team_no=#{team_no} and drive_name=#{before_name}
 	</update>
 	
-	<!-- 내파일만 보기 -->
-	<select id="myFileList" parameterType="map" resultType="driveFileDto">
-		select * from drive_file where team_no=#{team_no} and drive_name=#{drive_name}
-		and drive_folder='1' and member_no=#{member_no} order by drive_file_no desc
-	</select>
 
 
 	<!-- 내폴더만 보기 -->
@@ -165,8 +185,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-	<select id="teamFileTotalSize" resultType="int" parameterType="int">
-		select sum(drive_file_size) from drive_file where team_no=#{team_no}
+	<select id="teamFileTotalSize" resultType="driveFileDto" >
+		select team.TEAM_NO,DF.drive_file_size 
+		from TEAM left outer join 
+			(select TEAM_NO,sum(DRIVE_FILE_SIZE) as drive_file_size 
+		from DRIVE_FILE group by TEAM_NO)DF 
+			on team.TEAM_NO=DF.TEAM_NO order by team.TEAM_NO desc
 	</select>
 
 

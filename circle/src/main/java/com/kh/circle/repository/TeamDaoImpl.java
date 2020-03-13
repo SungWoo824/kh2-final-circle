@@ -16,6 +16,7 @@ import com.kh.circle.entity.TeamMemberDto;
 import com.kh.circle.entity.TopicMemberDto;
 import com.kh.circle.vo.MemberListVO;
 import com.kh.circle.vo.TeamMainVO;
+import com.kh.circle.vo.TodoListJoinVO;
 
 @Repository
 public class TeamDaoImpl implements TeamDao {
@@ -190,6 +191,15 @@ public class TeamDaoImpl implements TeamDao {
 	@Override
 	public List<MemberListVO> minorPosition(int team_no) {
 		return sqlSession.selectList("team.minor", team_no);
+	}
+
+	@Override
+	public int countTeamMember(int team_no) {
+		MemberListVO memberListVO = MemberListVO.builder()
+				.team_no(team_no)
+				.build();
+			return sqlSession.selectOne("team.countTeamMember",memberListVO);
+	
 	}
 
 	

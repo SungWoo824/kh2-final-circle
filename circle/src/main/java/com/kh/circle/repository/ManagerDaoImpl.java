@@ -1,14 +1,14 @@
 package com.kh.circle.repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.entity.MemberDto;
+import com.kh.circle.entity.PayDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.vo.BoardVo;
 
@@ -41,9 +41,6 @@ public class ManagerDaoImpl implements ManagerDao{
 		return sqlSession.selectOne("driveFile.fileTotalSize");
 	}
 	
-	public int teamFileTotalSize(int team_no) {
-		return sqlSession.selectOne("driveFile.teamFileTotalSize",team_no);
-	}
 
 	@Override
 	public int managerCount() {
@@ -77,11 +74,35 @@ public class ManagerDaoImpl implements ManagerDao{
 		sqlSession.update("member.adminGrant", member_no);
 	}
 
+
 	@Override
+	public List<DriveFileDto> teamFileTotalSize() {
+		return sqlSession.selectList("driveFile.teamFileTotalSize");
+	}
+
+	@Override
+	public List<Integer> teamMemCount() {
+		return sqlSession.selectList("team.teamMemCount");
+	}
 	public int currentUserCount() {
 		
 		return 0;
 	}
 
+
 	
+	@Override
+	public int profit() {
+		return sqlSession.selectOne("pay.profit");
+	}
+	
+	@Override
+	public List<PayDto> profitList() {
+		return sqlSession.selectList("pay.profitList");
+	}
+	
+	@Override
+	public int profitListCount(BoardVo boardVo) {
+		return sqlSession.selectOne("pay.profitListCount", boardVo);
+	}
 }

@@ -15,4 +15,6 @@ public interface TodoListDao {
 	void editTodo(String todo_list_content ,int member_no, int todo_list_no);
 	void todoDone(int member_no, int todo_list_no);
 	void todoBackDone(int member_no, int todo_list_no);
+	int countDone(int team_no, int member_no);
+	int countSearch(int team_no, int member_no, String todo_list_content);
 }
