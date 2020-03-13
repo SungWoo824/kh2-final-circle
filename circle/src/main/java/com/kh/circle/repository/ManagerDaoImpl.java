@@ -90,7 +90,11 @@ public class ManagerDaoImpl implements ManagerDao{
 
 	@Override
 	public int profit() {
-		return sqlSession.selectOne("pay.profit");
+		if(sqlSession.selectOne("pay.profit")==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.profit");			
+		}
 	}
 	
 	@Override
