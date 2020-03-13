@@ -385,10 +385,65 @@ span{
     font-weight:700;
 }
 
-.pay-one{
-	width: 360px;
-	heigh:500px;
+.pay-info{
+	width: 100%;
+}
+
+.pay-box{
+	width:1100px;
+	margin:0 auto;
+	margin-top:220px;
+}
+
+.pay-box  > div{
+	width:300px;
+	margin-right:40px;
+	height: 360px;;
+	float:left;
 	border:1px solid #2684fe;
+	border-radius:12px;
+	
+}
+
+.pay-one{
+	margin: 0 auto;	
+	text-align:center;
+	padding:50px 0;
+}
+
+.pay-last{
+	margin-right:0;
+	margin: 0 auto;	
+	text-align:center;
+}
+
+.price{
+	font-size:50px;
+	font-weight:600;
+	color:#2684fe;
+}
+
+.price-one{
+	font-size:20px;
+	color:#2684fe;
+}
+
+/* .pay-one > div{ */
+/* 	margin: 0 auto;	 */
+/* 	text-align:center; */
+/* } */
+
+
+.pay-one >span{
+	font-size : 22px;
+	margin-top:40px;
+	margin-bottom:60px;
+}
+.pay-line{
+	width: 40px;
+	height:1px;
+	background-color: #222;
+	margin:20px auto;
 }
 
 .pay-title p,
@@ -399,6 +454,10 @@ span{
     margin-top: 20px;
     line-height: 28px;
 
+}
+
+.pay-p{
+	margin-top:40px;
 }
 
 .main-btn{

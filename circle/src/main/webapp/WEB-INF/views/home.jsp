@@ -88,12 +88,35 @@
                                <span>요금 안내</span>
                                <p>써클을 함께 사용할 멤버는 몇 명인가요?</p>
                             	</div>
-                            	<div class="pay-">
-                            		<div >
-	                            		<span>1개월권</span>
-	                            		<p>개당</p>
-	                            		<p>5000</p>
-	                            		<p>￦</p>
+                            	<div class="pay-info">
+                            		<div class="pay-box">
+	                            		<div class="pay-one">
+		                            		<span>1개월권</span>
+		                            		<div class="pay-line"></div>
+		                            		<div class="pay-p">
+			                            		<p>개당</p>
+			                            		<p class="price">5000</p>
+			                            		<p class="price-one">￦</p>
+		                            		</div>
+	                            		</div>
+	                            		<div class="pay-one">
+		                            		<span>6개월권</span>
+		                            		<div class="pay-line"></div>
+		                            		<div class="pay-p">
+			                            		<p>개당</p>
+			                            		<p class="price">27000</p>
+			                            		<p class="price-one">￦</p>
+		                            		</div>
+	                            		</div>
+	                            	<div class="pay-one pay-last">
+		                            		<span>1년권</span>
+		                            		<div class="pay-line"></div>
+		                            		<div class="pay-p">
+			                            		<p>개당</p>
+			                            		<p class="price">48000</p>
+			                            		<p class="price-one">￦</p>
+		                            		</div>
+	                            		</div>
                             		</div>
                             	</div>
                             </div>

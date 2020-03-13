@@ -235,7 +235,7 @@ public class DriveFileController {
 		
 		//압축
 		util.zip(list, out);
-		System.out.println("리스트"+list);
+//		System.out.println("리스트"+list);
 		
 		//압축하기 전 복사한 파일을 삭제(list)
 		for(int i=0; i<list.size(); i++) {
