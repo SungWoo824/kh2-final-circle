@@ -32,7 +32,7 @@ public class ManagerController {
 	public String main(Model model) {
 		model.addAttribute("memberCount", managerDao.memberCount());
 		model.addAttribute("teamCount", managerDao.teamCount());
-//		model.addAttribute("fileTotalSize",managerDao.fileTotalSize());
+		model.addAttribute("fileTotalSize",managerDao.fileTotalSize());
 		model.addAttribute("managerCount", managerDao.managerCount());
 		model.addAttribute("profit",managerDao.profit());
 		return "manager/main";
@@ -89,10 +89,10 @@ public class ManagerController {
 
 		List<TeamDto> teamList = managerDao.teamList(boardVo);
 		
-		model.addAttribute("listCount", listCount);
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("teamList", teamList);
-		model.addAttribute("teamFileTotalSize",managerDao.teamFileTotalSize(boardVo.getTeam_no()));
+			model.addAttribute("listCount", listCount);
+			model.addAttribute("pagination", pagination);
+			model.addAttribute("teamList", teamList);
+//			model.addAttribute("teamFileTotalSize",managerDao.teamFileTotalSize(boardVo.getTeam_no()));
 
 		return "manager/team";
 	}

@@ -92,4 +92,5 @@ public class ManagerDaoImpl implements ManagerDao{
 	public int profitListCount(BoardVo boardVo) {
 		return sqlSession.selectOne("pay.profitListCount", boardVo);
 	}
+
 }

@@ -3,6 +3,7 @@ package com.kh.circle.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.MemberProfileDto;
 import com.kh.circle.entity.TeamMemberDto;
@@ -440,6 +446,33 @@ public class ChatController {
 
 		      resp.getOutputStream().write(data);
 		   }
+		
+		@GetMapping("filedownload")
+		@ResponseBody
+		public ResponseEntity<ByteArrayResource> download(@RequestParam int chat_file_no) throws IOException{
+			ChatFileVo chatFileVo = chatDao.chatFileDownload(chat_file_no);
+			byte[] data = chatDao.getUploadNo(chatFileVo.getChat_file_no());
+			ByteArrayResource resource = new ByteArrayResource(data);
+			return ResponseEntity.ok()
+					.contentType(MediaType.APPLICATION_OCTET_STREAM)
+					.contentLength(chatFileVo.getChat_file_size())
+					.header(HttpHeaders.CONTENT_ENCODING, "UTF-8")
+					.header(HttpHeaders.CONTENT_DISPOSITION, 
+							makeDispositionString(chatFileVo.getChat_file_uploadname()))
+					.body(resource);
+		}
+		
+		private String makeDispositionString(String fileUploadName) throws UnsupportedEncodingException {
+			StringBuffer buffer= new StringBuffer();
+			buffer.append("attachment;");
+			buffer.append("filename=");
+			buffer.append("\"");
+			buffer.append(URLEncoder.encode(fileUploadName,"UTF-8"));
+			buffer.append("\"");
+			
+			return buffer.toString();
+		
+	}
 
 }
 

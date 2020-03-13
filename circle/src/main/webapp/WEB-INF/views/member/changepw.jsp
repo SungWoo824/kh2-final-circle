@@ -60,9 +60,6 @@ $(function(){
                         <ul class="gnb-menu">
                             <li><a href="#">제품소개</a></li>
                             <li><a href="#">요금안내</a></li>
-                            <c:when test="${not empty member_email}">
-						        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>
-						    </c:when>
                         </ul>
                         <ul class="gnb-menu">
                             <li class="login-btn"><a href="member/signin">로그인</a></li>
@@ -71,16 +68,43 @@ $(function(){
                     </div>
                 </div>        
         </div>
-        <div class="signup-article">
-			<form action="changepw" class="pw-form" method="post">
-				<input type="password" class="change_pw" name="change_pw"><br><br>
-				<input type="password" class="change_pw_check" name="change_pw_check"><br><br>
-				
-				<div id="alert-success">비밀번호가 일치합니다.</div>
-				<div id="alert-danger">비밀번호가 일치하지 않습니다.</div>
-		
-				<input type="submit" id="submit">
-			</form>
-		</div>
+        <div class="circle-main-content">
+                <div class="main-bg">
+                    
+                        <div id="fullpage">
+                            <div class="section">
+                                <div class="main-title">
+                                <form action="changepw" class="pw-form" method="post">
+                                    <div>
+                                        <span>비밀번호 변경</span>
+                                        
+									    <div class="form-group signin-form-group">
+									      <label for="exampleInputPassword1"></label>
+									      <input type="password" class="form-control change_pw" id="exampleInputPassword1" name="change_pw" placeholder="Password">
+									    </div>
+									    <div class="form-group signin-form-group">
+									      <label for="exampleInputPassword2"></label>
+									      <input type="password" class="form-control change_pw change_pw_check" id="exampleInputPassword1" name="change_pw_check" placeholder="Password Check">
+									    </div>
+									    
+									    <div id="alert-success">비밀번호가 일치합니다.</div>
+										<div id="alert-danger">비밀번호가 일치하지 않습니다.</div>
+                                       	
+                                       	<button type="submit" id="submit" class="btn btn-primary signin-submit">비밀번호 변경</button>
+                                    </div>
+                                   
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="section">
+                               
+                            </div>
+                            <div class="section">
+                                
+                            </div>
+                        </div>
+                  
+                </div>
+        </div>
 </body>
 </html>
