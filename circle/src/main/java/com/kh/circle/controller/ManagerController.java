@@ -37,7 +37,8 @@ public class ManagerController {
 		model.addAttribute("teamCount", managerDao.teamCount());
 		model.addAttribute("fileTotalSize",managerDao.fileTotalSize());
 		model.addAttribute("managerCount", managerDao.managerCount());
-		model.addAttribute("profit",managerDao.profit());
+		model.addAttribute("profit",managerDao.profit());			
+
 		return "manager/main";
 	}
 	
