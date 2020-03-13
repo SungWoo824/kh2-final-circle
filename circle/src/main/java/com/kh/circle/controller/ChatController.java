@@ -369,7 +369,7 @@ public class ChatController {
 			model.addAttribute("team_no", team_no);
 			model.addAttribute("member_no", member_no);
 			model.addAttribute("topic_no",topic_no);
-			return "redirect:/chat/topic_main";
+			return "redirect:/member/mypage";
 		}
 		
 		
@@ -382,7 +382,7 @@ public class ChatController {
 			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
 			model.addAttribute("team_no", team_no);
 			model.addAttribute("topic_no",topic_no);
-			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
+			return "redirect:/member/mypage";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
 		
 		
@@ -484,4 +484,3 @@ public class ChatController {
 	}
 
 }
-

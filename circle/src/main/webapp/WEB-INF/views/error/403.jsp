@@ -28,7 +28,6 @@
         
         
       </div>
-      
       <div class="erlogo-box">
         <img class="error-logo" src="${pageContext.request.contextPath}/resources/image/logol.png">
       </div>

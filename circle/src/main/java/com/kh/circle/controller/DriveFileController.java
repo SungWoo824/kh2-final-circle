@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.drew.metadata.StringValue;
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.repository.DriveFileDao;
+import com.kh.circle.repository.TeamDao;
 import com.kh.circle.service.CompressionUtil;
 //import com.kh.circle.service.CompressionUtil;
 import com.kh.circle.service.DriveFileService;
@@ -52,6 +53,8 @@ public class DriveFileController {
 	@Autowired
 	private SqlSession sqlSession;
 	
+	@Autowired
+	TeamDao teamDao;
 	
 	@GetMapping("/drive")
 	public String drive(
@@ -66,7 +69,7 @@ public class DriveFileController {
 		List<DriveFileDto> folderList= driveFileDao.getFolderList(boardVo.getTeam_no(),boardVo.getDrive_name());
 		model.addAttribute("driveFolderList",folderList);
 		model.addAttribute("member_no",session.getAttribute("member_no"));
-		
+		model.addAttribute("memberList",teamDao.memberList(boardVo.getTeam_no()));
 		List<DriveFileDto> myFolderList = driveFileDao.myFolderList(boardVo.getTeam_no(),
 																(int)session.getAttribute("member_no"));
 		model.addAttribute("myFolderList",myFolderList);
@@ -232,7 +235,7 @@ public class DriveFileController {
 		
 		//압축
 		util.zip(list, out);
-		System.out.println("리스트"+list);
+//		System.out.println("리스트"+list);
 		
 		//압축하기 전 복사한 파일을 삭제(list)
 		for(int i=0; i<list.size(); i++) {
