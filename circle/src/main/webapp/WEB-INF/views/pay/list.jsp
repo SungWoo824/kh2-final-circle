@@ -49,7 +49,7 @@
 		});
 	}
 </script>
-<body>
+<body style="background-color: #F6F6F6;">
 
 	<!-- 상단 헤더 -->
 	-->
@@ -97,7 +97,7 @@
 					<div class="mypage-main-content">
 
 						<!-- 상단 네비바 -->
-						<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+						<nav class="navbar navbar-expand-lg navbar-light bg-primary" >
 							<a class="navbar-brand" href="#" style="color:white">팀관리</a>
 							<button class="navbar-toggler" type="button"
 								data-toggle="collapse" data-target="#navbarNav"
@@ -138,28 +138,35 @@
        <a class="nav-link active" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/pay/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">구매 내역</a>	
     </div>
   </div>
-  <div class="col-9">
-    <div class="tab-content" id="v-pills-tabContent">
+  <div class="col-9" style="background-color: white; border:30px solid #F6F6F6; padding:10px;" >
+    <div class="tab-content" id="v-pills-tabContent" >
       		<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+						<br>	
 							<c:forEach var="pay" items="${list }">
 							<c:if test="${pay.status eq '준비' or '취소완료'}">
 							<!-- 만약 pay.no를 준 dao 결과값이 1이라면 onclick 이벤트를 걸어서 alert창을 띄워라 -->
+									
 									<ul>
+									<h3>
 										<li>
 											플랜 옵션: ${pay.item_name }
 										</li>
+									</h3>
+									<br>
 										<li>
 											구매 개수: ${pay.quantity }
 										</li>
 										<li>
 											총 결제 금액: ${pay.total_amount }
 										</li>
+									<br>	
 										<c:if test="${pay.status eq '준비' }">
 										<li>
 											<input class="no" type="hidden" value="${pay.no }">
 											<input class="item" type="hidden" value="${pay.item_name }">
-											<button type="button" id="cancel" onclick="location.href='revoke?no=${pay.no }&team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${param.team_domain}'">취소</button>
-										</li>										
+											<button type="button" id="cancel" onclick="location.href='revoke?no=${pay.no }&team_no=${param.team_no}&team_name=${param.team_name}&team_domain=${param.team_domain}'" class="btn btn-secondary">취소</button>
+										</li>	
+									<hr>									
 										</c:if>
 										<c:if test="${pay.status eq '취소완료' }">
 										<li>
