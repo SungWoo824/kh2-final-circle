@@ -170,17 +170,17 @@ public String member_list_owner(@RequestParam String team_name,
 	return "team_admin/member_list_owner";
 }
 
+//관리 / 멤버 설정 / 멤버 포지션 변경 후 
 @GetMapping("/grant_position")
 public String grant_position(@RequestParam String team_name,
-							@RequestParam int team_no,
 							@RequestParam String team_domain,
+							@RequestParam int team_no,
 							HttpSession session, Model model) {
-	//팀 이름 정보 넘겨줘야 함
+	int member_no = (int)session.getAttribute("member_no");	
+	model.addAttribute("team_no", team_no);
+	model.addAttribute("team_domain", team_domain);
 	model.addAttribute("team_name", team_name);
-	
-	//팀 이름 정보 넘겨줘야 함
-	model.addAttribute("team_name", team_name);
-	
+
 	//팀 테이블 정보 리스트 출력
 	model.addAttribute("teamDto", teamDao.teamDetail(team_no));
 	
@@ -201,7 +201,10 @@ public String grant_position(@RequestParam int team_no,
 							 @RequestParam String team_domain,
 							 HttpSession session, Model model,
 							 @ModelAttribute TeamMemberDto teamMemberDto) {
-	//팀 이름 정보 넘겨줘야 함
+	
+	int member_no = (int)session.getAttribute("member_no");	
+	model.addAttribute("team_no", team_no);
+	model.addAttribute("team_domain", team_domain);
 	model.addAttribute("team_name", team_name);
 	
 	//팀 테이블 정보 리스트 출력
@@ -215,10 +218,18 @@ public String grant_position(@RequestParam int team_no,
 	
 	
 	String member_position = teamMemberDto.getMember_position();
-	teamDao.grantPosition((int)session.getAttribute("member_no"), team_no, member_position);
+	
+	//소유자로 권한 주기 
+	teamDao.grantOwner(member_no, team_no);
+	
+	//준회원 정회원 변경 
+	teamDao.changeAuth(teamMemberDto);
+	
 	
 	return "redirect:./grant_position";		
 }
+
+
 	
 	//소유자 : 관리 / 개인 설정
 	@GetMapping("/owner_manager_per")

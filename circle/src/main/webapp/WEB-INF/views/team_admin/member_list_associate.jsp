@@ -53,11 +53,23 @@ $(function(){
 
 });
 
+//스크롤
+$(function(){
+    $(window).scroll(function(){
+        console.log("scroll event");
+        console.log($(this).scrollTop());
+
+        if($(this).scroll > $(document).innerHeight()*0.9){
+            console.log("더 불러오세요");
+        }
+    });
+}); 
 
 
 </script>
 
-<body>
+<body  style="height: 5000px;  background-color: #F6F6F6;">
+<div style="width:100%; height:90%; overflow:auto">
  	 <!-- 상단 헤더 --> -->
 	 <div class="circle-header">
 
@@ -142,7 +154,7 @@ $(function(){
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/grant_position?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">권한부여</a>	
    </div>
   </div>
-  <div class="col-9">
+  <div class="col-9" style="background-color: white; border:30px solid #F6F6F6; padding:10px;" >
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <!-- 								멤버관리 : 정보보기 -->
@@ -152,7 +164,7 @@ $(function(){
 		                                  	   <br>
 		                                  	   <hr>
       </div>
-      		<h3>준회원 멤버 보기  </h3>
+      		<h3>준회원 보기  </h3>
       		<br>
 			<c:forEach items="${memberListAssociate}" var="memberListVO">	
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
@@ -162,6 +174,7 @@ $(function(){
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
 				<br>
    			</c:forEach>
+				<br><br><hr>
     </div>
   </div>
 </div>	 
@@ -173,7 +186,7 @@ $(function(){
 			</div>
 		</div>
 </div>	                              
-
+</div>
 
 </body>
 </html>
