@@ -2,6 +2,7 @@ package com.kh.circle.repository;
 
 import java.util.List;
 
+import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.entity.MemberDto;
 import com.kh.circle.entity.PayDto;
 import com.kh.circle.entity.TeamDto;
@@ -13,7 +14,8 @@ public interface ManagerDao {
 	int memberCount();
 	int teamCount();
 	int fileTotalSize();
-	int teamFileTotalSize(int team_no);
+	List<DriveFileDto> teamFileTotalSize();
+	List<Integer> teamMemCount();
 	int managerCount();
 	int paySum();
 	List<TeamDto> teamList(BoardVo boardVo);
@@ -22,4 +24,5 @@ public interface ManagerDao {
 	int profit();
 	List<PayDto> profitList();
 	int profitListCount(BoardVo boardVo);
+
 }

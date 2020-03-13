@@ -50,8 +50,21 @@ $(function(){
 	})
 });
 
+//스크롤
+$(function(){
+    $(window).scroll(function(){
+        console.log("scroll event");
+        console.log($(this).scrollTop());
+
+        if($(this).scroll > $(document).innerHeight()*0.9){
+            console.log("더 불러오세요");
+        }
+    });
+});  
 </script>
-<body>
+<body style="height: 5000px">
+
+<div style="width:100%; height:90%; overflow:auto">
  	 <!-- 상단 헤더 -->
 	 <div class="circle-header">
                 <div class="header-wrap">
@@ -92,8 +105,8 @@ $(function(){
                            <div class="mypage-main-content">
                            
 								<!-- 상단 네비바 -->
-								<nav class="navbar navbar-expand-lg navbar-light bg-light">
-									  <a class="navbar-brand" href="#">멤버관리</a>
+								<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+									  <a class="navbar-brand" href="#" style="color:white">멤버관리</a>
 									  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 									    <span class="navbar-toggler-icon"></span>
 									  </button>
@@ -103,7 +116,7 @@ $(function(){
 									       		 <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">팀관리</a>
 									    	 </li> 
 									     	 <li class="nav-item active">
-									    		    <a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
+									    		    <a class="nav-link" style="color:white" href="${pageContext.request.contextPath}/team_admin/owner_manager_member?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">멤버관리<span class="sr-only">(current)</span></a>
 									     	 </li>
 									     	 <li class="nav-item">
 									        	<a class="nav-link" href="${pageContext.request.contextPath}/team_admin/owner_manager_per?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">개인설정</a>
@@ -118,13 +131,7 @@ $(function(){
 									   		</form>
 									  </div>
 								</nav>
-								<!--멤버관리 : 정보보기 -->
-	                                   <div class="mypage-div">
-	                                   <span> 팀 이름 = ${teamDto.team_name}</span>
-	                                   <br>
-	                                   <span> 내 등급 = ${teamMemberDto.member_position},</span>
-	                                   <span>${teamMemberDto.member_auth} </span>
-	                                    </div>
+
 						
 <!-- 팀 멤버 리스트 보기 -->
 <div class="row">
@@ -134,18 +141,31 @@ $(function(){
       <a class="nav-link " id="v-pills-profile-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_regular?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-profile" aria-selected="false">정회원</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_associate?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">준회원</a>
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/member_list_owner?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">소유자</a>
+      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/grant_position?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">권한부여</a>	
     </div>
   </div>
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
-      		<p>준회원 목록</p>
+      <br>
+      <!-- 								멤버관리 : 정보보기 -->
+			                                   <br>
+		                                   <h2> ${teamDto.team_name}팀 멤버 목록 입니다.</h2>
+		                                   	
+		                                  	   <br>
+		                                  	   <hr>
+		                         
+
+		                                  
+      <br>
+      		<h3>준회원 목록</h3>
+      		<br>
       	<c:if test="${not empty position }">
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '준회원'}">
 		      	<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
+				<span class="badge badge-primary">${memberListVO.member_position}</span>
+				<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out><br>
 				<br>
@@ -165,12 +185,12 @@ $(function(){
    			</c:forEach>
 		</c:if>
    			<br><br>
-   			<p>정회원 목록</p>
+   			<h3>정회원 목록</h3>
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '정회원'}">
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
+				<span class="badge badge-primary">${memberListVO.member_position}</span>
+				<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
 				<br>
