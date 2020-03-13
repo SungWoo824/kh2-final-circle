@@ -106,6 +106,8 @@ public class ChatController {
 		model.addAttribute("voteList", voteCreateDao.getVoteList());	
 		model.addAttribute("member_no", session.getAttribute("member_no"));
 		model.addAttribute("team_no", team_no);
+
+
 		//멤버 리스트 
 		model.addAttribute("memberList",teamDao.memberList(team_no));
 		
@@ -117,6 +119,9 @@ public class ChatController {
 		List<TopicMemberDto> inviteTopicList = topicDao.inviteTopicList(team_no,topic_no);
 		model.addAttribute("inviteTopicList", inviteTopicList);
 		
+		//팀 멤버 관련
+		model.addAttribute("countTeamMember", teamDao.countTeamMember(team_no));
+		
 		//투두리스트 관련
 		int member_no = (int)session.getAttribute("member_no");	
 			//할일 목록 출력
@@ -125,8 +130,13 @@ public class ChatController {
 			//할일 개수 출력
 			model.addAttribute("countTodo", todoListDao.countTodo(team_no, member_no));
 			
+			//완료 개수 출력
+			model.addAttribute("countDone", todoListDao.countDone(team_no, member_no));
 			
-		
+
+
+
+			
 		return "chat/topic_main";
 	}
 	

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.entity.MemberDto;
+import com.kh.circle.entity.PayDto;
 import com.kh.circle.entity.TeamDto;
 import com.kh.circle.vo.BoardVo;
 
@@ -87,5 +88,19 @@ public class ManagerDaoImpl implements ManagerDao{
 		return 0;
 	}
 
+	@Override
+	public int profit() {
+		return sqlSession.selectOne("pay.profit");
+	}
 	
+	@Override
+	public List<PayDto> profitList() {
+		return sqlSession.selectList("pay.profitList");
+	}
+	
+	@Override
+	public int profitListCount(BoardVo boardVo) {
+		return sqlSession.selectOne("pay.profitListCount", boardVo);
+	}
+
 }

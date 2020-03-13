@@ -217,11 +217,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='준회원')tm 
 			inner join member on member.member_no = tm.member_no
 	</select>
-	
+
+	<!-- 팀 전체 멤버 카운트 -->
+	<select id="countTeamMember" resultType="int" parameterType="memberListVO">
+		select count (*) from (select member.member_no,member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
+		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no})tm 
+			inner join member on member.member_no = tm.member_no)
+	</select>
+
 
 	<!-- 관리자-팀 회원수 -->
 	<select id="teamMemCount" resultType="int">
 			select count(member_no) from team_member group by team_no
 	</select>
-	
+
 </mapper>

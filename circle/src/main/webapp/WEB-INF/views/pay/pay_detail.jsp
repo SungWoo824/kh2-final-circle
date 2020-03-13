@@ -65,23 +65,19 @@ function rs(){
 		});
 	});
 </script>
-<!-- <nav class="navbar navbar-expand-lg navbar-light bg-light"> -->
-<!-- </nav> -->
-	<div align="center" style="margin-top: 4%; margin-bottom: 80px; background-color: #2FA4E7;">
+	<div align="center" style="margin-top: 4%; margin-bottom: 60px;">
 		<span style ="display:block;width:100%;height:50px;font-size:30px">플랜 옵션</span>
 	</div>
-<div style="background-color: #e9ecef">
-<div class="container-fluid" style="overflow:auto">
 		
           	<article class="admin-wrap" style="padding-top: 5rem;">
                     
 						<div class="card border-primary mb-3 admin-cardy" style="width: 20rem; height: 30rem; margin:auto;">
 						  <div class="card-header">1개월권<br>개당:5000\</div>
-						  <div class="card-body admin-card-body">
+						  <div class="card-body admin-cardy-body" style="margin-top: 10px">
 						    <form action="pay_detail" method="post">
-						    	<h4 class="card-title">
+						    	<h5 class="card-title">
 						    		혜택<br>
-								  	할 일 생성 개수 100개 -> 무제한<br>
+								  	할 일 생성 개수 100개<br>->무제한<br>
 									무제한 업로드 및 다운로드<br>
 									토픽 생성 가능<br>
 									투표 생성 가능<br>
@@ -104,16 +100,16 @@ function rs(){
 								<br><br>
 								<input type="submit" value="선택">
 								<br>
-								</h4>
+								</h5>
 							</form>
 						  </div>
 						</div>
 						                    
 						<div class="card border-primary mb-3 admin-cardy" style="width: 20rem; height: 30rem;  margin:auto;">
 						  <div class="card-header">6개월권<br>개당:27000\</div>
-						  <div class="card-body admin-card-body">
+						  <div class="card-body admin-cardy-body">
 						    <form action="pay_detail" method="post">
-						    	<h4 class="card-title">
+						    	<h5 class="card-title">
 						    		혜택<br>
 								  	할 일 생성 개수 100개 -> 무제한<br>
 									무제한 업로드 및 다운로드<br>
@@ -136,16 +132,16 @@ function rs(){
 								<br><br>
 								<input type="submit" value="선택">
 								<br>
-								</h4>
+								</h5>
 							</form>
 						  </div>
 						</div>
 						                    
 						<div class="card border-primary mb-3 admin-cardy" style="width: 20rem; height: 30rem; margin:auto;">
 						  <div class="card-header">1년권<br>개당:48000\</div>
-						  <div class="card-body admin-card-body">
+						  <div class="card-body admin-cardy-body">
 						    <form action="pay_detail" method="post">
-						    	<h4 class="card-title">
+						    	<h5 class="card-title">
 						    		혜택<br>
 								  	할 일 생성 개수 100개 -> 무제한<br>
 									무제한 업로드 및 다운로드<br>
@@ -168,11 +164,9 @@ function rs(){
 								<br><br>
 								<input type="submit" value="선택">
 								<br>
-								</h4>
+								</h5>
 							</form>
 						  </div>
 						</div>	
 			</article>	
-</div>
-</div>
 </html>
