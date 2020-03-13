@@ -893,7 +893,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	       	  
 	       	  <!-- 할 일 제목 , 카운트 개수  -->
 	       	  <div class="p-3 mb-2 bg-primary text-white" style="text-align:center; height: 70px" >
-		      <p> 할 일 / 현재위치 : 할 일 메인 페이지  	<span class="badge badge-light">${countTodo} </span>       </p>
+		      <p> 할 일	<span class="badge badge-light">${countTodo} </span>       </p>
 <!-- 	       		투두 리스트 메인목록보기 :시작 -->
 			
 						<span style="cursor:pointer; color: white;">할 일 메인 목록 보기
@@ -1235,13 +1235,13 @@ function TodoDelete(team_no,topic_no,todo_list_no){
             <!-- 팀, 토픽 기능 시작-->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-user-friends fa-lg"></i>
+                <i class="fas fa-user-friends fa-lg"></i> <span class="badge badge-primary">${countTeamMember} </span>
               </a>
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTeam">
                   <div>
-                    <span>팀 멤버 전체 보기</span>
+                    <span>팀 멤버 전체 보기</span>  <span class="badge badge-primary">${countTeamMember} </span>
                   </div>
                 </a>
                 <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTeam">
@@ -1481,21 +1481,27 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalCenterTitle">
-				팀 멤버 보기</h5>
+				팀 멤버 보기</h5> <span class="badge badge-primary">${countTeamMember}명</span>
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-  				<input type="search" value="멤버 찾기">
+				
+  				<input type="search" placeholder="멤버 검색" name="member_name" value="${memberListVO.member_name}">
+  				<button type="submit" value="찾기"></button>
+  				
 			  <c:forEach items="${memberList}" var="memberListVO">	
 					<div class="dropdown-item"> 
 						<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-						<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
+						<span class="badge badge-pill badge-primary">${memberListVO.member_position}</span>
+						<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out>
 						<br>
 					</div>
 				</c:forEach>
+				
+				
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>

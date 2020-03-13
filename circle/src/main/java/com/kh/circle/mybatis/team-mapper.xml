@@ -222,7 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="countTeamMember" resultType="int" parameterType="memberListVO">
 		select count (*) from (select member.member_no,member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
 		from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no})tm 
-			inner join member on member.member_no = tm.member_no);
+			inner join member on member.member_no = tm.member_no)
 	</select>
 
 

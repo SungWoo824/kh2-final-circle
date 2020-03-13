@@ -147,6 +147,7 @@ $(function(){
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
       </div>
+      <br>
       		<p> 회원을 선택하여 등급을 변경하세요!  </p>
 			<c:forEach items="${memberList}" var="memberListVO">	
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>

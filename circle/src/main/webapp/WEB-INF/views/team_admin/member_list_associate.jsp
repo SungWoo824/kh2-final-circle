@@ -129,15 +129,8 @@ $(function(){
 								  </div>
 								</nav>
 								
-								<!--멤버관리 : 정보보기 -->
-	                                   <div class="mypage-div">
-<%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
-	                                   <span> 팀 이름 = ${teamDto.team_name}</span>
-	                                   <br>
-	                                   <span> 내 등급 = ${teamMemberDto.member_position},</span>
-	                                   <span>${teamMemberDto.member_auth} </span>
-	                                    </div>
-	<!-- 팀 멤버 리스트 보기 : 정회원 -->
+
+	<!-- 팀 멤버 리스트 보기 : 준회 -->
 						
 <div class="row">
   <div class="col-3">
@@ -151,13 +144,20 @@ $(function(){
   </div>
   <div class="col-9">
     <div class="tab-content" id="v-pills-tabContent">
-      <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">...
+      <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <!-- 								멤버관리 : 정보보기 -->
+			                                   <br>
+		                                   <h2> ${teamDto.team_name}팀 준회원 멤버 목록 입니다.</h2>
+		                                   	
+		                                  	   <br>
+		                                  	   <hr>
       </div>
-      		<p>참여 중인 멤버 보기  </p>
+      		<h3>준회원 멤버 보기  </h3>
+      		<br>
 			<c:forEach items="${memberListAssociate}" var="memberListVO">	
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
+				<span class="badge badge-primary">${memberListVO.member_position}</span>
+				<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
 				<br>
