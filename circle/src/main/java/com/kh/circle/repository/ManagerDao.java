@@ -21,9 +21,6 @@ public interface ManagerDao {
 	List<TeamDto> teamList(BoardVo boardVo);
 	int teamListCount(BoardVo boardVo);
 	void memberAdminGrant(int member_no);
-
-	int currentUserCount();
-
 	int profit();
 	List<PayDto> profitList();
 	int profitListCount(BoardVo boardVo);

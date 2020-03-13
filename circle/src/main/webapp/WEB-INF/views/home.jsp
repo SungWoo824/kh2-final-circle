@@ -67,8 +67,7 @@
                                     <div class="main-btn">
                                         <div class="main-btn-bg">
                                             <a href="member/signup">무료 체험 시작</a><br><br>
-                                    <h5>member_email = ${member_email }</h5>
-                                    <h5>member_grade = ${member_grade }</h5>
+                                    
                                         </div>
                                     </div>
                                 </div>
@@ -88,77 +87,36 @@
                                <span>요금 안내</span>
                                <p>써클을 함께 사용할 멤버는 몇 명인가요?</p>
                             	</div>
-                            	<div class="pay-">
-                            		<div >
-	     <div align="center" style="margin-top: 4%; margin-bottom: 60px;">
+                            	<div class="pay-info">
+                            		<div class="pay-box">
+	                            		<div class="pay-one">
+		                            		<span>1개월권</span>
+		                            		<div class="pay-line"></div>
+		                            		<div class="pay-p">
+			                            		<p>개당</p>
+			                            		<p class="price">5000</p>
+			                            		<p class="price-one">￦</p>
+		                            		</div>
+	                            		</div>
+	                            		<div class="pay-one">
+		                            		<span>6개월권</span>
+		                            		<div class="pay-line"></div>
+		                            		<div class="pay-p">
+			                            		<p>개당</p>
+			                            		<p class="price">27000</p>
+			                            		<p class="price-one">￦</p>
+		                            		</div>
+	                            		</div>
+	                            	<div class="pay-one pay-last">
+		                            		<span>1년권</span>
+		                            		<div class="pay-line"></div>
+		                            		<div class="pay-p">
+			                            		<p>개당</p>
+			                            		<p class="price">48000</p>
+			                            		<p class="price-one">￦</p>
+		                            		</div>
+	                            		</div>
 
-	</div>
-			
-			<br>
-			<div style="margin: 0 auto; width: 1200px;" >
-          	<article class="admin-wrap" style="padding-top: 5rem; width: 1200px;" >
-                    
-						<div class="card border-primary mb-3 admin-cardy">
-						  <div class="card-header">1개월권<br>개당:5000\</div>
-						  <div class="card-body admin-cardy-body">
-						    <form action="pay_detail" method="post">
-						    	<h5 class="card-title">
-						    		<br>혜택<br>
-								  	할 일 생성 개수 100개<br>->무제한<br>
-									무제한 업로드 및 다운로드<br><br>
-									토픽 생성 가능<br><br>
-									투표 생성 가능<br><br>
-								
-								<br><br>	
-								<button type="button" class="btn btn-primary btn-lg" >지금 문의 하기 </button>
-							
-							
-								<br>
-								</h5>
-							</form>
-						  </div>
-						</div>
-						                    
-						<div class="card border-primary mb-3 admin-cardy">
-						  <div class="card-header">6개월권<br>개당:27000\</div>
-						  <div class="card-body admin-cardy-body">
-						    <form action="pay_detail" method="post">
-						    	<h5 class="card-title">
-						    		<br>혜택<br>
-								  	할 일 생성 개수 100개 -> 무제한<br>
-									무제한 업로드 및 다운로드<br><br>
-									토픽 생성 가능<br><br>
-									투표 생성 가능<br><br>
-							
-							<br><br>
-							<button type="button" class="btn btn-primary btn-lg">지금 문의 하기 </button>
-								<br>
-								</h5>
-							</form>
-						  </div>
-						</div>
-						                    
-						<div class="card border-primary mb-3 admin-cardy">
-						  <div class="card-header">1년권<br>개당:48000\</div>
-						  <div class="card-body admin-cardy-body">
-						    <form action="pay_detail" method="post">
-						    	<h5 class="card-title">
-						    		<br>혜택<br>
-								  	할 일 생성 개수 100개 -> 무제한<br>
-									무제한 업로드 및 다운로드<br><br>
-									토픽 생성 가능<br><br>
-									투표 생성 가능<br><br>
-							
-								<br><br>	
-								<button type="button" class="btn btn-primary btn-lg">지금 문의 하기 </button>
-								<br>
-								</h5>
-							</form>
-						  </div>
-						</div>	
-			</article>	
-			</div>
-	                            		
                             		</div>
                             	</div>
                             </div>

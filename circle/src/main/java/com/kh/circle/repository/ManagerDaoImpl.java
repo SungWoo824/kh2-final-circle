@@ -74,7 +74,6 @@ public class ManagerDaoImpl implements ManagerDao{
 		sqlSession.update("member.adminGrant", member_no);
 	}
 
-
 	@Override
 	public List<DriveFileDto> teamFileTotalSize() {
 		return sqlSession.selectList("driveFile.teamFileTotalSize");
@@ -89,11 +88,13 @@ public class ManagerDaoImpl implements ManagerDao{
 		return 0;
 	}
 
-
-	
 	@Override
 	public int profit() {
-		return sqlSession.selectOne("pay.profit");
+		if(sqlSession.selectOne("pay.profit")==null) {
+			return 0;
+		}else {
+			return sqlSession.selectOne("pay.profit");			
+		}
 	}
 	
 	@Override
@@ -105,4 +106,5 @@ public class ManagerDaoImpl implements ManagerDao{
 	public int profitListCount(BoardVo boardVo) {
 		return sqlSession.selectOne("pay.profitListCount", boardVo);
 	}
+
 }

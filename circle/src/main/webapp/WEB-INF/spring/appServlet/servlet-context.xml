@@ -74,7 +74,7 @@
         	<beans:ref bean="chatInterceptor"/>
         </interceptor>
         <interceptor>
-        	<mapping path="/drive/**"/>
+        	<mapping path="/drive/drive"/>
         	<beans:ref bean="driveInterceptor"/>
         </interceptor>
     </interceptors>
