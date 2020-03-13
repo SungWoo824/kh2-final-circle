@@ -1604,7 +1604,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				<c:forEach var="tmList" items="${topicMemberList}">
 						   ${tmList.member_name}(${tmList.member_email})(${tmList.topic_member_position })
 						<c:choose>
-							   <c:when test="${tmList.topic_member_position ne '토픽소유자' and tmList.member_no ne sessionScope.member_no}">
+							   <c:when test="${tmList.topic_member_position == '토픽소유자'}">
 							   		<a style="color:red" 
 							   		href="outtopic?topic_no=${param.topic_no }&member_no=${tmList.member_no}&team_no=${tmList.team_no}">
 							   		내보내기
