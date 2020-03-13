@@ -60,6 +60,7 @@
             <exclude-mapping path="/member/signin"/>
             <exclude-mapping path="/member/findpw"/>
             <exclude-mapping path="/member/changepw"/>
+              <exclude-mapping path="/member/download"/>
             <exclude-mapping path="/member/send"/>
             <exclude-mapping path="/member/validate"/>
             <exclude-mapping path="/"/>
