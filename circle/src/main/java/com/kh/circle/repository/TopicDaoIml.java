@@ -116,6 +116,11 @@ public class TopicDaoIml implements TopicDao{
 		sqlSession.delete("topic.deleteTopic", param);
 	}
 
+	@Override
+	public List<TopicMemberDto> topicMasterList(int member_no) {
+		return sqlSession.selectList("topic.topicMasterList",member_no);
+	}
+
 	
 
 }

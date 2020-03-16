@@ -72,6 +72,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where topic_no = #{topic_no}
 	</select>
 	
+	<select id = "topicMasterList" resultType="topicMemberDto" parameterType="int">
+		select * from
+		(select t.team_no,
+		tm.member_no, tm.topic_member_position
+		from team_member t inner join topic_member tm
+			on t.team_no = tm.team_no)
+		where member_no = #{member_no}
+	</select>
+	
+	
 	<!-- 토픽 정보 수정-->
 	<update id="editTopic" parameterType="topicDto">
 		update topic 

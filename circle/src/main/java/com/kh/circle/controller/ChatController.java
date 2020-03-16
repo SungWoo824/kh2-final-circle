@@ -119,6 +119,10 @@ public class ChatController {
 		List<TopicMemberDto> inviteTopicList = topicDao.inviteTopicList(team_no,topic_no);
 		model.addAttribute("inviteTopicList", inviteTopicList);
 		
+		List<TopicMemberDto> topicMasterList = topicDao.topicMasterList((int)session.getAttribute("member_no"));
+		model.addAttribute("topicMasterList",topicMasterList);
+		
+		model.addAttribute("teamMainList", teamDao.teamMainList((int)session.getAttribute("member_no")));
 		//팀 멤버 관련
 		model.addAttribute("countTeamMember", teamDao.countTeamMember(team_no));
 		
