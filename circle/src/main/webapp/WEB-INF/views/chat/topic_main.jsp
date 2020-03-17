@@ -778,18 +778,14 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 	                    <span>팀 전환 하기</span>
 	                 </div>
                 </a>
-               <c:set var="team" value="${teamMainList.get(0)}"></c:set>
-               <c:choose>
-						<c:when test="${team.member_position ne null}">
-			        		<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${param.team_no }&team_name=${param.team_name }&team_domain=${param.team_domain}" >
-			                  <div>
-			                 	<span>관리자 메뉴</span>
-			                  </div>
-		      				</a>
-		                </c:when>
-		                <c:otherwise>
-		                </c:otherwise>
-	             </c:choose>
+	           	 <c:set var="position" value="${selectPosition.get(0)}"></c:set>
+					<c:if test="${position.member_position == '소유자'}">
+		        		<a class="dropdown-item d-flex align-items-center"  href="${pageContext.request.contextPath}/team_admin/owner_manager_team?team_no=${param.team_no }&team_name=${param.team_name }&team_domain=${param.team_domain}" >
+		                  <div>
+		                 	<span>관리자 메뉴</span>
+		                  </div>
+	      				</a>
+	                </c:if>
               </div>
 	            </li>
 	        </ul>
@@ -1269,27 +1265,9 @@ function TodoDelete(team_no,topic_no,todo_list_no){
               <!-- Dropdown - Messages -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
 <%--               <c:forEach var="tmList" items="${topicMemberList}"> --%>
-				<c:set var="tmList" value="${topicMemberList.get(0)}"></c:set>
+				<c:set var="tmaster" value="${topicMaster.get(0)}"></c:set>
 	              <c:choose>
-	              		<c:when test="${tmList.topic_member_position == null}">
-	              		<a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
-			                  <div>
-			                    <div class="text-truncate">토픽 멤버 보기</div>
-			                  </div>
-			                </a>
-			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTopic">
-			                  <div>
-			                    <div class="text-truncate">토픽 초대하기</div>
-			                  </div>
-			                </a>
-			                <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
-			                  <div>
-			                    <div class="text-truncate">토픽 나가기</div>
-			                  </div>
-			                </a>
-			                
-	              		</c:when>
-	              		<c:otherwise>
+	              		<c:when test="${tmaster.topic_member_position == '토픽소유자' }">
 			                 <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
 				                  <div>
 				                    <div class="text-truncate">토픽 멤버 보기</div>
@@ -1311,21 +1289,38 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				                    <div class="text-truncate">토픽 삭제하기</div>
 				                  </div>
 				                </a>
-			                <c:if test="${tmList.size() > 1 }">
-				                <a class="dropdown-item d-flex align-items-center topic-out-btn" data-toggle="modal" data-target="#topicMasterChange">
-				                  <div>
-				                    <div class="text-truncate">토픽 나가기</div>
-				                  </div>
-				                </a>
+<%-- 			                <c:if test="${topicMemberList.size() > 1 }"> --%>
+<!-- 				                <a class="dropdown-item d-flex align-items-center topic-out-btn" data-toggle="modal" data-target="#topicMasterChange"> -->
+<!-- 				                  <div> -->
+<!-- 				                    <div class="text-truncate">토픽 나가기</div> -->
+<!-- 				                  </div> -->
+<!-- 				                </a> -->
+<%-- 			                </c:if> --%>
+<%-- 			                <c:if test="${topicMemberList.size() < 2 }"> --%>
+<%-- 				                 <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}"> --%>
+<!-- 				                  <div> -->
+<!-- 				                    <div class="text-truncate">토픽 나가기</div> -->
+<!-- 				                  </div> -->
+<!-- 				                </a> -->
+<%-- 			                </c:if> --%>
 			                </c:if>
-			                <c:if test="${tmList.size() < 2 }">
-				                 <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
-				                  <div>
-				                    <div class="text-truncate">토픽 나가기</div>
-				                  </div>
-				                </a>
-			                </c:if>
-			                </c:if>
+	              		</c:when>
+	              		<c:otherwise>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 멤버 보기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center" data-toggle="modal" data-target="#inviteTopic">
+			                  <div>
+			                    <div class="text-truncate">토픽 초대하기</div>
+			                  </div>
+			                </a>
+			                <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
+			                  <div>
+			                    <div class="text-truncate">토픽 나가기</div>
+			                  </div>
+			                </a>
 	              		</c:otherwise>
 	              </c:choose>
 <%--               </c:forEach> --%>
@@ -1605,19 +1600,19 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			<div class="modal-body">
 			<!-- 내가 토픽 소유자일 때 나를 제외하고 내보내기 할 수 있는 기능 -->
 				<c:forEach var="tmList" items="${topicMemberList}">
-						   ${tmList.member_name}(${tmList.member_email})(${tmList.topic_member_position })
-						<c:choose>
-							   <c:when test="${tmList.topic_member_position == '토픽소유자'}">
-							   		<a style="color:red" 
-							   		href="outtopic?topic_no=${param.topic_no }&member_no=${tmList.member_no}&team_no=${tmList.team_no}">
-							   		내보내기
-							   		</a><br>
-							   </c:when>
-							   <c:otherwise>
-									<br>
-							   </c:otherwise>
-						</c:choose>
-				</c:forEach>
+							<c:set var="tmaster" value="${topicMaster.get(0)}"></c:set>
+							   ${tmList.member_name}(${tmList.member_email})(${tmList.topic_member_position })
+								   <c:if test ="${tmaster.topic_member_position eq '토픽소유자' and sessionScope.member_no ne tmList.member_no}">
+								   		<a style="color:red" 
+								   		href="outtopic?topic_no=${param.topic_no }&member_no=${tmList.member_no}&team_no=${tmList.team_no}">
+								   		내보내기
+								   		</a><br>
+								   </c:if>
+								   
+							   <c:if test ="${tmaster.topic_member_position ne '토픽소유자' or sessionScope.member_no eq tmList.member_no}">
+							   		<br>
+							   </c:if>
+					</c:forEach>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>

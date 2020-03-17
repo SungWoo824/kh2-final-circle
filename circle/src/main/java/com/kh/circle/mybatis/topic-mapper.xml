@@ -45,8 +45,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="teamTopicFirst" parameterType="int" resultType="int">
 		select * from (select topic_no from topic_member where team_no = #{team_no} order by topic_no) where rownum &lt;=1
-   		 
-
 	</select>
 	
 	<select id="teamTopicList" parameterType="Map" resultType="topicDto">
@@ -72,14 +70,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where topic_no = #{topic_no}
 	</select>
 	
-	<select id = "topicMasterList" resultType="topicMemberDto" parameterType="int">
-		select * from
-		(select t.team_no,
-		tm.member_no, tm.topic_member_position
-		from team_member t inner join topic_member tm
-			on t.team_no = tm.team_no)
-		where member_no = #{member_no}
+	<select id="topicMaster" resultType="topicMemberDto" parameterType="map">
+	 select * from topic_member where member_no =#{member_no} and team_no=#{team_no} and topic_no= #{topic_no}
 	</select>
+	
 	
 	
 	<!-- 토픽 정보 수정-->

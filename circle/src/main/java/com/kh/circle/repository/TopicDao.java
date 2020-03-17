@@ -23,5 +23,5 @@ public interface TopicDao {
 	void topicMasterChange(int topic_no, int member_no);
 	void deleteTopic(int topic_no, int team_no);
 	List<TopicMemberDto> topicMasterList(int member_no);
-
+	List<TopicMemberDto> topicMaster(int member_no,int team_no, int topic_no);
 }

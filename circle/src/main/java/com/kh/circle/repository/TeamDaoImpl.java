@@ -202,7 +202,15 @@ public class TeamDaoImpl implements TeamDao {
 	
 	}
 
-	
+	@Override
+	public List<TeamMemberDto> selectPosition(int member_no, int team_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("member_no", member_no);
+		param.put("team_no", team_no);
+		return sqlSession.selectList("team.selectPosition", param);
+	}
+
+
 	
 
 }

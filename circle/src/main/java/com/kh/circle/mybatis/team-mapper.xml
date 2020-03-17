@@ -190,8 +190,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 소유자인지 확인 -->
-	<select id="selectPosition" parameterType="teamMemberDto" resultType="String">
-		select member_position from team_member where member_no=#{member_no} and team_no=#{team_no}
+	<select id="selectPosition" parameterType="map" resultType="teamMemberDto">
+		select * from team_member where member_no=#{member_no} and team_no=#{team_no}
 	</select>
 	
 	<select id="managerTeamList" resultType="teamDto" parameterType="boardVo">

@@ -33,4 +33,5 @@ public interface TeamDao {
 	String checkPosition(int member_no, int team_no);
 	List<MemberListVO> minorPosition(int team_no);
 	int countTeamMember(int team_no);
+	List<TeamMemberDto> selectPosition(int member_no, int team_no);
 }

@@ -121,6 +121,13 @@ public class TopicDaoIml implements TopicDao{
 		return sqlSession.selectList("topic.topicMasterList",member_no);
 	}
 
-	
+	@Override
+	public List<TopicMemberDto> topicMaster(int member_no, int team_no, int topic_no) {
+		Map<String, Integer> param = new HashMap<>();
+		param.put("member_no",member_no);
+		param.put("team_no", team_no);
+		param.put("topic_no",topic_no);
+		return sqlSession.selectList("topic.topicMaster",param);
+	}
 
 }
