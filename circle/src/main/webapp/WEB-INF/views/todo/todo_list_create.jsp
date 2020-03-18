@@ -554,18 +554,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 		 </div>
 	</div> 	   
 	<!-- 할일 메인 리스트 :  끝  --> 	  	   
-		  	   
-					   <!-- 할일 수정 결과 -->
-					   <div id="todo-edit"></div>
-				  	   
-					   <!--비동기 검색 결과   -->
-					   <div id="todo-list-search"></div>
-												
-					   <!-- 할일 추가 된 것 결과 -->									
-					   <div id="todo-create"></div>				
-					   
-					   <!--할일 삭제 결과 -->					
-					   <div id="todo-delete"></div>			
+		  	   	
 			   
 			   <!-- 완료 목록 보기 :시작  -->		
 			   <div id="list-done-result">
@@ -585,8 +574,9 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 										<div class="all-div">
 												<div class="modify-origin-div">
 													<div class="todo-title" style=" margin-left:10px;">
-															<span> [ ${todoListJoinVO.todo_list_content} | ${todoListJoinVO.topic_name} ] </span>
-														
+														<span>할 일 제목 : [ ${todoListJoinVO.todo_list_content} ]</span>
+														<br>
+														<span>토픽 방 이름 : [ ${todoListJoinVO.topic_name} ] </span>
 															
 				
 															<div style="float:right; margin-right:10px;">

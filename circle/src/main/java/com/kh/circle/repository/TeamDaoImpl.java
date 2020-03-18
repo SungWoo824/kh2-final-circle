@@ -126,7 +126,7 @@ public class TeamDaoImpl implements TeamDao {
 		sqlSession.update("team.editTeamDomain",teamDto);
 	}
 	
-	//팀 관리자 : 멤버 등급 변경
+//	팀 관리자 : 멤버 등급 변경
 	@Override
 	public void grantPosition(int member_no, int team_no, String member_position) {
 		Map<String,Object> param = new HashMap<>();
@@ -171,7 +171,8 @@ public class TeamDaoImpl implements TeamDao {
 		return teamMemberDto != null; 
 }
 
-
+	
+	//정회원 준회원 변경 
 	@Override
 	public void changeAuth(TeamMemberDto teamMemberDto) {	
 		sqlSession.update("team.changeAuth", teamMemberDto);
@@ -187,12 +188,14 @@ public class TeamDaoImpl implements TeamDao {
 		
 		return sqlSession.selectOne("team.selectPosition", teamMemberDto);
 	}
-
+	
+	
 	@Override
 	public List<MemberListVO> minorPosition(int team_no) {
 		return sqlSession.selectList("team.minor", team_no);
 	}
-
+	
+	//한 팀의 전체 인원 수 출력 
 	@Override
 	public int countTeamMember(int team_no) {
 		MemberListVO memberListVO = MemberListVO.builder()
@@ -200,6 +203,16 @@ public class TeamDaoImpl implements TeamDao {
 				.build();
 			return sqlSession.selectOne("team.countTeamMember",memberListVO);
 	
+	}
+	
+	//소유자 권한 주기 
+	@Override
+	public void grantOwner(int member_no, int team_no) {
+		TeamMemberDto teamMemberDto = TeamMemberDto.builder()	
+													.team_no(team_no)
+													.member_no(member_no)
+													.build();
+		sqlSession.update("team.grantOwner", teamMemberDto);
 	}
 
 	@Override

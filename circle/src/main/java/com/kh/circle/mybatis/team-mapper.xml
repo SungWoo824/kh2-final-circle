@@ -67,14 +67,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 지정된 팀에 참여중인 정회원만 출력 -->
 	<select id="memberListRegular" resultType="memberListVO" parameterType="int">
 	select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
-	 from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='정회원'and member_position is null)tm 
+	 from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='정회원')tm 
 	inner join member on member.member_no = tm.member_no
 	</select>
 	
 	<!-- 지정된 팀에 참여중인 준회원만 출력 -->
 	<select id="memberListAssociate" resultType="memberListVO" parameterType="int">
 	select member.member_name,member.member_email,tm.member_position,tm.member_auth,tm.member_grade 
-	 from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='준회원'and member_position is null)tm 
+	 from (select member_no,member_position,member_auth,member_grade from team_member where team_no=#{team_no} and member_auth='준회원')tm 
 	inner join member on member.member_no = tm.member_no
 	</select>
 	
@@ -184,6 +184,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	set member_auth = #{member_auth} 
 	where member_no=#{member_no} and team_no=#{team_no} 
 	</update>
+	
+	<!-- 소유자로 지정 -->
+	<update id="grantOwner" parameterType="teamMemberDto">
+		update team_member
+		set member_position ='소유자'
+		where member_no=#{member_no} and team_no=#{team_no} 
+	</update>
+		
 	
 	<select id="teamCount" resultType="int">
 		select count(*) from team

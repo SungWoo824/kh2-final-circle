@@ -24,7 +24,7 @@
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/resources/js/crypto/secom.js"></script>
-<body>
+<body style="background-color: #F6F6F6;">
 
 	<!-- 상단 헤더 -->
 	-->
@@ -114,11 +114,14 @@
       	
     </div>
   </div>
-  <div class="col-9">
+  <div class="col-9" style="background-color: white; border:30px solid #F6F6F6; padding:10px;">
     <div class="tab-content" id="v-pills-tabContent">
       		<div class="tab-pane active" id="home" role="tabpanel"
 							aria-labelledby="home-tab">
-							<p>준회원 목록</p>
+								<br>
+							<h2>준회원 목록</h2>
+							<br>
+							
       	<c:if test="${not empty position }">
       		<form action="./change_auth" method="post">
 			<c:forEach items="${memberList}" var="memberListVO">	
@@ -130,8 +133,8 @@
 		      </select>
 		      <input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
 		      	<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
+				<span class="badge badge-primary">${memberListVO.member_position}</span>
+				<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out><br>
 				<br>
@@ -141,7 +144,7 @@
    			<input type="hidden" name="team_name" value="${param.team_name }">
    			<input type="hidden" name="team_domain" value="${param.team_domain }">
 				<c:if test="${not empty minor}">
-				<input type="submit" value="확인">
+				<input type="submit" class="btn btn-outline-primary" value="확인">
 				</c:if>
    			</form>
 		</c:if>
@@ -149,26 +152,29 @@
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '준회원'}">
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
+				<span class="badge badge-primary">${memberListVO.member_position}</span>
+				<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out><br>
 				<br>
    			</c:if>
    			</c:forEach>
 		</c:if>
-   			<br><br>
-   			<p>정회원 목록</p>
+   			<br><br><hr>
+   			
+	   			<h2>정회원 목록</h2>
+	   			<br>
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '정회원'}">
    				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
-				<c:out value="${memberListVO.member_position}">${memberListVO.member_position}</c:out> 
-				<c:out value="${memberListVO.member_auth}">${memberListVO.member_auth}</c:out> 
+				<span class="badge badge-primary">${memberListVO.member_position}</span>
+				<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
 				<br>
    			</c:if>
    			</c:forEach>
+   			<br><br><hr>
 							</div>
 					    </div>
 					  	</div>

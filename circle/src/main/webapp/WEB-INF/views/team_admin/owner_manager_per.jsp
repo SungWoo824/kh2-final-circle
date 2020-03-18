@@ -115,10 +115,10 @@ $(function(){
 								</nav>	 
 								<div class="mypage-div">
 <%-- 	                                    		<c:forEach var="teamDto" items="${teamDto}"> 메소드 반환이 리스트 형식일 때 쓰는거--%>
-	                                    		<span> 팀 이름 = ${teamDto.team_name}</span>
-	                                    		<br>
-	                                    		<span> 내 등급 = ${teamMemberDto.member_position},</span>
-	                                    		<span>${teamMemberDto.member_auth} </span>
+<%-- 	                                    		<span> 팀 이름 = ${teamDto.team_name}</span> --%>
+<!-- 	                                    		<br> -->
+<%-- 	                                    		<span> 내 등급 = ${teamMemberDto.member_position},</span> --%>
+<%-- 	                                    		<span>${teamMemberDto.member_auth} </span> --%>
 	                                    </div>
                     					<!-- 변경하기 부분 -->
 	                                    <article class="modify-article">

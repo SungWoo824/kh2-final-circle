@@ -34,4 +34,5 @@ public interface TeamDao {
 	List<MemberListVO> minorPosition(int team_no);
 	int countTeamMember(int team_no);
 	List<TeamMemberDto> selectPosition(int member_no, int team_no);
+	void grantOwner(int member_no, int team_no);
 }

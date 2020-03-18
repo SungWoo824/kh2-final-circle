@@ -62,7 +62,7 @@ $(function(){
     });
 });  
 </script>
-<body style="height: 5000px">
+<body style="height: 5000px;  background-color: #F6F6F6;">
 
 <div style="width:100%; height:90%; overflow:auto">
  	 <!-- 상단 헤더 -->
@@ -144,20 +144,17 @@ $(function(){
       <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="${pageContext.request.contextPath}/team_admin/grant_position?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}" role="tab" aria-controls="v-pills-messages" aria-selected="false">권한부여</a>	
     </div>
   </div>
-  <div class="col-9">
+  <div class="col-9" style="background-color: white; border:30px solid #F6F6F6; padding:10px;" >
     <div class="tab-content" id="v-pills-tabContent">
       <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
       <br>
       <!-- 								멤버관리 : 정보보기 -->
-			                                   <br>
+			                              
 		                                   <h2> ${teamDto.team_name}팀 멤버 목록 입니다.</h2>
 		                                   	
 		                                  	   <br>
 		                                  	   <hr>
 		                         
-
-		                                  
-      <br>
       		<h3>준회원 목록</h3>
       		<br>
       	<c:if test="${not empty position }">
@@ -184,16 +181,17 @@ $(function(){
    			</c:if>
    			</c:forEach>
 		</c:if>
-   			<br><br>
+   			<br><br><hr>
    			<h3>정회원 목록</h3>
+   				<br>
 			<c:forEach items="${memberList}" var="memberListVO">	
 		      <c:if test="${memberListVO.member_auth eq '정회원'}">
-   				<c:out value="${memberListVO.member_name}">${memberListVO.member_name}</c:out>
+   				<c:out value="${memberListVO.member_name}">${memberListVO.member_name} |</c:out> 
 				<span class="badge badge-primary">${memberListVO.member_position}</span>
 				<span class="badge badge-pill badge-light">${memberListVO.member_auth}</span>
 				<c:out value="${memberListVO.member_grade}">${memberListVO.member_grade}</c:out> 
 				<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
-				<br>
+				<br><br>
    			</c:if>
    			</c:forEach>
       </div>
@@ -205,7 +203,7 @@ $(function(){
 			</div>
 		</div>
 </div>	                              
-
+</div>
 
 </body>
 </html>
