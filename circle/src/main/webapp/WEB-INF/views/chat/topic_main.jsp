@@ -1289,20 +1289,20 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 				                    <div class="text-truncate">토픽 삭제하기</div>
 				                  </div>
 				                </a>
-<%-- 			                <c:if test="${topicMemberList.size() > 1 }"> --%>
-<!-- 				                <a class="dropdown-item d-flex align-items-center topic-out-btn" data-toggle="modal" data-target="#topicMasterChange"> -->
-<!-- 				                  <div> -->
-<!-- 				                    <div class="text-truncate">토픽 나가기</div> -->
-<!-- 				                  </div> -->
-<!-- 				                </a> -->
-<%-- 			                </c:if> --%>
-<%-- 			                <c:if test="${topicMemberList.size() < 2 }"> --%>
-<%-- 				                 <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}"> --%>
-<!-- 				                  <div> -->
-<!-- 				                    <div class="text-truncate">토픽 나가기</div> -->
-<!-- 				                  </div> -->
-<!-- 				                </a> -->
-<%-- 			                </c:if> --%>
+			                <c:if test="${topicMemberList.size() > 1 }">
+				                <a class="dropdown-item d-flex align-items-center topic-out-btn" data-toggle="modal" data-target="#topicMasterChange">
+				                  <div>
+				                    <div class="text-truncate">토픽 나가기</div>
+				                  </div>
+				                </a>
+			                </c:if>
+			                <c:if test="${topicMemberList.size() < 2 }">
+				                 <a class="dropdown-item d-flex align-items-center topic-out-btn" href="outtopic?topic_no=${param.topic_no }&member_no=${sessionScope.member_no}">
+				                  <div>
+				                    <div class="text-truncate">토픽 나가기</div>
+				                  </div>
+				                </a>
+			                </c:if>
 			                </c:if>
 	              		</c:when>
 	              		<c:otherwise>

@@ -239,10 +239,7 @@ public class DriveFileController {
 		
 		//압축하기 전 복사한 파일을 삭제(list)
 		for(int i=0; i<list.size(); i++) {
-//			list.remove(String.valueOf(list));
-			DriveFileDto driveFileDto = driveFileDao.getNum(drive_file_no.get(i));
-			File copy = new File(dir, driveFileDto.getDrive_file_uploadname());
-			copy.delete();
+			list.remove(list.get(i));
 		}
 		
 		
