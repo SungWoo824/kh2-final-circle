@@ -235,13 +235,27 @@ public class DriveFileController {
 		
 		//압축
 		util.zip(list, out);
-//		System.out.println("리스트"+list);
+		System.out.println("리스트"+list);
 		
+		System.out.println("몇개 ="+list.size());
 		//압축하기 전 복사한 파일을 삭제(list)
-		for(int i=0; i<list.size(); i++) {
-			list.remove(list.get(i));
-		}
+//		for(int i=0; i<list.size(); i++) {
+//			DriveFileDto driveFileDto = driveFileDao.getNum(drive_file_no.get(i));
+//			File removeFile = new File(dir, driveFileDto.getDrive_file_uploadname());
+//			System.out.println(removeFile);
+//			System.out.println("전"+i);
+//			list.remove();
+//		}
 		
+		for(File target : list) {
+			System.out.println(target.canWrite()+", "+target.canRead()+", "+target.canExecute());
+			System.out.println(target.exists()+", "+target.delete());
+		}
+
+//		for(File de : list) {		
+//			de.getName();
+//			de.delete();			
+//		}
 		
 //		dest를 불러와서 전송
 		byte[] data = FileUtils.readFileToByteArray(dest);
