@@ -192,6 +192,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from DRIVE_FILE group by TEAM_NO)DF 
 			on team.TEAM_NO=DF.TEAM_NO order by team.TEAM_NO desc
 	</select>
+	
+	<select id="getAllList" resultType="driveFileDto">
+		select * from drive_file order by drive_file_no asc
+	</select>
 
 
 	

@@ -132,8 +132,8 @@
                     </div>
                     <div class="header-gnb">
                         <ul class="gnb-menu">
-                            <li><a href="#">제품소개</a></li>
-                            <li><a href="#">요금안내</a></li>
+                           <li><a href="${pageContext.request.contextPath}/#test2" data-menuanchor="test2">제품소개</a></li>
+                            <li><a href="${pageContext.request.contextPath}/#test3" data-menuanchor="test3">요금안내</a></li>
                             <c:choose>
 		                        <c:when test="${not empty member_email}">
 							        <li><a href="${pageContext.request.contextPath}/member/mypage">내정보</a></li>

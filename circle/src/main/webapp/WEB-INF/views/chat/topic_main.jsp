@@ -1594,7 +1594,11 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			<!-- 내가 토픽 소유자일 때 나를 제외하고 내보내기 할 수 있는 기능 -->
 				<c:forEach var="tmList" items="${topicMemberList}">
 							<c:set var="tmaster" value="${topicMaster.get(0)}"></c:set>
-							   ${tmList.member_name}(${tmList.member_email})(${tmList.topic_member_position })
+							  		${tmList.member_name}
+							   		<c:if test="${tmList.topic_member_position eq '토픽소유자'}" >
+								   		<span style="color:#2196f3">(${tmList.topic_member_position })</span>
+							   		</c:if>
+							   		[${tmList.member_email}]
 								   <c:if test ="${tmaster.topic_member_position eq '토픽소유자' and sessionScope.member_no ne tmList.member_no}">
 								   		<a style="color:red" 
 								   		href="outtopic?topic_no=${param.topic_no }&member_no=${tmList.member_no}&team_no=${tmList.team_no}">
@@ -1709,7 +1713,7 @@ function TodoDelete(team_no,topic_no,todo_list_no){
 			        	<input type="checkbox" name="member_no" value="${tmlist.member_no }">	
 		        	</c:otherwise>
 			 	</c:choose>
-		 	        	<span>${tmlist.member_no}/${tmlist.member_name}/${tmlist.member_email}</span>
+		 	        	<span>${tmlist.member_name}[${tmlist.member_email}]</span>
 	 	        	<br>
 	        </c:forEach>
       </div>

@@ -34,6 +34,8 @@ public interface DriveFileDao {
 	List<DriveFileDto> myFolderList(int team_no, int member_no);
 
 	List<Integer> fileList(int team_no, String drive_name);
+
+	List<DriveFileDto> getAllList();
 	
 	
 }

@@ -172,6 +172,11 @@ public class DriveFileDaoImpl implements DriveFileDao{
 		return sqlSession.selectList("driveFile.fileList", param);
 	}
 
+	@Override
+	public List<DriveFileDto> getAllList() {
+		return sqlSession.selectList("driveFile.getAllList");
+	}
+
 
 
 

@@ -3,14 +3,14 @@ package com.kh.circle.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.servlet.http.HttpSession;
-
 
 import org.apache.commons.io.FileUtils;
 import org.apache.ibatis.session.SqlSession;
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.drew.metadata.StringValue;
 import com.kh.circle.entity.DriveFileDto;
 import com.kh.circle.repository.DriveFileDao;
 import com.kh.circle.repository.TeamDao;
@@ -235,27 +234,6 @@ public class DriveFileController {
 		
 		//압축
 		util.zip(list, out);
-		System.out.println("리스트"+list);
-		
-		System.out.println("몇개 ="+list.size());
-		//압축하기 전 복사한 파일을 삭제(list)
-//		for(int i=0; i<list.size(); i++) {
-//			DriveFileDto driveFileDto = driveFileDao.getNum(drive_file_no.get(i));
-//			File removeFile = new File(dir, driveFileDto.getDrive_file_uploadname());
-//			System.out.println(removeFile);
-//			System.out.println("전"+i);
-//			list.remove();
-//		}
-		
-		for(File target : list) {
-			System.out.println(target.canWrite()+", "+target.canRead()+", "+target.canExecute());
-			System.out.println(target.exists()+", "+target.delete());
-		}
-
-//		for(File de : list) {		
-//			de.getName();
-//			de.delete();			
-//		}
 		
 //		dest를 불러와서 전송
 		byte[] data = FileUtils.readFileToByteArray(dest);
