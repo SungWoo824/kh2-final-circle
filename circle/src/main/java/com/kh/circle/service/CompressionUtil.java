@@ -220,7 +220,6 @@ public class CompressionUtil {
 		if (src.size() > 0) {
 
 			for (int i = 0; i < src.size(); i++) {
-//				System.out.println("name: " + src.get(i).getName());
 				ze = new ZipArchiveEntry(src.get(i).getName());
 				zos.putArchiveEntry(ze);
 				fis = new FileInputStream(src.get(i));

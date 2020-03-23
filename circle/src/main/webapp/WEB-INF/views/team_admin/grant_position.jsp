@@ -175,13 +175,13 @@ $(function(){
 										<c:out value="${memberListVO.member_email}">${memberListVO.member_email}</c:out> 
 										<br>
 										
-									<select>
-										<option value="${memberListVO.member_auth}">정회원</option>
-										<option value="${memberListVO.member_auth}">준회원</option>
-										<option >선택안함</option>
-									</select>
-									   <input type="hidden" name="changeAuth" value="${memberListVO.member_no}">
-									<input type="button" value="확인"	>
+<!-- 									<select> -->
+<%-- 										<option value="${memberListVO.member_auth}">정회원</option> --%>
+<%-- 										<option value="${memberListVO.member_auth}">준회원</option> --%>
+<!-- 										<option >선택안함</option> -->
+<!-- 									</select> -->
+<%-- 									   <input type="hidden" name="changeAuth" value="${memberListVO.member_no}"> --%>
+<!-- 									<input type="button" value="확인"	> -->
 										
 								<!-- 소유자가 아닐 경우만, 소유자로 지정할 수 있는 버튼 보임 -->		
 								<div style="float:right; margin-right:10px;">

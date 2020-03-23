@@ -46,11 +46,8 @@ public class DriveFileChecker {
 		//fileList에 남아있는 항목을 삭제
 		for(File f : fileList) {
 			f.delete();
-		}
-		System.out.println("삭제 완료");
-		
+		}	
 	}
-	
 }
 
 

@@ -134,10 +134,6 @@ $(function(){
 											href="${pageContext.request.contextPath}/plan/list?team_no=${teamDto.team_no}&team_name=${teamDto.team_name}&team_domain=${teamDto.team_domain}">보유중인
 												플랜 보기</a></li>
 								    </ul>
-								    <form class="form-inline my-2 my-lg-0">
-								      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-								      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-								    </form>
 								  </div>
 								</nav>
 								

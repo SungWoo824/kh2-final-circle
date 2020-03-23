@@ -41,7 +41,6 @@ public class DriveFileNoLoadTest {
 		
 //		List<Integer> list = Arrays.asList(614, 615, 616);
 		List<Integer> list = driveFileDao.fileList(467, "dfs");
-		System.out.println(list);
 		
 		String base = "D:/upload/kh2e/drivefile";
 		for(int no : list) {

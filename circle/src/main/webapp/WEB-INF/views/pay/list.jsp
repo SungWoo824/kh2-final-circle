@@ -142,10 +142,10 @@
     <div class="tab-content" id="v-pills-tabContent" >
       		<div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
 						<br>	
+						  <div style="width:100%; height:400px; overflow:auto">
 							<c:forEach var="pay" items="${list }">
 							<c:if test="${pay.status eq '준비' or '취소완료'}">
-							<!-- 만약 pay.no를 준 dao 결과값이 1이라면 onclick 이벤트를 걸어서 alert창을 띄워라 -->
-									
+							<!-- 만약 pay.no를 준 dao 결과값이 1이라면 onclick 이벤트를 걸어서 alert창을 띄워라 -->	
 									<ul>
 									<h3>
 										<li>
@@ -175,7 +175,9 @@
 										</c:if>
 									</ul>
 									</c:if>
+							<c:if test="${empty pay.status}">구매내역이 없습니다.</c:if>
 							</c:forEach>
+							</div>
 							</div>
 					    </div>
 					  	</div>

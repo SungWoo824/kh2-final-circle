@@ -35,4 +35,5 @@ public interface TeamDao {
 	int countTeamMember(int team_no);
 	List<TeamMemberDto> selectPosition(int member_no, int team_no);
 	void grantOwner(int member_no, int team_no);
+	String checkPositionAuth(int member_no, int team_no);
 }

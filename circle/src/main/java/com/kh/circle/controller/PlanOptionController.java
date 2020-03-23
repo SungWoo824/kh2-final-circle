@@ -70,7 +70,7 @@ TeamDao teamDao;
 		model.addAttribute("memberList",teamDao.memberList(team_no));
 		
 		//소유자인지 아닌지 확인
-		model.addAttribute("position", teamDao.checkPosition((int) session.getAttribute("member_no"), team_no));
+		model.addAttribute("position", teamDao.checkPositionAuth((int) session.getAttribute("member_no"), team_no));
 		
 		model.addAttribute("minor", teamDao.minorPosition(team_no));
 		

@@ -95,7 +95,6 @@ public class ManagerController {
 
 		List<TeamDto> teamList = managerDao.teamList(boardVo);
 		List<DriveFileDto> teamFileTotalSize = managerDao.teamFileTotalSize();
-//		System.out.println(teamFileTotalSize);
 		
 		List<String> teamFileSizeList = new ArrayList<>();
 		
