@@ -393,6 +393,18 @@ public class ChatController {
 			return "redirect:/member/mypage";//팀의 다른 토픽 또는 기본토픽으로 이동
 		}
 		
+		//토픽멤버 내보내기
+		@GetMapping("/memberout")
+		public String memberOut(@RequestParam int topic_no, 
+												@RequestParam(defaultValue="") int team_no,
+												HttpSession session,
+												Model model) {
+			topicDao.outTopic(topic_no, (int)session.getAttribute("member_no"));
+			model.addAttribute("team_no", team_no);
+			model.addAttribute("topic_no",topic_no);
+			return "redirect:/chat/topic_main";//팀의 다른 토픽 또는 기본토픽으로 이동
+		}
+		
 		
 
 		//토픽 초대(같은 토픽에 참여하고있지 않은 팀 리스트)
