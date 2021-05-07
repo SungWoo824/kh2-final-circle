@@ -1,4 +1,4 @@
-# kh2-final-circle
+# CIRCLE
 
 http://www.sysout.co.kr/circle/
 
